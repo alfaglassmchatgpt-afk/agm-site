@@ -1,6 +1,7 @@
 <?php
 /** Dynamic homepage lists: published pages plus current product catalog. */
 defined('ABSPATH') || exit;
+require_once __DIR__ . '/agm-material-groups.php';
 function agm_navigation_pages($section) {
     $root = get_page_by_path($section === 'materials' ? 'materialy' : 'izdeliya');
     $pages = get_pages(['post_status' => 'publish', 'sort_column' => 'menu_order,post_title']);
@@ -18,6 +19,12 @@ function agm_navigation_render($html) {
         $items = [];
         foreach (agm_navigation_pages($section) as $page) {
             $items[$page->post_title] = ['url' => get_permalink($page), 'card' => false];
+        }
+        if ($section === 'materials') {
+            $items = [];
+            foreach (agm_material_grouped_pages() as $key => $group) {
+                $items[$group['title']] = ['url' => agm_material_group_url($key), 'card' => false];
+            }
         }
         if ($section === 'products') {
             foreach ($catalog as $item) {

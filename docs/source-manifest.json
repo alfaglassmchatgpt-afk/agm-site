@@ -116,7 +116,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/page-agm-glass.php",
-    "sha256": "bc4b72c7729d3f29b2776b6a8328407d8cdf7fd6f09bccad1185e947b9b392e8",
+    "sha256": "9bdc9010ff8f2816730201d1fa3b246ff791b4ecf58f9d8944883c0a6903c42b",
     "sanitised": true
   },
   {
@@ -261,7 +261,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-glass/app.js",
-    "sha256": "a68d60521abaa4fbfb3730fccd7dfd22089e4b83f28b3aba18e31d9ff14d3e2a",
+    "sha256": "03d83e1db51bdfae30e3634ae17b1a6c0916d2bd19db0d3e03b485ebb1a8f7e2",
     "sanitised": true
   },
   {
@@ -431,7 +431,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-glass/style.css",
-    "sha256": "7605b5b681888ccc7c5a8af2cbc8006f6e6463935a5b3414e42bd402ab030945",
+    "sha256": "2f33b475a2be210c532b957f6ae797856643c57c11a8a2e9a93882558e04ca22",
     "sanitised": true
   },
   {
@@ -1196,7 +1196,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/inc/agm-navigation.php",
-    "sha256": "c290f912e68e324465c9b34a0dddf75da90df9f9d80765caf5b04c337b4629a1",
+    "sha256": "08cf00c4ea6377444d68523cebcbe4639cdf794c91d82c61d7efcd53ecc288e3",
     "sanitised": true
   },
   {
@@ -1677,6 +1677,11 @@
   {
     "path": "src/plugins/elementor-addon-by-screpter/includes/widgets/class-article-cards-widget.php",
     "sha256": "a170dfa6e77804d6d75a0e65a30b3b79326ae6e3dd7d592331bb04604cb6fa9f",
+    "sanitised": true
+  },
+  {
+    "path": "src/themes/alfa-glass-home-2026/inc/agm-material-groups.php",
+    "sha256": "f6a88d441ee0899bc2ac82625ea0e8262cfc18f6efcafa97f488445562cc7364",
     "sanitised": true
   }
 ]

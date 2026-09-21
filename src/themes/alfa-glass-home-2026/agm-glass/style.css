@@ -17,3 +17,13 @@
 
 /* Unified generated material series */
 .gc-card img{height:auto;aspect-ratio:1/1;object-fit:contain}.gc-main-photo img{height:auto;aspect-ratio:1/1;object-fit:contain}@media(max-width:1000px){.gc-main-photo img{height:auto}}@media(max-width:700px){.gc-card img,.gc-main-photo img{height:auto}}
+
+/* Material categories: overview first, individual materials within a group. */
+.gc-category-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.gc-category{display:block;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--surface);text-decoration:none;color:var(--ink)}
+.gc-category img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover}
+.gc-category>div{padding:22px}.gc-category h2{font-size:23px;line-height:1.25;margin:0 0 12px}.gc-category p{margin:0 0 16px}.gc-category strong{font-size:14px}
+.gc-category:hover,.gc-category:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.gc-back{display:inline-block;margin:4px 0 24px}.gc-material-group{margin-bottom:42px}.gc-material-group>h2{margin:0 0 24px}
+@media(max-width:1000px){.gc-category-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:540px){.gc-category-grid{grid-template-columns:1fr}.gc-category h2{font-size:21px}}

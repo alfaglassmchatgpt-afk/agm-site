@@ -44,6 +44,26 @@
   if('ResizeObserver' in window) new ResizeObserver(()=>root.style.setProperty('--header-height',$('.site-header').getBoundingClientRect().height+'px')).observe($('.site-header'));
 })();
 
-(()=>{'use strict';const cards=[...document.querySelectorAll('[data-material-card]')],search=document.querySelector('#material-search');let group='all';function filter(){const q=(search?.value||'').toLocaleLowerCase('ru');let n=0;cards.forEach(c=>{c.hidden=!(group==='all'||c.dataset.groups.split(' ').includes(group))||!c.textContent.toLocaleLowerCase('ru').includes(q);if(!c.hidden)n++});document.querySelector('#material-count').textContent='Найдено материалов: '+n;document.querySelector('#no-results').hidden=!!n;}if(search){search.addEventListener('input',filter);document.querySelectorAll('[data-filter]').forEach(b=>b.addEventListener('click',()=>{group=b.dataset.filter;document.querySelectorAll('[data-filter]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));filter()}));filter()}
+(()=>{'use strict';
+const search=document.querySelector('#material-search');
+if(search){
+ const catalog=document.querySelector('.gc-catalog'), selected=catalog.dataset.selectedGroup || '';
+ const cards=[...catalog.querySelectorAll('[data-material-card]')];
+ const overview=catalog.querySelector('.gc-category-grid');
+ function filter(){
+  const q=search.value.trim().toLocaleLowerCase('ru');
+  const browsing=!selected&&!q;
+  overview.hidden=!browsing;
+  let count=0;
+  cards.forEach(card=>{
+   card.hidden=browsing || !!(selected&&card.dataset.groups!==selected) || !card.textContent.toLocaleLowerCase('ru').includes(q);
+   if(!card.hidden)count++;
+  });
+  catalog.querySelectorAll('.gc-material-group').forEach(section=>{section.hidden=![...section.querySelectorAll('[data-material-card]')].some(card=>!card.hidden)});
+  catalog.querySelector('#material-count').textContent=browsing?'Выберите группу материалов':'Найдено материалов: '+count;
+  catalog.querySelector('#no-results').hidden=browsing||!!count;
+ }
+ search.addEventListener('input',filter);filter();
+}
 document.querySelectorAll('[data-photo]').forEach(b=>b.addEventListener('click',()=>{document.querySelector('#material-photo').src=b.dataset.photo;document.querySelectorAll('[data-photo]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)))}));
 const f=document.querySelector('#glass-brief');if(f)f.addEventListener('submit',e=>{e.preventDefault();if(!f.reportValidity())return;const d=new FormData(f),names={thickness:'Толщина',color:'Цвет',width:'Ширина, мм',height:'Высота, мм',quantity:'Количество',comment:'Обработка и пожелания'},text=['Задание на изготовление ALFAGLASS',f.dataset.title,...Object.entries(names).map(([k,v])=>v+': '+(d.get(k)||'уточнить'))].join('\n');const u=URL.createObjectURL(new Blob(['\ufeff'+text],{type:'text/plain;charset=utf-8'})),a=document.createElement('a');a.href=u;a.download='ALFAGLASS-material.txt';a.click();setTimeout(()=>URL.revokeObjectURL(u),1000);document.querySelector('#brief-status').textContent='Задание подготовлено. Передайте файл менеджеру вместе с чертежом.'});})();
