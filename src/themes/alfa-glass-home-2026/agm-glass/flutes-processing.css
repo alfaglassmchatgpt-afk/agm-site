@@ -1,0 +1,8 @@
+/* Processing pictograms reuse the Silver Mirror card artwork and tile layout. */
+.gc-prose .flutes-processing-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;list-style:none;padding:0;margin:24px 0}
+.flutes-processing-grid .flutes-processing-tile{display:grid;grid-template-columns:44px minmax(0,1fr);align-items:center;gap:10px;padding:14px;margin:0;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.flutes-processing-tile svg{display:block;width:40px;height:40px;fill:none;stroke:var(--blue);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.flutes-processing-tile span{font-size:16px;font-weight:700;line-height:1.25;letter-spacing:-.15px;color:var(--ink);overflow-wrap:anywhere}
+@media(max-width:1300px){.gc-prose .flutes-processing-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:700px){.gc-prose .flutes-processing-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.flutes-processing-grid .flutes-processing-tile{grid-template-columns:36px minmax(0,1fr);padding:12px;gap:8px}.flutes-processing-tile svg{width:36px;height:36px}.flutes-processing-tile span{font-size:14px}}
+@media(max-width:360px){.flutes-processing-grid .flutes-processing-tile{grid-template-columns:1fr;justify-items:center;text-align:center}}
