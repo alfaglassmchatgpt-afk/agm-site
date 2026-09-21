@@ -1,0 +1,163 @@
+.about-block {
+    padding: 80px 0px 30px;
+    .wrapper {
+        display: flex;
+        align-items: center;
+        gap: 95px;
+        justify-content: space-between;
+    }
+    .left-side {
+        display: flex;
+        flex-direction: column;
+        width: 46%;
+    }
+    .main-title {
+        text-align: left;
+    }
+    .desc {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        margin-bottom: 60px;
+        & p,
+        &>* {
+            font-weight: 400;
+            font-size: 18px;
+            line-height: 133%;
+            color: #666;
+        }
+    }
+    .achives {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        .achive-item {
+            display: flex;
+            flex-direction: column;
+            width: 172px;
+        }
+        .achive-value {
+            font-weight: 700;
+            font-size: 40px;
+            line-height: 120%;
+            text-transform: uppercase;
+            background: linear-gradient(194.6deg, #43abff 4.53%, #077cdb 35.02%, #005397 98.27%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+        .achive {
+            font-weight: 400;
+            font-size: 20px;
+            line-height: 120%;
+            letter-spacing: -0.03em;
+            color: #19191b;
+        }
+    }
+    .right-side {
+        display: flex;
+        flex-direction: column;
+        width: 46%;
+        padding: 29px;
+        border: 3px solid #d4e3f0;
+        border-radius: 20px;
+    }
+    .form-title {
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 117%;
+        text-transform: uppercase;
+        color: #000;
+        margin-bottom: 8px;
+    }
+    .form-desc {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 125%;
+        color: #666;
+        margin-bottom: 24px;
+    }
+    .form-end {
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 129%;
+        color: #22282b;
+        margin-top: 12px;
+    }
+    .default-btn {
+        margin-top: 24px;
+    }
+    @media (max-width: 996px) { 
+        padding: 40px 0px 30px;
+        .wrapper {
+            gap: 40px;
+        }
+        .desc {
+            margin-bottom: 32px;
+            & p, &>* {
+                font-size: 16px;
+            }
+        }
+        .achives {
+            flex-direction: column;
+            gap: 12px;
+            .achive-item {
+                flex-direction: row;
+                gap: 14px;
+                width: auto;
+            }
+            .achive-value {
+                font-size: 32px;
+                min-width: fit-content;
+                margin-bottom: unset;
+            }
+            .achive {
+                font-size: 16px;
+            }
+        }
+        .right-side {
+            padding: 17px;
+        }
+        .form-end {
+            text-align: center;
+        }
+    }
+    @media (max-width: 768px) { 
+        .wrapper {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .left-side {
+            width: 100%;
+        }
+        .right-side {
+            width: 100%;
+        }
+    }
+}
+
+body.dark-color {
+    .about-block {
+        .desc {
+            & p, &>* {
+                color: #d3d3d3;
+            }
+        }
+        .achives {
+            .achive {
+                color: #fff;
+            }
+        }
+        .right-side {
+            border: 3px solid rgba(212, 227, 240, 0.15);
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .form-desc {
+            color: #d3d3d3;
+        }
+        .form-end {
+            color: rgba(255, 255, 255, 0.5);
+        }
+    }
+}

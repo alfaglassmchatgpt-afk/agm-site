@@ -1,0 +1,87 @@
+.partners-block {
+    padding: 80px 0px;
+    .partners {
+        display: grid;
+        grid-template-columns: repeat(5,1fr);
+        gap: 24px 20px;
+        max-width: 1064px;
+        margin-left: auto;
+        margin-right: auto;
+        &.dark {
+            display: none;
+            .partner-item {
+                & img {
+                    filter: grayscale(1) opacity(0.8);
+                }
+            }
+        }
+    }
+    .partner-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        height: 110px;
+        border: 1px solid #cdd1d3;
+        border-radius: 12px;
+        background: #fff;
+        & img {
+            width: auto;
+            height: auto;
+            display: block;
+            object-fit: contain;
+            max-width: 100%;
+            max-height: 100%;
+            filter: grayscale(1) opacity(0.5);
+            transition: 0.5s;
+        }
+        &:hover img {
+            filter: unset;
+        }
+    }
+    @media (max-width: 996px) { 
+        padding: 40px 0px;
+        .partners {
+            gap: 16px;
+        }
+    }
+    @media (max-width: 768px) { 
+        .partners {
+            grid-template-columns: repeat(2,1fr);
+        }
+    }
+    @media (max-width: 498px) { 
+        .partner-item {
+            padding: 15px 20px;
+            height: 80px;
+            & img {
+                filter: unset;
+            }
+        }
+    }
+}
+
+body.dark-color {
+    .partners-block {
+        .partner-item {
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .partners:not(.dark) {
+            display: none;
+        }
+        .partners.dark {
+            display: grid;
+            .partner-item:hover img {
+                filter: unset;
+            }
+        }
+        @media (max-width: 498px) { 
+            .partners.dark {
+                .partner-item img {
+                    filter: unset;
+                }
+            }
+        }
+    }
+}

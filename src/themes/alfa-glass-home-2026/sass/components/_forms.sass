@@ -1,0 +1,255 @@
+[aria-invalid=true]
+	color: red
+.wpcf7-not-valid-tip, .wpcf7-spinner
+	display: none !important
+
+.wpcf7 form.invalid .wpcf7-response-output, .wpcf7 form.unaccepted .wpcf7-response-output, .wpcf7 form.payment-required .wpcf7-response-output
+	font-size: 1.3rem
+	padding: 0
+	margin: 0
+	margin-top: 1.6rem
+	border: none
+	color: red
+
+.modal__dialog
+	form
+		width: 42rem
+		h3
+			margin-bottom: 4rem
+		label
+			display: block
+			margin-bottom: 2.4rem
+			span
+				display: inline-block
+				padding-top: 1rem
+		input
+			width: 100%
+			padding: 3rem
+			border-radius: 1.6rem
+			border: 1px solid var(--e-global-color-secondary)
+		.wpcf7-acceptance
+			label
+				margin-bottom: 4rem
+		button.btn
+			margin-top: 0
+input
+	font-size: 2rem
+	font-weight: 500
+	width: 100%
+	&:focus
+		&::placeholder
+			color: transparent
+
+.form__row
+	display: flex
+	justify-content: space-between
+	align-items: center
+.form__simple
+	.form__row
+		padding: 0 0.9rem 2rem
+		gap: 2rem
+		border-bottom: 2px solid var(--e-global-color-text)
+	.wpcf7-form-control-wrap
+		flex-grow: 1
+		position: relative
+		input[type="tel"], input[type="email"]
+			position: relative
+			padding-left: 5.2rem
+		.input-icon
+			content: ""
+			position: absolute
+			width: 1.8rem
+			height: 1.8rem
+			left: 0.9rem
+			top: 50%
+			transform: translateY(-50%)
+		.tel-icon
+			background: url(../img/icons/phone.svg) no-repeat center / contain
+		.email-icon
+			background: url(../img/icons/mail.svg) no-repeat center / contain
+.btn__form_simple
+	width: 4.4rem
+	height: 4.4rem
+	background-color: var(--e-global-color-text)
+	border-radius: 50%
+	display: flex
+	justify-content: center
+	align-items: center
+	flex: 0 0 auto
+	.item__arrow
+		position: relative
+		width: 1.8rem
+		height: 1.4rem
+		&::before, &::after
+			display: none
+		span.decor
+			position: absolute
+			width: 100%
+			height: 100%
+			inset: 0
+			background: url("../img/icons/simple-btn-arrow.svg") no-repeat center / contain
+			transform: none
+input[type="checkbox"]
+	display: none
+input[type=checkbox]:checked+.wpcf7-list-item-label::after
+	opacity: 1
+.wpcf7-acceptance
+	font-size: 1.3rem
+	display: block
+
+	a
+		text-decoration: underline
+	.wpcf7-list-item
+		margin: 0
+	.wpcf7-list-item-label
+		padding-top: 0
+		position: relative
+		display: block
+		padding-left: 3.8rem
+		opacity: 0.7
+		line-height: 1.1
+		&::before
+			content: ""
+			position: absolute
+			width: 2.2rem
+			height: 2.2rem
+			top: 0
+			left: 0
+			border-radius: 5px
+			border: 1px solid var(--e-global-color-secondary)
+			box-shadow: 0px 1.146px 3.438px 0px rgba(0, 0, 0, 0.15)
+		&::after
+			content: ""
+			position: absolute
+			width: 2.2rem
+			height: 2.2rem
+			top: 0
+			left: 0
+			border-radius: 5px
+			background: url("../img/icons/checked.svg") no-repeat center / cover
+			opacity: 0
+			transition: 0.3s ease
+.custom-success-block
+	text-align: center
+	width: 35.4rem
+	margin: 0 auto
+	svg
+		margin-bottom: 1.6rem
+		width: 6rem
+		height: auto
+	h3
+		margin-bottom: 2rem
+	p
+		padding: 0 6rem
+@media screen and (max-width: 1440px)
+
+	input
+		font-size: 1.5rem
+	.form__simple
+		.form__row
+			padding: 0 0 2rem
+		.wpcf7-form-control-wrap
+			input[type="tel"], input[type="email"]
+				position: relative
+				padding-left: 3.6rem
+			.input-icon
+				width: 1.6rem
+				height: 1.6rem
+				left: 0.8rem
+	.btn__form_simple
+		width: 3.4rem
+		height: 3.4rem
+		.item__arrow
+			width: 1.5rem
+			height: 1.2rem
+	.wpcf7-acceptance
+		font-size: 1.3rem
+		display: block
+
+		.wpcf7-list-item-label
+			position: relative
+			display: block
+			padding-left: 3.8rem
+			&::before
+				content: ""
+				position: absolute
+				width: 2.2rem
+				height: 2.2rem
+				top: 0
+				left: 0
+				border-radius: 5px
+				border: 1px solid var(--e-global-color-secondary)
+				box-shadow: 0px 1.146px 3.438px 0px rgba(0, 0, 0, 0.15)
+			&::after
+				content: ""
+				position: absolute
+				width: 2.2rem
+				height: 2.2rem
+				top: 0
+				left: 0
+				border-radius: 5px
+				opacity: 0
+				transition: 0.3s ease
+	.modal__dialog
+		form
+			width: 40rem
+			h3
+				margin-bottom: 4rem
+			label
+				margin-bottom: 2.4rem
+				span
+					padding-top: 1rem
+			input
+				padding: 3rem
+				border-radius: 1.6rem
+			.wpcf7-acceptance
+				label
+					margin-bottom: 4rem
+@media screen and (max-width: 1024px)
+	.form__simple
+		.form__row
+			padding: 0 0 1.5rem
+		.wpcf7-form-control-wrap
+			input[type="tel"], input[type="email"]
+				padding-left: 2.7rem
+			.input-icon
+				width: 1.5rem
+				height: 1.5rem
+				left: 0.4rem
+	.btn__form_simple
+		width: 3.4rem
+		height: 3.4rem
+		.item__arrow
+			width: 1.4rem
+			height: 1.1rem
+
+	input
+		font-size: 1.6rem
+	.wpcf7-acceptance
+		font-size: 1.1rem
+		.wpcf7-list-item-label
+			padding-left: 3.2rem
+			&::before
+				width: 2rem
+				height: 2rem
+				border-radius: 3px
+				border: 1px solid var(--e-global-color-secondary)
+				box-shadow: 0px 1.146px 2px 0px rgba(0, 0, 0, 0.15)
+			&::after
+				width: 2rem
+				height: 2rem
+				border-radius: 3px
+	.modal__dialog
+		padding: 2rem
+		form
+			width: 30rem
+			h3
+				margin-bottom: 2rem
+			label
+				margin-bottom: 2rem
+			input
+				padding: 2.3rem 3rem
+				border-radius: 1.6rem
+			.wpcf7-acceptance
+				label
+					margin-bottom: 2rem

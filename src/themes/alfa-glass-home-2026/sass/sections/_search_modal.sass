@@ -1,0 +1,200 @@
+#popup-search-modal
+	top: 100%
+	position: absolute
+	height: unset
+	height: calc(100vh - 100%)
+	overflow: hidden
+	.modal__dialog
+		border-radius: 0
+		background-color: var(--e-global-color-accent)
+		padding: 3rem 8rem
+		position: absolute
+		width: 100%
+		max-height: 100%
+		top: 0
+		left: 0
+		overflow-y: auto
+	.modal__content
+
+	.search-form
+		width: 100%
+		margin-bottom: 3rem
+		.form__row
+			padding: 3.7rem 4rem
+			border-radius: 2rem
+			border: 1px solid var(--e-global-color-secondary)
+		.search-field
+			height: auto
+			padding: 0
+			opacity: 0.6
+			border: none
+			border-radius: 0
+			&__wrapper
+				flex-grow: 1
+		button
+			svg
+				width: 2.6rem
+				height: auto
+		button:disabled
+			opacity: 0.3
+			cursor: no-drop
+	.history__search
+		display: flex
+		align-items: center
+		gap: 2rem
+		.item__query
+			padding: 2rem
+			border-radius: 1.6rem
+			border: 1px solid var(--e-global-color-secondary)
+			display: flex
+			align-items: center
+			gap: 1.6rem
+			flex-shrink: 0
+			cursor: pointer
+			transition: 0.3s ease-out
+			svg
+				width: 1.6rem
+				height: auto
+				opacity: 0.6
+				transition: 0.3s ease-out
+			&:hover
+				border-color: var(--e-global-color-text)
+				svg
+					opacity: 1
+		.small__title
+			margin-right: 4rem
+	.list-product-search
+		ul
+			display: flex
+			flex-wrap: wrap
+			column-gap: 8rem
+			row-gap: 4rem
+			li
+				flex: 0 1 33rem
+				a
+					display: flex
+					gap: 2.4rem
+					align-items: center
+				img
+					width: 12rem
+					height: auto
+					aspect-ratio: 1
+					object-fit: cover
+					border-radius: 1.4rem
+				.product__category
+					opacity: 0.7
+					margin-bottom: 1rem
+				.small__title
+					font-weight: 600
+					display: -webkit-box
+					-webkit-box-orient: vertical
+					-webkit-line-clamp: 1
+					overflow: hidden
+					text-overflow: ellipsis
+					white-space: normal
+.search
+	.category__first-screen
+		.description
+			margin-bottom: 4rem
+			opacity: 0.7
+	&__result_error
+		text-align: center
+		padding-top: 8rem
+	&__reset
+		display: none
+@media screen and (max-width: 1440px)
+	#popup-search-modal
+		.modal__dialog
+			padding: 3rem 6rem
+		.search-form
+			margin-bottom: 2rem
+			.form__row
+				padding: 3.3rem 3rem
+		.history__search
+			gap: 1.6rem
+			.small__title
+				margin-right: 2rem
+		.list-product-search
+			ul
+				column-gap: 4rem
+				row-gap: 4rem
+				li
+					flex: 0 1 28.4rem
+					img
+						width: 10rem
+	.search
+		.category__first-screen
+			.description
+				margin-bottom: 2rem
+		&__result_error
+			padding-top: 6rem
+@media screen and (max-width: 1024px)
+	#popup-search-modal
+		.modal__dialog
+			padding: 2rem 4rem
+		.search-form
+			.form__row
+				padding: 3rem
+			button
+				svg
+					width: 2.4rem
+		.history__search
+			.small__title
+				margin-right: 1.4rem
+		.list-product-search
+			ul
+				li
+					flex: 0 1 24.4rem
+					img
+						width: 8rem
+	.search
+		.category__first-screen
+			.description
+				margin-bottom: 2rem
+		&__result_error
+			padding-top: 4rem
+
+@media screen and (max-width: 576px)
+	#popup-search-modal
+		.modal__dialog
+			padding: 2rem
+		.search-form
+			.form__row
+				padding: 2rem
+			button
+				svg
+					width: 2.4rem
+		.history__search
+			flex-wrap: wrap
+			.small__title
+				margin-right: 0
+				width: 100%
+			.item__query
+				padding: 1.6rem
+				border-radius: 1.4rem
+				gap: 0.8rem
+				svg
+					width: 1.4rem
+		.list-product-search
+			ul
+				gap: 2rem
+				li
+					flex: 0 1 100%
+					img
+						width: 8rem
+			&.search_val__find
+				padding-bottom: 5rem
+	.search
+		.category__first-screen
+			.description
+				margin-bottom: 2rem
+		&__result_error
+			padding-top: 4rem
+		&__reset
+			display: block
+			position: fixed
+			bottom: 0
+			left: 0
+			width: 100%
+			height: 5rem
+			background-color: var(--e-global-color-primary)

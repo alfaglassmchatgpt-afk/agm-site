@@ -1,0 +1,236 @@
+{
+  "theme": [
+    {
+      "name": "alfa-glass-home-2026",
+      "status": "active",
+      "version": "1.0.0"
+    },
+    {
+      "name": "alfa-glass",
+      "status": "inactive",
+      "version": "1.0.0"
+    },
+    {
+      "name": "alfa-glass_1",
+      "status": "inactive",
+      "version": "1.0.0"
+    },
+    {
+      "name": "twentytwentyfive",
+      "status": "inactive",
+      "version": "1.0"
+    }
+  ],
+  "plugin": [
+    {
+      "name": "eps-301-redirects",
+      "status": "inactive",
+      "version": "2.83"
+    },
+    {
+      "name": "advanced-custom-fields-pro",
+      "status": "active",
+      "version": "6.2.7"
+    },
+    {
+      "name": "tinymce-advanced",
+      "status": "inactive",
+      "version": "5.9.2"
+    },
+    {
+      "name": "alfaglass-site-auditor",
+      "status": "inactive",
+      "version": "0.1.0"
+    },
+    {
+      "name": "autoptimize",
+      "status": "inactive",
+      "version": "3.1.14"
+    },
+    {
+      "name": "backwpup",
+      "status": "inactive",
+      "version": "5.7.2"
+    },
+    {
+      "name": "better-search-replace",
+      "status": "inactive",
+      "version": "1.4.10"
+    },
+    {
+      "name": "breadcrumb-navxt",
+      "status": "active",
+      "version": "7.5.1"
+    },
+    {
+      "name": "taxonomy-terms-order",
+      "status": "active",
+      "version": "1.9.4"
+    },
+    {
+      "name": "contact-form-7-honeypot",
+      "status": "active",
+      "version": "3.4.0"
+    },
+    {
+      "name": "cf7-google-sheets-connector",
+      "status": "inactive",
+      "version": "5.2.3"
+    },
+    {
+      "name": "classic-editor",
+      "status": "active",
+      "version": "1.7.0"
+    },
+    {
+      "name": "classic-widgets",
+      "status": "active",
+      "version": "0.3"
+    },
+    {
+      "name": "contact-form-7",
+      "status": "active",
+      "version": "6.1.5"
+    },
+    {
+      "name": "contact-form-7-dynamic-text-extension",
+      "status": "active",
+      "version": "5.0.5"
+    },
+    {
+      "name": "cyr2lat",
+      "status": "inactive",
+      "version": "7.1.0"
+    },
+    {
+      "name": "cyr3lat",
+      "status": "inactive",
+      "version": "3.7.5"
+    },
+    {
+      "name": "wp-db-backup",
+      "status": "inactive",
+      "version": "2.5.3"
+    },
+    {
+      "name": "duplicator",
+      "status": "inactive",
+      "version": "1.5.15"
+    },
+    {
+      "name": "elementor",
+      "status": "active",
+      "version": "3.35.6"
+    },
+    {
+      "name": "elementor-addon-by-screpter",
+      "status": "active",
+      "version": "1.0"
+    },
+    {
+      "name": "elementskit-lite",
+      "status": "active",
+      "version": "3.8.1"
+    },
+    {
+      "name": "killbot",
+      "status": "inactive",
+      "version": "1.0.3"
+    },
+    {
+      "name": "kirki",
+      "status": "active",
+      "version": "5.2.2"
+    },
+    {
+      "name": "loading-page",
+      "status": "inactive",
+      "version": "1.2.7"
+    },
+    {
+      "name": "loco-translate",
+      "status": "inactive",
+      "version": "2.8.2"
+    },
+    {
+      "name": "post-types-order",
+      "status": "active",
+      "version": "2.4.3"
+    },
+    {
+      "name": "redirection",
+      "status": "inactive",
+      "version": "5.9.0"
+    },
+    {
+      "name": "robin-image-optimizer",
+      "status": "inactive",
+      "version": "2.0.3"
+    },
+    {
+      "name": "sm-cookie-policy",
+      "status": "inactive",
+      "version": "1.0"
+    },
+    {
+      "name": "svg-support",
+      "status": "inactive",
+      "version": "2.5.14"
+    },
+    {
+      "name": "what-template",
+      "status": "inactive",
+      "version": "0.1"
+    },
+    {
+      "name": "wp-downgrade",
+      "status": "inactive",
+      "version": "1.2.6"
+    },
+    {
+      "name": "wp-file-manager",
+      "status": "inactive",
+      "version": "8.0.4"
+    },
+    {
+      "name": "wp-mail-smtp",
+      "status": "inactive",
+      "version": "4.7.1"
+    },
+    {
+      "name": "wp-phpmyadmin-extension",
+      "status": "inactive",
+      "version": "5.2.2.01"
+    },
+    {
+      "name": "wp-super-cache",
+      "status": "inactive",
+      "version": "3.0.3"
+    },
+    {
+      "name": "wp-yandex-metrika",
+      "status": "inactive",
+      "version": "1.2.2"
+    },
+    {
+      "name": "duplicate-post",
+      "status": "inactive",
+      "version": "4.5"
+    },
+    {
+      "name": "wordpress-seo",
+      "status": "inactive",
+      "version": "27.1.1"
+    },
+    {
+      "name": "000-agm-staging-guard",
+      "status": "must-use",
+      "version": ""
+    },
+    {
+      "name": "001-agm-staging-https",
+      "status": "must-use",
+      "version": ""
+    }
+  ]
+}

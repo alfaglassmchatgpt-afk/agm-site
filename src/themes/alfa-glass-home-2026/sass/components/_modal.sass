@@ -1,0 +1,64 @@
+.modal
+	display: none
+	position: fixed
+	z-index: 1001
+	left: 0
+	top: 0
+	width: 100%
+	height: 100%
+	overflow: hidden
+	justify-content: center
+	align-items: center
+	&-backdrop
+		position: fixed
+		top: 0
+		left: 0
+		z-index: 1000
+		width: 100vw
+		height: 100vh
+		background-color: var(--e-global-color-text)
+		opacity: 0.4
+		display: none
+	&__dialog
+		background-color: var(--e-global-color-primary)
+		padding: 5rem
+		border-radius: var(--border-radius)
+		position: relative
+		.close
+			position: absolute
+			top: 3rem
+			right: 3rem
+			cursor: pointer
+			svg
+				width: 2rem
+				height: 2rem
+@media screen and (max-width: 1440px)
+	.modal
+		&__dialog
+			padding: 4rem
+			.close
+				top: 3rem
+				right: 3rem
+				svg
+					width: 2rem
+					height: 2rem
+@media screen and (max-width: 1440px)
+	.modal
+		&__dialog
+			padding: 2rem
+			.close
+				top: 2rem
+				right: 2rem
+				svg
+					width: 1.6rem
+					height: 1.6rem
+@media screen and (max-width: 1440px)
+	.modal
+		&__dialog
+			padding: 2rem
+			.close
+				top: 2rem
+				right: 2rem
+				svg
+					width: 1.6rem
+					height: 1.6rem

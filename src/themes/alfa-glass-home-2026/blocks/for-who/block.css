@@ -1,0 +1,140 @@
+.for-who-block {
+    padding: 80px 0px;
+    .plank-item {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        background: #fff;
+        border: 1px solid #cdd1d3;
+        border-radius: 20px;
+        height: 365px;
+        overflow: hidden;
+        &:before {
+            content: "";
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            position: absolute;
+            pointer-events: none;
+            z-index: 2;
+            background: linear-gradient(180deg, rgb(255 255 255 / 10%) 0%, #fff 44%);
+        }
+    }
+    .plank-item__bg {
+        display: flex;
+        width: 100%;
+        height: auto;
+        height: 45%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        & img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+            object-position: center;
+        }
+    }
+    .plank-item__content {
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        flex-grow: 1;
+        height: auto;
+        max-height: 55%;
+        margin-top: auto;
+        position: relative;
+        z-index: 3;
+        box-sizing: border-box;
+    }
+    .plank-item__name {
+        font-weight: 700;
+        font-size: 20px;
+        line-height: 140%;
+        text-transform: uppercase;
+        color: #000;
+        margin-bottom: 16px;
+    }
+    .plank-item__desc {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 125%;
+        color: #666;
+    }
+    .plank-item__icon {
+        border: 1px solid #d4e3f0;
+        border-radius: 100px;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: -30px;
+        right: 20px;
+        & img,
+        & svg {
+            width: auto;
+            height: auto;
+            display: block;
+            object-fit: contain;
+            max-width: 60%;
+            max-height: 60%;
+        }
+    }
+    @media (max-width: 1200px) { 
+        .plank-item__name {
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+    }
+    @media (max-width: 996px) { 
+        padding: 40px 0px;
+    }
+    @media (max-width: 498px) { 
+        .planks {
+            margin-right: -16px;
+            width: calc(100% + 16px);
+        }
+        .plank-item {
+            height: 320px;
+            &:before {
+                background: linear-gradient(180deg, rgb(255 255 255 / 10%) 0%, #fff 47%);   
+            }
+        }
+        .plank-item__bg {
+            height: 46%;
+        }
+    }
+}
+
+body.dark-color {
+    .for-who-block {
+        .plank-item {
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.1);
+            &:before {
+                display: none;
+            }
+        }
+        .plank-item__desc {
+            color: #d3d3d3;
+        }
+        .plank-item__icon {
+            border: 1px solid rgba(212, 227, 240, 0.5);
+        }
+        .plank-item__bg:before {
+            content: "";
+            width: 100%;
+            height: 100%;
+            bottom: 0;
+            left: 0;
+            position: absolute;
+            pointer-events: none;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000 100%);
+        }
+    }
+}

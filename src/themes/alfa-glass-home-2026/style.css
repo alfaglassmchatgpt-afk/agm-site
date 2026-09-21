@@ -1,0 +1,1815 @@
+/*!
+Theme Name: Alfa Glass — новая главная 2026
+Theme URI: http://underscores.me/
+Author: Anfalova.art
+Author URI: https://anfalova.art/
+Description: Description
+Version: 1.0.0
+Tested up to: 5.4
+Requires PHP: 5.6
+License: GNU General Public License v2 or later
+License URI: LICENSE
+Text Domain: alfa-glass
+Tags: custom-background, custom-logo, custom-menu, featured-images, threaded-comments, translation-ready
+
+This theme, like WordPress, is licensed under the GPL.
+Use it to make something cool, have fun, and share what you've learned.
+
+Alfa-glass is based on Underscores https://underscores.me/, (C) 2012-2020 Automattic, Inc.
+Underscores is distributed under the terms of the GNU GPL v2 or later.
+
+Normalizing styles have been helped along thanks to the fine work of
+Nicolas Gallagher and Jonathan Neal https://necolas.github.io/normalize.css/
+*/
+
+/*--------------------------------------------------------------
+>>> TABLE OF CONTENTS:
+----------------------------------------------------------------
+# Generic
+	- Normalize
+	- Box sizing
+# Base
+	- Typography
+	- Elements
+	- Links
+	- Forms
+## Layouts
+# Components
+	- Navigation
+	- Posts and pages
+	- Comments
+	- Widgets
+	- Media
+	- Captions
+	- Galleries
+# plugins
+	- Jetpack infinite scroll
+# Utilities
+	- Accessibility
+	- Alignments
+
+--------------------------------------------------------------*/
+
+/*--------------------------------------------------------------
+# Generic
+--------------------------------------------------------------*/
+
+/* Normalize
+--------------------------------------------- */
+
+/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
+
+/* Document
+	 ========================================================================== */
+
+
+
+/* Grouping content
+	 ========================================================================== */
+
+/**
+ * 1. Add the correct box sizing in Firefox.
+ * 2. Show the overflow in Edge and IE.
+ */
+hr {
+	box-sizing: content-box;
+	height: 0;
+	overflow: visible;
+}
+
+/**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
+ */
+pre {
+	font-family: monospace, monospace;
+	font-size: 1em;
+}
+
+/* Text-level semantics
+	 ========================================================================== */
+
+/**
+ * Remove the gray background on active links in IE 10.
+ */
+a {
+	background-color: transparent;
+}
+
+/**
+ * 1. Remove the bottom border in Chrome 57-
+ * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
+ */
+abbr[title] {
+	border-bottom: none;
+	text-decoration: underline;
+	text-decoration: underline dotted;
+}
+
+/**
+ * Add the correct font weight in Chrome, Edge, and Safari.
+ */
+b,
+strong {
+	font-weight: bolder;
+}
+
+/**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
+ */
+code,
+kbd,
+samp {
+	font-family: monospace, monospace;
+	font-size: 1em;
+}
+
+/**
+ * Add the correct font size in all browsers.
+ */
+small {
+	font-size: 80%;
+}
+
+/**
+ * Prevent `sub` and `sup` elements from affecting the line height in
+ * all browsers.
+ */
+sub,
+sup {
+	font-size: 75%;
+	line-height: 0;
+	position: relative;
+	vertical-align: baseline;
+}
+
+sub {
+	bottom: -0.25em;
+}
+
+sup {
+	top: -0.5em;
+}
+
+/* Embedded content
+	 ========================================================================== */
+
+/**
+ * Remove the border on images inside links in IE 10.
+ */
+img {
+	border-style: none;
+}
+
+/* Forms
+	 ========================================================================== */
+
+/**
+ * 1. Change the font styles in all browsers.
+ * 2. Remove the margin in Firefox and Safari.
+ */
+button,
+input,
+optgroup,
+select,
+textarea {
+	font-family: inherit;
+	font-size: 100%;
+	line-height: 1.15;
+	margin: 0;
+}
+
+/**
+ * Show the overflow in IE.
+ * 1. Show the overflow in Edge.
+ */
+button,
+input {
+	overflow: visible;
+}
+
+/**
+ * Remove the inheritance of text transform in Edge, Firefox, and IE.
+ * 1. Remove the inheritance of text transform in Firefox.
+ */
+button,
+select {
+	text-transform: none;
+}
+
+/**
+ * Correct the inability to style clickable types in iOS and Safari.
+ */
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+	-webkit-appearance: button;
+}
+
+/**
+ * Remove the inner border and padding in Firefox.
+ */
+button::-moz-focus-inner,
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner {
+	border-style: none;
+	padding: 0;
+}
+
+/**
+ * Restore the focus styles unset by the previous rule.
+ */
+button:-moz-focusring,
+[type="button"]:-moz-focusring,
+[type="reset"]:-moz-focusring,
+[type="submit"]:-moz-focusring {
+	outline: 1px dotted ButtonText;
+}
+
+/**
+ * Correct the padding in Firefox.
+ */
+fieldset {
+	padding: 0.35em 0.75em 0.625em;
+}
+
+/**
+ * 1. Correct the text wrapping in Edge and IE.
+ * 2. Correct the color inheritance from `fieldset` elements in IE.
+ * 3. Remove the padding so developers are not caught out when they zero out
+ *		`fieldset` elements in all browsers.
+ */
+legend {
+	box-sizing: border-box;
+	color: inherit;
+	display: table;
+	max-width: 100%;
+	padding: 0;
+	white-space: normal;
+}
+
+/**
+ * Add the correct vertical alignment in Chrome, Firefox, and Opera.
+ */
+progress {
+	vertical-align: baseline;
+}
+
+/**
+ * Remove the default vertical scrollbar in IE 10+.
+ */
+textarea {
+	overflow: auto;
+}
+
+/**
+ * 1. Add the correct box sizing in IE 10.
+ * 2. Remove the padding in IE 10.
+ */
+[type="checkbox"],
+[type="radio"] {
+	box-sizing: border-box;
+	padding: 0;
+}
+
+/**
+ * Correct the cursor style of increment and decrement buttons in Chrome.
+ */
+[type="number"]::-webkit-inner-spin-button,
+[type="number"]::-webkit-outer-spin-button {
+	height: auto;
+}
+
+/**
+ * 1. Correct the odd appearance in Chrome and Safari.
+ * 2. Correct the outline style in Safari.
+ */
+[type="search"] {
+	-webkit-appearance: textfield;
+	outline-offset: -2px;
+}
+
+/**
+ * Remove the inner padding in Chrome and Safari on macOS.
+ */
+[type="search"]::-webkit-search-decoration {
+	-webkit-appearance: none;
+}
+
+/**
+ * 1. Correct the inability to style clickable types in iOS and Safari.
+ * 2. Change font properties to `inherit` in Safari.
+ */
+::-webkit-file-upload-button {
+	-webkit-appearance: button;
+	font: inherit;
+}
+
+/* Interactive
+	 ========================================================================== */
+
+/*
+ * Add the correct display in Edge, IE 10+, and Firefox.
+ */
+details {
+	display: block;
+}
+
+/*
+ * Add the correct display in all browsers.
+ */
+summary {
+	display: list-item;
+}
+
+/* Misc
+	 ========================================================================== */
+
+/**
+ * Add the correct display in IE 10+.
+ */
+template {
+	display: none;
+}
+
+/**
+ * Add the correct display in IE 10.
+ */
+[hidden] {
+	display: none;
+}
+
+/* Box sizing
+--------------------------------------------- */
+
+/* Inherit box-sizing to more easily change it's value on a component level.
+@link http://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/ */
+*,
+*::before,
+*::after {
+	box-sizing: inherit;
+}
+
+html {
+	box-sizing: border-box;
+}
+
+/*--------------------------------------------------------------
+# Base
+--------------------------------------------------------------*/
+
+/* Typography
+--------------------------------------------- */
+body,
+button,
+input,
+select,
+optgroup,
+textarea {
+	color: #404040;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+	font-size: 1rem;
+	line-height: 1.5;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	clear: both;
+}
+
+
+dfn,
+cite,
+em,
+i {
+	font-style: italic;
+}
+
+blockquote {
+	margin: 0 1.5em;
+}
+
+address {
+	margin: 0 0 1.5em;
+}
+
+pre {
+	background: #eee;
+	font-family: "Courier 10 Pitch", courier, monospace;
+	line-height: 1.6;
+	margin-bottom: 1.6em;
+	max-width: 100%;
+	overflow: auto;
+	padding: 1.6em;
+}
+
+code,
+kbd,
+tt,
+var {
+	font-family: monaco, consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
+}
+
+abbr,
+acronym {
+	border-bottom: 1px dotted #666;
+	cursor: help;
+}
+
+mark,
+ins {
+	background: #fff9c0;
+	text-decoration: none;
+}
+
+big {
+	font-size: 125%;
+}
+
+/* Elements
+--------------------------------------------- */
+body {
+	background: #fff;
+}
+
+hr {
+	background-color: #ccc;
+	border: 0;
+	height: 1px;
+	margin-bottom: 1.5em;
+}
+
+
+ul {
+	list-style: disc;
+}
+
+ol {
+	list-style: decimal;
+}
+
+
+
+dt {
+	font-weight: 700;
+}
+
+dd {
+	margin: 0 1.5em 1.5em;
+}
+
+/* Make sure embeds and iframes fit their containers. */
+embed,
+iframe,
+object {
+	max-width: 100%;
+}
+
+img {
+	height: auto;
+	max-width: 100%;
+}
+
+figure {
+	margin: 1em 0;
+}
+
+table {
+	margin: 0 0 1.5em;
+	width: 100%;
+}
+
+/* Links
+--------------------------------------------- */
+a {
+	color: #4169e1;
+}
+
+a:visited {
+	color: #800080;
+}
+
+a:hover,
+a:focus,
+a:active {
+	color: #191970;
+}
+
+a:focus {
+	outline: thin dotted;
+}
+
+a:hover,
+a:active {
+	outline: 0;
+}
+
+
+
+/*--------------------------------------------------------------
+# Layouts
+--------------------------------------------------------------*/
+
+/*--------------------------------------------------------------
+# Components
+--------------------------------------------------------------*/
+
+/* Navigation
+--------------------------------------------- */
+.main-navigation {
+	display: block;
+	width: 100%;
+}
+
+.main-navigation ul {
+	display: none;
+	list-style: none;
+	margin: 0;
+	padding-left: 0;
+}
+
+.main-navigation ul ul {
+	box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+	float: left;
+	position: absolute;
+	top: 100%;
+	left: -999em;
+	z-index: 99999;
+}
+
+.main-navigation ul ul ul {
+	left: -999em;
+	top: 0;
+}
+
+.main-navigation ul ul li:hover>ul,
+.main-navigation ul ul li.focus>ul {
+	display: block;
+	left: auto;
+}
+
+.main-navigation ul ul a {
+	width: 200px;
+}
+
+.main-navigation ul li:hover>ul,
+.main-navigation ul li.focus>ul {
+	left: auto;
+}
+
+.main-navigation li {
+	position: relative;
+}
+
+.main-navigation a {
+	display: block;
+	text-decoration: none;
+}
+
+/* Small menu. */
+.menu-toggle,
+.main-navigation.toggled ul {
+	display: block;
+}
+
+@media screen and (min-width: 37.5em) {
+
+	.menu-toggle {
+		display: none;
+	}
+
+	.main-navigation ul {
+		display: flex;
+	}
+}
+
+.site-main .comment-navigation,
+.site-main .posts-navigation,
+.site-main .post-navigation {
+	margin: 0 0 1.5em;
+}
+
+.comment-navigation .nav-links,
+.posts-navigation .nav-links,
+.post-navigation .nav-links {
+	display: flex;
+}
+
+.comment-navigation .nav-previous,
+.posts-navigation .nav-previous,
+.post-navigation .nav-previous {
+	flex: 1 0 50%;
+}
+
+.comment-navigation .nav-next,
+.posts-navigation .nav-next,
+.post-navigation .nav-next {
+	text-align: end;
+	flex: 1 0 50%;
+}
+
+/* Posts and pages
+--------------------------------------------- */
+.sticky {
+	display: block;
+}
+
+.post,
+.page {
+	margin: 0 0 1.5em;
+}
+
+.updated:not(.published) {
+	display: none;
+}
+
+.page-content,
+.entry-content,
+.entry-summary {
+	margin: 1.5em 0 0;
+}
+
+.page-links {
+	clear: both;
+	margin: 0 0 1.5em;
+}
+
+/* Comments
+--------------------------------------------- */
+.comment-content a {
+	word-wrap: break-word;
+}
+
+.bypostauthor {
+	display: block;
+}
+
+/* Widgets
+--------------------------------------------- */
+.widget {
+	margin: 0 0 1.5em;
+}
+
+.widget select {
+	max-width: 100%;
+}
+
+/* Media
+--------------------------------------------- */
+.page-content .wp-smiley,
+.entry-content .wp-smiley,
+.comment-content .wp-smiley {
+	border: none;
+	margin-bottom: 0;
+	margin-top: 0;
+	padding: 0;
+}
+
+/* Make sure logo link wraps around logo image. */
+.custom-logo-link {
+	display: inline-block;
+}
+
+/* Captions
+--------------------------------------------- */
+.wp-caption {
+	margin-bottom: 1.5em;
+	max-width: 100%;
+}
+
+.wp-caption img[class*="wp-image-"] {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.wp-caption .wp-caption-text {
+	margin: 0.8075em 0;
+}
+
+.wp-caption-text {
+	text-align: center;
+}
+
+/* Galleries
+--------------------------------------------- */
+.gallery {
+	margin-bottom: 1.5em;
+	display: grid;
+	grid-gap: 1.5em;
+}
+
+.gallery-item {
+	display: inline-block;
+	text-align: center;
+	width: 100%;
+}
+
+.gallery-columns-2 {
+	grid-template-columns: repeat(2, 1fr);
+}
+
+.gallery-columns-3 {
+	grid-template-columns: repeat(3, 1fr);
+}
+
+.gallery-columns-4 {
+	grid-template-columns: repeat(4, 1fr);
+}
+
+.gallery-columns-5 {
+	grid-template-columns: repeat(5, 1fr);
+}
+
+.gallery-columns-6 {
+	grid-template-columns: repeat(6, 1fr);
+}
+
+.gallery-columns-7 {
+	grid-template-columns: repeat(7, 1fr);
+}
+
+.gallery-columns-8 {
+	grid-template-columns: repeat(8, 1fr);
+}
+
+.gallery-columns-9 {
+	grid-template-columns: repeat(9, 1fr);
+}
+
+.gallery-caption {
+	display: block;
+}
+
+/*--------------------------------------------------------------
+# Plugins
+--------------------------------------------------------------*/
+
+/* Jetpack infinite scroll
+--------------------------------------------- */
+
+/* Hide the Posts Navigation and the Footer when Infinite Scroll is in use. */
+.infinite-scroll .posts-navigation,
+.infinite-scroll.neverending .site-footer {
+	display: none;
+}
+
+/* Re-display the Theme Footer when Infinite Scroll has reached its end. */
+.infinity-end.neverending .site-footer {
+	display: block;
+}
+
+/*--------------------------------------------------------------
+# Utilities
+--------------------------------------------------------------*/
+
+/* Accessibility
+--------------------------------------------- */
+
+/* Text meant only for screen readers. */
+.screen-reader-text {
+	border: 0;
+	clip: rect(1px, 1px, 1px, 1px);
+	clip-path: inset(50%);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute !important;
+	width: 1px;
+	word-wrap: normal !important;
+}
+
+.screen-reader-text:focus {
+	background-color: #f1f1f1;
+	border-radius: 3px;
+	box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.6);
+	clip: auto !important;
+	clip-path: none;
+	color: #21759b;
+	display: block;
+	font-size: 0.875rem;
+	font-weight: 700;
+	height: auto;
+	left: 5px;
+	line-height: normal;
+	padding: 15px 23px 14px;
+	text-decoration: none;
+	top: 5px;
+	width: auto;
+	z-index: 100000;
+}
+
+/* Do not show the outline on the skip link target. */
+#primary[tabindex="-1"]:focus {
+	outline: 0;
+}
+
+/* Alignments
+--------------------------------------------- */
+.alignleft {
+
+	/*rtl:ignore*/
+	float: left;
+
+	/*rtl:ignore*/
+	margin-right: 1.5em;
+	margin-bottom: 1.5em;
+}
+
+.alignright {
+
+	/*rtl:ignore*/
+	float: right;
+
+	/*rtl:ignore*/
+	margin-left: 1.5em;
+	margin-bottom: 1.5em;
+}
+
+.aligncenter {
+	clear: both;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 1.5em;
+}
+
+
+
+/*
+#########################################################################################
+#########################################################################################
+#                                                                                       #
+#                                       Доработка                                       #
+#                                                                                       #
+#########################################################################################
+#########################################################################################
+*/
+
+
+
+
+/* ================================================== */
+/* #region        Главная. Первый экран.              */
+/* ================================================== */
+@media screen and (max-width: 576px) {
+    .hero-slider-container {display: none !important;}  /* прячем мобильный*/
+}
+    
+@media screen and (min-width: 577px) {
+    .hero-static {display: none !important;}  /* прячем мобильный*/
+
+    .main-screen {
+
+    }
+    .main-screen .block__main {
+        width: 100% !important;
+        /*height: 80vh;*/
+        border-radius: var(--border-radius);
+
+
+        height: 0;
+        position: relative;
+        width: 100%;
+        padding-bottom: calc(9 / 21 * 100%); /* 42.857% */
+        background-position: 50% 50% !important;
+    }
+
+    .main-screen .block__main picture {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0; /* чтобы контент был поверх, если нужно */
+    }
+
+    .main-screen .block__main picture img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* картинка заполнит весь блок, обрежется если надо */
+        /* или object-fit: contain — если нужно вписать целиком */
+    }
+    .main-screen .block__main .col__right {
+        margin-left: auto;
+    }
+    .main-screen .col__right .btn {
+        margin-top: auto;
+        margin-left: auto;
+    }
+    .main-screen .col__right,
+    .main-screen .col__left {
+        position: absolute !important;
+        top: 0 !important;
+        height: 100% !important;
+    }
+    .main-screen .col__left {
+        left: 0 !important;
+    }
+    .main-screen .col__right {
+        right: 0 !important;
+    }
+
+    .main-screen .swiper-button-prev,
+    .main-screen .swiper-button-next {
+        opacity: .35;
+        color: #fff;
+        transition:all .25s ease-out;
+    }
+    .main-screen .swiper-button-prev:hover,
+    .main-screen .swiper-button-next:hover {
+        opacity: 1;
+    }
+    .main-screen .swiper-button-prev {
+        left: 20px !important;
+    }
+    .main-screen .swiper-button-next{
+        right: 20px !important;
+    }
+    .main-screen .swiper-pagination-bullet-active {
+    background: #9b9b9b;
+    }
+}
+
+
+
+/* ================================================== */
+/* #endregion Главная. Первый экран.                  */
+/* ================================================== */
+
+
+
+
+
+:root {
+   --vh: 100vh;
+   --headerHeight: 80px;
+}
+
+.header {
+    box-shadow: 0 5px 10px 0 rgba(0,0,0,.1);
+}
+.popup-menu__page .contacts__mobile {
+    flex-wrap: wrap; /*контакты в мобильном меню */
+}
+
+/* fix: не учтен размер шапки, поэтому не виден низ меню */
+#popup-menu-main { 
+    overflow-y: scroll;
+    height: calc(var(--vh) - var(--headerHeight)) !important;
+    -webkit-overflow-scrolling: touch;
+
+    /* "Заставим" скроллбар отображаться всегда */
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: rgba(0,0,0,0.5) transparent;
+}
+/* Для WebKit-браузеров */
+#popup-menu-main::-webkit-scrollbar {
+    width: 8px;
+    background: transparent;
+}
+#popup-menu-main::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0,0.5);
+    border-radius: 4px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+}
+
+/* Подвал. Каталог отделяем от адреса для мобильных */
+@media screen and (max-width: 576px) {
+  .footer .footer__address {
+    margin-bottom: 6rem;
+  }
+}
+
+/* Меняем ширину сайта */
+/*
+.site .container {
+    max-width: 1400px;
+}
+
+.site .container-fluid,
+.block__content {
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+*/
+
+/* Выделяем активные пункты + app.js*/
+.menu .current-menu-ancestor > a > span,
+.menu .current-menu-item > a > span,
+.menu .current-menu-item > .menu-item__link > span {
+    border-bottom: 2px solid #000 !important;
+    font-weight: bold;
+}
+.menu a[href*="#"] > span,
+.menu a[href*="/#"] > span {
+    border: none  !important; /* Или любое другое значение для отмены выделения */
+    font-weight: 400   !important;
+}
+
+/* Наведение на + -> */
+.decor__vector:hover {background-color: #000 !important;}
+.decor__vector:hover::before,
+.decor__vector:hover::after {
+    background-color: #fff !important;
+}
+
+.btn__form_simple:hover {
+    border: 1px solid #000;    
+    background: #fff;
+}
+.btn__form_simple:hover .item__arrow span.decor {
+    background: url(//alfaglass.ru/wp-content/themes/alfa-glass/css/../img/icons/simple-btn-arrow-black.svg) no-repeat center/contain;
+}
+
+.product__img {
+    /*min-height: 500px;*/
+}
+
+a[data-fancybox] {
+    display: inline-block;
+    position: relative;
+    overflow: hidden !important;
+}
+a[data-fancybox]:hover {
+    
+    
+}
+/*
+a[data-fancybox]::after {
+
+    content:"";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    background-image: url('img/icons/zoom.svg');
+    background-size: 50px 50px;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    z-index: 1;
+    transition:all .25s ease-out;
+    opacity: 0;
+
+}
+
+
+a[data-fancybox]:hover::after {
+    content:"";
+    opacity: 1;
+}
+*/
+
+/*обработаем отдельно разные ссылки*/
+.single-product .product__gallary .swiper-slide a[data-fancybox],
+.single-product .product__img_wrapper .product__img a[data-fancybox] {
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+
+/* Делаем основное фото 4х3 */
+.wp-singular .site  .product__img {
+  /* Убираем влияние высоты самого блока */
+  height: auto !important;
+}
+.wp-singular .site .product__img .gallery-main {
+    padding-bottom: 75%;
+}
+.wp-singular .site .product__img .gallery-main > a {
+  display: block !important;
+  width: 100% !important;
+  position: absolute !important;
+  /* padding-bottom: 56.25%; /* 9/16 * 100% = 56.25% */
+  /*padding-bottom: 62.5%; /* 10/16 * 100% */
+  padding-bottom: 75%; /* фиксированное соотношение 4:3 */
+  overflow: hidden !important;
+  height: 0 !important; /* чтобы высота задавалась только через padding */
+
+  top: 0;
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+.wp-singular .site .product__img .gallery-main > a._active {
+    opacity: 1;
+    pointer-events: auto;
+}
+.wp-singular .site .product__img .gallery-main > a > img.main-photo {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  width: 100% !important;
+  height: 100%;
+  object-fit: cover !important;
+  transform: translate(-50%, -50%) !important;
+
+  
+}
+
+
+.wp-singular .site .product__img .thumbnails {
+    display: flex;
+    flex-wrap: wrap; /* пусть переносятся... Хотя по ТЗ всего 4 и задачи не было что-то делать с этим.*/
+    width: 100%;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.wp-singular .site .product__img .thumbnail-wrap {
+    width: calc(25% - 15px) !important;
+    height: auto;
+    background: #fff;
+    border-radius: var(--border-radius);
+}
+.wp-singular .site .product__img .thumbnail {
+    display: block !important;
+    width: 100%;
+    position: relative !important;
+    padding-bottom: 75%;
+    overflow: hidden !important;
+    height: 0 !important;
+    cursor: pointer;
+
+    filter: brightness(75%); /* Немного затемнить */
+    transition: filter 0.3s ease;       
+    opacity: .45;         
+}
+.wp-singular .site .product__img .swiper-slide-active > a {border: 1px solid black;}
+.wp-singular .site .product__img .thumbnail._active {
+    filter: brightness(100%); /* Восстанавливаем нормальную яркость */
+    opacity: 1;
+}
+.wp-singular .site .product__img .thumbnail::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,.5);
+    background-image: url(//alfaglass.ru/wp-content/themes/alfa-glass/img/icons/zoom.svg);
+    background-size: 50px 50px;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    z-index: 1;
+    transition: all .25s ease-out;
+    opacity: 0;                
+}
+.wp-singular .site .product__img .thumbnail img {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    width: 100% !important;
+    height: 100%;
+    object-fit: cover !important;
+    transform: translate(-50%,-50%) !important;
+} 
+
+
+.wp-singular .site .product__img .swiper-button-prev,
+.wp-singular .site .product__img .swiper-button-next {
+    position: absolute;
+    top: 91%;
+    left: 0;
+    z-index: 10;
+}
+.wp-singular .site .product__img .swiper-button-next {
+    left: 100%;
+    transform: translateX(-100%);
+}
+
+
+
+
+
+
+
+
+
+/* Фиксим разную высоту в слайдере */
+.swiper-wrapper {align-items: stretch;}
+.swiper-slide {height: auto;}
+
+
+/* Складываем фильтр категорий и поиска в несколько строк */
+@media screen and (max-width: 576px) {
+  .tax-product_category .category__filter ul, .search .category__filter ul {
+    flex-wrap: wrap;
+  }
+  .tax-product_category .category__filter ul li, .search .category__filter ul li{
+      flex: 1 1 150px;        /* элементы растут и сжимаются с базовой шириной 150px */
+        max-width: calc((100% - .8rem * 1) / 2); 
+        box-sizing: border-box;
+  }
+
+    @supports (display: grid) {
+        .tax-product_category .category__filter ul, .search .category__filter ul {
+        display: grid !important;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: .8rem;
+    }
+        .tax-product_category .category__filter ul li, .search .category__filter ul li{
+        max-width: none;       
+        flex: none;            
+    }
+    }  
+}
+
+.w-multibox{bottom:2%;right:2%;position:fixed !important;z-index:999 !important;width:80px;height:80px}
+.w-multibox__block{position:absolute;position:absolute;bottom:100px;right:-100px;transition:all .15s ease-in;opacity:0;visibility:hidden}
+.w-multibox._open .w-multibox__block{display:block;right:0;opacity:1;visibility:visible}
+.w-multibox__button{display:block;height:80px;width:80px;padding:0;box-sizing:border-box;position:absolute;cursor:pointer;border-radius:50px;background:#000;box-shadow:0 4px 8px 0 rgba(34,60,80,0.2)}
+.w-multibox__close{display:flex;justify-content:center;align-items:center;position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;transform:scale(0.5);transition:all .25s ease-out}
+.w-multibox._open .w-multibox__close{opacity:1;transform:scale(1)}
+.w-multibox__close svg{width:45%;height:45%}
+.w-multibox__btn-name{display:flex;justify-content:center;align-items:center;position:absolute;width:100%;height:100%;font-size:16px;top:0;left:0;color:#fff}
+.w-multibox._open .w-multibox__btn-name{display:none}.w-multibox__items-outer{display:flex;flex-direction:column;align-content:flex-end;width:290px}
+.w-multibox__item{display:flex;justify-content:flex-end}
+.w-multibox__link{position:relative;display:flex;align-items:center;margin:4px 0;transition:all .25s ease-out;text-decoration:none !important}
+.w-multibox__a-text {white-space: nowrap;}
+.w-multibox__a-text,
+.w-multibox__icon{display:flex;align-items:center;text-decoration:none !important;box-shadow:0 4px 8px 0 rgba(34,60,80,0.2)}
+.w-multibox__a-text{
+height:36px;padding:0 16px;font-size:16px;font-style:normal;background:#000000;border-radius:25px;color:#fff}
+
+.w-multibox__icon{box-sizing:border-box;width:44px;height:44px;background:#000;padding:8px;margin-left:8px;border-radius:25px}
+.w-multibox__icon{color:#fff}
+.w-multibox__link:hover{transform:translateX(5px)}.w-multibox__pulse{animation:w-multibox-animation-pulse 2s infinite;background-color:#000;border-radius:50%;height:100px;left:-10px;position:absolute;bottom:-10px;transform:scale(0);width:100px;z-index:-1}
+.w-multibox__pulse._wide-pulse{border:3px solid rgba(0,0,0,.5);background:rgba(0,0,0,.2);box-sizing:border-box;height:150%;width:150%;left:-25%;top:-25%}
+.w-multibox._open .w-multibox__pulse{animation:none}
+.w-multibox._closed.bounce{animation:bounce 1s infinite ease-in-out}@keyframes w-multibox-animation-pulse{0%{opacity:1;transform:scale(0)}50%{opacity:0.5}to{opacity:0;transform:scale(1)}}@keyframes bounce{10%,90%{transform:translate3d(0,-7px,0)}20%,80%{transform:translate3d(0,8px,0)}30%,50%,70%{transform:translate3d(0,-8px,0)}40%,60%{transform:translate3d(0,8px,0)}}@media screen and (min-width:1000px){.w-multibox{display:none !important}}.sm-table{position:relative}
+
+.fa-search-plus {display: none;}
+
+
+
+/**
+ * Валидация форм
+ */
+
+
+.wpcf7 .wpcf7-submit:disabled {
+    opacity: .4;
+}
+/* Делаем кнопку визуально активной всегда */
+/*
+.wpcf7 .wpcf7-submit[disabled] {
+    opacity: 1 !important;
+    cursor: pointer !important;
+    pointer-events: all !important;
+}
+
+.wpcf7 .wpcf7-submit.wpcf7-sending {
+    opacity: 1 !important;
+    cursor: pointer !important;
+}
+*/
+
+
+/* это для формы на главной справа  "заказать номер" */
+.form__simple .form__row {
+    padding-left: 0 !important;
+  
+}
+.form__simple .form__row [data-name="tel-10"] {
+    height: 4.4rem;
+    display: flex;
+}
+.form__simple .form__row [data-name="tel-10"] input {
+    border-radius: 1.6rem;
+}
+
+@media screen and (max-width: 1024px) {
+  .form__simple .form__row [data-name="tel-10"] {
+    height: 3.4rem;
+  }
+}
+.form__simple .form-messages-container {
+    margin-top: 15px;
+}
+
+
+._color-red {color: red !important;}
+.required-notice {
+    font-size: 14px;
+    color: var(--e-global-color-text);
+    margin: 10px 0;
+    text-align: center;
+}
+[aria-invalid="true"] {
+  color: var(--e-global-color-text) !important;
+  border: 1px solid red !important;
+}
+
+.wpcf7-acceptance input[type=checkbox][aria-invalid="true"] + span::before {
+    border: 1px solid red !important;
+}
+.modal__dialog form .wpcf7-acceptance label {
+  margin-bottom: 2rem !important;
+}
+
+
+.form-messages-container {
+    /*
+    background: #fff3f3;
+    border: 1px solid #ffcdd2;
+    border-radius: 5px;
+    padding: 15px;*/
+    margin-bottom: 15px;
+}
+
+.form-message {
+    color: #d32f2f;
+    font-size: 14px;
+    margin: 5px 0;
+    line-height: 1.25;
+    /*padding-left: 20px;*/
+    position: relative;
+}
+
+/*
+.form-message:before {
+    content: "•";
+    position: absolute;
+    left: 8px;
+    color: #d32f2f;
+}
+*/
+.form-message:first-child {
+    margin-top: 0;
+}
+
+.form-message:last-child {
+    margin-bottom: 0;
+}
+/*
+.wpcf7-form {position: relative;}
+.wpcf7-response-output {display: none !important;}
+.form-validation-messages {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--e-global-color-primary);
+    color: var(--e-global-color-text);
+    padding: 25px 24px;
+    border-radius: 12px;
+    z-index: 99999;
+    text-align: center;
+    width: 100%;
+    max-width: 450px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    
+    display: none;
+}
+
+.validation-message {
+    margin: 12px 0;
+    padding: 10px;
+   
+    background: rgba(255, 68, 68, 0.15);
+    border-radius: 5px;
+    font-size: 14px;
+    line-height: 1.4;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.4s ease;
+}
+
+.validation-message.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.validation-message:first-child {
+    margin-top: 0;
+}
+
+.validation-message:last-child {
+    margin-bottom: 15px;
+}
+
+.close-messages-btn {
+    margin: 0 auto;
+  font-size: 14px;
+  height: 40px !important;
+  width: 110px !important;
+  border-radius: 10px !important;
+} 
+*/
+
+
+/* ярлык "Под заказ" */
+.product-badges {
+  display: flex;
+  font-size: 14px;
+
+}
+.badge {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}
+.product-badges i {
+  display: block;
+  /*width: 32px;
+    height: 32px;*/
+  /*margin-right: 6px;*/
+
+  background-image: url("data:image/svg+xml,%3Csvg viewBox%3D%220 -0.5 25 25%22 xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath fill-rule%3D%22evenodd%22 clip-rule%3D%22evenodd%22 d%3D%22M5.5 12.0002C5.50024 8.66068 7.85944 5.78639 11.1348 5.1351 14.4102 4.48382 17.6895 6.23693 18.9673 9.32231 20.2451 12.4077 19.1655 15.966 16.3887 17.8212 13.6119 19.6764 9.91127 19.3117 7.55 16.9502 6.23728 15.6373 5.49987 13.8568 5.5 12.0002Z%22 stroke%3D%22%2396CDB0%22 stroke-width%3D%221.5%22 stroke-linecap%3D%22round%22 stroke-linejoin%3D%22round%22 fill%3D%22none%22%2F%3E%3Cpath d%3D%22M9 12.0002L11.333 14.3332 16 9.66724%22 stroke%3D%22%2396CDB0%22 stroke-width%3D%221.5%22 stroke-linecap%3D%22round%22 stroke-linejoin%3D%22round%22 fill%3D%22none%22%2F%3E%3C%2Fsvg%3E");
+  /*background-size: contain;
+    background-position: 50% 50%;*/
+  width: 24px;
+  height: 24px;
+  background-size: 150% 150%;
+  background-position: 50% 50%;
+  margin-right: 8px;
+}
+@media (min-width: 577px) and (max-width: 1024px) {
+  .product-badges span,
+  .product-badges i {
+    transform: scale(0.8);
+    margin-right: 0;
+  }
+  .product-badges span {
+    margin-left: -4px;
+  }
+}
+
+
+/* Блоки контента */
+.single-product .product__img_wrapper, .tax-product_category .product__img_wrapper {
+    height: unset !important;
+}
+.content-gray {
+    background: #f5f5f5;
+    border-radius: var(--border-radius);
+    margin-top: 4rem;
+    padding: 4rem ;
+}
+
+/* content-gray всегда скрыт */
+.content-view--default .content-gray { display: none !important; }
+
+@media screen and (min-width: 577px) {
+    /* content-gray всегда скрыт */
+    .content-view--left  .content-full {display: none !important;}
+}
+@media screen and (max-width: 576px) {
+    /* Но на мобильный content-gray прячем, отображается дефолтный блок */
+    .content-view--left  .content-gray {display: none !important;}
+}
+@media screen and (max-width: 1440px) {
+    .content-gray {
+        margin-top: 3rem;
+        padding: 3rem ;
+    }
+}
+@media screen and (max-width: 1024px) {
+    .content-gray {
+        margin-top: 2rem;
+        margin-bottom: 0;
+        padding: 2rem;
+    }
+}
+
+
+@media screen and (max-width: 576px) {
+  .single-product .product__info .item__title {
+    text-align: left !important;
+  }
+}
+/**
+ * Конфигуратор
+ */
+.modal__dialog {
+    max-height: 90vh;
+}
+.modal__content {
+    max-height: calc(90vh - 120px);
+    overflow-y: auto;
+    /*padding-right: 30px;*/
+}
+@media screen and (min-width: 1025px) {
+    .modal__dialog {
+        padding-left: calc(5rem - 20px) !important;
+        padding-right: calc(5rem - 20px) !important;
+    }
+    .modal__content {
+        padding: 20px;
+        /*padding-right: 30px;*/
+    }
+}
+.cfig-form-item-name {
+    margin-bottom: .75em;
+    font-weight: 600;
+    font-size: 1.35em;
+}
+.g-address._error input {
+    border: 1px solid red !important;
+}
+.g-address._error input ~ .cfig-error-message {
+    display: block !important;
+    width: 100%;
+    text-align: center;
+    color: red;
+}
+
+/* блок в форме для предпросмотра выбранных элементов конфигуратора */ 
+.cfig-view-selected {
+    margin-bottom: 20px;
+    font-size: var(--e-global-typography-text-font-size);
+    line-height: 1.75em;
+}
+
+
+.cfig__group {margin-bottom: 3rem;}
+.cfig__heading {
+    font-size: var(--e-global-typography-5b7d725-font-size);
+    font-weight: 600;
+        margin-bottom: 1.75rem;
+}
+.cfig__input {
+    width: 100%;
+    padding: 14px;
+    border-radius: 1.6rem;
+    border: 1px solid var(--e-global-color-secondary);
+    font-size: var(--e-global-typography-text-font-size);
+    
+}
+
+/* Группа "свой размер" */
+.cfig__g-custom-size .cfig__body {
+    display: flex;
+    align-items: center;
+    font-size: 1.6rem;
+}
+.cfig__g-custom-size .cfig__body input {
+    max-width: 150px;
+    text-align: center;
+}
+.cfig__g-custom-size .cfig__body span:nth-child(2) {margin: 0 14px;}
+.cfig__g-custom-size .cfig__body span:last-child {margin-left: 8px;}
+
+
+/*** вспомогательные для конфигуратора*/
+/** уберём +- */
+.cfig__input {
+    -moz-appearance: textfield; /* Firefox */
+}
+.cfig__input::-webkit-outer-spin-button,
+.cfig__input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+ 
+
+/** Блок с простыми радио/чекбоксами */
+.cfig__g-checboxes .cfig__cb {
+    position: relative;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding-right: 15px;
+}
+
+/* Прячем стандартные радио и чекбоксы */
+.cfig__g-checboxes .cfig__cb input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* Кастомный радио-кружок */
+.cfig__cb .cfig__input::before {
+    content: "";
+    display: inline-block;
+    width: 21px;
+    height: 21px;
+    border: 2px solid #ddd;
+    border-radius: 50%;
+    background: white;
+    margin-right: 8px;
+    transition: all 0.2s ease;
+    transform: translateY(-1px);
+}
+
+/* Кастомный чекбокс-квадрат */
+.cfig__cb input[type="checkbox"] + .cfig__input::before {
+    border-radius: 4px;
+}
+
+/* Выбранный радио */
+.cfig__cb input[type="radio"]:checked + .cfig__input::before {
+    background: #000;
+    border-color: #000;
+    box-shadow: inset 0 0 0 3px white;
+}
+
+/* Выбранный чекбокс */
+.cfig__cb input[type="checkbox"]:checked + .cfig__input::before {
+    background: #000;
+    border-color: #000;
+    /*background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E");*/
+    border-radius: 2px !important;
+    background: url("img/icons/checked.svg") no-repeat center/cover;
+    background-color: #000;
+    transform: translateY(-1px);
+}
+
+/* Стили для текстовой части */
+.cfig__g-checboxes .cfig__input {
+    background: none !important;
+    border: 0 !important;
+    padding: 0 !important;
+    display: flex;
+    align-items: center;
+}
+
+/* Выбранное состояние */
+.cfig__cb input:checked + .cfig__input {
+    background: #000;
+    border-color: #000;
+}
+
+
+
+/* радио-кнопки */
+fieldset {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+.cfig__cb-btn {
+    position: relative;
+    cursor: pointer;
+    margin: 0;
+}
+
+/* Прячем настоящие радио-кнопки */
+.cfig__cb-btn input[type="checkbox"],
+.cfig__cb-btn input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* Стилизуем span как кнопки */
+.cfig__cb-btn span {
+    display: inline-block;
+    padding: 14px;
+    border: 1px solid var(--e-global-color-secondary);
+    border-radius: 1.6rem;
+    background: #f8f9fa;
+    color: #333;
+    text-align: center;
+    min-width: 80px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+/* Состояние при наведении */
+.cfig__cb-btn:hover span {
+    background: #f8f9fa;
+    border: 1px solid #000;
+    border-color: var(--e-global-color-text);
+}
+
+/* Выбранное состояние */
+.cfig__cb-btn input[type="checkbox"]:checked + span,
+.cfig__cb-btn input[type="radio"]:checked + span {
+    background: var(--e-global-color-text);
+    color: white;
+    border-color: var(--e-global-color-text);
+    /*transform: translateY(-2px);*/
+}
+
+/* Состояние при наведении на выбранную кнопку */
+.cfig__cb-btn input[type="checkbox"]:checked:hover + span,
+.cfig__cb-btn input[type="radio"]:checked:hover + span {
+    background: var(--e-global-color-text);
+    border-color: var(--e-global-color-text);
+}
+
+/* Фокус для доступности */
+.cfig__cb-btn input[type="checkbox"]:focus + span,
+.cfig__cb-btn input[type="radio"]:focus + span {
+    outline: none !important;
+    outline-offset: 0 !important;
+}
+
+/* Адаптивность для мобильных */
+@media (max-width: 768px) {
+    .cfig__cb-btn span {
+        padding: 10px 16px;
+        min-width: 70px;
+        font-size: 13px;
+    }
+    
+    fieldset {
+        gap: 8px;
+    }
+}
+
+
+
+.b-backlight-color fieldset {
+  display: flex;
+  flex-direction: row !important;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: stretch;
+}
+
+.b-backlight-color .cfig__cb-btn {
+  /* Убираем max-width, оставляем только flex-basis как рекомендуемую ширину */
+  flex: 1 0 calc(25% - 7.5px); /* flex-shrink: 0 чтобы не сжимались меньше */
+  min-width: 137px;
+  box-sizing: border-box;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Планшет: 2 в ряд */
+@media (min-width: 401px) and (max-width: 1540px) {
+  .b-backlight-color .cfig__cb-btn {
+    flex: 1 0 calc(50% - 7.5px); /* Заменяем flex-basis на flex (shorthand) */
+  }
+}
+
+/* Телефон: 1 в ряд */
+@media (max-width: 400px) {
+  .b-backlight-color .cfig__cb-btn {
+    flex: 1 0 100%;
+  }
+}
+
+
+
+
+
+/* ========== КРУГОВОЙ ЛОАДЕР ========== */
+.btn.is-submitting .item__arrow::before,
+.btn.is-submitting .item__arrow::after {
+    display: none !important;
+}
+.custom-loader {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    animation: loader-spin 0.8s linear infinite;
+    margin-top: -2px;
+    
+    /* ЦВЕТ КАК У СТРЕЛКИ - БЕЛЫЙ */
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #FFFFFF;
+}
+
+/* Если у обычной кнопки (не при ховере) стрелка черная: */
+.btn .custom-loader {
+    border-color: rgba(0, 0, 0, 0.2);
+    border-top-color: #000000;
+}
+
+/* При ховере кнопка становится черной, лоадер БЕЛЫЙ */
+.btn:hover .custom-loader {
+    border-color: rgba(255, 255, 255, 0.3);
+    border-top-color: #FFFFFF;
+}
+
+
+/* Анимация вращения */
+@keyframes loader-spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Success message не влазит на мобильных */
+form .custom-success-block {
+    width: 100% !important;
+}

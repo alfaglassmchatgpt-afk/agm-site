@@ -1,0 +1,42 @@
+.elementor-widget-wp-widget-nav_menu
+	ul
+		list-style: none
+		padding: 0
+		margin: 0
+		display: flex
+		flex-direction: column
+		gap: 1.6rem
+		a
+			display: block
+			position: relative
+			padding: 2.6rem 3rem
+			border: 1px solid var(--e-global-color-secondary)
+			border-radius: 1.6rem
+			transition: 0.3s ease-out
+			&::before
+				content: ""
+				position: absolute
+				width: 2.8rem
+				height: 2.8rem
+				top: 50%
+				right: 2rem
+				transform: translateY(-50%)
+				background: url("../img/icons/arrow_white.svg") no-repeat center / contain
+				opacity: 0
+		.current-menu-item, li:hover
+			a
+				background-color: var(--e-global-color-text)
+				color: var(--e-global-color-accent)
+				&::before
+					opacity: 1
+@media screen and (max-width: 1440px)
+	.elementor-widget-wp-widget-nav_menu
+		ul
+			gap: 1rem
+			a
+				padding: 1.9rem 2rem
+				border-radius: 1.4rem
+				&::before
+					width: 2.2rem
+					height: 2.2rem
+					right: 1.5rem

@@ -1,0 +1,55 @@
+.page-template-page-sitemap .block__default
+	padding: 4rem 6rem
+
+.html-sitemap
+	padding-top: 4rem
+
+.html-sitemap__grid
+	display: grid
+	grid-template-columns: repeat(3, minmax(0, 1fr))
+	gap: 4rem 6rem
+
+.html-sitemap__group
+	min-width: 0
+
+.html-sitemap__title
+	font-weight: 600
+	margin-bottom: 2.4rem
+
+.html-sitemap__list
+	list-style: none
+	padding: 0
+	margin: 0
+
+.html-sitemap__list li
+	padding: 0.6rem 0
+
+.html-sitemap__list_nested
+	margin-top: 0.4rem
+	padding-left: 2rem
+
+.html-sitemap__list_products
+	margin-top: 0.8rem
+
+.html-sitemap a
+	text-decoration: underline
+	text-underline-offset: 0.2em
+
+.html-sitemap a:hover
+	opacity: 0.7
+
+@media screen and (max-width: 1024px)
+	.html-sitemap__grid
+		grid-template-columns: repeat(2, minmax(0, 1fr))
+		gap: 3rem 4rem
+
+@media screen and (max-width: 576px)
+	.html-sitemap
+		padding-top: 2.4rem
+
+	.html-sitemap__grid
+		grid-template-columns: 1fr
+		gap: 3rem
+
+	.html-sitemap__list_nested
+		padding-left: 1.4rem

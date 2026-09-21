@@ -1,0 +1,194 @@
+.material-cats-block {
+    padding: 80px 0px;
+    .main-title {
+        text-align: left;
+    }
+    .tabs-holder {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+    }
+    .tab-btns {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        .tab-btn {
+            gap: 16px;
+            border: 1px solid #d4e3f0;
+            border-radius: 10px;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+            cursor: pointer;
+            & p {
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 125%;
+                text-align: center;
+                background: linear-gradient(194.6deg, #43abff 9.36%, #077cdb 37.68%, #005397 96.43%);
+                background-clip: text;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                transition: 0.3s;
+            }
+            &.active,
+            &:hover {
+                background: #ebf1ff;
+                border-color: #ebf1ff;
+                & p {
+                    font-weight: 700;
+                }
+            }
+        }
+    }
+    .tab-group {
+        display: none;
+        grid-template-columns: repeat(4,1fr);
+        gap: 20px;
+        &.active {
+            display: grid;
+        }
+    }
+    .material-item {
+        display: flex;
+        flex-direction: column;
+        border-radius: 15px;
+        overflow: hidden;
+        border: 1px solid #cdd1d3;
+        background: white;
+    }
+    .material-item__img {
+        width: 100%;
+        height: 225px;
+        display: flex;
+        background: rgba(0, 0, 0, 0.06);
+        & img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+            object-position: center;
+        }
+    }
+    .material-item__content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+        flex-grow: 1;
+    }
+    .material-item__name {
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 138%;
+        text-align: center;
+        text-transform: uppercase;
+        color: #000;
+        margin-bottom: auto;
+    }
+    .default-btn {
+        width: 100%;
+        margin-top: 32px;
+        & span {
+            font-weight: 700;
+        }
+        & sup {
+            font-weight: 700;
+        }
+    }
+    @media (max-width: 1200px) { 
+        .tab-group {
+            grid-template-columns: repeat(2,1fr);
+        }
+    }
+    @media (max-width: 996px) { 
+        padding: 40px 0px;
+        .tabs-holder {
+            gap: 32px;
+        }
+    }
+    @media (max-width: 600px) { 
+        .tab-group {
+            gap: 8px;
+        }
+        .material-item__content {
+            padding: 12px;
+            align-items: flex-start;
+        }
+        .default-btn {
+            margin-top: 20px;
+        }
+        .material-item__name {
+            font-size: 14px;
+            text-align: left;
+        }
+    }
+    @media (max-width: 498px) { 
+        .default-btn {
+            padding: 6px 15px 10px 15px;
+            .first-span {
+                display: none;
+            }
+        }
+        .material-item {
+            .material-item__name {
+                text-transform: unset;
+            }
+            .material-item__img {
+                height: 160px;
+            }
+            .material-item__content {
+                min-height: 138px;
+            }
+        }
+    }
+    @media (max-width: 400px) { 
+        .material-item__img {
+            height: 160px;
+        }
+    }
+    @media (max-width: 370px) { 
+        .tab-group {
+            flex-direction: column;
+            &.active {
+                display: flex;
+            }
+        }
+    }
+}
+
+body.dark-color {
+    .material-item {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    .tab-btns {
+        .tab-btn {
+            color: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(212, 227, 240, 0.4);
+            & p {
+                color: rgba(255, 255, 255, 0.5);
+                background: unset;
+                background-clip: unset;
+                -webkit-background-clip: unset;
+                -webkit-text-fill-color: unset;
+            }
+            &.active,
+            &:hover {
+                background: #ebf1ff;
+                border-color: #ebf1ff;
+                & p {
+                    background: linear-gradient(194.6deg, #43abff 9.36%, #077cdb 37.68%, #005397 96.43%);
+                    background-clip: text;
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                }
+            }
+        }
+    }
+    .material-item__img {
+        background: #2b2b2b;
+    }
+}

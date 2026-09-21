@@ -1,0 +1,302 @@
+.configurator
+	overflow-x: clip
+	max-width: 100%
+	&__wrapper
+		padding: 6rem
+		display: flex
+		align-items: start
+	&__panes
+		overflow: hidden
+		width: 116.7rem
+		height: 98.4rem
+		flex-shrink: 0
+		position: relative
+		.tab_pane
+			position: absolute
+			top: 0
+			left: 0
+			width: 100%
+			height: 100%
+			opacity: 1
+			z-index: 2
+			transition: opacity 0.3s ease
+
+			&:not(._active)
+				opacity: 0
+				z-index: 1
+		.btn__group
+			position: absolute
+			right: 3rem
+			bottom: 3rem
+			z-index: 100
+			.btn__slider
+				svg, path
+					transition: 0.3s ease-out
+				&:hover
+					svg
+						fill: var(--e-global-color-accent)
+					path
+						fill: var(--e-global-color-text)
+		.gallary
+			width: 100%
+			height: 100%
+			position: absolute
+			top: 0
+			left: 0
+			z-index: 2
+			opacity: 1
+			transition: opacity 0.3s ease
+			&:not(._active)
+				z-index: 1
+				opacity: 0
+			.items
+				width: 100%
+				height: 100%
+				position: relative
+				aspect-ratio: 2 / 3
+				background-color: rgba(14, 15, 15, 0.06)
+				contain-intrinsic-size: 1167px 1750px
+				img
+					position: absolute
+					width: 100%
+					height: 100%
+					top: 0
+					left: 0
+					object-fit: cover
+					transition: opacity 0.3s ease
+					&:not(._active)
+						opacity: 0
+			.icons
+				position: absolute
+				width: 18rem
+				height: 18rem
+				left: 2rem
+				bottom: 2rem
+				border-radius: 1.6rem
+				border: 0.5rem solid var(--e-global-color-accent)
+				overflow: hidden
+				cursor: pointer
+				img
+					position: absolute
+					width: 100%
+					height: 100%
+					top: 0
+					left: 0
+					transition: opacity 0.3s ease
+				img._active
+					opacity: 0
+	&__menu
+		margin-bottom: 4rem
+		.category__tab
+			&:first-child
+				.tab__content
+					display: block
+			&._active
+				.tab__title
+					&::after
+						transform: translateY(-50%) rotate(90deg)
+			.tab__title
+				padding: 2rem 1rem
+				border-top: 1px solid var(--e-global-color-secondary)
+				border-bottom: 1px solid var(--e-global-color-secondary)
+				position: relative
+				cursor: pointer
+				&::after
+					content: ""
+					position: absolute
+					width: 1.4rem
+					height: 1.1rem
+					top: 50%
+					transform: translateY(-50%)
+					right: 1.8rem
+					background: url(../img/icons/arrow_2.svg) no-repeat center / contain
+					transition: transform 0.3s ease-out
+			.tab__content
+				padding-top: 3rem
+				padding-bottom: 4rem
+				display: none
+				.wrapper
+					display: flex
+					flex-wrap: wrap
+					align-items: start
+					gap: 3rem
+			.tab__link
+				display: block
+				width: 9.4rem
+				overflow: hidden
+				white-space: nowrap
+				&._active
+					img
+						border: 2px solid var(--e-global-color-text)
+					.item__name
+						font-weight: 700
+
+			.load__more
+				position: relative
+				display: block
+				svg
+					position: absolute
+					width: 3.4rem
+					height: auto
+					top: 50%
+					left: 50%
+					transform: translate(-50%, -50%)
+					path
+						fill: var(--e-global-color-accent)
+						stroke: var(--e-global-color-accent)
+				img
+					margin: 0
+				&::before
+					content: ''
+					position: absolute
+					inset: 0
+					background-color: rgba(14, 15, 15, 0.60)
+					border-radius: 1.6rem
+			img
+				width: 100%
+				aspect-ratio: 1/1
+				object-fit: cover
+				border-radius: 1.6rem
+				margin-bottom: 1.6rem
+	&__tabs
+		width: 50rem
+		margin-left: 8rem
+	.section__title
+		margin-bottom: 3.8rem
+	&__panes img
+		width: 100%
+		height: 100%
+		object-fit: cover
+	a
+		&:active, &:focus
+
+			outline: none
+			border: none
+@media screen and (max-width: 1440px)
+	.configurator
+		&__wrapper
+			padding: 4rem
+			justify-content: space-between
+		&__panes
+			width: 83rem
+			height: 80rem
+			.btn__group
+				right: 3rem
+				bottom: 3rem
+			.gallary
+				.icons
+					width: 18rem
+					height: 18rem
+					left: 3rem
+					bottom: 3rem
+					border-radius: 1.4rem
+		&__menu
+			margin-bottom: 2.6rem
+			.category__tab
+				.tab__title
+					padding: 1.6rem 1rem
+					position: relative
+					cursor: pointer
+					&::after
+						width: 1.4rem
+						height: 1.1rem
+						right: 1.8rem
+				.tab__link
+					width: 8.4rem
+				.tab__content
+					padding-top: 2rem
+					padding-bottom: 2rem
+					.wrapper
+						column-gap: 3rem
+						row-gap: 2rem
+				img
+					border-radius: 1.4rem
+					margin-bottom: 1.4rem
+				.load__more
+					svg
+						width: 2.5rem
+						margin: 0
+					&::before
+						border-radius: 1.4rem
+		&__tabs
+			width: 42.7rem
+			margin-left: 0
+			flex-shrink: 0
+		.section__title
+			margin-bottom: 2rem
+@media screen and (max-width: 1024px)
+	.configurator
+		&__wrapper
+			padding: 2rem
+			display: block
+		&__panes
+			width: 100%
+			max-width: 100%
+			height: 50rem
+			margin-bottom: 2rem
+			.btn__group
+				right: 2rem
+				bottom: 2rem
+			.gallary
+				.items
+					contain-intrinsic-size: auto
+				.icons
+					width: 14rem
+					height: 14rem
+					left: 2rem
+					bottom: 2rem
+		&__menu
+			margin-bottom: 2rem
+			.category__tab
+				.tab__title
+					padding: 1.6rem 1.2rem 1.6rem 0.8rem
+					position: relative
+					cursor: pointer
+					&::after
+						width: 1rem
+						height: 0.8rem
+						right: 1.6rem
+				.tab__content
+					padding-top: 1.6rem
+					.wrapper
+						column-gap: 2rem
+						row-gap: 1.6rem
+				.tab__link
+					width: 6rem
+				img
+					border-radius: 1rem
+					margin-bottom: 0.8rem
+				.load__more
+					svg
+						width: 1.8rem
+						margin: 0
+					&::before
+						border-radius: 1rem
+		&__tabs
+			width: 100%
+			margin-left: 0
+		.section__title
+			margin-top: 0
+@media screen and (max-width: 576px)
+	.configurator
+		&__wrapper
+			padding: 4rem 2rem 2rem
+			display: block
+		&__panes
+			width: 100%
+			height: 31rem
+			margin-bottom: 2rem
+			.btn__group
+				right: 1rem
+				bottom: 0.5rem
+			.gallary
+				.icons
+					display: none
+		&__menu
+			margin-bottom: 2rem
+		&__tabs
+			width: 100%
+		.section__title
+			margin-bottom: 4rem
+			margin-top: 0
+			padding-right: 5rem

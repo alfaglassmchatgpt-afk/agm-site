@@ -1,0 +1,234 @@
+.header
+	z-index: 1000
+	padding: 3.3rem 0
+	position: fixed
+	background-color: var(--e-global-color-primary)
+	width: 100%
+	ul
+		list-style: none
+		padding: 0
+		margin: 0
+	a, .menu-item__link
+		display: block
+		line-height: 1
+		position: relative
+
+	.row
+		align-items: center
+	.site__logo
+		margin-right: 12rem
+		img
+			width: 17.4rem
+			height: auto
+	.main-navigation
+		.menu
+			gap: 4.4rem
+			align-items: center
+	&__menu
+		margin-right: 10rem
+	.menu
+		display: flex
+		.sub-menu
+			display: none
+			position: absolute
+			top: 100%
+			left: 0
+			float: none
+			background: var(--e-global-color-accent)
+			flex-direction: column
+			min-width: 18.4rem
+			padding: 1.2rem 2rem
+			z-index: 1002
+			border-radius: 1.6rem
+			animation: popover .5s ease-in-out
+			&::before
+				content: ""
+				position: absolute
+				top: -0.8rem
+				left: 0
+				right: 0
+				height: 0.8rem
+			a, .menu-item__link
+				padding-top: 0.8rem
+				padding-bottom: 0.8rem
+				position: relative
+				z-index: 1
+
+		&-item
+			a, .menu-item__link
+				padding-top: 1rem
+				padding-bottom: 1rem
+
+			&_modal
+				padding-left: 2.4rem
+				position: relative
+				font-weight: 500
+				&::before
+					content: ""
+					position: absolute
+					width: 1.6rem
+					height: 1.6rem
+					left: 0
+					top: 50%
+					transform: translateY(-50%)
+					background: url("../img/icons/grid_big_round.svg") no-repeat center / contain
+			&-has-children
+				position: relative
+				& > .menu-item__link
+					padding-right: 1.7rem
+					position: relative
+					&::before
+						content: ""
+						position: absolute
+						width: 1rem
+						height: 0.5rem
+						right: 0
+						top: 50%
+						transform: translateY(-50%)
+						background: url("../img/icons/arrow.svg") no-repeat center / contain
+						pointer-events: none
+				&:hover > .sub-menu,
+				&:focus-within > .sub-menu
+					display: flex
+
+	.search__btn
+		margin-right: auto
+		svg
+			width: 2.6rem
+			height: auto
+			transition: transform 0.3s ease-out
+		&:hover
+			svg
+				transform: scale(1.15)
+	.phone__link
+		a
+			font-size: 2rem
+			font-weight: 600
+	.socials__links
+		padding-left: 2.4rem
+@keyframes popover
+	0%
+		opacity: 0
+		transform: translateY(-3rem)
+	100%
+		opacity: 1
+		transform: translateY(0)
+@media screen and (max-width: 1440px)
+	.header
+		padding: 2.5rem 0
+		.site__logo
+			margin-right: 9rem
+			img
+				width: 13rem
+		&__menu
+			margin-right: 6rem
+		.main-navigation
+			.menu
+				gap: 2.2rem
+		.menu
+			.sub-menu
+				min-width: 18.4rem
+				padding: 1.2rem 2rem
+				border-radius: 1.6rem
+				a, .menu-item__link
+					padding-top: 0.8rem
+					padding-bottom: 0.8rem
+
+			&-item
+				a, .menu-item__link
+					padding-top: 1rem
+					padding-bottom: 1rem
+				&_modal
+					padding-left: 2.6rem
+					&::before
+						width: 1.5rem
+						height: 1.5rem
+				&-has-children
+					& > .menu-item__link
+						padding-right: 1.6rem
+						&::before
+							width: 0.8rem
+							height: 0.4rem
+		.search__btn
+			svg
+				width: 2.3rem
+		.phone__link
+			a
+				font-size: 1.7rem
+
+		.socials__links
+			padding-left: 2rem
+@media screen and (max-width: 1024px)
+	.header
+		padding: 1.7rem 0
+		.site__logo
+			img
+				width: 13rem
+		.search__btn
+			margin-right: 4rem
+			margin-left: auto
+			svg
+				width: 2.3rem
+			&:hover
+				svg
+					transform: scale(1.15)
+		.phone__link
+			a
+				font-size: 1.5rem
+
+		.socials__links
+			padding-left: 2.6rem
+		.burger
+			&__menu
+				margin-left: 1.8rem
+			&__wrapper
+				width: 4rem
+				height: 4rem
+				display: flex
+				justify-content: center
+				align-items: center
+				background-color: var(--e-global-color-text)
+				border-radius: 50%
+
+				&._active
+					.line1, .line3
+						opacity: 0
+					.line2_1
+						transform: rotate(45deg) translate(-1px, -1px)
+					.line2_2
+						transform: rotate(-45deg) translate(1px, -1px)
+			&__lines
+				position: relative
+				width: 1.4rem
+				height: 1.1rem
+
+				.line
+					width: 100%
+					height: 2px
+					background-color: var(--e-global-color-accent)
+					transition: 0.3s ease-out
+					border-radius: 2px
+					position: absolute
+					transform-origin: center
+					&1
+						top: 0
+
+					&2
+						top: 50%
+						transform: translateY(-50%)
+
+					&3
+						bottom: 0
+@media screen and (max-width: 576px)
+	.header
+		padding: 2rem 0
+		.site__logo
+			margin-right: 0
+			img
+				width: 13rem
+
+		.search__btn
+			margin-right: 1.2rem
+		.burger
+			&__menu
+				margin-left: 0

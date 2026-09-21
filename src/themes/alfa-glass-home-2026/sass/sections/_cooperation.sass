@@ -1,0 +1,290 @@
+.cooperation
+	&__grid
+		display: grid
+		grid-template-columns: repeat(4, 1fr)
+		grid-template-rows: auto auto
+		grid-template-areas: "link content content content" "link item1 item2 item3"
+		margin-right: -1rem
+		margin-left: -1rem
+		gap: 1px
+		background-color: var(--e-global-color-secondary)
+		padding: 1px
+		.grid__item
+			position: relative
+			background-color: var(--e-global-color-primary)
+			&::before, &::after
+				content: ""
+				position: absolute
+				width: 1.8rem
+				height: 1.8rem
+				border-color: var(--e-global-color-text)
+				border-style: solid
+				border-width: 0
+				z-index: 1
+			&:first-child::before
+				border-top-width: 1px
+				border-right-width: 1px
+				top: -1px
+				right: -1px
+			&:nth-child(2)::before
+				border-top-width: 1px
+				top: -1px
+				left: -1px
+			&:nth-child(3)::before
+				border-bottom-width: 1px
+				border-right-width: 1px
+				bottom: -1px
+				right: -1px
+			&:nth-child(4)
+				&::before
+					border-bottom-width: 1px
+					bottom: -1px
+					left: -1px
+				&::after
+					border-bottom-width: 1px
+					bottom: -1px
+					right: -1px
+			&:nth-child(5)::before
+				border-bottom-width: 1px
+				border-left-width: 1px
+				bottom: -1px
+				left: -1px
+	&__link
+		grid-area: link
+		height: 73rem
+		padding: 2rem
+		.wrapper
+			width: 100%
+			height: 100%
+			background-repeat: no-repeat
+			background-position: center
+			background-size: cover
+			display: flex
+			flex-direction: column
+			align-items: center
+			justify-content: center
+			border-radius: var(--border-radius)
+			.small__title
+				color: var(--e-global-color-accent)
+				text-transform: uppercase
+				width: 20rem
+				text-align: center
+				margin-bottom: 3.2rem
+			.icon
+				width: 8rem
+				height: 8rem
+				margin-bottom: 3.2rem
+				img
+					width: 100%
+					height: 100%
+					object-fit: contain
+
+			.decor__vector
+				position: relative
+				width: 3.2rem
+				height: 3.2rem
+				&::before, &::after
+					content: ""
+					position: absolute
+					top: 50%
+					left: 50%
+					transform: translate(-50%, -50%)
+					background-color: var(--e-global-color-accent)
+				&::before
+					width: 100%
+					height: 0.15rem
+				&::after
+					height: 100%
+					width: 0.15rem
+
+	&__content
+		grid-area: content
+		display: flex
+		padding: 8rem
+		gap: 15.2rem
+		.section__title
+			width: 74rem
+			flex-shrink: 0
+		.description
+			opacity: 0.7
+			p
+				margin-bottom: 4rem
+	&__item
+		display: flex
+		flex-direction: column
+		padding: 8rem
+		justify-content: space-between
+		.small__title
+			text-transform: uppercase
+		.item__icon
+			width: 4.3rem
+			height: 3.6rem
+			margin-bottom: 14rem
+			img
+				width: 100%
+				height: 100%
+				object-fit: contain
+				object-position: center left
+@media screen and (max-width: 1440px)
+	.cooperation
+		&__grid
+			.grid__item
+				&::before
+					width: 1.3rem
+					height: 1.3rem
+				&:nth-child(4)
+					&::after
+						width: 1.3rem
+						height: 1.3rem
+		&__link
+			height: auto
+			padding: 2rem
+			.wrapper
+				.small__title
+					width: 14.8rem
+					margin-bottom: 2.4rem
+				.icon
+					width: 6rem
+					height: 6rem
+					margin-bottom: 2.4rem
+				.decor__vector
+					width: 2.4rem
+					height: 2.4rem
+		&__content
+			padding: 6rem
+			gap: 9.6rem
+			.section__title
+				width: 55.2rem
+			.description
+				p
+					margin-bottom: 3rem
+		&__item
+			padding: 6rem
+			.item__icon
+				width: 3.2rem
+				height: 2.7rem
+				margin-bottom: 10.5rem
+@media screen and (max-width: 1024px)
+	.cooperation
+		&__link
+			.wrapper
+				.small__title
+					width: 15.1rem
+					margin-bottom: 2rem
+				.icon
+					width: 4.2rem
+					height: 4.2rem
+					margin-bottom: 2rem
+				.decor__vector
+					width: 1.5rem
+					height: 1.5rem
+		&__content
+			flex-wrap: wrap
+			padding: 4rem
+			gap: 3rem
+			.section__title
+				width: 60rem
+			.description
+				display: flex
+				column-gap: 6rem
+				p
+					margin-bottom: 0
+				.btn
+					width: 26.1rem
+					flex-shrink: 0
+		&__item
+			padding: 4rem
+			padding-right: 2rem
+			.item__icon
+				width: 3.2rem
+				height: 2.7rem
+				margin-bottom: 5rem
+@media screen and (max-width: 576px)
+	.cooperation
+		&__grid
+			display: flex
+			flex-wrap: wrap
+			margin: 0
+			padding-left: 1rem
+			padding-right: 1rem
+			padding-top: 0
+			padding-bottom: 0
+			background-color: transparent
+			gap: 0
+			.grid__item
+				width: 100%
+				border: none
+				position: relative
+				&:first-child::before
+					border-top-width: 0
+					border-right-width: 0
+				&:nth-child(2)::before
+					border-top-width: 0
+				&:nth-child(3)::before
+					border-bottom-width: 1px
+					border-right-width: 0
+					border-left-width: 1px
+					bottom: -1px
+					right: auto
+					left: -1px
+				&:nth-child(4)
+					&::before
+						border-bottom-width: 0
+						border-left-width: 1px
+						bottom: auto
+						top: -1px
+						left: -1px
+					&::after
+						border-bottom-width: 0
+						border-right-width: 1px
+				&:nth-child(5)::before
+					border-bottom-width: 0
+					border-left-width: 0
+					border-top-width: 1px
+					border-right-width: 1px
+					bottom: auto
+					left: auto
+					top: -1px
+					right: -1px
+		&__link
+			order: 5
+			padding: 0
+			margin-top: 8rem
+			height: 50rem
+			.wrapper
+				.small__title
+					width: 20rem
+					margin-bottom: 2rem
+				.icon
+					width: 6.3rem
+					height: 6.3rem
+					margin-bottom: 2.4rem
+				.decor__vector
+					width: 2.3rem
+					height: 2.3rem
+		&__content
+			flex-wrap: wrap
+			padding: 0
+			margin-bottom: 4rem
+			gap: 3rem
+			.section__title
+				width: 100%
+			.description
+				font-size: 1.5rem
+		.cooperation__item
+			padding: 2rem
+			border: 1px solid var(--e-global-color-secondary)
+			border-bottom-width: 0
+			padding-left: 4rem
+			min-height: 9.6rem
+			flex-direction: row
+			align-items: center
+			justify-content: start
+			flex-wrap: nowrap
+			gap: 3.7rem
+			&:nth-child(5)
+				border-bottom-width: 1px
+			.item__icon
+				margin-bottom: 0
+		.btn
+			margin-top: 4rem

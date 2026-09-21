@@ -1,0 +1,1054 @@
+.single-product, .tax-product_category
+	.product
+		&__first-screen
+			.block__default
+				padding: 4rem 6rem 6rem
+			.breadcrumbs
+				margin-bottom: 4rem
+			.product__img
+				height: auto !important
+				> a[data-fancybox]
+					display: block
+					border-radius: var(--border-radius)
+					overflow: hidden
+					img
+						position: static
+						width: 100%
+						height: auto
+						display: block
+						object-fit: cover
+				.gallery-main
+					position: relative
+					padding-bottom: 75%
+					height: 0
+					overflow: hidden
+					> a
+						display: block !important
+						width: 100% !important
+						position: absolute !important
+						top: 0
+						left: 0
+						height: 100% !important
+						padding-bottom: 0 !important
+						overflow: hidden !important
+						opacity: 0
+						pointer-events: none
+						&._active
+							opacity: 1
+							pointer-events: auto
+						&.main-photo > img
+							position: absolute !important
+							top: 0 !important
+							left: 0 !important
+							width: 100% !important
+							height: 100% !important
+							object-fit: cover !important
+							transform: none !important
+							border-radius: var(--border-radius)
+				.thumbnails
+					display: flex
+					flex-wrap: wrap
+					width: 100%
+					gap: 20px
+					margin-top: 20px
+				.thumbnail-wrap
+					width: calc(25% - 15px) !important
+					height: auto
+					background: #fff
+					border-radius: var(--border-radius)
+				.thumbnail
+					display: block !important
+					width: 100%
+					position: relative !important
+					padding-bottom: 75%
+					overflow: hidden !important
+					height: 0 !important
+					cursor: pointer
+					filter: brightness(75%)
+					transition: filter 0.3s ease
+					opacity: .45
+					&._active
+						filter: brightness(100%)
+						opacity: 1
+					img
+						top: 50% !important
+						left: 50% !important
+						transform: translate(-50%, -50%) !important
+
+		&__img
+			width: 100%
+			height: 100%
+			position: relative
+			&_wrapper
+				padding-right: 7rem
+			img
+				position: absolute
+				width: 100%
+				height: 100%
+				object-fit: cover
+				border-radius: var(--border-radius)
+		&__info
+			display: flex
+			flex-direction: column
+			gap: 4rem
+			h1
+				font-size: var(--e-global-typography-secondary-font-size)
+				line-height: var(--e-global-typography-secondary-line-height)
+		&__atributes
+			list-style: none
+			padding-left: 0
+			li
+				padding: 1rem
+				border-bottom: 1px solid var(--e-global-color-secondary)
+				margin-bottom: 0
+				span
+					font-weight: 600
+		&__price
+			.price__desc
+				opacity: 0.4
+				margin-top: 2rem
+		&__btn-group
+			display: flex
+			justify-content: space-between
+			align-items: flex-end
+			.btn__shared
+				height: auto
+				svg
+					width: 2rem
+					height: auto
+	.block__header
+		display: flex
+		justify-content: space-between
+		align-items: center
+		margin-bottom: 6rem
+
+	.product
+		&__gallary
+			.block__content
+				overflow: hidden
+			.swiper-slide
+				width: auto
+			img
+				height: 58rem
+				width: auto
+				border-radius: var(--border-radius)
+		&__advice
+			.swiper-slide
+				width: 25%
+				padding: 4rem
+				border: 1px solid var(--e-global-color-secondary)
+			.advice__item
+				display: block
+				cursor: pointer
+				position: relative
+
+				.item
+					&__img
+						padding: 4rem 4rem 8rem
+						img
+							border-radius: var(--border-radius)
+							width: 100%
+							aspect-ratio: 1/1
+							object-fit: cover
+					&__category
+						opacity: 0.7
+						margin-bottom: 1rem
+					&__title
+						display: flex
+						justify-content: space-between
+						.small__title
+							font-weight: 600
+					&__link
+						position: absolute
+						inset: 0
+
+		&__uses
+			.block__header
+				display: flex
+				justify-content: space-between
+				align-items: center
+				margin-bottom: 6rem
+				.small__title
+					opacity: 0.7
+					margin-bottom: 2.4rem
+			.uses__item
+				width: 42.5rem
+				height: 58rem
+				padding: 3.6rem 4rem
+				border-radius: 2.3rem
+				position: relative
+				background-repeat: no-repeat
+				background-position: center
+				background-size: cover
+				display: flex
+				flex-direction: column
+				.item__title
+					margin-top: auto
+					display: flex
+					justify-content: space-between
+					align-items: center
+					.small__title
+						color: var(--e-global-color-accent)
+						text-transform: uppercase
+				.item__link
+					position: absolute
+					inset: 0
+				.item__arrow
+					span
+						background-color: var(--e-global-color-accent)
+					&::before, &::after
+						background-color: var(--e-global-color-accent)
+		&__features
+			&__wrapper
+				padding-bottom: 0 !important
+			&__list
+				.item
+					.small__title
+						text-transform: uppercase
+						padding: 3rem 4rem
+						display: flex
+						align-items: center
+						justify-content: space-between
+						border-top: 1px solid var(--e-global-color-text)
+						border-bottom: 1px solid var(--e-global-color-text)
+						cursor: pointer
+						box-sizing: border-box
+						margin-top: -1px
+						.icon
+							width: 2.3rem
+							height: 2.3rem
+							position: relative
+							&::before, &::after
+								content: ""
+								position: absolute
+								background-color: var(--e-global-color-text)
+								top: 50%
+								left: 50%
+								transform: translate(-50%, -50%)
+								transition: 0.3s ease-out
+							&::before
+								width: 100%
+								height: 2px
+							&::after
+								width: 2px
+								height: 100%
+					&._active
+						.icon
+							&::after
+								transform: translate(-50%, -50%) rotate(90deg)
+					&__content
+						padding-top: 3rem
+						padding-bottom: 4rem
+						max-width: 70%
+						display: none
+					&:last-child
+						.item__content
+							padding-bottom: 0
+	.item
+		&__arrow
+			width: 2.3rem
+			height: 2.3rem
+			position: relative
+			span
+				position: absolute
+				width: 100%
+				height: 1px
+				left: 0
+				top: 50%
+				transform: translateY(-50%)
+				background-color: var(--e-global-color-text)
+			&::before, &::after
+				content: ""
+				position: absolute
+				width: 1px
+				height: 70%
+				left: 50%
+				transform: translateX(-50%)
+				background-color: var(--e-global-color-text)
+				transition: transform 0.1s ease-out
+			&::before
+				top: 0
+				transform-origin: top
+			&::after
+				bottom: 0
+				transform-origin: bottom
+		&:hover,  &:active
+			.item__arrow
+				&::before
+					transform: translateX(-50%) rotate(-45deg)
+				&::after
+					transform: translateX(-50%) rotate(45deg)
+.tax-product_category, .search
+	.product__list
+		padding: 1px
+		gap: 1px
+
+	.category
+		&__first-screen
+			text-align: center
+			.block__default
+				padding: 4rem 6rem
+			.breadcrumbs
+				margin-bottom: 6rem
+			h1
+				margin-bottom: 2rem
+		&__filter
+			ul
+				padding: 0
+				margin-top: 8rem
+				display: flex
+				list-style: none
+				justify-content: center
+				gap: 2rem
+				li
+
+					border: 1px solid var(--e-global-color-secondary)
+					border-radius: 1.1rem
+					transition: 0.3s ease-out
+					margin-bottom: 0
+					a
+						height: 8rem
+						padding: 0 3rem
+						display: flex
+						justify-content: center
+						align-items: center
+					&._active, &:hover
+
+						background-color: var(--e-global-color-text)
+						color: var(--e-global-color-accent)
+		&__child-term
+			h2
+				margin-bottom: 6rem
+			.item, .item-part
+				position: relative
+				background-color: var(--e-global-color-primary)
+				&::before
+					content: ""
+					position: absolute
+					inset: -1px
+					background-color: var(--e-global-color-secondary)
+					z-index: -1
+			.item_btn
+				background-color: var(--e-global-color-primary)
+			.style1
+				.item-part
+					width: calc(50% - 1px / 2)
+				.item
+					width: calc(25% - 3px / 4)
+				.product
+
+					&__info-wrapper
+						padding: 2rem 1rem
+
+						.block__default
+							padding: 6rem
+							position: relative
+							z-index: 1
+							&::before, &::after
+								content: ''
+								position: absolute
+								background-color: var(--e-global-color-secondary)
+								top: 50%
+								left: 50%
+								transform: translate(-50%, -50%)
+								z-index: -1
+								opacity: 0.5
+							&::before
+								width: 100%
+								height: 1px
+							&::after
+								width: 1px
+								height: 100%
+
+					&__info__header
+						display: flex
+						justify-content: space-between
+						gap: 2rem
+						margin-bottom: 6.5rem
+						.btn__shared
+							opacity: 0.7
+							height: auto
+							svg
+								width: 2rem
+								height: auto
+						.product__category
+							margin-bottom: 1rem
+					&__category
+						opacity: 0.7
+						margin-bottom: 1rem
+					&__img
+						width: 32rem
+						height: 32rem
+						margin: 0 auto 6.5rem
+						img
+							width: 100%
+							height: 100%
+							border-radius: var(--border-radius)
+							object-fit: cover
+							transition: 0.3s ease-out
+					&__info__footer
+						display: flex
+						justify-content: space-between
+						align-items: flex-end
+						.description
+							max-width: 30rem
+							opacity: 0.7
+						.btn
+							padding-left: 5rem
+							padding-right: 5rem
+					&__img__wrapper
+						padding: 2rem 1rem
+						height: 100%
+						.product__img
+							width: 100%
+							height: 100%
+							position: relative
+							img
+								position: absolute
+
+					&__wrapper
+						padding: 8rem 4rem 4rem
+						position: relative
+						&:hover
+							.product__img
+								img
+									scale: 1.3
+						h3
+							font-weight: 600
+						a
+							position: absolute
+							inset: 0
+							opacity: 0
+					&__footer
+						display: flex
+						justify-content: space-between
+						align-items: flex-end
+						gap: 2rem
+						.item__arrow
+							margin-bottom: 0.5rem
+				.btn__load
+					margin: 2rem auto 0
+			.style2
+				.item
+					height: 78rem
+					width: calc((100% - 2px) / 3)
+				.product
+					&__wrapper
+						padding: 4rem 3rem
+						position: relative
+						display: flex
+						flex-direction: column
+						justify-content: flex-end
+						height: 100%
+						h3
+							font-weight: 600
+						a
+							position: absolute
+							inset: 2rem 1rem
+							span
+								opacity: 0
+						&:hover
+							h3
+								color: var(--e-global-color-accent)
+							.product
+								&__category
+									color: var(--e-global-color-accent)
+								&__img
+									width: 60rem
+									height: 74rem
+									top: 2rem
+									left: 1rem
+									&::after
+										opacity: 1
+							.item
+								&__arrow
+									span
+										background-color: var(--e-global-color-accent)
+									&::before, &::after
+										background-color: var(--e-global-color-accent)
+					&__category
+						opacity: 0.7
+						position: relative
+						margin-bottom: 1rem
+
+					&__img
+						position: absolute
+						width: 42rem
+						height: 42rem
+						top: 11rem
+						left: 10rem
+						transition: 0.3s ease-out
+						border-radius: var(--border-radius)
+						overflow: hidden
+						&::after
+							content: ''
+							position: absolute
+							inset: 0
+							background: linear-gradient(180deg, rgba(0, 0, 0, 0.00) 57.84%, rgba(0, 0, 0, 0.60) 100%)
+							opacity: 0
+							transition: 0.3s ease-out
+						img
+							width: 100%
+							height: 100%
+							object-fit: cover
+							position: relative
+					&__footer
+						display: flex
+						justify-content: space-between
+						align-items: flex-end
+						gap: 2rem
+						position: relative
+						.item__arrow
+							margin-bottom: 0.5rem
+				.btn__wrapper
+					position: absolute
+					inset: 2rem 2rem
+					border-radius: var(--border-radius)
+					overflow: hidden
+					&::after
+						content: ''
+						position: absolute
+						inset: 0
+						background-color: rgba(14, 15, 15, 0.40)
+				.btn__load
+					position: relative
+					width: 100%
+					height: 100%
+					display: flex
+					flex-direction: column
+					justify-content: center
+					color: var(--e-global-color-accent)
+					gap: 3rem
+					font-size: var(--e-global-typography-5b7d725-font-size)
+					span
+						&::after
+							color: var(--e-global-color-accent)
+							order: 1
+					.decor__vector
+						order: 2
+						width: 8rem
+						height: 8rem
+						position: relative
+						&::before, &::after
+							content: ''
+							position: absolute
+							background-color: var(--e-global-color-accent)
+						&::before
+							width: 100%
+							height: 2px
+							top: 50%
+							left: 0
+							transform: translateY(-50%)
+						&::after
+							width: 2px
+							height: 100%
+							top: 0
+							left: 50%
+							transform: translateX(-50%)
+
+@media screen and (max-width: 1440px)
+	.single-product, .tax-product_category
+		.product
+			&__first-screen
+				.block__default
+					padding: 3rem 4rem 4rem
+				.breadcrumbs
+					margin-bottom: 3rem
+
+			&__img
+				&_wrapper
+					padding-right: 5rem
+			&__info
+				gap: 3rem
+			&__description.small__title
+				font-size: 1.5rem
+			&__atributes
+				li
+					padding: 0.8rem
+			&__price
+				.price__desc
+					margin-top: 1.5rem
+		.block__header
+			margin-bottom: 6rem
+
+		.product
+			&__gallary
+				img
+					height: 43.5rem
+			&__advice
+				.swiper-slide
+					padding: 3rem
+				.advice__item
+					.item
+						&__img
+							padding: 4rem 4rem 7rem
+						&__category
+							margin-bottom: 0.4rem
+
+			&__uses
+				.block__header
+					.small__title
+						margin-bottom: 1rem
+				.uses__item
+					width: 31.5rem
+					height: 43.5rem
+					padding: 3rem
+					.item__title
+						.small__title
+							font-size: 1.5rem
+			&__features
+				&__wrapper
+					padding-top: 4rem !important
+				&__list
+					.item
+						.small__title
+							padding: 2rem 4rem
+							.icon
+								width: 2.3rem
+								height: 2.3rem
+						&__content
+							padding-top: 3rem
+							padding-bottom: 3rem
+							max-width: 100%
+		.item
+			&__arrow
+				width: 2.2rem
+				height: 2.2rem
+	.tax-product_category, .search
+		.category
+			&__first-screen
+				.block__default
+					padding: 3rem 4rem
+				.breadcrumbs
+					margin-bottom: 3.7rem
+				h1
+					margin-bottom: 1.6rem
+			&__filter
+				ul
+					margin-top: 6rem
+					gap: 1.6rem
+					li
+						border-radius: 0.8rem
+						a
+							height: 6rem
+							padding: 0 2.2rem
+			&__child-term
+				h2
+					margin-bottom: 5rem
+				.style1
+					.product
+						&__info-wrapper
+							.block__default
+								padding: 4rem
+						&__info__header
+							margin-bottom: 6rem
+							.btn__shared
+								svg
+									width: 1.5rem
+							.product__category
+								margin-bottom: 0.8rem
+						&__category
+							margin-bottom: 0.4rem
+						&__img
+							width: 22rem
+							height: 22rem
+							margin: 0 auto 6rem
+						&__info__footer
+							.description
+								max-width: 25rem
+							.btn
+								padding-left: 3.8rem
+								padding-right: 3.8rem
+						&__wrapper
+							padding: 7rem 3rem 3rem
+				.style2
+					.item
+						height: 58.5rem
+					.product
+						&__wrapper
+							padding: 4rem 3rem
+							&:hover
+								.product
+									&__img
+										width: 44rem
+										height: 54.5rem
+						&__category
+							margin-bottom: 0.8rem
+						&__img
+							width: 31.5rem
+							height: 31.5rem
+							top: 8.2rem
+							left: 7.2rem
+					.btn__load
+						.decor__vector
+							width: 6rem
+							height: 6rem
+
+@media screen and (max-width: 1024px)
+	.single-product, .tax-product_category
+		.product
+			&__first-screen
+				.block__default
+					padding: 2rem 2rem 3.51rem
+				.breadcrumbs
+					margin-bottom: 2rem
+			&__img
+				&_wrapper
+					padding-right: 3.7rem
+					height: 37rem
+			&__info
+				gap: 2rem
+		.block__header
+			margin-bottom: 4rem
+		.product
+			&__gallary
+				img
+					height: 40rem
+			&__advice
+				.swiper-slide
+					padding: 2rem
+				.advice__item
+					.item
+						&__img
+							padding: 2.8rem 2.8rem 4.2rem
+
+			&__uses
+				.block__header
+					.small__title
+						margin-bottom: 1rem
+				.uses__item
+					width: 22rem
+					height: 30.5rem
+					padding: 2rem
+					border-radius: 2rem
+					.item__title
+						align-items: flex-end
+					.item__arrow
+						margin-bottom: 0.3rem
+			&__features
+				&__list
+					.item
+						.small__title
+							.icon
+								&::before
+									height: 1px
+								&::after
+									width: 1px
+		.item__arrow
+			width: 1.6rem
+			height: 1.6rem
+	.tax-product_category, .search
+		.category
+			&__first-screen
+				.block__default
+					padding: 2rem 3rem
+				.breadcrumbs
+					margin-bottom: 2.5rem
+				h1
+					margin-bottom: 1.6rem
+			&__filter
+				ul
+					margin-top: 5.7rem
+					gap: 0.8rem
+					li
+						border-radius: 0.8rem
+						a
+							height: 5rem
+							padding: 0 2rem
+			&__child-term
+				h2
+					margin-bottom: 4rem
+				.style1
+					.product
+						&__info-wrapper
+							.block__default
+								padding: 2rem
+						&__info__header
+							margin-bottom: 3.3rem
+							.product__category
+								margin-bottom: 0.4rem
+							.btn__shared
+								svg
+									width: 1.2rem
+						&__category
+							margin-bottom: 0.4rem
+						&__img
+							width: 16rem
+							height: 16rem
+							margin: 0 auto 2.7rem
+						&__info__footer
+							.description
+								max-width: 18.2rem
+								display: -webkit-box
+								-webkit-box-orient: vertical
+								-webkit-line-clamp: 3
+								overflow: hidden
+								text-overflow: ellipsis
+								white-space: normal
+							.btn
+								padding-left: 3.2rem
+								padding-right: 3.2rem
+						&__wrapper
+							padding: 5rem 2rem 2rem
+					.btn__load
+						margin: 4rem auto 0
+				.style2
+					.item
+						height: 41.6rem
+					.product
+						&__wrapper
+							padding: 2rem 1rem
+							&:hover
+								.product
+									&__img
+										width: 30rem
+										height: 37.5rem
+						&__category
+							margin-bottom: 0.4rem
+						&__img
+							width: 22.4rem
+							height: 22.4rem
+							top: 6rem
+							left: 4.9rem
+					.btn__load
+						gap: 2rem
+						.decor__vector
+							width: 4.2rem
+							height: 4.2rem
+@media screen and (max-width: 576px)
+	.single-product, .tax-product_category
+		.product
+			&__first-screen
+				.block__default
+					padding: 2rem 2rem 3rem
+				.breadcrumbs
+					margin-bottom: 3rem
+					font-size: 1.1rem
+			&__img
+				height: 28.9rem
+				img
+					height: 100%
+			&__info
+				gap: 3rem
+				.item__title
+					text-align: center
+			&__btn-group
+				gap: 0.8rem
+				.btn__small
+					flex-grow: 1
+				.btn__shared
+					height: 5.6rem
+					width: 5.6rem
+					border: 1px solid var(--e-global-color-text)
+					span
+						display: none
+		.block__header
+			margin-bottom: 3rem
+			gap: 1rem
+			align-items: center
+		.product
+			&__gallary
+				img
+					width: 100%
+					height: 42rem
+					object-fit: cover
+				.swiper-slide
+					width: 100%
+			&__advice
+				.block__header
+					align-items: flex-end
+				.swiper-slide
+					width: 25.6rem
+
+			&__uses
+				.block__header
+					align-items: flex-end
+			&__features
+				&__list
+					.item
+						.small__title
+							padding: 1rem 2rem
+							.icon
+								width: 1.6rem
+								height: 1.6rem
+						&__content
+							padding-top: 2rem
+							padding-bottom: 2rem
+	.tax-product_category, .search
+		.product__list
+			padding: 0
+			gap: 0
+
+		.category
+			&__first-screen
+				text-align: center
+				.block__default
+					padding: 2rem 2rem 3rem
+				.breadcrumbs
+					margin-bottom: 4rem
+			&__filter
+				overflow-x: scroll
+				-ms-overflow-style: none
+				scrollbar-width: none
+				ul
+					justify-content: start
+					margin-top: 7rem
+					gap: 0.8rem
+					li
+						flex-shrink: 0
+						a
+							height: 5rem
+							padding: 0 2rem
+			&__child-term
+				.item, .item-part
+					&::before
+						display: none
+				h2
+					margin-bottom: 3rem
+				.style1
+					.item-part
+						width: 100%
+					.item
+						width: 100%
+						border-bottom: 1px solid var(--e-global-color-secondary)
+					.product__list>div
+						order: 2
+					.item-part
+						border: none
+						padding: 0
+						&:nth-child(2)
+							order: 1
+					.product
+						&__info-wrapper
+							padding: 0
+							margin-bottom: 1.2rem
+							.block__default
+								padding: 3rem 2rem 2rem
+								border-top-right-radius: 0
+								border-top-left-radius: 0
+								&::before, &::after
+									display: none
+							.product__img
+								position: absolute
+								width: 12rem
+								height: 12rem
+								border: 0.5rem solid var(--e-global-color-accent)
+								border-radius: 1.4rem
+								overflow: hidden
+								left: 3rem
+								top: -1rem
+								transform: translateY(-100%)
+								margin-bottom: 0
+								img
+									border-radius: 0
+						&__info__header
+							display: block
+							margin-bottom: 1.6rem
+							text-align: center
+							.shared__wrapper
+								position: absolute
+								bottom: 2rem
+								right: 2rem
+							.btn__shared
+								opacity: 1
+								height: 5.6rem
+								width: 5.6rem
+								border-radius: 1rem
+								border: 1px solid var(--e-global-color-text)
+								span
+									display: none
+								svg
+									width: 1.8rem
+							.product__category
+								margin-bottom: 0.8rem
+						&__category
+							margin-bottom: 0.8rem
+						&__img
+							width: 33.5rem
+							height: 33.5rem
+							margin: 0 auto 2rem
+						&__info__footer
+							display: block
+							.description
+								text-align: center
+								max-width: 100%
+								padding-left: 4rem
+								padding-right: 4rem
+								margin-bottom: 3rem
+							.btn
+								width: 27rem
+								padding-left: 0
+								padding-right: 0
+						&__img__wrapper
+							background-color: var(--e-global-color-accent)
+							padding: 2rem 2rem 0
+							border-top-left-radius: 2rem
+							border-top-right-radius: 2rem
+							height: auto
+							.product__img
+								height: 39rem
+								margin: 0
+
+						&__wrapper
+							padding: 2rem 1rem
+							position: relative
+							&:hover
+								.product__img
+									img
+										scale: 1
+							h3
+								font-weight: 600
+							a
+								position: absolute
+								inset: 0
+								opacity: 0
+						&__footer
+							display: flex
+							justify-content: space-between
+							align-items: flex-end
+							gap: 2rem
+							.item__arrow
+								margin-bottom: 0.5rem
+					.btn__load
+						margin: 2rem auto 0
+				.style2
+					.item
+						height: auto
+						width: 100%
+						border-top: 1px solid var(--e-global-color-secondary)
+						&:last-child
+							border-bottom: 1px solid var(--e-global-color-secondary)
+					.product
+						&__wrapper
+							padding: 2rem 1rem
+							display: block
+							&:hover
+								h3
+									color: var(--e-global-color-text)
+								.product
+									&__category
+										color: var(--e-global-color-text)
+									&__img
+										width: unset
+										height: unset
+										&::after
+											opacity: 0
+								.item
+									&__arrow
+										span
+											background-color: var(--e-global-color-text)
+										&::before, &::after
+											background-color: var(--e-global-color-text)
+						&__img
+							position: static
+							width: 100%
+							height: auto
+							aspect-ratio: 1/1
+							margin-bottom: 2rem
+							&::after
+								display: none
+					.btn__load
+						height: 42rem
+						.decor__vector
+							width: 4rem
+							height: 4rem

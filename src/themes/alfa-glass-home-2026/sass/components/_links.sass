@@ -1,0 +1,52 @@
+[data-text]
+	position: relative
+	line-height: 1
+	display: inline-block
+	&::after
+		content: attr(data-text)
+		position: absolute
+		white-space: nowrap
+		left: 50%
+		transform: translateX(-50%)
+		top: 0
+		font-weight: 700
+		color: var(--e-global-color-text)
+		visibility: hidden
+		opacity: 0
+		pointer-events: none
+	&:hover
+		color: transparent
+		&::after
+			visibility: visible
+			opacity: 1
+.socials__links
+	display: flex
+	gap: 1rem
+	a
+		svg
+			display: block
+			width: 2.6rem
+			height: 2.6rem
+			overflow: visible
+
+.elementor-widget-social-icons, .socials__links
+	a
+		path
+			transform-origin: center
+			transition: transform 0.3s ease-out
+		&:hover
+			svg
+				path.path__scale
+					transform: scale(0.7)
+a
+	&:focus, &:active
+		outline: none
+		border: none
+
+@media screen and (max-width: 1440px)
+	.socials__links
+		a
+			svg
+				width: 2.2rem
+				height: 2.2rem
+@media screen and (max-width: 1024px)

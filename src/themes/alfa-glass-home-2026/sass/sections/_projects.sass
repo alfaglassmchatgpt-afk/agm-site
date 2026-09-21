@@ -1,0 +1,169 @@
+.projects
+	&>.block__default
+		overflow: hidden
+	.section__title
+		margin-bottom: 6rem
+	.projects__item
+		width: 100%
+		height: 90rem
+		position: relative
+		z-index: 1
+		border-radius: var(--border-radius)
+		overflow: hidden
+		display: flex
+		flex-direction: column
+		padding: 6rem
+		justify-content: flex-end
+		color: var(--e-global-color-accent)
+		&:not(.swiper-slide-active)
+			.item__name, .item__address
+				opacity: 0
+		.item
+			&__img
+				position: absolute
+				top: 0
+				left: 0
+				width: 100%
+				height: 100%
+				z-index: -1
+				img
+					width: 100%
+					height: 100%
+					object-fit: cover
+			&__cover
+				position: absolute
+				top: 0
+				left: 0
+				width: 100%
+				height: 100%
+				background: linear-gradient(180deg, rgba(0, 0, 0, 0.00) 81.16%, rgba(0, 0, 0, 0.40) 93.4%)
+				z-index: -1
+			&__address
+				text-transform: uppercase
+				display: flex
+				gap: 0.8rem
+				margin-bottom: 1.6rem
+				svg
+					width: 1.6rem
+					height: auto
+			&__name, &__address
+				transition: opacity 0.3s ease-out
+	&__slider
+		overflow: hidden
+		border-radius: var(--border-radius)
+	&__slider_thumb
+		position: relative
+		overflow: hidden
+		width: 100%
+		height: 100%
+		border-radius: var(--border-radius)
+		.item__img
+			img
+				object-fit: fill
+				object-position: center left
+	.slider__btn_next
+		width: 100%
+		height: 100%
+		top: 0
+		left: 0
+		background-color: rgba(29, 30, 30, 0.4)
+		cursor: pointer
+		z-index: 100
+		position: absolute
+		color: var(--e-global-color-accent)
+		.small__title
+			position: absolute
+			text-transform: uppercase
+			transform: translate(-50%, -50%) rotate(-90deg)
+			top: 50%
+			left: 50%
+			white-space: nowrap
+			letter-spacing: 0.04rem
+			font-weight: 500
+		svg
+			position: absolute
+			width: 3.4rem
+			height: auto
+			left: 50%
+			bottom: 8rem
+			transform: translateX(-50%)
+			path
+				stroke: var(--e-global-color-accent)
+				fill: var(--e-global-color-accent)
+@media screen and (max-width: 1440px)
+	.projects
+		.section__title
+			margin-bottom: 6rem
+		.projects__item
+			height: 67.4rem
+			padding: 4rem
+			.item
+				&__address
+					text-transform: uppercase
+					display: flex
+					gap: 0.8rem
+					margin-bottom: 1.6rem
+					svg
+						width: 1.4rem
+		.slider__btn_next
+
+			svg
+				width: 3rem
+				bottom: 7rem
+@media screen and (max-width: 1024px)
+	.projects
+		.section__title
+			margin-bottom: 5rem
+		.projects__item
+			height: 48rem
+			padding: 2rem
+			.item
+				&__address
+					gap: 0.6rem
+					margin-bottom: 1rem
+					svg
+						width: 1rem
+		.slider__btn_next
+			svg
+				width: 2.1rem
+				bottom: 5rem
+@media screen and (max-width: 576px)
+	.projects
+		.section__title
+			margin-bottom: 4rem
+		&__slider
+			height: 53rem
+			&_thumb
+				height: 12rem
+				margin-top: 0.8rem
+		.projects__item
+			height: 100%
+			padding: 2rem
+			.item
+				&__address
+					gap: 0.6rem
+					margin-bottom: 1rem
+					svg
+						width: 1rem
+		.slider__btn_next
+			border-radius: 2rem
+			svg
+				width: 2.1rem
+				bottom: 50%
+				transform: translateY(-50%)
+			.small__title
+				position: absolute
+				text-transform: uppercase
+				transform: translateY(-50%)
+				top: 50%
+				left: 2rem
+				white-space: nowrap
+				letter-spacing: 0.04rem
+				font-weight: 500
+			svg
+				width: 2.1rem
+				height: auto
+				left: auto
+				right: 3rem
+				bottom: 50%
+				transform: translateY(50%)

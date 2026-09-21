@@ -1,0 +1,228 @@
+.mainbanner-block {
+    height: auto;
+    min-height: 700px;
+    margin-top: unset;
+    display: flex;
+    position: relative;
+    .swiper {
+        width: 100%;
+        height: auto;
+    }
+    .swiper-slide {
+        height: 100%;
+        display: flex;
+        &:before {
+            content: "";
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            position: absolute;
+            pointer-events: none;
+            z-index: 1;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.62) 8.71%, rgba(255, 255, 255, 0.89) 25.9%, rgba(255, 255, 255, 0.85) 44.93%, rgba(255, 255, 255, 0.54) 61.14%, rgba(255, 255, 255, 0) 100%);
+        }
+    }
+    .background {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        position: absolute;
+        top: 0;
+        left: 0;
+        & video {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+            object-position: center;
+        }
+    }
+    .slide-item {
+        display: flex;
+        flex-direction: column;
+        max-width: 630px;
+        position: relative;
+        z-index: 2;
+        height: auto;
+        padding: 120px 15px;
+        padding-left: calc((100% - 1050px) / 2);
+        box-sizing: content-box;
+    }
+    h1.page-title,
+    h2.main-title {
+        font-weight: 700;
+        font-size: 40px;
+        line-height: 130%;
+        text-transform: uppercase;
+        color: #000;
+        margin-bottom: 16px;
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        background: unset;
+        background-clip: unset;
+        -webkit-background-clip: unset;
+        -webkit-text-fill-color: unset;
+        & span {
+            font-weight: 700;
+            line-height: 130%;
+            text-transform: uppercase;
+            background: linear-gradient(194.6deg, #43abff 17.05%, #077cdb 41.91%, #005397 93.49%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    }
+    .slide-item__desc {
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 130%;
+        color: #666;
+        margin-bottom: 40px;
+    }
+    .btns {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 40px;
+        .default-btn,
+        .second-btn {
+            padding: 13px 24px;
+        }
+    }
+    .slide-item__chars {
+        display: flex;
+        gap: 40px;
+        flex-wrap: wrap;
+    }
+    .slide-item__char {
+        display: flex;
+        flex-direction: column;
+        max-width: 172px;
+        .char-value {
+            font-weight: 700;
+            font-size: 40px;
+            line-height: 120%;
+            text-transform: uppercase;
+            background: linear-gradient(194.6deg, #43abff 1.19%, #077cdb 33.18%, #005397 99.55%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        .char-name {
+            font-weight: 400;
+            font-size: 20px;
+            line-height: 120%;
+            letter-spacing: -0.03em;
+            color: #19191b;
+        }
+    }
+    .swiper-pagination {
+        position: absolute;
+        bottom: 60px;
+        top: unset;
+        left: calc((100% - 1050px) / 2);
+        gap: 12px;
+        .swiper-pagination-bullet {
+            width: 8px !important;
+            height: 8px !important;
+            background: white;
+            &.swiper-pagination-bullet-active {
+                background: linear-gradient(194.6deg, #43abff 1.35%, #077cdb 33.27%, #005397 99.49%);
+            }
+        }
+    }
+    @media (max-width: 1200px) { 
+        .slide-item {
+            padding: 100px 16px;
+        }
+        .swiper-pagination {
+            left: 16px;
+        }
+    }
+    @media (max-width: 996px) { 
+        h1.page-title, h2.main-title {
+            font-size: 32px;
+        }
+        .slide-item__desc {
+            font-size: 16px;
+            margin-bottom: 32px;
+        }
+        .btns {
+            margin-bottom: 32px;
+        }
+        .slide-item__chars {
+            gap: 24px;
+        }
+        .slide-item__char {
+            max-width: 120px;
+            .char-value {
+                font-size: 28px;
+            }
+            .char-name {
+                font-size: 14px;
+            }
+        }
+        .swiper-pagination {
+            bottom: 40px;
+        }
+    }
+    @media (max-width: 498px) { 
+        .btns {
+            flex-direction: column;
+            &>* {
+                width: 100%;
+                padding: 14px 20px;
+            }
+        }
+        .slide-item__char {
+            max-width: 105px;
+            &:nth-child(2) {
+                max-width: 120px;
+            }
+        }
+        .swiper-slide:before {
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.62) 8.71%, rgba(255, 255, 255, 0.89) 25.9%, rgba(255, 255, 255, 0.85) 44.93%, rgba(255, 255, 255, 0.54) 61.14%, rgba(255, 255, 255, 0) 100%);
+        }
+        .swiper-pagination {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .slide-item__desc {
+            max-width: 310px;
+        }
+    }
+}
+
+body.dark-color {
+    .swiper-slide:before {
+        background: linear-gradient(90deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.5) 13.46%, rgba(0, 0, 0, 0.5) 33.62%, rgba(0, 0, 0, 0.3) 61.14%, rgba(0, 0, 0, 0) 100%);
+    }
+    .slide-item__desc {
+        color: #fff;
+    }
+    .slide-item__char {
+        .char-value {
+            color: #fff;
+            background: unset;
+            background-clip: unset;
+            -webkit-background-clip: unset;
+            -webkit-text-fill-color: unset;
+        }
+        .char-name {
+            color: rgba(255, 255, 255, 0.5);
+        }
+    }
+    @media (max-width: 498px) { 
+        .slide-item__desc {
+            color: #d3d3d3;
+        }
+        .slide-item__char {
+            .char-name {
+                color: white;
+            }
+        }
+    }
+}
