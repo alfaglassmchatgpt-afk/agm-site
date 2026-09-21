@@ -1691,7 +1691,12 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-glass/riflenoe-steklo-flutes.html",
-    "sha256": "135f60385d8a2244e124cfa106af3c86a88a8c6d70ddad0e37b372ab75a14e55",
+    "sha256": "c93b96eda670a4aa38efb3dfee6ffb525fc4f759c09809ca22a292b8490a04e2",
+    "sanitised": true
+  },
+  {
+    "path": "src/themes/alfa-glass-home-2026/agm-glass/flutes-examples.css",
+    "sha256": "17c6b1b61fda10421f293dc7ebdca7851f2daf82c8cc4e7e15bf8417a8d237f1",
     "sanitised": true
   }
 ]
