@@ -116,7 +116,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/page-agm-glass.php",
-    "sha256": "b79a566b84acc7282e158dded2b13cf27add43c23368c43257f2c11e25e8ad60",
+    "sha256": "b5b10bc5a2bf820cae91afabaa7cdf25ca17bb0de8b4a4943fd4a5ac38147444",
     "sanitised": true
   },
   {
@@ -266,7 +266,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-glass/catalog.html",
-    "sha256": "ad2e4e300424f130dd7f4c36e2316fd276506d745faf4906b8d6879c1a262e8f",
+    "sha256": "c8bc0bb94fad08d2794822d62053d2366f52e1d7a8132eae82cdacf644d25428",
     "sanitised": true
   },
   {
@@ -1681,12 +1681,17 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/inc/agm-material-groups.php",
-    "sha256": "0486c6713b31eb20b08e273512e2795893a776dd64e6d67d63454ee7ac02803a",
+    "sha256": "d84f5cefe58e2c10060c3a081d8f71bf4a4d56e637a41544788d9f3a2211f7ad",
     "sanitised": true
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-glass/sostarennye-zerkala-k1.html",
     "sha256": "416269fe7b3171d4b01306a294b49432c2e1e9b482c7f72457da9de7aae8afc6",
+    "sanitised": true
+  },
+  {
+    "path": "src/themes/alfa-glass-home-2026/agm-glass/riflenoe-steklo-flutes.html",
+    "sha256": "135f60385d8a2244e124cfa106af3c86a88a8c6d70ddad0e37b372ab75a14e55",
     "sanitised": true
   }
 ]
