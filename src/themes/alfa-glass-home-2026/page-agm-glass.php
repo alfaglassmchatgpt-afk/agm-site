@@ -1,6 +1,7 @@
 <?php
 /** Template Name: Каталог материалов — ALFAGLASS 2026 */
 defined('ABSPATH') || exit;
+require_once __DIR__ . '/inc/agm-configurator.php';
 $home = agm_navigation_render(file_get_contents(get_template_directory() . '/agm-homepage/index.html'));
 preg_match('/<header class="site-header">.*?<\/header>/s', $home, $header);
 preg_match('/<svg[^>]*class="svg-library".*?<\/svg>/s', $home, $sprite);
@@ -12,6 +13,7 @@ $allowed = ['catalog', 'riflenoe-steklo-flutes', 'sostarennye-zerkala-k1', 'floa
 if (!in_array($slug, $allowed, true)) { status_header(404); exit; }
 $html = file_get_contents(get_template_directory() . '/agm-glass/' . $slug . '.html');
 if ($slug === 'catalog') { $html = agm_material_catalog_render($html); }
+if ($slug !== 'catalog') { $html = agm_order_render($html, $slug, false); }
 ob_start(); wp_head(); $head = ob_get_clean();
 ob_start(); wp_body_open(); $body = ob_get_clean();
 ob_start(); wp_footer(); $footer = ob_get_clean();

@@ -1,0 +1,811 @@
+{
+  "zerkalo-serebro": {
+    "title": "Зеркало серебро",
+    "variants": {
+      "standard": "обычное стекло",
+      "clear": "осветлённое стекло"
+    },
+    "thicknesses": [
+      "4",
+      "6"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "bevel",
+      "drill",
+      "film",
+      "sandblast",
+      "frame"
+    ],
+    "policy": "mirror",
+    "note": "Закалка классического зеркала недоступна. Специальные конструкции согласуются отдельно."
+  },
+  "tonirovannye-zerkala": {
+    "title": "Тонированные зеркала",
+    "variants": {
+      "tint_bronze": "бронза",
+      "tint_silver": "серебро",
+      "tint_gold": "золотое",
+      "tint_pink": "розовое",
+      "tint_blue": "синее",
+      "tint_dichroic": "дихроичное",
+      "tint_rainbow": "радужное"
+    },
+    "thicknesses": [
+      "4",
+      "6"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "bevel",
+      "drill",
+      "film",
+      "sandblast",
+      "frame"
+    ],
+    "policy": "mirror",
+    "note": "Закалка классического зеркала недоступна. Специальные конструкции согласуются отдельно."
+  },
+  "riflenoe-steklo-flutes": {
+    "title": "Рифлёное стекло Flutes",
+    "variants": {
+      "standard": "Обычное стекло, не осветлённое; лёгкий зеленоватый оттенок"
+    },
+    "thicknesses": [
+      "4",
+      "6"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "temper",
+      "laminate",
+      "paint",
+      "drill",
+      "film",
+      "frame",
+      "sandblast"
+    ],
+    "policy": "owner-confirmed",
+    "note": "Состав обработок Flutes подтверждён владельцем. Совместимость и параметры согласуем по проекту."
+  },
+  "sostarennye-zerkala-k1": {
+    "title": "Состаренное зеркало K1",
+    "variants": {
+      "standard": "По образцу"
+    },
+    "thicknesses": [
+      "unknown"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "bevel",
+      "drill",
+      "film",
+      "sandblast",
+      "frame"
+    ],
+    "policy": "mirror",
+    "note": "Закалка готового зеркала недоступна."
+  },
+  "float-steklo-clear-m1": {
+    "title": "Флоат стекло Clear М1",
+    "variants": {
+      "standard": "По образцу"
+    },
+    "thicknesses": [
+      "unknown"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "frame"
+    ],
+    "policy": "basic",
+    "note": "Специальные обработки включаются после подтверждения для этого материала."
+  },
+  "raywall90": {
+    "title": "Рифлёное стекло RAYWALL90",
+    "variants": {
+      "standard": "Прозрачный"
+    },
+    "thicknesses": [
+      "4"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "frame"
+    ],
+    "policy": "basic",
+    "note": "Специальные обработки включаются после подтверждения для этого материала."
+  },
+  "raywall": {
+    "title": "Рифлёное стекло RAYWALL45",
+    "variants": {
+      "standard": "Прозрачный"
+    },
+    "thicknesses": [
+      "4"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "frame"
+    ],
+    "policy": "basic",
+    "note": "Специальные обработки включаются после подтверждения для этого материала."
+  },
+  "vison-sun": {
+    "title": "Рифлёное стекло VISON SUN",
+    "variants": {
+      "standard": "Прозрачный, осветлённый"
+    },
+    "thicknesses": [
+      "4",
+      "5",
+      "6"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "frame"
+    ],
+    "policy": "basic",
+    "note": "Специальные обработки включаются после подтверждения для этого материала."
+  },
+  "flutes-moru-bronze": {
+    "title": "Рифлёное стекло Flutes Moru Bronze",
+    "variants": {
+      "standard": "Бронза, магнетронное напыление"
+    },
+    "thicknesses": [
+      "4",
+      "5",
+      "6",
+      "8",
+      "10"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "frame"
+    ],
+    "policy": "basic",
+    "note": "Специальные обработки включаются после подтверждения для этого материала."
+  },
+  "flutes-moru-ultra": {
+    "title": "Узорчатое стекло Flutes Moru Ultra",
+    "variants": {
+      "standard": "Осветлённое"
+    },
+    "thicknesses": [
+      "4",
+      "5",
+      "6",
+      "8",
+      "10"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "frame"
+    ],
+    "policy": "basic",
+    "note": "Специальные обработки включаются после подтверждения для этого материала."
+  },
+  "flutes-moru-grey": {
+    "title": "Узорчатое стекло Flutes Moru Grey",
+    "variants": {
+      "standard": "Серый, магнетронное напыление"
+    },
+    "thicknesses": [
+      "4",
+      "5",
+      "6",
+      "8",
+      "10"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "frame"
+    ],
+    "policy": "basic",
+    "note": "Специальные обработки включаются после подтверждения для этого материала."
+  },
+  "flutes-moru-grey-mat": {
+    "title": "Рифлёное матовое тонированное стекло Moru Grey",
+    "variants": {
+      "standard": "Серый"
+    },
+    "thicknesses": [
+      "8"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "frame"
+    ],
+    "policy": "basic",
+    "note": "Специальные обработки включаются после подтверждения для этого материала."
+  },
+  "flutes-moru-bronze-mat": {
+    "title": "Рифлёное матовое тонированное стекло Moru Bronze",
+    "variants": {
+      "standard": "Бронза"
+    },
+    "thicknesses": [
+      "8"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "frame"
+    ],
+    "policy": "basic",
+    "note": "Специальные обработки включаются после подтверждения для этого материала."
+  },
+  "flutes-moru-ultra-mat": {
+    "title": "Рифлёное матовое стекло Moru Ultra",
+    "variants": {
+      "standard": "Прозрачный"
+    },
+    "thicknesses": [
+      "4",
+      "8"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "frame"
+    ],
+    "policy": "basic",
+    "note": "Специальные обработки включаются после подтверждения для этого материала."
+  },
+  "moru-bronze-mat": {
+    "title": "Тонированное стекло Bronze Satin",
+    "variants": {
+      "standard": "Тонированное в массе бронза сатинированное"
+    },
+    "thicknesses": [
+      "4",
+      "6",
+      "8",
+      "10"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "frame"
+    ],
+    "policy": "basic",
+    "note": "Специальные обработки включаются после подтверждения для этого материала."
+  },
+  "moru-grey-mat": {
+    "title": "Тонированное стекло Grey Satin",
+    "variants": {
+      "standard": "Тонированное в массе серое сатинированное"
+    },
+    "thicknesses": [
+      "4",
+      "6",
+      "8",
+      "10"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "frame"
+    ],
+    "policy": "basic",
+    "note": "Специальные обработки включаются после подтверждения для этого материала."
+  },
+  "moru-dark-grey-mat": {
+    "title": "Стекло Dark Grey Mat",
+    "variants": {
+      "standard": "Тонированное в массе тёмно-серое сатинированное"
+    },
+    "thicknesses": [
+      "4",
+      "6",
+      "8",
+      "10"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "frame"
+    ],
+    "policy": "basic",
+    "note": "Специальные обработки включаются после подтверждения для этого материала."
+  },
+  "steklo-matovoe-matelux": {
+    "title": "Стекло Matelux матовое &quot;сатинато&quot;  (Satinato)",
+    "variants": {
+      "standard": "По образцу"
+    },
+    "thicknesses": [
+      "unknown"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "frame"
+    ],
+    "policy": "basic",
+    "note": "Специальные обработки включаются после подтверждения для этого материала."
+  },
+  "moru-grey": {
+    "title": "Тонированное стекло Grey",
+    "variants": {
+      "standard": "Тонированное в массе серое"
+    },
+    "thicknesses": [
+      "4",
+      "5",
+      "6",
+      "8",
+      "10"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "frame"
+    ],
+    "policy": "basic",
+    "note": "Специальные обработки включаются после подтверждения для этого материала."
+  },
+  "moru-dark-grey": {
+    "title": "Тонированное стекло Dark Grey",
+    "variants": {
+      "standard": "Тонированное в массе тёмно-серое"
+    },
+    "thicknesses": [
+      "4",
+      "6",
+      "8",
+      "10"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "frame"
+    ],
+    "policy": "basic",
+    "note": "Специальные обработки включаются после подтверждения для этого материала."
+  },
+  "moru-bronze": {
+    "title": "Тонированное стекло Bronze",
+    "variants": {
+      "standard": "Тонированное в массе бронза"
+    },
+    "thicknesses": [
+      "4",
+      "5",
+      "6",
+      "8",
+      "10"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "frame"
+    ],
+    "policy": "basic",
+    "note": "Специальные обработки включаются после подтверждения для этого материала."
+  },
+  "tonirovannoe-v-masse-steklo-moru": {
+    "title": "Рифлёное стекло MORU ( Мору) тонированное в массе.  Цвет бронза и серое. Flutes",
+    "variants": {
+      "standard": "По образцу"
+    },
+    "thicknesses": [
+      "unknown"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "frame"
+    ],
+    "policy": "basic",
+    "note": "Специальные обработки включаются после подтверждения для этого материала."
+  },
+  "diamant": {
+    "title": "Узорчатое стекло Diamant",
+    "variants": {
+      "standard": "Прозрачный"
+    },
+    "thicknesses": [
+      "4"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "frame"
+    ],
+    "policy": "basic",
+    "note": "Специальные обработки включаются после подтверждения для этого материала."
+  },
+  "hithicross": {
+    "title": "Узорчатое стекло HitHiCross",
+    "variants": {
+      "standard": "Прозрачный"
+    },
+    "thicknesses": [
+      "4"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "frame"
+    ],
+    "policy": "basic",
+    "note": "Специальные обработки включаются после подтверждения для этого материала."
+  },
+  "gothic": {
+    "title": "Узорчатое стекло Gothic",
+    "variants": {
+      "standard": "Прозрачный"
+    },
+    "thicknesses": [
+      "4"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "frame"
+    ],
+    "policy": "basic",
+    "note": "Специальные обработки включаются после подтверждения для этого материала."
+  },
+  "silvit": {
+    "title": "Узорчатое стекло Silvit",
+    "variants": {
+      "standard": "Прозрачный"
+    },
+    "thicknesses": [
+      "4"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "frame"
+    ],
+    "policy": "basic",
+    "note": "Специальные обработки включаются после подтверждения для этого материала."
+  },
+  "kathedral-klein": {
+    "title": "Узорчатое стекло Kathedral Klein",
+    "variants": {
+      "standard": "Прозрачный"
+    },
+    "thicknesses": [
+      "4"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "frame"
+    ],
+    "policy": "basic",
+    "note": "Специальные обработки включаются после подтверждения для этого материала."
+  },
+  "monumental-atlantic": {
+    "title": "Узорчатое стекло Monumental Atlantic",
+    "variants": {
+      "standard": "Прозрачный"
+    },
+    "thicknesses": [
+      "4"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "frame"
+    ],
+    "policy": "basic",
+    "note": "Специальные обработки включаются после подтверждения для этого материала."
+  },
+  "krepi": {
+    "title": "Узорчатое стекло Krepi",
+    "variants": {
+      "standard": "Прозрачный"
+    },
+    "thicknesses": [
+      "4"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "frame"
+    ],
+    "policy": "basic",
+    "note": "Специальные обработки включаются после подтверждения для этого материала."
+  },
+  "kathedralaqualite": {
+    "title": "Узорчатое стекло Kathedral Aqualite",
+    "variants": {
+      "standard": "Прозрачный"
+    },
+    "thicknesses": [
+      "4"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "frame"
+    ],
+    "policy": "basic",
+    "note": "Специальные обработки включаются после подтверждения для этого материала."
+  },
+  "steklo-solnczezashhitnoe-stopsol": {
+    "title": "Солнцезащитное стекло Stopsol (рефлективное)",
+    "variants": {
+      "standard": "По образцу"
+    },
+    "thicknesses": [
+      "unknown"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "frame"
+    ],
+    "policy": "basic",
+    "note": "Специальные обработки включаются после подтверждения для этого материала."
+  },
+  "steklo-lacobel": {
+    "title": "Стекло Lacobel",
+    "variants": {
+      "standard": "По образцу"
+    },
+    "thicknesses": [
+      "unknown"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "frame"
+    ],
+    "policy": "painted",
+    "note": "Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы."
+  },
+  "steklo-matelak": {
+    "title": "Стекло Matelac",
+    "variants": {
+      "standard": "По образцу"
+    },
+    "thicknesses": [
+      "unknown"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "frame"
+    ],
+    "policy": "painted",
+    "note": "Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы."
+  },
+  "dihroichnoe-steklo": {
+    "title": "Дихроичное стекло, купить в Москве",
+    "variants": {
+      "standard": "По образцу"
+    },
+    "thicknesses": [
+      "unknown"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "frame"
+    ],
+    "policy": "basic",
+    "note": "Специальные обработки включаются после подтверждения для этого материала."
+  },
+  "steklo-osvetlyonnoe-clearvision": {
+    "title": "Стекло осветлённое (Clearvision, Optiwhite)",
+    "variants": {
+      "standard": "По образцу"
+    },
+    "thicknesses": [
+      "unknown"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "frame"
+    ],
+    "policy": "basic",
+    "note": "Специальные обработки включаются после подтверждения для этого материала."
+  },
+  "steklo-kristalvizhn-crystalvision": {
+    "title": "Стекло Crystalvision (Кристалвижн) ультраосветлённое",
+    "variants": {
+      "standard": "По образцу"
+    },
+    "thicknesses": [
+      "unknown"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "frame"
+    ],
+    "policy": "basic",
+    "note": "Специальные обработки включаются после подтверждения для этого материала."
+  },
+  "zerkalo-osvetlyonnoe": {
+    "title": "Осветлённые зеркала оптивайт Clear Vision AGC",
+    "variants": {
+      "standard": "По образцу"
+    },
+    "thicknesses": [
+      "unknown"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "bevel",
+      "drill",
+      "film",
+      "sandblast",
+      "frame"
+    ],
+    "policy": "mirror",
+    "note": "Закалка готового зеркала недоступна."
+  },
+  "sostarennye-zerkala": {
+    "title": "Состаренные зеркала Morena (морена)",
+    "variants": {
+      "standard": "По образцу"
+    },
+    "thicknesses": [
+      "unknown"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "bevel",
+      "drill",
+      "film",
+      "sandblast",
+      "frame"
+    ],
+    "policy": "mirror",
+    "note": "Закалка готового зеркала недоступна."
+  },
+  "zerkalo-gezella": {
+    "title": "Стекло шпион (зеркало Гезелла)",
+    "variants": {
+      "standard": "По образцу"
+    },
+    "thicknesses": [
+      "unknown"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "bevel",
+      "drill",
+      "film",
+      "sandblast",
+      "frame"
+    ],
+    "policy": "mirror",
+    "note": "Закалка готового зеркала недоступна."
+  }
+}
