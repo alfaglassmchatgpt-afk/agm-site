@@ -1,0 +1,14 @@
+Built-in image_gen; precise-object-edit; four existing v1 images as edit targets.
+Preserve composition, furniture, architecture, aluminium profiles, lighting and camera.
+Change glass to ordinary slightly green AGC Flutes, physical vertical pitch 12.5 mm.
+Fine low-relief optical reeding, not rods, pipes or opaque slats. Perspective compression.
+No text, labels or watermarks. Landscape 1536x1024.
+
+Sliding: glass 1200 x 2600 mm; target 96 complete vertical periods across width.
+Furniture: each closed glass panel 600 x 1200 mm; target 48 periods; same pitch on open leaf.
+Door: glass 800 x 2100 mm; target 64 periods.
+Island: front 2400 x 800 mm, target 192 periods; side 1000 mm, target 80 periods.
+
+Door/island second pass: increase previous visible flute frequency by 1.6 times;
+reduce spacing to 62.5%; preserve everything else. These are generative visual targets,
+not a certified dimensional rendering or fabrication drawing.
