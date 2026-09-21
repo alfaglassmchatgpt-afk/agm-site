@@ -9,6 +9,7 @@
 - [Состояние и ограничения](docs/STATUS.md)
 - [Инвентаризация](docs/INVENTORY.md), [версии компонентов](docs/components.json)
 - [Продолжение работы и восстановление](docs/HANDOVER.md)
+- [Резервные копии и ротация на ВМ](docs/BACKUPS.md)
 - [Защита данных](docs/DATA-POLICY.md)
 - [Журнал изменений](docs/CHANGELOG.md)
 - [Правила для следующих агентов](AGENTS.md)

@@ -232,5 +232,16 @@
       "status": "must-use",
       "version": ""
     }
-  ]
+  ],
+  "backup": {
+    "implementation": "infra/agm-site-backup.py",
+    "service": "agm-site-backup.service",
+    "timer": "agm-site-backup.timer",
+    "status": "enabled",
+    "schedule": "daily 00:00 UTC + 0-10 minutes",
+    "retention_successful": 3,
+    "storage": "/var/backups/agm-site",
+    "first_verified": "backup-20260921T111239Z",
+    "restore_test_tables": 38
+  }
 }
