@@ -18,4 +18,14 @@ assert.deepEqual(flutes.ops,['temper','paint']);
 assert.equal(model.normalize({material:'__proto__',base:'standard',thickness:'4'},materials,()=>''),null);
 assert.equal(model.normalize({material:'riflenoe-steklo-flutes',base:'standard',thickness:'20'},materials,()=>''),null);
 assert.equal(model.normalize(null,materials,()=>''),null);
+const tinted=materials['tonirovannye-zerkala'];
+assert.equal(Object.keys(tinted.variants).length,7);
+for(const base of Object.keys(tinted.variants)){
+ for(const thickness of ['4','6']){
+  const item=model.normalize({material:'tonirovannye-zerkala',base,thickness},materials,()=>base);
+  assert.equal(!!item,thickness==='4'||['tint_bronze','tint_grey'].includes(base));
+ }
+}
+assert.equal(model.normalize({material:'tonirovannye-zerkala',base:'tint_silver',thickness:'6'},materials,()=> 'old').material,'zerkalo-serebro');
+assert.equal(model.normalize({material:'tonirovannye-zerkala',base:'tint_dichroic',thickness:'4'},materials,()=> 'old'),null);
 console.log('PASS: 39 profiles, operation allowlists, mirror/painted heat exclusions, legacy migration and invalid stored entries.');

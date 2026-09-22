@@ -14,7 +14,8 @@
   const clean = (v,n=500) => typeof v==='string'?v.slice(0,n):'';
   const hole = h => ({diameter:clean(h?.diameter,12),count:typeof h?.count==='string'?clean(h.count,5):'1',unknown:!!h?.unknown});
   const normalize=i=>AGMOrderModel.normalize(i,materials,newId);
-  try { const saved=JSON.parse(localStorage.getItem(key)||localStorage.getItem('agm-materials-request-v1')); if(saved && Array.isArray(saved.items)){state.items=saved.items.slice(0,30).map(normalize).filter(Boolean);state.active=state.items.some(i=>i.id===saved.active)?saved.active:state.items[0]?.id||null;} } catch(e) {}
+  let omittedStoredItems=0;
+  try { const saved=JSON.parse(localStorage.getItem(key)||localStorage.getItem('agm-materials-request-v1')); if(saved && Array.isArray(saved.items)){state.items=saved.items.slice(0,30).map(normalize).filter(Boolean);omittedStoredItems=Math.min(saved.items.length,30)-state.items.length;state.active=state.items.some(i=>i.id===saved.active)?saved.active:state.items[0]?.id||null;} } catch(e) {}
   const active = () => state.items.find(i=>i.id===state.active);
   function save(){try{localStorage.setItem(key,JSON.stringify(state));}catch(e){toast('Браузер не сохраняет выбор. Скачайте заявку перед закрытием страницы.');}}
   let toastTimer;
@@ -53,7 +54,7 @@
     renderList();renderOps();renderProcessing();$('#cart-error').hidden=true;
     const i=active(), selection=onThisPage(i)?i:nextDraft;
     if(i){$('#width').value=i.width;$('#height').value=i.height;$('#quantity').value=i.quantity;$('#unknown').checked=i.unknown;$('#width').disabled=i.unknown;$('#height').disabled=i.unknown;$('#item-note').value=i.note;$('#active-item-label').textContent='Параметры изделия '+(state.items.indexOf(i)+1);}
-    if(mirrorPage){$$('input[name=base]').forEach(r=>r.checked=r.value===selection.base);$$('input[name=thickness]').forEach(r=>r.checked=r.value===selection.thickness);$('#variant-note').textContent=materialName(selection)+': '+baseName(selection)+', '+thicknessName(selection)+'.'+(i&&!onThisPage(i)?' В расчёте выбрано изделие другого материала. Нажмите «Добавить ещё изделие», чтобы добавить этот вариант.':'');$('#add-material').textContent=i?'Добавить ещё изделие →':'Добавить к расчёту →';}
+    if(mirrorPage){$$('input[name=base]').forEach(r=>r.checked=r.value===selection.base);$$('input[name=thickness]').forEach(r=>{r.checked=r.value===selection.thickness;r.disabled=!AGMOrderModel.thicknesses(materials[current],selection.base).includes(r.value);});$('#variant-note').textContent=materialName(selection)+': '+baseName(selection)+', '+thicknessName(selection)+'.'+(i&&!onThisPage(i)?' В расчёте выбрано изделие другого материала. Нажмите «Добавить ещё изделие», чтобы добавить этот вариант.':'');$('#add-material').textContent=i?'Добавить ещё изделие →':'Добавить к расчёту →';}
   }
   const processing=node('div',undefined,'processing-options');
   $('#selected-ops').after(processing);
@@ -104,7 +105,7 @@
   function addItem(){
     if(state.items.length>=30){toast('В одной заявке можно собрать до 30 изделий.');return null;}
     const selection={material:current,base:$('input[name=base]:checked').value,thickness:$('input[name=thickness]:checked').value};
-    const item=normalize({id:newId(),material:selection.material,base:selection.base,thickness:selection.thickness,quantity:'1',ops:[]});state.items.push(item);state.active=item.id;save();render();return item;
+    const item=normalize({id:newId(),material:selection.material,base:selection.base,thickness:selection.thickness,quantity:'1',ops:[]});if(!item){toast('Проверьте исполнение и доступную толщину.');return null;}state.items.push(item);state.active=item.id;save();render();return item;
   }
   function ensureItem(){return active()||addItem();}
   function toggleOp(id,onlyAdd=false){
@@ -122,7 +123,7 @@
   $('#add-another').addEventListener('click',()=>{addItem();toast('Добавлено новое изделие. У него свой набор обработок.');});
   if(mirrorPage){
     $('#add-material').addEventListener('click',()=>{addItem();toast('Изделие добавлено в «Мой расчёт»');openCart();});
-    $$('input[name=base],input[name=thickness]').forEach(r=>r.addEventListener('change',()=>{const i=onThisPage(active())?active():nextDraft;i.base=$('input[name=base]:checked').value;i.thickness=$('input[name=thickness]:checked').value;save();render();}));
+    $$('input[name=base],input[name=thickness]').forEach(r=>r.addEventListener('change',()=>{const i=onThisPage(active())?active():nextDraft;i.base=$('input[name=base]:checked').value;i.thickness=$('input[name=thickness]:checked').value;const allowed=AGMOrderModel.thicknesses(materials[current],i.base);if(!allowed.includes(i.thickness)){i.thickness=allowed[0];toast('Для этого исполнения доступна толщина '+i.thickness+' мм.');}save();render();}));
     $('.operation-grid').addEventListener('click',e=>{
       const toggle=e.target.closest('[data-toggle-op]'),b=e.target.closest('[data-info]');
       if(toggle){const id=toggle.dataset.toggleOp;toggleOp(id);$('.operation-grid [data-toggle-op="'+id+'"]')?.focus();toast('Выбор обновлён в «Мой расчёт»');}
@@ -146,5 +147,5 @@
   function themeState(){const dark=document.documentElement.dataset.theme==='dark';$('#theme-toggle').setAttribute('aria-label',dark?'Включить светлую тему':'Включить тёмную тему');$('#theme-toggle').setAttribute('aria-pressed',String(dark));}
   $('#theme-toggle')?.addEventListener('click',()=>{document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark';try{localStorage.setItem('alfaglass-home-theme',document.documentElement.dataset.theme);}catch(e){}themeState();});
   $('#menu-toggle')?.addEventListener('click',()=>{const yes=$('#main-nav').classList.toggle('is-open');$('#menu-toggle').setAttribute('aria-expanded',String(yes));$('#menu-toggle').setAttribute('aria-label',yes?'Закрыть меню':'Открыть меню');});
-  if($('#theme-toggle'))themeState();render();
+  if($('#theme-toggle'))themeState();render();if(omittedStoredItems)toast('Некоторые сохранённые позиции больше не соответствуют каталогу. Добавьте их заново с актуальным исполнением и толщиной.');
 })();

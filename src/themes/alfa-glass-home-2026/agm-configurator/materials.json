@@ -26,13 +26,13 @@
   "tonirovannye-zerkala": {
     "title": "Тонированные зеркала",
     "variants": {
-      "tint_bronze": "бронза",
-      "tint_silver": "серебро",
-      "tint_gold": "золотое",
-      "tint_pink": "розовое",
-      "tint_blue": "синее",
-      "tint_dichroic": "дихроичное",
-      "tint_rainbow": "радужное"
+      "tint_bronze": "Бронза",
+      "tint_grey": "Серое",
+      "tint_gold": "Золотое",
+      "tint_pink": "Розовое",
+      "tint_rainbow": "Радужное",
+      "tint_blue": "Синее",
+      "tint_black": "Чёрное"
     },
     "thicknesses": [
       "4",
@@ -50,7 +50,32 @@
       "frame"
     ],
     "policy": "mirror",
-    "note": "Закалка классического зеркала недоступна. Специальные конструкции согласуются отдельно."
+    "note": "Закалка классического зеркала недоступна. Специальные конструкции согласуются отдельно.",
+    "variantThicknesses": {
+      "tint_bronze": [
+        "4",
+        "6"
+      ],
+      "tint_grey": [
+        "4",
+        "6"
+      ],
+      "tint_gold": [
+        "4"
+      ],
+      "tint_pink": [
+        "4"
+      ],
+      "tint_rainbow": [
+        "4"
+      ],
+      "tint_blue": [
+        "4"
+      ],
+      "tint_black": [
+        "4"
+      ]
+    }
   },
   "riflenoe-steklo-flutes": {
     "title": "Рифлёное стекло Flutes",
