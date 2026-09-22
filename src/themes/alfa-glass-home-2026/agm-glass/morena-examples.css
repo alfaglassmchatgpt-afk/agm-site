@@ -1,0 +1,7 @@
+.morena-examples{scroll-margin-top:calc(var(--header-height,180px) + 24px)}
+.morena-examples-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px;margin-top:28px}
+.morena-example{min-width:0;overflow:hidden;border:1px solid var(--line);border-radius:18px;background:var(--surface)}
+.morena-example-image{display:block}.morena-example-image img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:cover}
+.morena-example-image:focus-visible{outline:3px solid var(--accent);outline-offset:-3px}
+.morena-example-copy{padding:26px}.morena-example-copy h3{font-size:25px;line-height:1.25;margin:12px 0 16px}.morena-example-copy>p{line-height:1.6}.morena-example-copy>a{display:inline-block;margin-top:12px;font-weight:600}
+@media(max-width:760px){.morena-examples-grid{grid-template-columns:1fr;gap:20px}.morena-example-copy{padding:20px}.morena-example-copy h3{font-size:22px}}
