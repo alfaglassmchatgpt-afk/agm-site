@@ -1726,7 +1726,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-configurator/operations.json",
-    "sha256": "baf5be65e5b2ca160cdd184fdc5ecf8a57a1e718ae8c7ec2bf27a11cdcdf254b",
+    "sha256": "15c3dc22d20199789ea079f75b7d21325c8dc46f9403c55f0fe3d121366f1d92",
     "sanitised": true
   },
   {
@@ -1787,6 +1787,6 @@
   {
     "path": "src/themes/alfa-glass-home-2026/page-agm-processing.php",
     "sanitised": true,
-    "sha256": "957b199c8d2d7d2658e5a89eb65ad7a2c442d773622c95d72e249e9e804d9e91"
+    "sha256": "85c077dc67a8a044c5c7037328c8615e466f8b2c2fdc000ba5b4417dcfac2c2f"
   }
 ]
