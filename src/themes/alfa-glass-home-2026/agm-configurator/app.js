@@ -128,7 +128,7 @@
     $('.operation-grid').addEventListener('click',e=>{
       const toggle=e.target.closest('[data-toggle-op]'),b=e.target.closest('[data-info]');
       if(toggle){const id=toggle.dataset.toggleOp;toggleOp(id);$('.operation-grid [data-toggle-op="'+id+'"]')?.focus();toast('Выбор обновлён в «Мой расчёт»');}
-      if(b){opDialogId=b.dataset.info;const op=opById.get(opDialogId);$('#op-title').textContent=op.title;$('#op-description').textContent=op.description;$('#op-note').textContent=op.note;$('#op-diagram').replaceChildren(b.closest('.operation').querySelector('svg').cloneNode(true));$('#op-add').textContent=active()?.ops.includes(op.id)?'Уже в расчёте':'Добавить к расчёту';$('#operation-dialog').showModal();}
+      if(b){opDialogId=b.dataset.info;const op=opById.get(opDialogId);$('#op-title').textContent=op.title;$('#op-description').textContent=op.description;$('#op-note').textContent=op.note;let guide=$('#op-guide');if(!guide){guide=node('a','Подробнее об обработке →');guide.id='op-guide';guide.style.display='block';guide.style.margin='16px 0';$('#op-note').after(guide);}guide.href=config.processingUrl+'#'+op.id;$('#op-diagram').replaceChildren(b.closest('.operation').querySelector('svg').cloneNode(true));$('#op-add').textContent=active()?.ops.includes(op.id)?'Уже в расчёте':'Добавить к расчёту';$('#operation-dialog').showModal();}
     });
     $('#packaging').addEventListener('change',e=>{const checked=e.target.checked;const i=ensureItem();if(i){i.packaging=checked;save();render();}});
   }

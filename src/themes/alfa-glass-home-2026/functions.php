@@ -677,3 +677,4 @@ function render_breads() {
 		</div>
 	<?php }
 }
+require_once __DIR__ . '/inc/agm-processing.php';
