@@ -1686,7 +1686,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-glass/sostarennye-zerkala-k1.html",
-    "sha256": "877729bda533af2e9bc2e78153e9a450cdb05eefab2923ca8018d66a7da6a263",
+    "sha256": "afc5ae99b6fa549cd1a0029567c2e2d96dc660f43dd9057b4801c654c17e2b16",
     "sanitised": true
   },
   {
@@ -1737,6 +1737,11 @@
   {
     "path": "src/themes/alfa-glass-home-2026/inc/agm-configurator.php",
     "sha256": "b6832eb8698cacd57ef509df9531608346541014d2ff7e63adfb5b204c16c0fc",
+    "sanitised": true
+  },
+  {
+    "path": "src/themes/alfa-glass-home-2026/agm-glass/k1-examples.css",
+    "sha256": "3de55c866bc0f5c96fe733c2c2a80d12c7c4940f2b92d363c500f0bd978714d3",
     "sanitised": true
   }
 ]
