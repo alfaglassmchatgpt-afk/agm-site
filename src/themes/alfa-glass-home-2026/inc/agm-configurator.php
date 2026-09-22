@@ -40,7 +40,7 @@ function agm_order_render($html, $slug, $legacy = false) {
         $html = str_replace('<div class="operation-grid">', '<p id="operation-material-note">' . esc_html($current['note']) . '</p><div class="operation-grid">', $html);
         $html = str_replace('Добавить ещё зеркало', 'Добавить ещё изделие', $html);
     }
-    $data = ['processingUrl' => home_url('/obrabotka-stekla-i-zerkal/'), 'current' => $slug, 'materials' => $registry, 'operations' => json_decode(file_get_contents($dir . '/operations.json'), true)];
+    $data = ['operationAssetsUrl' => $url . '/', 'processingUrl' => home_url('/obrabotka-stekla-i-zerkal/'), 'current' => $slug, 'materials' => $registry, 'operations' => json_decode(file_get_contents($dir . '/operations.json'), true)];
     $scripts = '<script id="agm-order-data" type="application/json">' . wp_json_encode($data, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE) . '</script>';
     $scripts .= '<script src="' . $asset('model.js') . '" defer></script><script src="' . $asset('app.js') . '" defer></script>';
     return str_replace('</body>', $scripts . '</body>', $html);
