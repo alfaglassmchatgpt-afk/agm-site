@@ -771,10 +771,11 @@
   "zerkalo-osvetlyonnoe": {
     "title": "Осветлённое зеркало «Crystalvision» (Crystal)",
     "variants": {
-      "standard": "По образцу"
+      "standard": "Crystalvision (Crystal)"
     },
     "thicknesses": [
-      "unknown"
+      "4",
+      "6"
     ],
     "operations": [
       "cut",

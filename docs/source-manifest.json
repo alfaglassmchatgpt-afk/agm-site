@@ -451,7 +451,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-glass/zerkalo-osvetlyonnoe.html",
-    "sha256": "68ad6b783e93795490cc6669d943b6084e2bfbf1eb160397e10c58f7749f3bc6",
+    "sha256": "fc3dadf9b48014412a94c39f0814fa2d7e8cd50894b56ccfe8cad4634a695517",
     "sanitised": true
   },
   {
@@ -1716,7 +1716,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-configurator/materials.json",
-    "sha256": "6fec6331292b01370658f3a9a712396a11fb720c3e5bdf2e1b1d2581d32fb7e3",
+    "sha256": "1715b906bac610dfa301ea329253c7db55ef2848f1344bee55af4e4b8edd6da3",
     "sanitised": true
   },
   {
