@@ -28,4 +28,9 @@ for(const base of Object.keys(tinted.variants)){
 }
 assert.equal(model.normalize({material:'tonirovannye-zerkala',base:'tint_silver',thickness:'6'},materials,()=> 'old').material,'zerkalo-serebro');
 assert.equal(model.normalize({material:'tonirovannye-zerkala',base:'tint_dichroic',thickness:'4'},materials,()=> 'old'),null);
-console.log('PASS: 39 profiles, operation allowlists, mirror/painted heat exclusions, legacy migration and invalid stored entries.');
+for(const value of ['1','200','10000',6]) assert.equal(model.wholeMillimetres(value),true);
+for(const value of ['',0,-1,'0.1','200.01','200,1','abc',Infinity]) assert.equal(model.wholeMillimetres(value),false);
+const fractional=model.normalize({material:'zerkalo-serebro',base:'standard',thickness:'4',width:'200.1',height:'300'},materials,()=> 'fraction');
+assert.equal(fractional.width,'200.1'); // Preserve saved measurements; require correction rather than silently rounding.
+assert.equal(model.wholeMillimetres(fractional.width),false);
+console.log('PASS: 39 profiles, operation allowlists, mirror/painted heat exclusions, legacy migration, invalid stored entries and whole millimetres.');

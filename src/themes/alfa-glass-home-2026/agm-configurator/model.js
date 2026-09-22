@@ -16,5 +16,6 @@
     if(ops.includes('polish')&&ops.includes('grind'))ops=ops.filter(x=>x!=='grind');
     return {id:clean(i.id,100)||newId(),material,base:i.base,thickness:String(i.thickness),width:clean(String(i.width||''),12),height:clean(String(i.height||''),12),quantity:clean(String(i.quantity??'1'),5),unknown:!!i.unknown,ops,packaging:!!i.packaging,note:clean(i.note,2000),bevel:{width:widths.includes(i.bevel?.width)?i.bevel.width:'',scope:i.bevel?.scope==='sides'?'sides':'all',sides:clean(i.bevel?.sides)},drill:{rows:Array.isArray(i.drill?.rows)&&i.drill.rows.length?i.drill.rows.slice(0,20).map(hole):[hole({})],location:clean(i.drill?.location,1000)}};
   }
-  return {normalize,thicknesses};
+  const wholeMillimetres=v=>Number.isInteger(Number(v))&&Number(v)>=1;
+  return {normalize,thicknesses,wholeMillimetres};
 });
