@@ -1,0 +1,6 @@
+[data-k1-slide][hidden],[data-k1-controls][hidden]{display:none!important}
+.k1-variant-controls{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:18px 0}
+.k1-variant-controls button{min-width:48px;min-height:48px;border:1px solid var(--line);border-radius:50%;background:var(--surface);color:var(--text);font-size:24px;cursor:pointer}
+.k1-variant-controls button:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.k1-variant-controls span{text-align:center;font-weight:600}
+.k1-visual-label{font-size:12px;letter-spacing:.08em;font-weight:600}

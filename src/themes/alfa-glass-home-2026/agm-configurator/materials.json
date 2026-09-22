@@ -80,7 +80,8 @@
   "sostarennye-zerkala-k1": {
     "title": "Состаренное зеркало K1",
     "variants": {
-      "standard": "По образцу"
+      "standard": "K1 — светлое",
+      "gold": "K1 Gold — золотое"
     },
     "thicknesses": [
       "4"
