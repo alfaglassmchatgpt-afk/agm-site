@@ -266,7 +266,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-glass/catalog.html",
-    "sha256": "de415fcff563d03e7a8d25505f14bb31b279b5bfaa679703eb3df21ebe5f587d",
+    "sha256": "5647e2dd2ef69cc941415269e909e69c348bde122cd8414fea23880505330466",
     "sanitised": true
   },
   {
@@ -446,12 +446,12 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-glass/zerkalo-gezella.html",
-    "sha256": "2762c9aaa83650d5ed1df5a1a159a48d853b24d0ffb25876ad109a4389a1b7bf",
+    "sha256": "5ac59a908923c43b592f7ef49c79bf92a06826ff8a9bf89164cfd5877621d1cd",
     "sanitised": true
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-glass/zerkalo-osvetlyonnoe.html",
-    "sha256": "8e910105759f4cc276c38d3e7c41ee8780a04630d33940009dcbb8dec9e4d443",
+    "sha256": "68ad6b783e93795490cc6669d943b6084e2bfbf1eb160397e10c58f7749f3bc6",
     "sanitised": true
   },
   {
@@ -536,7 +536,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-materials/mirror.html",
-    "sha256": "4386d6f820816b09bf0efde0e7a1b0c27bbb515b331c4b5b4c9ee9992cdbb19f",
+    "sha256": "394a6dacebd58c7bc846cf09de831a1f7e74ae6efa583f44085a440d74d54ff2",
     "sanitised": true
   },
   {
@@ -1681,7 +1681,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/inc/agm-material-groups.php",
-    "sha256": "0c34fde9cbb8939377ffce7ba38e897e86b339315d09ebc9843972188ad1406d",
+    "sha256": "1e76c0ea2b528b7d7e1512f7ea529cf809d056edce15007de6add53b3f9460ba",
     "sanitised": true
   },
   {
@@ -1716,7 +1716,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-configurator/materials.json",
-    "sha256": "21f811d98c9fa6444ca57d69112e1401e54dd6fc3d19695729bfcc7325d0a71d",
+    "sha256": "6fec6331292b01370658f3a9a712396a11fb720c3e5bdf2e1b1d2581d32fb7e3",
     "sanitised": true
   },
   {
