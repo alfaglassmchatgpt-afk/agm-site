@@ -536,7 +536,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-materials/mirror.html",
-    "sha256": "394a6dacebd58c7bc846cf09de831a1f7e74ae6efa583f44085a440d74d54ff2",
+    "sha256": "99e046146da863fa5da5886d21651b8d9f40a892e5fe1bece27b6342ad970159",
     "sanitised": true
   },
   {
@@ -1768,5 +1768,10 @@
     "path": "src/themes/alfa-glass-home-2026/agm-materials/tinted-samples.css",
     "sanitised": true,
     "sha256": "748d62632d8f10ecb495ed20e6addb2b25b2fe5215edada738f3dd188c7517e3"
+  },
+  {
+    "path": "src/themes/alfa-glass-home-2026/agm-materials/silver-samples.js",
+    "sanitised": true,
+    "sha256": "08571f51738878da06429c31191c2416caae5402970b012c754042ff8f13d78e"
   }
 ]
