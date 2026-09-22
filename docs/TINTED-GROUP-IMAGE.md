@@ -1,0 +1,7 @@
+# Общий образец тонированных зеркал
+
+Каталог использует `agm-materials/assets/tinted-group-stand-v1.png`: семь зеркал со смещением на одной светлой подставке. Создано встроенным imagegen. Локальная копия: `.local/tinted-group/tinted-group-stand-v1.png`. Медиа не публикуется в Git, для восстановления нужен защищённый бэкап; новое изображение войдёт в следующий штатный полный комплект.
+
+Промпт:
+
+Photorealistic square premium material catalog visualization. Match reference neutral sunlit studio, pale limestone plinth, camera angle and calm editorial style. Instead of one sample arrange EXACTLY SEVEN upright portrait rectangular mirror samples on ONE wide low pale limestone plinth, staggered behind one another in an elegant fanned diagonal stepped arrangement. Each panel offset sideways enough that a BROAD face strip (at least 40% width) is visible, showing its distinct color, not merely its edge. Seven colors only: bronze brown, neutral smoke grey, warm gold, rose pink, iridescent rainbow (cyan-violet-rose-gold), deep blue, dark charcoal black. Smooth opaque reflective mirrors, softly reflecting studio window, no transparency through panels, no patina, no texture, no frames. All seven panels same physical size and height, fine polished edges. All seven hues easily distinguishable even at thumbnail size. Complete plinth and all sample tops visible, balanced centered compact arrangement, no text no logos no people. Output square 1254x1254.
