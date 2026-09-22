@@ -43,12 +43,18 @@ function agm_material_catalog_render($html) {
     $groups = agm_material_grouped_pages();
     $selected = isset($_GET['group']) && is_string($_GET['group']) ? sanitize_key(wp_unslash($_GET['group'])) : '';
     if (!isset($groups[$selected])) { $selected = ''; }
+    if ($selected) {
+        // Group links open the actual collection, without the catalog introduction.
+        $html = preg_replace('/<section class="container gc-intro">.*?<\/section>/s', '', $html, 1);
+        $html = str_replace(' / Все материалы</div>', ' / ' . esc_html($groups[$selected]['title']) . '</div>', $html);
+    }
     preg_match_all('/<a class="gc-card"[^>]*>.*?<\/a>/s', $html, $matches);
     $cards = [];
     foreach ($matches[0] as $card) {
         if (preg_match('/href="[^"]*materialy\/([^\/"?]+)\//', $card, $match)) { $cards[$match[1]] = $card; }
     }
     $out = '<section class="container gc-catalog" data-selected-group="' . esc_attr($selected) . '">';
+    if ($selected) { $out .= '<h1>' . esc_html($groups[$selected]['title']) . '</h1>'; }
     $out .= '<label class="gc-search">' . ($selected ? 'Найти в этой группе' : 'Найти среди всех материалов') . '<input id="material-search" type="search" placeholder="Например: Moru, бронза, рифлёное"></label>';
     $out .= '<a class="gc-back" href="' . esc_url(home_url('/materialy/')) . '"' . ($selected ? '' : ' hidden') . '>← Все группы материалов</a>';
     $out .= '<div class="gc-category-grid"' . ($selected ? ' hidden' : '') . '>';
@@ -61,7 +67,7 @@ function agm_material_catalog_render($html) {
     }
     $out .= '</div><p id="material-count" aria-live="polite"></p>';
     foreach ($groups as $key => $group) {
-        $out .= '<section class="gc-material-group" data-group="' . esc_attr($key) . '"' . ($selected === $key ? '' : ' hidden') . '><h2>' . esc_html($group['title']) . '</h2><div class="gc-grid">';
+        $out .= '<section class="gc-material-group" data-group="' . esc_attr($key) . '"' . ($selected === $key ? '' : ' hidden') . '>' . ($selected === $key ? '' : '<h2>' . esc_html($group['title']) . '</h2>') . '<div class="gc-grid">';
         foreach ($group['pages'] as $page) {
             $card = $cards[$page->post_name] ?? '<a class="gc-card" data-material-card href="' . esc_url(get_permalink($page)) . '"><div><h3>' . esc_html($page->post_title) . '</h3><strong>Выбрать материал →</strong></div></a>';
             $card = preg_replace('/ data-groups="[^"]*"/', '', $card);
