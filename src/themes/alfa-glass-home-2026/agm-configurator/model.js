@@ -12,7 +12,7 @@
     const m=materials[material];
     if(!Object.prototype.hasOwnProperty.call(m.variants,i.base)||!thicknesses(m,i.base).includes(String(i.thickness)))return null;
     const hole=h=>({diameter:clean(h?.diameter,12),count:typeof h?.count==='string'?clean(h.count,5):'1',unknown:!!h?.unknown});
-    let ops=Array.isArray(i.ops)?[...new Set(i.ops.filter(x=>m.operations.includes(x)))]:[];
+    let ops=Array.isArray(i.ops)?[...new Set(i.ops.map(x=>x==='frame'&&m.operations.includes('facade')?'facade':x).filter(x=>m.operations.includes(x)))]:[];
     if(ops.includes('polish')&&ops.includes('grind'))ops=ops.filter(x=>x!=='grind');
     return {id:clean(i.id,100)||newId(),material,base:i.base,thickness:String(i.thickness),width:clean(String(i.width||''),12),height:clean(String(i.height||''),12),quantity:clean(String(i.quantity??'1'),5),unknown:!!i.unknown,ops,packaging:!!i.packaging,note:clean(i.note,2000),bevel:{width:widths.includes(i.bevel?.width)?i.bevel.width:'',scope:i.bevel?.scope==='sides'?'sides':'all',sides:clean(i.bevel?.sides)},drill:{rows:Array.isArray(i.drill?.rows)&&i.drill.rows.length?i.drill.rows.slice(0,20).map(hole):[hole({})],location:clean(i.drill?.location,1000)}};
   }

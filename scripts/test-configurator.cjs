@@ -10,6 +10,11 @@ for(const [slug,m] of Object.entries(materials)){
  const item=model.normalize({material:slug,base:Object.keys(m.variants)[0],thickness:m.thicknesses[0],ops:operations.map(o=>o.id)},materials,()=>slug);
  assert.ok(item);assert.ok(item.ops.every(op=>m.operations.includes(op)));
  assert.ok(!(item.ops.includes('polish')&&item.ops.includes('grind')));
+ assert.equal(m.operations.includes('frame'),m.policy==='mirror');
+ assert.equal(m.operations.includes('facade'),m.policy!=='mirror');
+ const migrated=model.normalize({material:slug,base:Object.keys(m.variants)[0],thickness:m.thicknesses[0],ops:['frame'],width:'450',height:'700'},materials,()=>slug);
+ assert.deepEqual(migrated.ops,[m.policy==='mirror'?'frame':'facade']);
+ assert.equal(migrated.width,'450');
 }
 const legacy=model.normalize({base:'tint_bronze',thickness:'6',ops:['temper','bevel'],width:'700',height:'1200',quantity:'2'},materials,()=> 'legacy');
 assert.equal(legacy.material,'tonirovannye-zerkala');assert.deepEqual(legacy.ops,['bevel']);assert.equal(legacy.width,'700');
