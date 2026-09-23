@@ -23,3 +23,5 @@ Dev-адрес: `/obrabotka-stekla-i-zerkal/`. Запись page ID 5175, шаб
 Фигурная резка: assets/shape-oval-offcuts-v1.png — выбранный овал с обрезками, подключён через operations.json к обзору и подсказке. Медиа восстанавливать из защищённого бэкапа.
 
 Галереи: поле images в operations.json содержит image/caption. Общий gallery.js используется обзором и конфигуратором, без автопрокрутки, со стрелками и счётчиком. Три drill-*-v1.png и четыре sandblast-*-v1.png хранятся в agm-configurator/assets на dev и в защищённых копиях; локальные исходники и промпты — .local/drill-gallery и .local/sandblast-gallery. Для подсветки удаляются защитное и отражающее покрытия; справочный источник: https://www.glassetch.ru/photos.html.
+
+Фацет: images включает прежнее сравнение ширины, assets/bevel-panel-v1.png и assets/bevel-room-v1.png. Встроенный image_gen, локальные файлы и промпты .local/bevel-interiors. Для восстановления изображений нужен защищённый бэкап.
