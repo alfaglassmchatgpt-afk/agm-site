@@ -27,3 +27,5 @@ Dev-адрес: `/obrabotka-stekla-i-zerkal/`. Запись page ID 5175, шаб
 Фацет: images включает прежнее сравнение ширины, assets/bevel-panel-v1.png и assets/bevel-room-v1.png. Встроенный image_gen, локальные файлы и промпты .local/bevel-interiors. Для восстановления изображений нужен защищённый бэкап.
 
 Закалка: assets/temper-furnace-v1.png и temper-breakage-v1.png, локально .local/tempering с промптами встроенного image_gen. Справка о разрушении и термообработке: https://www.pilkington.com/en-gb/united-kingdom/architectural-and-technical-glass/product-categories/safety-and-security/pilkington-toughened-glass . Это иллюстрации, не фотографии оборудования компании и не протокол испытаний.
+
+Триплекс: assets/triplex-clear-66-v1.png, triplex-silvit-v1.png, triplex-brass-v1.png. Встроенный image_gen; локальные файлы/промпты .local/triplex. Органическая вертикальная фактура Silvit сверена по https://www.saint-gobain-glass.fr/fr/produits/decorglass ; сетка — по референсу владельца. Примеры не задают сертифицированный состав или характеристики безопасности, медиа восстанавливать из защищённого бэкапа.
