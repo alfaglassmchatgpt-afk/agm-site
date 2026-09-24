@@ -116,7 +116,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/page-agm-glass.php",
-    "sha256": "9d7b39f7113e2e917bd72bbcd28c8b591e3421aa6c5d268c5743030bcd826158",
+    "sha256": "36f083b5b3898c87c6230e534f5f5c4b573ae625b4fd2d74d9935ff0a13245dd",
     "sanitised": true
   },
   {
@@ -266,7 +266,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-glass/catalog.html",
-    "sha256": "5f0456eca6d8f83b4ce6748f221b3207e23550d5bb1004845929097e1a6a218c",
+    "sha256": "702714d3d55e73303cfc12759d225ec6837c7121e8f09e96c43a9feddf5ab138",
     "sanitised": true
   },
   {
@@ -1681,7 +1681,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/inc/agm-material-groups.php",
-    "sha256": "7af8623dde90402ee2339a6d71f6a162a86a5193b1c36a887897ef764c721f7d",
+    "sha256": "76e8148e9fd1312e0b8ef0bb042d3dcfdff6104983e83f29325badc9fc8f22b6",
     "sanitised": true
   },
   {
@@ -1716,7 +1716,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-configurator/materials.json",
-    "sha256": "dd990986233723325d71e595a31edb7f21593a6aa06f71de926bead60b173723",
+    "sha256": "bc74da3594e5e0299d6339f5b719765054f21000c649d7e4f5a4335cce8a02c3",
     "sanitised": true
   },
   {
@@ -1797,6 +1797,11 @@
   {
     "path": "src/themes/alfa-glass-home-2026/agm-glass/moru-crystal.html",
     "sha256": "974249ae2e5ec6e6e914f5f92e3ea31cd1c49ceff092d13c90300d9ef47d8da4",
+    "sanitised": true
+  },
+  {
+    "path": "src/themes/alfa-glass-home-2026/agm-glass/moru-ultra.html",
+    "sha256": "8eb7c0c14b7aecc054ebcf9ee451272b2158955acb9a384ca62824bb3f26f9a2",
     "sanitised": true
   }
 ]
