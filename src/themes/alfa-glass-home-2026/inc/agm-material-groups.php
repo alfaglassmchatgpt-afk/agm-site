@@ -76,12 +76,16 @@ function agm_material_catalog_render($html) {
         $out .= '<section class="gc-material-group" data-group="' . esc_attr($key) . '"' . ($selected === $key ? '' : ' hidden') . '>' . ($selected === $key ? '' : '<h2>' . esc_html($group['title']) . '</h2>') . '<div class="gc-grid">';
         foreach ($group['pages'] as $page) {
             $card = $cards[$page->post_name] ?? '<a class="gc-card" data-material-card href="' . esc_url(get_permalink($page)) . '"><div><h3>' . esc_html($page->post_title) . '</h3><strong>Выбрать материал →</strong></div></a>';
+            if ($page->post_name === 'tonirovannye-zerkala') { $card = agm_tinted_cascade_card(get_permalink($page)); }
             $card = preg_replace('/ data-groups="[^"]*"/', '', $card);
             $out .= str_replace('data-material-card', 'data-material-card data-groups="' . esc_attr($key) . '"', $card);
         }
         $out .= '</div></section>';
     }
     $out .= '<p id="no-results" hidden>Ничего не найдено. Попробуйте другое название.</p></section>';
+    $assets = get_template_directory_uri() . '/agm-glass/';
+    $html = str_replace('</head>', '<link rel="stylesheet" href="' . esc_url($assets . 'tinted-cascade.css?v=1') . '"></head>', $html);
+    $html = str_replace('</body>', '<script src="' . esc_url($assets . 'tinted-cascade.js?v=1') . '" defer></script></body>', $html);
     return preg_replace_callback('/<section class="container gc-catalog">.*?<\/section>/s', function () use ($out) { return $out; }, $html, 1);
 }
 
@@ -103,3 +107,15 @@ add_action('save_post_page', function ($id) {
     if (isset(agm_material_groups()[$key])) { update_post_meta($id, '_agm_material_group', $key); }
     else { delete_post_meta($id, '_agm_material_group'); }
 });
+
+function agm_tinted_cascade_card($url) {
+    $colors = ['bronze'=>'Бронза','grey'=>'Серое','gold'=>'Золотое','pink'=>'Розовое','rainbow'=>'Радужное','blue'=>'Синее','black'=>'Чёрное'];
+    $out = '<article class="gc-card tint-cascade" data-material-card><a class="tint-deck" data-tint-link href="' . esc_url(add_query_arg('variant','tint_bronze',$url)) . '" aria-label="Тонированное зеркало — Бронза">';
+    $n = 0;
+    foreach ($colors as $key=>$label) {
+        $out .= '<img data-cascade-color="' . esc_attr($key) . '" data-label="' . esc_attr($label) . '" src="' . esc_url(get_template_directory_uri() . '/agm-materials/assets/tinted-' . $key . '-sample-v2.png') . '" alt="' . esc_attr($label) . ' — визуализация зеркала" style="--slot:' . $n . ';z-index:' . (7-$n) . '" loading="lazy">';
+        $n++;
+    }
+    $out .= '</a><div class="tint-switch" hidden><button type="button" data-cascade-prev aria-label="Предыдущий оттенок">←</button><span data-cascade-label aria-live="polite">Бронза · 1 / 7</span><button type="button" data-cascade-next aria-label="Следующий оттенок">→</button></div><div class="tint-copy"><h3>Тонированные зеркала</h3><p>7 оттенков · варианты и обработка</p><a data-tint-link href="' . esc_url(add_query_arg('variant','tint_bronze',$url)) . '"><strong>Выбрать материал →</strong></a></div></article>';
+    return $out;
+}

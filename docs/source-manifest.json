@@ -1681,7 +1681,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/inc/agm-material-groups.php",
-    "sha256": "6d7634188221cc2ddcbed9c4faa4de55f321197139d4b21d9925d73b46957a84",
+    "sha256": "adaac63c1e1c9d1e6cb5847b88ba6158fc82a7d4045eee6969e814f46f9229c4",
     "sanitised": true
   },
   {
@@ -1706,7 +1706,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-configurator/app.js",
-    "sha256": "d18dc6cf3790d40573875134813ffc421adc12b7b95c699f5cbd0410bf4b011d",
+    "sha256": "9d82d284bc89b2fcfe2d1ec6feef85e84ea8abb2ceff2d040193b9516e932122",
     "sanitised": true
   },
   {
@@ -1808,5 +1808,15 @@
     "path": "src/themes/alfa-glass-home-2026/agm-glass/moru-bronze-toned.html",
     "sha256": "f3cf5ce8fb2fa2227f0222262fc4dd3b6391ddbcb30ac7887289d85313822faa",
     "sanitised": true
+  },
+  {
+    "path": "src/themes/alfa-glass-home-2026/agm-glass/tinted-cascade.css",
+    "sanitised": true,
+    "sha256": "d3e53a51332515a8420fb121152b2b7fc4361157e2c5372e4a9b70f1a5eedd1e"
+  },
+  {
+    "path": "src/themes/alfa-glass-home-2026/agm-glass/tinted-cascade.js",
+    "sanitised": true,
+    "sha256": "f6b994f3a6d2c3449d4a3b6fb563349be6f74cf9481b70ea4cdbd604a948c211"
   }
 ]

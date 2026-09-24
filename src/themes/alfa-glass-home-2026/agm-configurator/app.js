@@ -17,6 +17,13 @@
   const normalize=i=>AGMOrderModel.normalize(i,materials,newId);
   let omittedStoredItems=0;
   try { const saved=JSON.parse(localStorage.getItem(key)||localStorage.getItem('agm-materials-request-v1')); if(saved && Array.isArray(saved.items)){state.items=saved.items.slice(0,30).map(normalize).filter(Boolean);omittedStoredItems=Math.min(saved.items.length,30)-state.items.length;state.active=state.items.some(i=>i.id===saved.active)?saved.active:state.items[0]?.id||null;} } catch(e) {}
+  // A catalog color opens a fresh draft without changing existing cart items.
+  const requestedVariant=new URLSearchParams(location.search).get('variant');
+  if(current==='tonirovannye-zerkala' && Object.hasOwn(materials[current].variants,requestedVariant)){
+    nextDraft.base=requestedVariant;
+    nextDraft.thickness=AGMOrderModel.thicknesses(materials[current],requestedVariant)[0];
+    state.active=null;
+  }
   const active = () => state.items.find(i=>i.id===state.active);
   function save(){try{localStorage.setItem(key,JSON.stringify(state));}catch(e){toast('Браузер не сохраняет выбор. Скачайте заявку перед закрытием страницы.');}}
   let toastTimer;
