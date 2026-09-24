@@ -424,9 +424,9 @@
     }
   },
   "flutes-moru-ultra-mat": {
-    "title": "Рифлёное матовое стекло Moru Ultra",
+    "title": "MORU Ultra матовое (на осветлённом стекле)",
     "variants": {
-      "standard": "Прозрачный"
+      "standard": "Ultra — матовое на осветлённом стекле"
     },
     "thicknesses": [
       "4",
@@ -434,10 +434,10 @@
     ],
     "operations": [
       "cut",
-      "shape",
       "polish",
       "grind",
       "drill",
+      "shape",
       "facade",
       "temper",
       "laminate",

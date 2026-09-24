@@ -266,7 +266,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-glass/catalog.html",
-    "sha256": "681ccc022ec51cab45e7e4a1cc45ea91180c08f9cdccddd4f19fa12f05fd70e0",
+    "sha256": "6acdef6a79953044c503dc2568673b9b0ff4afc97e2045c620d80e4e20c1f1fd",
     "sanitised": true
   },
   {
@@ -306,7 +306,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-glass/flutes-moru-ultra-mat.html",
-    "sha256": "feffd72bcb045bbf97ec3c5b30f11466e9caee2274658c765ec3f4a270101dcc",
+    "sha256": "5dea2a2c62c10b61b41bc64501f679b90e31a0f3e4d94b5e5f57d5224236ed3b",
     "sanitised": true
   },
   {
@@ -1681,7 +1681,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/inc/agm-material-groups.php",
-    "sha256": "12c9696a016b0cb07abc02392d358435ec6e27017d1bcb531705ebb07111689a",
+    "sha256": "b35350df7a543b8d7c3db463335ce4acb37644452fd71ef5e5cc94ab42c88747",
     "sanitised": true
   },
   {
@@ -1716,7 +1716,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-configurator/materials.json",
-    "sha256": "1d1806f6c0b0717953d603b06c865e3ce3494a73c1429c0e11960760a1c96f96",
+    "sha256": "06859a4e8025926eb843b1702373e26e72d1b75b7856b0ee5fa52038f0b64ee0",
     "sanitised": true
   },
   {
