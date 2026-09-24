@@ -113,7 +113,7 @@ function agm_tinted_cascade_card($url) {
     $out = '<article class="gc-card tint-cascade" data-material-card><a class="tint-deck" data-tint-link href="' . esc_url(add_query_arg('variant','tint_bronze',$url)) . '" aria-label="Тонированное зеркало — Бронза">';
     $n = 0;
     foreach ($colors as $key=>$label) {
-        $out .= '<img data-cascade-color="' . esc_attr($key) . '" data-label="' . esc_attr($label) . '" src="' . esc_url(get_template_directory_uri() . '/agm-materials/assets/tinted-' . $key . '-sample-v2.png') . '" alt="' . esc_attr($label) . ' — визуализация зеркала" style="--slot:' . $n . ';z-index:' . (7-$n) . '" loading="lazy">';
+        $out .= '<img data-cascade-color="' . esc_attr($key) . '" data-label="' . esc_attr($label) . '" src="' . esc_url(get_template_directory_uri() . '/agm-materials/assets/tinted-' . $key . '-catalog-v3.png') . '" alt="' . esc_attr($label) . ' — визуализация зеркала" style="--slot:' . $n . ';z-index:' . (7-$n) . '" loading="lazy">';
         $n++;
     }
     $out .= '</a><div class="tint-copy"><h3>Тонированные зеркала</h3><p>7 оттенков</p><div class="tint-swatches" role="group" aria-label="Цвет зеркала" hidden>';
