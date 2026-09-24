@@ -56,6 +56,7 @@
     const i=active(), selection=onThisPage(i)?i:nextDraft;
     if(i){$('#width').value=i.width;$('#height').value=i.height;$('#quantity').value=i.quantity;$('#unknown').checked=i.unknown;$('#width').disabled=i.unknown;$('#height').disabled=i.unknown;$('#item-note').value=i.note;$('#active-item-label').textContent='Параметры изделия '+(state.items.indexOf(i)+1);}
     if(mirrorPage){$$('input[name=base]').forEach(r=>r.checked=r.value===selection.base);$$('input[name=thickness]').forEach(r=>{r.checked=r.value===selection.thickness;r.disabled=!AGMOrderModel.thicknesses(materials[current],selection.base).includes(r.value);});$('#variant-note').textContent=materialName(selection)+': '+baseName(selection)+', '+thicknessName(selection)+'.'+(i&&!onThisPage(i)?' В расчёте выбрано изделие другого материала. Нажмите «Добавить ещё изделие», чтобы добавить этот вариант.':'');$('#add-material').textContent=i?'Добавить ещё изделие →':'Добавить к расчёту →';}
+    document.dispatchEvent(new CustomEvent('agm:selectionchange',{detail:{material:current,base:selection.base}}));
   }
   const processing=node('div',undefined,'processing-options');
   $('#selected-ops').after(processing);

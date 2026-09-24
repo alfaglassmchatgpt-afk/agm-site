@@ -3,3 +3,5 @@
 .tint-controls{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.tint-controls span{text-align:center;font-weight:600}
 .tint-controls button{min-width:44px;min-height:44px;border:1px solid var(--line,#ddd);border-radius:50%;background:var(--surface,#fff);color:inherit;font-size:24px;cursor:pointer}
 .tint-controls button:focus-visible{outline:3px solid #007ca6;outline-offset:3px}.option:has(input:disabled){opacity:.45}
+
+body[data-page="tinted"] .tint-samples .material-photo img{height:auto;aspect-ratio:4/5;object-fit:contain}
