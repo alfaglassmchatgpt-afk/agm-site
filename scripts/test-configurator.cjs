@@ -1,7 +1,13 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const root=path.join(__dirname,'../src/themes/alfa-glass-home-2026/agm-configurator');
 const model=require(root+'/model.js'),materials=JSON.parse(fs.readFileSync(root+'/materials.json')),operations=JSON.parse(fs.readFileSync(root+'/operations.json'));
-assert.equal(Object.keys(materials).length,39);
+assert.equal(Object.keys(materials).length,40);
+assert.deepEqual(materials['moru-crystal'].thicknesses,['4','5','6','8','10']);
+for(const thickness of materials['moru-crystal'].thicknesses){
+ const item=model.normalize({material:'moru-crystal',base:'standard',thickness,ops:['temper','laminate','bevel','facade']},materials,()=> 'moru');
+ assert.ok(item);assert.equal(item.thickness,thickness);
+ assert.deepEqual(item.ops,['temper','laminate','bevel','facade']);
+}
 for(const [slug,m] of Object.entries(materials)){
  assert.ok(m.thicknesses.length&&Object.keys(m.variants).length);
  assert.equal(new Set(m.operations).size,m.operations.length);
@@ -38,4 +44,4 @@ for(const value of ['',0,-1,'0.1','200.01','200,1','abc',Infinity]) assert.equal
 const fractional=model.normalize({material:'zerkalo-serebro',base:'standard',thickness:'4',width:'200.1',height:'300'},materials,()=> 'fraction');
 assert.equal(fractional.width,'200.1'); // Preserve saved measurements; require correction rather than silently rounding.
 assert.equal(model.wholeMillimetres(fractional.width),false);
-console.log('PASS: 39 profiles, operation allowlists, mirror/painted heat exclusions, legacy migration, invalid stored entries and whole millimetres.');
+console.log('PASS: 40 profiles, operation allowlists, MORU CRYSTAL thicknesses, mirror/painted heat exclusions, legacy migration, invalid stored entries and whole millimetres.');
