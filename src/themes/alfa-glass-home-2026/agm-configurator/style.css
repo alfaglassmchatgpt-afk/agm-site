@@ -15,3 +15,10 @@
 @media(max-width:700px){.agm-order .tinted-application-grid{grid-template-columns:1fr}}
 
 .agm-order{--brand:var(--blue,#006d86);--paper:var(--surface,#fff);--top:0px;scroll-margin-top:220px}.agm-order .workspace{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:28px}.agm-order .product-info{margin-bottom:24px}.agm-order .options{flex-wrap:wrap}.agm-order .option{min-width:90px}.agm-order .cart-panel{top:220px;max-height:calc(100dvh - 240px)}.agm-order .field select{width:100%;padding:10px;background:var(--paper);color:var(--ink);border:1px solid var(--line);border-radius:7px}.agm-order svg{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round}.agm-order [hidden]{display:none!important}@media(max-width:980px){.agm-order .workspace{display:block}.agm-order .cart-panel{top:0;max-height:100dvh}.agm-order .cart-mobile{z-index:80}}
+
+/* Keep the embedded calculator independent of the host page's form defaults. */
+.agm-order{font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:var(--ink)}
+.agm-order .check-row input,.agm-order .packing input{appearance:auto;width:16px;height:16px;min-width:16px;min-height:16px;padding:0;flex-shrink:0}
+.agm-order .field input,.agm-order .field textarea{font-weight:400}
+.agm-order .cart-heading h2{font-weight:700}
+.agm-order .toast:not([hidden]){opacity:1;pointer-events:none}
