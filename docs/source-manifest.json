@@ -1681,7 +1681,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/inc/agm-material-groups.php",
-    "sha256": "adaac63c1e1c9d1e6cb5847b88ba6158fc82a7d4045eee6969e814f46f9229c4",
+    "sha256": "a4e6ef95fac6f48762225daf1e1a8d20cd1724fb9cd00bfaa4149a70f4e5195f",
     "sanitised": true
   },
   {
@@ -1812,11 +1812,11 @@
   {
     "path": "src/themes/alfa-glass-home-2026/agm-glass/tinted-cascade.css",
     "sanitised": true,
-    "sha256": "d3e53a51332515a8420fb121152b2b7fc4361157e2c5372e4a9b70f1a5eedd1e"
+    "sha256": "307b820f392cf035116cf6fe8b9689d0b531e207765ea509a0dfee784dc05a81"
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-glass/tinted-cascade.js",
     "sanitised": true,
-    "sha256": "f6b994f3a6d2c3449d4a3b6fb563349be6f74cf9481b70ea4cdbd604a948c211"
+    "sha256": "521517ac2d28d90b32b74761b6f6212ca472150a58b18596898cb179ff7b8825"
   }
 ]

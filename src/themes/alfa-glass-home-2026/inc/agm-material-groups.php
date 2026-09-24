@@ -84,8 +84,8 @@ function agm_material_catalog_render($html) {
     }
     $out .= '<p id="no-results" hidden>Ничего не найдено. Попробуйте другое название.</p></section>';
     $assets = get_template_directory_uri() . '/agm-glass/';
-    $html = str_replace('</head>', '<link rel="stylesheet" href="' . esc_url($assets . 'tinted-cascade.css?v=1') . '"></head>', $html);
-    $html = str_replace('</body>', '<script src="' . esc_url($assets . 'tinted-cascade.js?v=1') . '" defer></script></body>', $html);
+    $html = str_replace('</head>', '<link rel="stylesheet" href="' . esc_url($assets . 'tinted-cascade.css?v=2') . '"></head>', $html);
+    $html = str_replace('</body>', '<script src="' . esc_url($assets . 'tinted-cascade.js?v=2') . '" defer></script></body>', $html);
     return preg_replace_callback('/<section class="container gc-catalog">.*?<\/section>/s', function () use ($out) { return $out; }, $html, 1);
 }
 
@@ -116,6 +116,10 @@ function agm_tinted_cascade_card($url) {
         $out .= '<img data-cascade-color="' . esc_attr($key) . '" data-label="' . esc_attr($label) . '" src="' . esc_url(get_template_directory_uri() . '/agm-materials/assets/tinted-' . $key . '-sample-v2.png') . '" alt="' . esc_attr($label) . ' — визуализация зеркала" style="--slot:' . $n . ';z-index:' . (7-$n) . '" loading="lazy">';
         $n++;
     }
-    $out .= '</a><div class="tint-switch" hidden><button type="button" data-cascade-prev aria-label="Предыдущий оттенок">←</button><span data-cascade-label aria-live="polite">Бронза · 1 / 7</span><button type="button" data-cascade-next aria-label="Следующий оттенок">→</button></div><div class="tint-copy"><h3>Тонированные зеркала</h3><p>7 оттенков · варианты и обработка</p><a data-tint-link href="' . esc_url(add_query_arg('variant','tint_bronze',$url)) . '"><strong>Выбрать материал →</strong></a></div></article>';
+    $out .= '</a><div class="tint-copy"><h3>Тонированные зеркала</h3><p>7 оттенков</p><div class="tint-swatches" role="group" aria-label="Цвет зеркала" hidden>';
+    foreach ($colors as $key=>$label) {
+        $out .= '<button type="button" data-swatch="' . esc_attr($key) . '" aria-label="' . esc_attr($label) . '" title="' . esc_attr($label) . '" aria-pressed="' . ($key === 'bronze' ? 'true' : 'false') . '"></button>';
+    }
+    $out .= '</div><p class="tint-color-label" data-cascade-label aria-live="polite">Бронза</p><a data-tint-link href="' . esc_url(add_query_arg('variant','tint_bronze',$url)) . '"><strong>Выбрать материал →</strong></a></div></article>';
     return $out;
 }
