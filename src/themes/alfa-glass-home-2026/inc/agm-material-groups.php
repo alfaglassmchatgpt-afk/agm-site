@@ -31,6 +31,10 @@ function agm_material_grouped_pages() {
                 if (in_array($page->post_name, $group['slugs'], true)) { $key = $candidate; break; }
             }
         }
+        // Existing reeded cards are hidden while their replacement content is prepared.
+        // Explicit slugs allow newly created cards to appear without lifting this hold.
+        $held_reeded = ['raywall90', 'raywall', 'vison-sun', 'flutes-moru-bronze', 'flutes-moru-ultra', 'flutes-moru-grey', 'flutes-moru-grey-mat', 'flutes-moru-bronze-mat', 'flutes-moru-ultra-mat', 'tonirovannoe-v-masse-steklo-moru'];
+        if ($key === 'riflenoe-steklo' && in_array($page->post_name, $held_reeded, true)) { continue; }
         $groups[$key]['pages'][] = $page;
     }
     $order = array_flip($groups['zerkala']['slugs']);
