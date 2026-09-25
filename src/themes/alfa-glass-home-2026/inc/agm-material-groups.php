@@ -12,7 +12,7 @@ function agm_material_groups() {
         'okrashennoe-steklo' => ['title' => 'Окрашенное стекло', 'slugs' => ['steklo-lacobel', 'steklo-matelak']],
         'uzorchatoe-steklo' => ['title' => 'Узорчатое стекло', 'slugs' => ['diamant', 'hithicross', 'gothic', 'silvit', 'kathedral-klein', 'monumental-atlantic', 'krepi', 'kathedralaqualite']],
         'matovoe-steklo' => ['title' => 'Матовое стекло', 'slugs' => ['steklo-matovoe-matelux']],
-        'prozrachnoe-steklo' => ['title' => 'Прозрачное и осветлённое стекло', 'slugs' => ['float-steklo-clear-m1', 'steklo-osvetlyonnoe-clearvision', 'steklo-kristalvizhn-crystalvision']],
+        'prozrachnoe-steklo' => ['title' => 'Прозрачное и осветлённое стекло', 'slugs' => ['float-steklo-clear-m1', 'steklo-kristalvizhn-crystalvision', 'steklo-osvetlyonnoe-clearvision']],
         'solncezashhitnoe-steklo' => ['title' => 'Солнцезащитное стекло', 'slugs' => ['steklo-solnczezashhitnoe-stopsol']],
         'dihroichnoe-steklo' => ['title' => 'Дихроичное стекло', 'slugs' => ['dihroichnoe-steklo']],
         'other' => ['title' => 'Другие материалы', 'slugs' => []],
@@ -39,6 +39,8 @@ function agm_material_grouped_pages() {
     }
     $order = array_flip($groups['zerkala']['slugs']);
     usort($groups['zerkala']['pages'], function ($a, $b) use ($order) { return ($order[$a->post_name] ?? 99) <=> ($order[$b->post_name] ?? 99); });
+    $order = array_flip($groups['prozrachnoe-steklo']['slugs']);
+    usort($groups['prozrachnoe-steklo']['pages'], function ($a, $b) use ($order) { return ($order[$a->post_name] ?? 99) <=> ($order[$b->post_name] ?? 99); });
     return array_filter($groups, function ($group) { return !empty($group['pages']); });
 }
 
