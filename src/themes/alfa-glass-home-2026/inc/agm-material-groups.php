@@ -5,7 +5,7 @@ defined('ABSPATH') || exit;
 function agm_material_groups() {
     return [
         'zerkala' => ['title' => 'Зеркала', 'slugs' => ['zerkalo-serebro', 'zerkalo-osvetlyonnoe', 'tonirovannye-zerkala', 'zerkalo-gezella']],
-        'craft-triplex' => ['title' => 'Крафтовый триплекс', 'slugs' => ['craft-moru-bronze-mat']],
+        'craft-triplex' => ['title' => 'Крафтовый триплекс', 'slugs' => ['craft-moru-bronze-mat', 'craft-moru-grey-mat']],
         'riflenoe-steklo' => ['title' => 'Рифлёное стекло', 'slugs' => ['riflenoe-steklo-flutes', 'moru-crystal', 'moru-ultra', 'moru-bronze-toned', 'moru-grey', 'raywall90', 'raywall', 'vison-sun', 'flutes-moru-bronze', 'flutes-moru-ultra', 'flutes-moru-grey', 'flutes-moru-grey-mat', 'flutes-moru-bronze-mat', 'flutes-moru-ultra-mat', 'tonirovannoe-v-masse-steklo-moru']],
         'sostarennye-zerkala' => ['title' => 'Состаренные зеркала', 'slugs' => ['sostarennye-zerkala', 'sostarennye-zerkala-k1']],
         'tonirovannoe-steklo' => ['title' => 'Тонированное стекло', 'slugs' => ['moru-dark-grey', 'moru-bronze', 'moru-bronze-mat', 'moru-grey-mat', 'moru-dark-grey-mat']],
