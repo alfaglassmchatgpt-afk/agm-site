@@ -1104,8 +1104,7 @@
     "8"
   ],
   "operations": [
-    "craft_holes",
-    "craft_cutouts"
+    "drill"
   ],
   "policy": "craft",
   "fixedComposition": true,
@@ -1125,8 +1124,7 @@
     "8"
   ],
   "operations": [
-    "craft_holes",
-    "craft_cutouts"
+    "drill"
   ],
   "policy": "craft",
   "fixedComposition": true,
@@ -1146,8 +1144,7 @@
     "8"
   ],
   "operations": [
-    "craft_holes",
-    "craft_cutouts"
+    "drill"
   ],
   "policy": "craft",
   "fixedComposition": true,

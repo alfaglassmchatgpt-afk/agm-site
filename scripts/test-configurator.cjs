@@ -56,7 +56,16 @@ for(const [slug,m] of Object.entries(materials)){if(!m.operationThicknesses)cont
 
 const craft=materials['craft-moru-bronze-mat'];
 assert.deepEqual(craft.thicknesses,['8']);
-assert.deepEqual(craft.operations,['craft_holes','craft_cutouts']);
-assert.deepEqual(model.normalize({material:'craft-moru-bronze-mat',base:'standard',thickness:'8',ops:['temper','laminate','craft_holes','craft_cutouts']},materials,()=> 'craft').ops,['craft_holes','craft_cutouts']);
+assert.deepEqual(craft.operations,['drill']);
+assert.deepEqual(model.normalize({material:'craft-moru-bronze-mat',base:'standard',thickness:'8',ops:['temper','laminate','craft_holes','craft_cutouts']},materials,()=> 'craft').ops,['drill']);
 for(const [width,height,unknown,expected] of [['1400','2900',false,true],['1401','2000',false,false],['1000','2901',false,false],['2900','1400',false,false],['1000.5','2000',false,false],['','',true,false]]) assert.equal(model.fitsFormat({width,height,unknown},craft),expected);
-console.log('PASS: fixed craft composition, two manufacturing options, whole-mm format bounds and required dimensions.');
+console.log('PASS: fixed craft composition, shared drill operation, whole-mm format bounds and required dimensions.');
+for(const [slug,m] of Object.entries(materials).filter(([,m])=>m.policy==='craft')){
+  assert.deepEqual(m.operations,['drill']);
+  for(const legacy of [['craft_holes'],['craft_cutouts'],['craft_holes','craft_cutouts'],['drill','craft_cutouts']]) {
+    const item=model.normalize({material:slug,base:'standard',thickness:'8',ops:legacy,width:'1000',height:'2000',note:'По эскизу'},materials,()=>slug);
+    assert.deepEqual(item.ops,['drill']);assert.equal(item.note,'По эскизу');assert.equal(item.width,'1000');
+  }
+}
+assert.ok(!operations.some(o=>['craft_holes','craft_cutouts'].includes(o.id)));
+console.log('PASS: all craft profiles reuse drill; legacy selections deduplicated and dimensions/notes retained.');

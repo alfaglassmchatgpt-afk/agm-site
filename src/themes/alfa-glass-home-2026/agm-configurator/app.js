@@ -90,7 +90,7 @@
       if(i.bevel.scope==='sides'){const [l,t]=field('Стороны фацета / ссылка на чертёж','bevel-sides',i.bevel.sides,'textarea');t.maxLength=500;t.placeholder='Например: верхняя и две боковые';t.addEventListener('input',()=>{i.bevel.sides=t.value;commit();});box.append(l);}
       box.append(node('p','Допустимость ширины для выбранного материала подтвердим при расчёте.','small muted'));processing.append(box);
     }
-    if(i.ops.includes('drill')){
+    if(i.ops.includes('drill')&&materials[i.material].policy!=='craft'){
       const box=node('fieldset',undefined,'processing-box');box.append(node('legend','Параметры отверстий'),node('p','Количество указывайте на одно изделие. Для разных диаметров добавьте отдельные строки.','small muted'));
       i.drill.rows.forEach((r,n)=>{
         const row=node('div',undefined,'hole-row');row.append(node('strong','Отверстия — группа '+(n+1)));
@@ -107,12 +107,12 @@
   function processingText(i){
     const text=[];
     if(i.ops.includes('bevel'))text.push('Фацет: '+(i.bevel.width?i.bevel.width+' мм':'ширина не указана')+', '+(i.bevel.scope==='all'?'по всему периметру':'отдельные стороны: '+i.bevel.sides));
-    if(i.ops.includes('drill')){i.drill.rows.forEach(r=>text.push('Отверстия: '+(r.unknown?'диаметр уточнить':'Ø '+r.diameter+' мм')+' — '+r.count+' шт. на изделие; всего '+(Number(r.count)*Number(i.quantity))+' шт.'));text.push('Расположение отверстий: '+(i.drill.location||'уточнить / по чертежу'));}
+    if(i.ops.includes('drill')&&materials[i.material].policy!=='craft'){i.drill.rows.forEach(r=>text.push('Отверстия: '+(r.unknown?'диаметр уточнить':'Ø '+r.diameter+' мм')+' — '+r.count+' шт. на изделие; всего '+(Number(r.count)*Number(i.quantity))+' шт.'));text.push('Расположение отверстий: '+(i.drill.location||'уточнить / по чертежу'));}
     return text.length?'\n'+text.join('\n'):'';
   }
   function processingError(i){
     if(i.ops.includes('bevel')){if(!bevelWidths.includes(i.bevel.width))return 'Выберите ширину фацета.';if(i.bevel.scope==='sides'&&!i.bevel.sides.trim())return 'Укажите стороны фацета или напишите «по чертежу».';}
-    if(i.ops.includes('drill'))for(const r of i.drill.rows){if(!r.unknown&&(!window.AGMOrderModel.wholeMillimetres(r.diameter)))return 'Укажите диаметр отверстий целым числом в мм (от 1 мм) или выберите консультацию.';if(!Number.isInteger(Number(r.count))||Number(r.count)<1||Number(r.count)>9999)return 'Количество отверстий на изделие должно быть целым числом от 1 до 9999.';}
+    if(i.ops.includes('drill')&&materials[i.material].policy!=='craft')for(const r of i.drill.rows){if(!r.unknown&&(!window.AGMOrderModel.wholeMillimetres(r.diameter)))return 'Укажите диаметр отверстий целым числом в мм (от 1 мм) или выберите консультацию.';if(!Number.isInteger(Number(r.count))||Number(r.count)<1||Number(r.count)>9999)return 'Количество отверстий на изделие должно быть целым числом от 1 до 9999.';}
     return null;
   }
   function addItem(){
