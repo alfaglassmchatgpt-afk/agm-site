@@ -87,6 +87,7 @@ function agm_material_catalog_render($html) {
     }
     $out .= '<p id="no-results" hidden>Ничего не найдено. Попробуйте другое название.</p></section>';
     $assets = get_template_directory_uri() . '/agm-glass/';
+    $html = str_replace('</head>', '<link rel="stylesheet" href="' . esc_url(get_template_directory_uri() . '/agm-glass/sample-standard.css?v=' . filemtime(get_template_directory() . '/agm-glass/sample-standard.css')) . '"></head>', $html);
     $html = str_replace('</head>', '<link rel="stylesheet" href="' . esc_url($assets . 'group-navigation.css?v=' . filemtime(get_template_directory() . '/agm-glass/group-navigation.css')) . '"></head>', $html);
     $html = str_replace('</head>', '<link rel="stylesheet" href="' . esc_url($assets . 'craft.css?v=1') . '"></head>', $html);
     $html = str_replace('</head>', '<link rel="stylesheet" href="' . esc_url($assets . 'tinted-cascade.css?v=2') . '"></head>', $html);

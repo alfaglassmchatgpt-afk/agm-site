@@ -1,0 +1,7 @@
+/* Keep the complete standardized sample visible in groups and product galleries. */
+.gc-category img{height:auto;aspect-ratio:1/1;object-fit:contain}
+.agm-material-layout .gc-main-photo img,
+.agm-material-layout .clear-sample-gallery .gc-main-photo img,
+.agm-order .material-photo img,
+body[data-page="tinted"] .tint-samples .material-photo img{display:block;width:100%;height:auto;max-height:none;aspect-ratio:1/1;object-fit:contain}
+.agm-order .related-mirror-card>img{height:auto;aspect-ratio:1/1;object-fit:contain}

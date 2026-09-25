@@ -61,6 +61,7 @@ function agm_order_render($html, $slug, $legacy = false) {
     $back = '<nav class="container agm-card-back" aria-label="Возврат в каталог"><a href="' . esc_url($backUrl) . '"><span aria-hidden="true">←</span> Назад: ' . esc_html($backLabel) . '</a></nav>';
     $html = preg_replace_callback('/<main\b[^>]*>/', function ($match) use ($back) { return $match[0] . $back; }, $html, 1);
     $html = str_replace('</head>', '<link rel="stylesheet" href="' . $asset('navigation.css') . '"></head>', $html);
+    $html = str_replace('</head>', '<link rel="stylesheet" href="' . esc_url(get_template_directory_uri() . '/agm-glass/sample-standard.css?v=' . filemtime(get_template_directory() . '/agm-glass/sample-standard.css')) . '"></head>', $html);
 
     $data = ['operationAssetsUrl' => $url . '/', 'processingUrl' => home_url('/obrabotka-stekla-i-zerkal/'), 'current' => $slug, 'materials' => $registry, 'operations' => json_decode(file_get_contents($dir . '/operations.json'), true)];
     $scripts = '<script id="agm-order-data" type="application/json">' . wp_json_encode($data, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE) . '</script>';
