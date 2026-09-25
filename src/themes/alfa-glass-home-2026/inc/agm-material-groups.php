@@ -8,10 +8,10 @@ function agm_material_groups() {
         'craft-triplex' => ['title' => 'Крафтовый триплекс', 'slugs' => ['craft-moru-bronze-mat', 'craft-moru-grey-mat', 'craft-moru-dark-grey-mat']],
         'riflenoe-steklo' => ['title' => 'Рифлёное стекло', 'slugs' => ['riflenoe-steklo-flutes', 'moru-crystal', 'moru-ultra', 'moru-bronze-toned', 'moru-grey', 'raywall90', 'raywall', 'vison-sun', 'flutes-moru-bronze', 'flutes-moru-ultra', 'flutes-moru-grey', 'flutes-moru-grey-mat', 'flutes-moru-bronze-mat', 'flutes-moru-ultra-mat', 'tonirovannoe-v-masse-steklo-moru']],
         'sostarennye-zerkala' => ['title' => 'Состаренные зеркала', 'slugs' => ['sostarennye-zerkala', 'sostarennye-zerkala-k1']],
-        'tonirovannoe-steklo' => ['title' => 'Тонированное стекло', 'slugs' => ['moru-dark-grey', 'moru-bronze', 'moru-bronze-mat', 'moru-grey-mat', 'moru-dark-grey-mat']],
+        'tonirovannoe-steklo' => ['title' => 'Тонированное стекло', 'slugs' => ['moru-dark-grey', 'moru-bronze', 'moru-dark-grey-mat']],
         'okrashennoe-steklo' => ['title' => 'Окрашенное стекло', 'slugs' => ['steklo-lacobel', 'steklo-matelak']],
         'uzorchatoe-steklo' => ['title' => 'Узорчатое стекло', 'slugs' => ['diamant', 'hithicross', 'gothic', 'silvit', 'kathedral-klein', 'monumental-atlantic', 'krepi', 'kathedralaqualite']],
-        'matovoe-steklo' => ['title' => 'Матовое стекло', 'slugs' => ['steklo-matovoe-matelux']],
+        'matovoe-steklo' => ['title' => 'Матовое стекло', 'slugs' => ['steklo-matovoe-matelux', 'steklo-matovoe-osvetlyonnoe', 'moru-bronze-mat', 'moru-grey-mat']],
         'prozrachnoe-steklo' => ['title' => 'Прозрачное и осветлённое стекло', 'slugs' => ['float-steklo-clear-m1', 'steklo-kristalvizhn-crystalvision', 'steklo-osvetlyonnoe-clearvision']],
         'solncezashhitnoe-steklo' => ['title' => 'Солнцезащитное стекло', 'slugs' => ['steklo-solnczezashhitnoe-stopsol']],
         'dihroichnoe-steklo' => ['title' => 'Дихроичное стекло', 'slugs' => ['dihroichnoe-steklo']],
@@ -41,6 +41,8 @@ function agm_material_grouped_pages() {
     usort($groups['zerkala']['pages'], function ($a, $b) use ($order) { return ($order[$a->post_name] ?? 99) <=> ($order[$b->post_name] ?? 99); });
     $order = array_flip($groups['prozrachnoe-steklo']['slugs']);
     usort($groups['prozrachnoe-steklo']['pages'], function ($a, $b) use ($order) { return ($order[$a->post_name] ?? 99) <=> ($order[$b->post_name] ?? 99); });
+    $order = array_flip($groups['matovoe-steklo']['slugs']);
+    usort($groups['matovoe-steklo']['pages'], function ($a, $b) use ($order) { return ($order[$a->post_name] ?? 99) <=> ($order[$b->post_name] ?? 99); });
     return array_filter($groups, function ($group) { return !empty($group['pages']); });
 }
 

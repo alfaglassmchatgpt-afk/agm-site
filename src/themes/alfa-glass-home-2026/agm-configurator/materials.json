@@ -468,9 +468,9 @@
     }
   },
   "moru-bronze-mat": {
-    "title": "Тонированное стекло Bronze Satin",
+    "title": "Матовое бронзовое стекло",
     "variants": {
-      "standard": "Тонированное в массе бронза сатинированное"
+      "standard": "Бронза матовая"
     },
     "thicknesses": [
       "4",
@@ -484,15 +484,21 @@
       "polish",
       "grind",
       "drill",
-      "facade"
+      "facade",
+      "temper",
+      "paint",
+      "film",
+      "laminate",
+      "bevel"
     ],
     "policy": "basic",
-    "note": "Специальные обработки включаются после подтверждения для этого материала."
+    "note": "Формат листа 3210 × 2250 мм. Изготовление по вашим размерам.",
+    "preserveUnknownThickness": true
   },
   "moru-grey-mat": {
-    "title": "Тонированное стекло Grey Satin",
+    "title": "Матовое серое стекло",
     "variants": {
-      "standard": "Тонированное в массе серое сатинированное"
+      "standard": "Серое матовое"
     },
     "thicknesses": [
       "4",
@@ -506,10 +512,16 @@
       "polish",
       "grind",
       "drill",
-      "facade"
+      "facade",
+      "temper",
+      "paint",
+      "film",
+      "laminate",
+      "bevel"
     ],
     "policy": "basic",
-    "note": "Специальные обработки включаются после подтверждения для этого материала."
+    "note": "Формат листа 3210 × 2250 мм. Изготовление по вашим размерам.",
+    "preserveUnknownThickness": true
   },
   "moru-dark-grey-mat": {
     "title": "Стекло Dark Grey Mat",
@@ -534,12 +546,15 @@
     "note": "Специальные обработки включаются после подтверждения для этого материала."
   },
   "steklo-matovoe-matelux": {
-    "title": "Стекло Matelux матовое &quot;сатинато&quot;  (Satinato)",
+    "title": "Матовое стекло Matelux",
     "variants": {
-      "standard": "По образцу"
+      "standard": "Матовое стекло"
     },
     "thicknesses": [
-      "unknown"
+      "4",
+      "6",
+      "8",
+      "10"
     ],
     "operations": [
       "cut",
@@ -547,10 +562,16 @@
       "polish",
       "grind",
       "drill",
-      "facade"
+      "facade",
+      "temper",
+      "paint",
+      "film",
+      "laminate",
+      "bevel"
     ],
     "policy": "basic",
-    "note": "Специальные обработки включаются после подтверждения для этого материала."
+    "note": "Формат листа 3210 × 2250 мм. Изготовление по вашим размерам.",
+    "preserveUnknownThickness": true
   },
   "moru-grey": {
     "title": "MORU тонированное в массе Grey",
@@ -1184,5 +1205,33 @@
       "height": 2900
     },
     "note": "Готовая комбинация 4 + 4 мм. Формат 2900 × 1400 мм; рифление вдоль высоты. Укажите размер изделия, наличие отверстий и технологических вырезов; расположение — по эскизу."
+  },
+  "steklo-matovoe-osvetlyonnoe": {
+    "policy": "basic",
+    "title": "Матовое осветлённое стекло",
+    "variants": {
+      "standard": "Осветлённое матовое стекло"
+    },
+    "thicknesses": [
+      "4",
+      "6",
+      "8",
+      "10"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "facade",
+      "temper",
+      "paint",
+      "film",
+      "laminate",
+      "bevel"
+    ],
+    "note": "Формат листа 3210 × 2250 мм. Изготовление по вашим размерам.",
+    "preserveUnknownThickness": true
   }
 }
