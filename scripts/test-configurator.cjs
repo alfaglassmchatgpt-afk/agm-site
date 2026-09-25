@@ -1,6 +1,15 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const root=path.join(__dirname,'../src/themes/alfa-glass-home-2026/agm-configurator');
 const model=require(root+'/model.js'),materials=JSON.parse(fs.readFileSync(root+'/materials.json')),operations=JSON.parse(fs.readFileSync(root+'/operations.json'));
+for(const slug of ['float-steklo-clear-m1','steklo-kristalvizhn-crystalvision','steklo-osvetlyonnoe-clearvision']){
+ assert.deepEqual(materials[slug].thicknesses,['4','5','6','8','10','12']);
+ const prior={material:slug,base:'standard',thickness:'unknown',width:'480',height:'720',quantity:'2',ops:['drill','bevel'],note:'По чертежу'};
+ const restored=model.normalize(prior,materials,()=>slug);
+ assert.ok(restored);assert.equal(restored.thickness,'unknown');assert.equal(restored.width,'480');assert.equal(restored.height,'720');assert.equal(restored.quantity,'2');assert.deepEqual(restored.ops,prior.ops);assert.equal(restored.note,prior.note);
+ for(const thickness of materials[slug].thicknesses)assert.equal(model.normalize({...prior,thickness},materials,()=>slug).thickness,thickness);
+ assert.equal(model.normalize({...prior,thickness:'7'},materials,()=>slug),null);
+}
+assert.equal(model.normalize({material:'zerkalo-serebro',base:'standard',thickness:'unknown'},materials,()=> 'invalid'),null);
 assert.equal(Object.keys(materials).length,45);
 assert.deepEqual(materials['moru-bronze-toned'].thicknesses,['4','5','8']);
 const bronze=model.normalize({material:'moru-bronze-toned',base:'standard',thickness:'8',ops:['temper','laminate','paint','cut','facade']},materials,()=> 'bronze');

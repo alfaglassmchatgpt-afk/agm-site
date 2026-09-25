@@ -137,10 +137,15 @@
   "float-steklo-clear-m1": {
     "title": "Стекло прозрачное (М1)",
     "variants": {
-      "standard": "По образцу"
+      "standard": "М1"
     },
     "thicknesses": [
-      "unknown"
+      "4",
+      "5",
+      "6",
+      "8",
+      "10",
+      "12"
     ],
     "operations": [
       "cut",
@@ -156,7 +161,8 @@
       "bevel"
     ],
     "policy": "basic",
-    "note": "Параметры обработок согласуем по толщине стекла, размерам изделия и чертежу."
+    "note": "Параметры обработок согласуем по толщине стекла, размерам изделия и чертежу.",
+    "preserveUnknownThickness": true
   },
   "raywall90": {
     "title": "Рифлёное стекло RAYWALL90",
@@ -888,10 +894,15 @@
   "steklo-osvetlyonnoe-clearvision": {
     "title": "Стекло осветлённое Extra Clear, Optiwhite",
     "variants": {
-      "standard": "По образцу"
+      "standard": "Extra Clear, Optiwhite"
     },
     "thicknesses": [
-      "unknown"
+      "4",
+      "5",
+      "6",
+      "8",
+      "10",
+      "12"
     ],
     "operations": [
       "cut",
@@ -907,15 +918,21 @@
       "bevel"
     ],
     "policy": "basic",
-    "note": "Параметры обработок согласуем по толщине стекла, размерам изделия и чертежу."
+    "note": "Параметры обработок согласуем по толщине стекла, размерам изделия и чертежу.",
+    "preserveUnknownThickness": true
   },
   "steklo-kristalvizhn-crystalvision": {
     "title": "Стекло осветлённое Crystalvision",
     "variants": {
-      "standard": "По образцу"
+      "standard": "Crystalvision"
     },
     "thicknesses": [
-      "unknown"
+      "4",
+      "5",
+      "6",
+      "8",
+      "10",
+      "12"
     ],
     "operations": [
       "cut",
@@ -931,7 +948,8 @@
       "bevel"
     ],
     "policy": "basic",
-    "note": "Параметры обработок согласуем по толщине стекла, размерам изделия и чертежу."
+    "note": "Параметры обработок согласуем по толщине стекла, размерам изделия и чертежу.",
+    "preserveUnknownThickness": true
   },
   "zerkalo-osvetlyonnoe": {
     "title": "Осветлённое зеркало «Crystalvision» (Crystal)",
@@ -1111,62 +1129,60 @@
     }
   },
   "craft-moru-bronze-mat": {
-  "title": "Мору бронзовое матовое · Крафтовый триплекс",
-  "variants": {
-    "standard": "MORU Ultra 4 мм + плоское матовое бронзовое стекло 4 мм"
+    "title": "Мору бронзовое матовое · Крафтовый триплекс",
+    "variants": {
+      "standard": "MORU Ultra 4 мм + плоское матовое бронзовое стекло 4 мм"
+    },
+    "thicknesses": [
+      "8"
+    ],
+    "operations": [
+      "drill"
+    ],
+    "policy": "craft",
+    "fixedComposition": true,
+    "maxSize": {
+      "width": 1400,
+      "height": 2900
+    },
+    "note": "Готовая комбинация 4 + 4 мм. Формат 2900 × 1400 мм; рифление вдоль высоты. Укажите размер изделия, наличие отверстий и технологических вырезов; расположение — по эскизу."
   },
-  "thicknesses": [
-    "8"
-  ],
-  "operations": [
-    "drill"
-  ],
-  "policy": "craft",
-  "fixedComposition": true,
-  "maxSize": {
-    "width": 1400,
-    "height": 2900
-  },
-  "note": "Готовая комбинация 4 + 4 мм. Формат 2900 × 1400 мм; рифление вдоль высоты. Укажите размер изделия, наличие отверстий и технологических вырезов; расположение — по эскизу."
-}
-,
   "craft-moru-grey-mat": {
-  "title": "Мору серое матовое · Крафтовый триплекс",
-  "variants": {
-    "standard": "MORU Ultra 4 мм + плоское матовое серое стекло 4 мм"
+    "title": "Мору серое матовое · Крафтовый триплекс",
+    "variants": {
+      "standard": "MORU Ultra 4 мм + плоское матовое серое стекло 4 мм"
+    },
+    "thicknesses": [
+      "8"
+    ],
+    "operations": [
+      "drill"
+    ],
+    "policy": "craft",
+    "fixedComposition": true,
+    "maxSize": {
+      "width": 1400,
+      "height": 2900
+    },
+    "note": "Готовая комбинация 4 + 4 мм. Формат 2900 × 1400 мм; рифление вдоль высоты. Укажите размер изделия, наличие отверстий и технологических вырезов; расположение — по эскизу."
   },
-  "thicknesses": [
-    "8"
-  ],
-  "operations": [
-    "drill"
-  ],
-  "policy": "craft",
-  "fixedComposition": true,
-  "maxSize": {
-    "width": 1400,
-    "height": 2900
-  },
-  "note": "Готовая комбинация 4 + 4 мм. Формат 2900 × 1400 мм; рифление вдоль высоты. Укажите размер изделия, наличие отверстий и технологических вырезов; расположение — по эскизу."
-}
-,
   "craft-moru-dark-grey-mat": {
-  "title": "Мору Dark Gray матовое · Крафтовый триплекс",
-  "variants": {
-    "standard": "MORU Ultra 4 мм + плоское матовое тёмно-серое стекло 4 мм"
-  },
-  "thicknesses": [
-    "8"
-  ],
-  "operations": [
-    "drill"
-  ],
-  "policy": "craft",
-  "fixedComposition": true,
-  "maxSize": {
-    "width": 1400,
-    "height": 2900
-  },
-  "note": "Готовая комбинация 4 + 4 мм. Формат 2900 × 1400 мм; рифление вдоль высоты. Укажите размер изделия, наличие отверстий и технологических вырезов; расположение — по эскизу."
-}
+    "title": "Мору Dark Gray матовое · Крафтовый триплекс",
+    "variants": {
+      "standard": "MORU Ultra 4 мм + плоское матовое тёмно-серое стекло 4 мм"
+    },
+    "thicknesses": [
+      "8"
+    ],
+    "operations": [
+      "drill"
+    ],
+    "policy": "craft",
+    "fixedComposition": true,
+    "maxSize": {
+      "width": 1400,
+      "height": 2900
+    },
+    "note": "Готовая комбинация 4 + 4 мм. Формат 2900 × 1400 мм; рифление вдоль высоты. Укажите размер изделия, наличие отверстий и технологических вырезов; расположение — по эскизу."
+  }
 }

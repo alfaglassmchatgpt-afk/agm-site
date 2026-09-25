@@ -11,7 +11,7 @@
     if(material==='tonirovannye-zerkala'&&i.base==='tint_silver'){material='zerkalo-serebro';i={...i,base:'standard'};}
     if(!Object.prototype.hasOwnProperty.call(materials,material))return null;
     const m=materials[material];
-    if(!Object.prototype.hasOwnProperty.call(m.variants,i.base)||!thicknesses(m,i.base).includes(String(i.thickness)))return null;
+    if(!Object.prototype.hasOwnProperty.call(m.variants,i.base)||(!thicknesses(m,i.base).includes(String(i.thickness))&&!(m.preserveUnknownThickness&&i.thickness==='unknown')))return null;
     const hole=h=>({diameter:clean(h?.diameter,12),count:typeof h?.count==='string'?clean(h.count,5):'1',unknown:!!h?.unknown});
     let ops=Array.isArray(i.ops)?[...new Set(i.ops.map(x=>m.policy==='craft'&&['craft_holes','craft_cutouts'].includes(x)?'drill':x==='frame'&&m.operations.includes('facade')?'facade':x).filter(x=>operations(m,i.thickness).includes(x)))]:[];
     if(ops.includes('polish')&&ops.includes('grind'))ops=ops.filter(x=>x!=='grind');
