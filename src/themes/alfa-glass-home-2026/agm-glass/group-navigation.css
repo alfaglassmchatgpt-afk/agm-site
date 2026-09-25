@@ -1,0 +1,6 @@
+.gc-catalog .gc-back{display:inline-flex;align-items:center;gap:8px;min-height:48px;max-width:100%;box-sizing:border-box;margin:0 0 24px;padding:12px 20px;border:1px solid #087b9e;border-radius:12px;background:#087b9e;color:#fff;font-weight:700;line-height:1.4;text-decoration:none;box-shadow:0 4px 12px rgb(8 123 158 / 18%)}
+.gc-catalog .gc-back:hover{background:#06647f;border-color:#06647f;color:#fff}
+.gc-catalog .gc-back:focus-visible{outline:3px solid #e5a82e;outline-offset:4px}
+.gc-catalog .gc-back[hidden]{display:none!important}
+[data-theme="dark"] .gc-catalog .gc-back{background:#79d8ed;border-color:#79d8ed;color:#102c38}
+[data-theme="dark"] .gc-catalog .gc-back:hover{background:#a0e6f4;border-color:#a0e6f4}

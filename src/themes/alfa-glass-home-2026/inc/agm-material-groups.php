@@ -65,7 +65,6 @@ function agm_material_catalog_render($html) {
     $out = '<section class="container gc-catalog" data-selected-group="' . esc_attr($selected) . '">';
     if ($selected) { $out .= '<h1>' . esc_html($groups[$selected]['title']) . '</h1>'; }
     $out .= '<label class="gc-search">' . ($selected ? 'Найти в этой группе' : 'Найти среди всех материалов') . '<input id="material-search" type="search" placeholder="Например: Moru, бронза, рифлёное"></label>';
-    $out .= '<a class="gc-back" href="' . esc_url(home_url('/materialy/')) . '"' . ($selected ? '' : ' hidden') . '>← Все группы материалов</a>';
     $out .= '<div class="gc-category-grid"' . ($selected ? ' hidden' : '') . '>';
     foreach ($groups as $key => $group) {
         $preview = '';
@@ -75,6 +74,7 @@ function agm_material_catalog_render($html) {
         $out .= '<a class="gc-category" href="' . esc_url(agm_material_group_url($key)) . '">' . $preview . '<div><h2>' . esc_html($group['title']) . '</h2><p>Материалов: ' . count($group['pages']) . '</p><strong>Смотреть группу →</strong></div></a>';
     }
     $out .= '</div><p id="material-count" aria-live="polite"></p>';
+    $out .= '<a class="gc-back" href="' . esc_url(home_url('/materialy/')) . '"' . ($selected ? '' : ' hidden') . '>← Все группы материалов</a>';
     foreach ($groups as $key => $group) {
         $out .= '<section class="gc-material-group" data-group="' . esc_attr($key) . '"' . ($selected === $key ? '' : ' hidden') . '>' . ($selected === $key ? '' : '<h2>' . esc_html($group['title']) . '</h2>') . '<div class="gc-grid">';
         foreach ($group['pages'] as $page) {
@@ -87,6 +87,7 @@ function agm_material_catalog_render($html) {
     }
     $out .= '<p id="no-results" hidden>Ничего не найдено. Попробуйте другое название.</p></section>';
     $assets = get_template_directory_uri() . '/agm-glass/';
+    $html = str_replace('</head>', '<link rel="stylesheet" href="' . esc_url($assets . 'group-navigation.css?v=' . filemtime(get_template_directory() . '/agm-glass/group-navigation.css')) . '"></head>', $html);
     $html = str_replace('</head>', '<link rel="stylesheet" href="' . esc_url($assets . 'craft.css?v=1') . '"></head>', $html);
     $html = str_replace('</head>', '<link rel="stylesheet" href="' . esc_url($assets . 'tinted-cascade.css?v=2') . '"></head>', $html);
     $html = str_replace('</body>', '<script src="' . esc_url($assets . 'tinted-cascade.js?v=2') . '" defer></script></body>', $html);
