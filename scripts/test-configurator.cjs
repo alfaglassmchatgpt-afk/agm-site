@@ -1,7 +1,7 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const root=path.join(__dirname,'../src/themes/alfa-glass-home-2026/agm-configurator');
 const model=require(root+'/model.js'),materials=JSON.parse(fs.readFileSync(root+'/materials.json')),operations=JSON.parse(fs.readFileSync(root+'/operations.json'));
-assert.equal(Object.keys(materials).length,44);
+assert.equal(Object.keys(materials).length,45);
 assert.deepEqual(materials['moru-bronze-toned'].thicknesses,['4','5','8']);
 const bronze=model.normalize({material:'moru-bronze-toned',base:'standard',thickness:'8',ops:['temper','laminate','paint','cut','facade']},materials,()=> 'bronze');
 assert.deepEqual(bronze.ops,['temper','laminate','paint','cut']);
@@ -50,7 +50,7 @@ for(const value of ['',0,-1,'0.1','200.01','200,1','abc',Infinity]) assert.equal
 const fractional=model.normalize({material:'zerkalo-serebro',base:'standard',thickness:'4',width:'200.1',height:'300'},materials,()=> 'fraction');
 assert.equal(fractional.width,'200.1'); // Preserve saved measurements; require correction rather than silently rounding.
 assert.equal(model.wholeMillimetres(fractional.width),false);
-console.log('PASS: 44 profiles, operation allowlists, MORU CRYSTAL/ULTRA/Bronze profiles, mirror/painted heat exclusions, legacy migration, invalid stored entries and whole millimetres.');
+console.log('PASS: 45 profiles, operation allowlists, MORU CRYSTAL/ULTRA/Bronze profiles, mirror/painted heat exclusions, legacy migration, invalid stored entries and whole millimetres.');
 
 for(const [slug,m] of Object.entries(materials)){if(!m.operationThicknesses)continue;for(const t of m.thicknesses){const ops=model.operations(m,t);assert.equal(ops.includes("facade"),t==="4");assert.equal(ops.includes("profile"),t==="8");for(const op of ["temper","laminate","film","paint"])assert.ok(ops.includes(op));const i=model.normalize({material:slug,base:Object.keys(m.variants)[0],thickness:t,ops:["facade","profile"]},materials,()=>slug);assert.deepEqual(i.ops,t==="4"?["facade"]:t==="8"?["profile"]:[]);}}
 
