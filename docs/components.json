@@ -1,4 +1,5 @@
 {
+  "dev_access": {"updated": "2026-09-25", "url": "https://10.78.89.58", "ssh_host": "10.78.89.58", "tls_san": ["10.78.89.58", "192.168.1.58", "agm-dev"]},
   "theme": [
     {
       "name": "alfa-glass-home-2026",

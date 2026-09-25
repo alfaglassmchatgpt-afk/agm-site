@@ -4,11 +4,11 @@
 
 1. Клонировать https://github.com/alfaglassmchatgpt-afk/agm-site.git. Прочитать AGENTS.md и STATUS.md.
 2. Установить Git и OpenSSH. Получить профиль WireGuard и разрешённый SSH-доступ у владельца через защищённый канал. Их нет в GitHub. Предпочтительно отдельный ключ нового компьютера; не восстанавливать приватные ключи из истории чата.
-3. Подключить WireGuard. Сверить SSH host key с доверенным источником владельца. Выполнить `ssh -o BatchMode=yes kirill@192.168.1.58`. Не отключать проверку host key.
+3. Подключить WireGuard. Сверить SSH host key с доверенным источником владельца. Выполнить `ssh -o BatchMode=yes kirill@10.78.89.58`. Не отключать проверку host key.
 4. Проверить `df -h /` и `sudo -n true`. Рабочая директория WordPress: `/srv/agm/site`.
 5. Убедиться в dev-флагах: `sudo -u www-data wp --path=/srv/agm/site --skip-plugins --skip-themes config get AGM_STAGING` и аналогично DISABLE_WP_CRON. Ожидается 1.
 6. Сверить сертификат с ВМ: `sudo openssl x509 -in /etc/ssl/agm-staging/server.crt -noout -fingerprint -sha256 -dates -ext subjectAltName`. Сравнить с INVENTORY.md. На Windows можно импортировать проверенный certificates/agm-dev.crt командой `Import-Certificate -FilePath certificates/agm-dev.crt -CertStoreLocation Cert:\CurrentUser\Root`. Эта операция действует только для текущего пользователя этого компьютера.
-7. Открыть https://192.168.1.58/. Вход WordPress получить отдельно у владельца. Не сбрасывать пароль автоматически.
+7. Открыть https://10.78.89.58/. Вход WordPress получить отдельно у владельца. Не сбрасывать пароль автоматически.
 8. До изменения сравнить выбранные файлы с актуальной ВМ: src содержит очищенные данные и исключения. Сохранять отдельную защищённую копию изменяемых оригиналов вне публичного репозитория. Вносить и проверять изменения только на dev.
 9. После работы обновить журнал, инвентаризацию при необходимости и безопасный код в GitHub. Проверить, что новый коммит доступен удалённо.
 
