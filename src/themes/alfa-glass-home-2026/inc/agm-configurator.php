@@ -22,7 +22,7 @@ function agm_order_render($html, $slug, $legacy = false) {
     if (!$legacy) {
         $choices = '';
         foreach (['base' => ['Исполнение', $current['variants']], 'thickness' => ['Толщина', array_combine($current['thicknesses'], array_map(function ($t) { return $t === 'unknown' ? 'Уточнить толщину' : $t . ' мм'; }, $current['thicknesses']))]] as $name => $field) {
-            $choices .= '<fieldset class="choice"><legend>' . esc_html($field[0]) . '</legend><div class="options">';
+            $choices .= '<fieldset class="choice"' . (!empty($current['fixedComposition']) ? ' hidden' : '') . '><legend>' . esc_html($field[0]) . '</legend><div class="options">';
             $first = true;
             foreach ($field[1] as $value => $label) {
                 $choices .= '<label class="option"><input type="radio" name="' . esc_attr($name) . '" value="' . esc_attr($value) . '"' . ($first ? ' checked' : '') . '><span>' . esc_html($label) . '</span></label>';
