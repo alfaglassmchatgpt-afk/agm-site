@@ -42,6 +42,26 @@ function agm_order_render($html, $slug, $legacy = false) {
         $html = str_replace('<div class="operation-grid">', '<p id="operation-material-note">' . esc_html($current['note']) . '</p><div class="operation-grid">', $html);
         $html = str_replace('Добавить ещё зеркало', 'Добавить ещё изделие', $html);
     }
+    $backUrl = home_url('/materialy/');
+    $backLabel = 'Все материалы';
+    if (function_exists('agm_material_groups')) {
+        $groups = agm_material_groups();
+        $page = get_page_by_path('materialy/' . $slug);
+        $groupKey = $page ? get_post_meta($page->ID, '_agm_material_group', true) : '';
+        if (!isset($groups[$groupKey])) {
+            foreach ($groups as $key => $group) {
+                if (in_array($slug, $group['slugs'], true)) { $groupKey = $key; break; }
+            }
+        }
+        if (isset($groups[$groupKey])) {
+            $backUrl = agm_material_group_url($groupKey);
+            $backLabel = $groups[$groupKey]['title'];
+        }
+    }
+    $back = '<nav class="container agm-card-back" aria-label="Возврат в каталог"><a href="' . esc_url($backUrl) . '"><span aria-hidden="true">←</span> Назад: ' . esc_html($backLabel) . '</a></nav>';
+    $html = preg_replace_callback('/<main\b[^>]*>/', function ($match) use ($back) { return $match[0] . $back; }, $html, 1);
+    $html = str_replace('</head>', '<link rel="stylesheet" href="' . $asset('navigation.css') . '"></head>', $html);
+
     $data = ['operationAssetsUrl' => $url . '/', 'processingUrl' => home_url('/obrabotka-stekla-i-zerkal/'), 'current' => $slug, 'materials' => $registry, 'operations' => json_decode(file_get_contents($dir . '/operations.json'), true)];
     $scripts = '<script id="agm-order-data" type="application/json">' . wp_json_encode($data, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE) . '</script>';
     $scripts .= '<script src="' . $asset('gallery.js') . '" defer></script>';
