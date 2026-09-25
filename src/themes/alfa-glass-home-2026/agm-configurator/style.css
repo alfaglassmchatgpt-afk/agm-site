@@ -22,3 +22,33 @@
 .agm-order .field input,.agm-order .field textarea{font-weight:400}
 .agm-order .cart-heading h2{font-weight:700}
 .agm-order .toast:not([hidden]){opacity:1;pointer-events:none}
+
+/* Material cards follow the tinted-mirror hero and shared calculation panel. */
+.agm-material-layout{--brand:#076da1;--paper:var(--surface,#fff);padding-top:0;padding-bottom:60px}
+.agm-material-layout .workspace{grid-template-columns:minmax(0,1fr) 318px;gap:32px;align-items:start}
+.agm-material-layout .gc-product{grid-template-columns:minmax(0,.94fr) minmax(0,1fr);gap:30px;padding:0;margin:0 0 40px}
+.agm-material-layout .product-info{margin:0;min-width:0}
+.agm-material-layout .product-info h1{font-size:clamp(30px,3.2vw,44px);line-height:1.13;margin:10px 0 18px;overflow-wrap:normal}
+.agm-material-layout .product-info>.choice{margin-top:22px}
+.agm-material-layout .options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.agm-material-layout .option{min-width:0}
+.agm-material-layout .option span{height:100%;min-height:46px;display:flex;align-items:center}
+.agm-material-layout .cart-panel{top:110px;max-height:calc(100dvh - 130px)}
+.agm-material-layout .content>.container{width:100%;max-width:none;margin-left:0;margin-right:0;padding-left:0;padding-right:0}
+.agm-material-layout .gc-main-photo{border-radius:14px;border:1px solid var(--line);background:var(--paper)}
+.agm-material-layout .gc-main-photo img{height:auto;aspect-ratio:4/5;object-fit:contain}
+.agm-material-layout .agm-material-specs{margin-top:22px;border-top:1px solid var(--line);padding-top:14px}
+.agm-material-layout .agm-material-specs summary{cursor:pointer;color:var(--brand);font-weight:600}
+.agm-material-layout .gc-specs{font-size:13px;margin:10px 0}
+.agm-material-diagram{aspect-ratio:4/5;display:flex;flex-direction:column;justify-content:center;text-align:center;border:1px solid var(--line);border-radius:14px;background:linear-gradient(120deg,var(--paper),var(--soft));padding:24px;color:var(--muted)}
+.agm-material-diagram>span{font-size:clamp(28px,4vw,54px);color:var(--brand)}
+.agm-material-diagram small{font-size:12px}
+[data-theme=dark] .agm-material-layout{--brand:#70caff}
+@media(min-width:981px) and (max-width:1180px){.agm-material-layout .workspace{grid-template-columns:minmax(0,1fr) 270px;gap:22px}.agm-material-layout .gc-product{gap:20px}.agm-material-layout .product-info h1{font-size:30px}}
+@media(max-width:980px){.agm-material-layout .workspace{display:block}.agm-material-layout .cart-panel{top:0;max-height:100dvh}}
+@media(max-width:700px){.agm-material-layout .gc-product{grid-template-columns:minmax(0,1fr);gap:24px}.agm-material-layout .product-info h1{font-size:32px}.agm-material-layout .gc-main-photo img{max-height:520px}.agm-material-layout .agm-material-diagram{max-height:420px}}
+body.designers-page:has(.agm-material-layout){background:#f3f7fa}
+[data-theme=dark] body.designers-page:has(.agm-material-layout){background:#0b1720}
+.agm-material-layout .product-info h1{text-transform:none;letter-spacing:-1px}
+.agm-material-layout .cart-panel{top:200px;max-height:calc(100dvh - 220px)}
+@media(max-width:980px){.agm-material-layout .cart-panel{top:0;max-height:100dvh}}

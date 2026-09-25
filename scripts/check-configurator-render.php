@@ -10,6 +10,24 @@ foreach ($registry as $slug => $profile) {
         if (substr_count($html, $marker) !== 1) { throw new RuntimeException($slug . ': wrong count of ' . $marker); }
     }
     if (strpos($html, 'id="glass-brief"') !== false) { throw new RuntimeException($slug . ': old form remains'); }
+    if (!$legacy) {
+        $document = new DOMDocument();
+        $previous = libxml_use_internal_errors(true);
+        $document->loadHTML('<?xml encoding="UTF-8">' . $html);
+        libxml_clear_errors();
+        libxml_use_internal_errors($previous);
+        $xpath = new DOMXPath($document);
+        if ($xpath->query('//section[contains(@class,"product-head")]//div[@class="product-info"]//button[@id="add-material"]')->length !== 1) {
+            throw new RuntimeException($slug . ': choices must be beside the gallery');
+        }
+        if ($xpath->query('//div[@class="workspace"]/aside[@id="cart-panel"]')->length !== 1) {
+            throw new RuntimeException($slug . ': calculation sidebar is missing');
+        }
+        preg_match_all('/<img\b[^>]*src="([^"]+)"/', file_get_contents(get_template_directory() . $file), $images);
+        foreach ($images[1] as $source) {
+            if (strpos($html, $source) === false) { throw new RuntimeException($slug . ': original image lost'); }
+        }
+    }
     if (in_array($profile['policy'], ['mirror', 'painted'], true) && in_array('temper', $profile['operations'], true)) {
         throw new RuntimeException($slug . ': forbidden heat treatment');
     }

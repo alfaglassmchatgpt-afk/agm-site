@@ -1,6 +1,7 @@
 <?php
 /** One configurator for the material cards; explicit per-material capabilities. */
 defined('ABSPATH') || exit;
+require_once __DIR__ . '/agm-material-layout.php';
 function agm_order_registry() {
     static $registry;
     if ($registry === null) {
@@ -34,6 +35,7 @@ function agm_order_render($html, $slug, $legacy = false) {
         // Flutes' display-only processing list is superseded by the working controls.
         $html = preg_replace('/<h3 id="flutes-processing-title">.*?<\/ul>/s', '<p><a href="#material-request">Выбрать обработку и собрать заявку ↓</a></p>', $html, 1);
         $html = str_replace('</head>', '<link rel="stylesheet" href="' . $asset('style.css') . '"></head>', $html);
+        $html = agm_order_material_layout($html, $slug);
     } else {
         $html = preg_replace('/<script src="__AGM_ASSETS__\/app\.js" defer><\/script>/', '', $html);
         $html = preg_replace('/<div class="operation-grid">.*?<\/div><p class="small muted"/s', '<div class="operation-grid"></div><p class="small muted"', $html, 1);
