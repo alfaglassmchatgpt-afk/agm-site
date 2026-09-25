@@ -135,7 +135,7 @@
     "note": "Закалка готового зеркала недоступна."
   },
   "float-steklo-clear-m1": {
-    "title": "Флоат стекло Clear М1",
+    "title": "Стекло прозрачное (М1)",
     "variants": {
       "standard": "По образцу"
     },
@@ -148,10 +148,15 @@
       "polish",
       "grind",
       "drill",
-      "facade"
+      "facade",
+      "temper",
+      "paint",
+      "film",
+      "laminate",
+      "bevel"
     ],
     "policy": "basic",
-    "note": "Специальные обработки включаются после подтверждения для этого материала."
+    "note": "Параметры обработок согласуем по толщине стекла, размерам изделия и чертежу."
   },
   "raywall90": {
     "title": "Рифлёное стекло RAYWALL90",
@@ -881,7 +886,7 @@
     "note": "Специальные обработки включаются после подтверждения для этого материала."
   },
   "steklo-osvetlyonnoe-clearvision": {
-    "title": "Стекло осветлённое (Clearvision, Optiwhite)",
+    "title": "Стекло осветлённое Extra Clear, Optiwhite",
     "variants": {
       "standard": "По образцу"
     },
@@ -894,13 +899,18 @@
       "polish",
       "grind",
       "drill",
-      "facade"
+      "facade",
+      "temper",
+      "paint",
+      "film",
+      "laminate",
+      "bevel"
     ],
     "policy": "basic",
-    "note": "Специальные обработки включаются после подтверждения для этого материала."
+    "note": "Параметры обработок согласуем по толщине стекла, размерам изделия и чертежу."
   },
   "steklo-kristalvizhn-crystalvision": {
-    "title": "Стекло Crystalvision (Кристалвижн) ультраосветлённое",
+    "title": "Стекло осветлённое Crystalvision",
     "variants": {
       "standard": "По образцу"
     },
@@ -913,10 +923,15 @@
       "polish",
       "grind",
       "drill",
-      "facade"
+      "facade",
+      "temper",
+      "paint",
+      "film",
+      "laminate",
+      "bevel"
     ],
     "policy": "basic",
-    "note": "Специальные обработки включаются после подтверждения для этого материала."
+    "note": "Параметры обработок согласуем по толщине стекла, размерам изделия и чертежу."
   },
   "zerkalo-osvetlyonnoe": {
     "title": "Осветлённое зеркало «Crystalvision» (Crystal)",
