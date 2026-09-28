@@ -844,12 +844,15 @@
     "note": "Специальные обработки включаются после подтверждения для этого материала."
   },
   "steklo-solnczezashhitnoe-stopsol": {
-    "title": "Солнцезащитное стекло Stopsol (рефлективное)",
+    "title": "Стопсол Феникс Клеар (Phoenix Clear)",
     "variants": {
-      "standard": "По образцу"
+      "standard": "Phoenix Clear"
     },
     "thicknesses": [
-      "unknown"
+      "4",
+      "6",
+      "8",
+      "10"
     ],
     "operations": [
       "cut",
@@ -857,10 +860,16 @@
       "polish",
       "grind",
       "drill",
-      "facade"
+      "facade",
+      "temper",
+      "paint",
+      "film",
+      "laminate",
+      "bevel"
     ],
     "policy": "basic",
-    "note": "Специальные обработки включаются после подтверждения для этого материала."
+    "note": "Лист 3210 × 2250 мм. Параметры и сочетания согласуем по толщине, размерам, стороне покрытия и чертежу.",
+    "preserveUnknownThickness": false
   },
   "steklo-lacobel": {
     "title": "Стекло Lacobel",
@@ -1738,6 +1747,62 @@
     ],
     "policy": "painted",
     "note": "Матовое по лицу окрашенное стекло 4 мм. Формат листа 3210 × 2250 мм.  Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+    "preserveUnknownThickness": false
+  },
+  "stopsol-phoenix-bronze": {
+    "title": "Стопсол Феникс Бронза (Phoenix Bronze)",
+    "variants": {
+      "standard": "Phoenix Bronze"
+    },
+    "thicknesses": [
+      "4",
+      "6",
+      "8",
+      "10"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "facade",
+      "temper",
+      "paint",
+      "film",
+      "laminate",
+      "bevel"
+    ],
+    "policy": "basic",
+    "note": "Лист 3210 × 2250 мм. Параметры и сочетания согласуем по толщине, размерам, стороне покрытия и чертежу.",
+    "preserveUnknownThickness": false
+  },
+  "stopsol-phoenix-gray": {
+    "title": "Стопсол Феникс Серый (Phoenix Gray)",
+    "variants": {
+      "standard": "Phoenix Gray"
+    },
+    "thicknesses": [
+      "4",
+      "6",
+      "8",
+      "10"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "facade",
+      "temper",
+      "paint",
+      "film",
+      "laminate",
+      "bevel"
+    ],
+    "policy": "basic",
+    "note": "Лист 3210 × 2250 мм. Параметры и сочетания согласуем по толщине, размерам, стороне покрытия и чертежу.",
     "preserveUnknownThickness": false
   }
 }

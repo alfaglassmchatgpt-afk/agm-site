@@ -30,6 +30,7 @@ foreach ($groups as $key => $group) {
 }
 agm_check(array_map(function ($page) { return $page->post_name; }, $groups['matovoe-steklo']['pages']) === ['steklo-matovoe-matelux', 'steklo-matovoe-osvetlyonnoe', 'moru-bronze-mat', 'moru-grey-mat', 'moru-dark-grey-mat'], 'Matte range order or membership');
 agm_check(array_map(function ($page) { return $page->post_name; }, $groups['tonirovannoe-steklo']['pages']) === ['tonirovannoe-steklo-grey', 'moru-bronze', 'moru-dark-grey', 'tonirovannoe-steklo-blue'], 'Tinted range must contain four transparent colours');
+agm_check(array_map(function ($page) { return $page->post_name; }, $groups['solncezashhitnoe-steklo']['pages']) === ['steklo-solnczezashhitnoe-stopsol', 'stopsol-phoenix-bronze', 'stopsol-phoenix-gray'], 'Phoenix range order and membership');
 $lacobel = agm_material_catalog_render($source, 'steklo-lacobel');
 $matelac = agm_material_catalog_render($source, 'steklo-matelak');
 agm_check(substr_count($lacobel, 'data-material-card') === 13, 'Lacobel must show thirteen colours');

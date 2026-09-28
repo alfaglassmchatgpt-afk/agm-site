@@ -13,7 +13,7 @@ function agm_material_groups() {
         'uzorchatoe-steklo' => ['title' => 'Узорчатое стекло', 'slugs' => ['diamant', 'hithicross', 'gothic', 'silvit', 'kathedral-klein', 'monumental-atlantic', 'krepi', 'kathedralaqualite']],
         'matovoe-steklo' => ['title' => 'Матовое стекло', 'slugs' => ['steklo-matovoe-matelux', 'steklo-matovoe-osvetlyonnoe', 'moru-bronze-mat', 'moru-grey-mat', 'moru-dark-grey-mat']],
         'prozrachnoe-steklo' => ['title' => 'Прозрачное и осветлённое стекло', 'slugs' => ['float-steklo-clear-m1', 'steklo-kristalvizhn-crystalvision', 'steklo-osvetlyonnoe-clearvision']],
-        'solncezashhitnoe-steklo' => ['title' => 'Солнцезащитное стекло', 'slugs' => ['steklo-solnczezashhitnoe-stopsol']],
+        'solncezashhitnoe-steklo' => ['title' => 'Солнцезащитное стекло', 'slugs' => ['steklo-solnczezashhitnoe-stopsol', 'stopsol-phoenix-bronze', 'stopsol-phoenix-gray']],
         'dihroichnoe-steklo' => ['title' => 'Дихроичное стекло', 'slugs' => ['dihroichnoe-steklo']],
         'other' => ['title' => 'Другие материалы', 'slugs' => []],
     ];
@@ -47,6 +47,8 @@ function agm_material_grouped_pages() {
     usort($groups['tonirovannoe-steklo']['pages'], function ($a, $b) use ($order) { return ($order[$a->post_name] ?? 99) <=> ($order[$b->post_name] ?? 99); });
     $order = array_flip($groups['okrashennoe-steklo']['slugs']);
     usort($groups['okrashennoe-steklo']['pages'], function ($a, $b) use ($order) { return ($order[$a->post_name] ?? 99) <=> ($order[$b->post_name] ?? 99); });
+    $order = array_flip($groups['solncezashhitnoe-steklo']['slugs']);
+    usort($groups['solncezashhitnoe-steklo']['pages'], function ($a, $b) use ($order) { return ($order[$a->post_name] ?? 99) <=> ($order[$b->post_name] ?? 99); });
     return array_filter($groups, function ($group) { return !empty($group['pages']); });
 }
 
