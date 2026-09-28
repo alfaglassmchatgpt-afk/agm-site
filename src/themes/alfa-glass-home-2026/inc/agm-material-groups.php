@@ -58,7 +58,7 @@ function agm_material_catalog_render($html, $family = '') {
     $groups = agm_material_grouped_pages();
     $selected = isset($_GET['group']) && is_string($_GET['group']) ? sanitize_key(wp_unslash($_GET['group'])) : '';
     if (!isset($groups[$selected])) { $selected = ''; }
-    $families = ['steklo-lacobel' => ['title' => 'Стекло Лакобель', 'prefix' => 'lacobel-'], 'steklo-matelak' => ['title' => 'Стекло Матылак', 'prefix' => 'matelac-']];
+    $families = ['steklo-lacobel' => ['title' => 'Стекло Лакобель', 'prefix' => 'lacobel-'], 'steklo-matelak' => ['title' => 'Стекло Мателак (Matelac)', 'prefix' => 'matelac-']];
     if (isset($families[$family])) {
         $selected = 'okrashennoe-steklo';
         $groups[$selected]['title'] = $families[$family]['title'];

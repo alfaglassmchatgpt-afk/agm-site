@@ -21,14 +21,23 @@ class RotationTests(unittest.TestCase):
         (path / 'manifest.json').write_text(json.dumps({'format': 'agm-site-backup-v1', 'verified': True, 'files': files}))
         return path
 
-    def test_keeps_three_newest_and_unmanaged_files(self):
+    def test_keeps_two_newest_and_unmanaged_files(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             for day in range(1, 6): self.make_backup(root, day)
             (root / 'legacy').mkdir()
-            self.assertEqual(module.prune(root), 2)
-            self.assertEqual([p.name for p in module.completed(root)], ['backup-20260905T000000Z', 'backup-20260904T000000Z', 'backup-20260903T000000Z'])
+            self.assertEqual(module.prune(root), 3)
+            self.assertEqual([p.name for p in module.completed(root)], ['backup-20260905T000000Z', 'backup-20260904T000000Z'])
             self.assertTrue((root / 'legacy').is_dir())
+
+    def test_low_space_keeps_one_and_never_zero(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            for day in range(1, 4): self.make_backup(root, day)
+            self.assertEqual(module.prune(root, keep=1), 2)
+            self.assertEqual([p.name for p in module.completed(root)], ['backup-20260903T000000Z'])
+            with self.assertRaises(RuntimeError): module.prune(root, keep=0)
+            self.assertEqual(len(module.completed(root)), 1)
 
     def test_corruption_never_evicts_old_backups(self):
         with tempfile.TemporaryDirectory() as tmp:

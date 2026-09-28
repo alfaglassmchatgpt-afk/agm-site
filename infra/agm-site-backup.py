@@ -15,7 +15,7 @@ import sys
 
 ROOT = Path('/var/backups/agm-site')
 SITE = Path('/srv/agm/site')
-KEEP = 3
+KEEP = 2
 RESERVE = 2 * 1024**3
 NAME = re.compile(r'backup-\d{8}T\d{6}Z')
 PAYLOADS = ('site.tar.gz', 'database.sql.gz', 'config.tar.gz')
@@ -64,8 +64,8 @@ def completed(root=ROOT):
 
 
 def prune(root=ROOT, keep=KEEP):
-    if keep < 3:
-        raise RuntimeError('At least three successful backups must be retained')
+    if keep < 1:
+        raise RuntimeError('At least one verified successful backup must be retained')
     backups = completed(root)
     # Do not evict history if a retained backup was corrupted after creation.
     for path in backups[:keep]:
@@ -119,8 +119,15 @@ def backup():
         size_query = "SELECT COALESCE(SUM(DATA_LENGTH+INDEX_LENGTH),0) FROM information_schema.tables WHERE TABLE_SCHEMA='%s'" % database
         dbsize = int(run(mysql + [size_query], stdout=subprocess.PIPE, text=True).stdout.strip())
         sitesize = int(run(['/usr/bin/du', '-sb', str(SITE)], stdout=subprocess.PIPE, text=True).stdout.split()[0])
-        if shutil.disk_usage(ROOT).free < sitesize + dbsize + RESERVE:
-            raise RuntimeError('Insufficient space; previous successful backups retained')
+        required = sitesize + dbsize + RESERVE
+        # Owner-approved low-space rotation: verify survivors before eviction.
+        pre_rotated = 0
+        if shutil.disk_usage(ROOT).free < required:
+            pre_rotated += prune(keep=KEEP)
+        if shutil.disk_usage(ROOT).free < required:
+            pre_rotated += prune(keep=1)
+        if shutil.disk_usage(ROOT).free < required:
+            raise RuntimeError('Insufficient space; last verified backup retained')
         stamp = dt.datetime.now(dt.timezone.utc).strftime('%Y%m%dT%H%M%SZ')
         final = ROOT / ('backup-' + stamp)
         pending = ROOT / ('.incomplete-' + final.name)
@@ -169,7 +176,7 @@ def backup():
                     os.fsync(stream.fileno())
             pending.rename(final)
             removed = prune()
-            print(json.dumps({'backup': final.name, 'verified': True, 'rotated': removed,
+            print(json.dumps({'backup': final.name, 'verified': True, 'rotated': removed, 'pre_rotated': pre_rotated,
                               'retention': KEEP, 'free_bytes': shutil.disk_usage(ROOT).free}), flush=True)
         finally:
             if pending.exists():
