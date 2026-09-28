@@ -1,0 +1,13 @@
+.smart-page .smart-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin:24px 0}
+.smart-page .smart-card{padding:24px;border:1px solid var(--border,#dce5ef);border-radius:20px;background:var(--surface,#fff)}
+.smart-page .smart-card h3{margin:0 0 12px;font-size:21px}
+.smart-page .smart-card p{margin:0;line-height:1.75}
+.smart-page .smart-scene{margin:0 0 28px}
+.smart-page .smart-scene img{width:100%;height:auto;display:block;border-radius:22px}
+.smart-page .smart-scene figcaption{padding:12px 4px;line-height:1.6;color:var(--muted,#65748a)}
+.smart-page .choice:has(input[name="thickness"]){display:none}
+.smart-page .gc-section{line-height:1.8}
+.smart-page details.smart-faq{padding:18px 0;border-bottom:1px solid var(--border,#dce5ef)}
+.smart-page details.smart-faq summary{cursor:pointer;font-weight:650}
+html[data-theme="dark"] .smart-page .smart-card{background:#102437;border-color:#294156}
+@media(max-width:650px){.smart-page .smart-grid{grid-template-columns:1fr}.smart-page .smart-card{padding:19px}}

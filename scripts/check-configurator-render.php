@@ -5,6 +5,7 @@ $registry = agm_order_registry();
 foreach ($registry as $slug => $profile) {
     $legacy = in_array($slug, ['zerkalo-serebro', 'tonirovannye-zerkala'], true);
     $file = $legacy ? '/agm-materials/' . ($slug === 'zerkalo-serebro' ? 'mirror' : 'tinted') . '.html' : '/agm-glass/' . $slug . '.html';
+    if ($slug === 'smart-mirror') { $file = '/agm-smart/index.html'; }
     $html = agm_order_render(file_get_contents(get_template_directory() . $file), $slug, $legacy);
     foreach (['id="cart-panel"', 'id="agm-order-data"', 'id="request-dialog"', 'id="add-material"'] as $marker) {
         if (substr_count($html, $marker) !== 1) { throw new RuntimeException($slug . ': wrong count of ' . $marker); }

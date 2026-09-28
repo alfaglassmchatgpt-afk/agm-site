@@ -10,7 +10,7 @@ for(const slug of ['float-steklo-clear-m1','steklo-kristalvizhn-crystalvision','
  assert.equal(model.normalize({...prior,thickness:'7'},materials,()=>slug),null);
 }
 assert.equal(model.normalize({material:'zerkalo-serebro',base:'standard',thickness:'unknown'},materials,()=> 'invalid'),null);
-assert.equal(Object.keys(materials).length,73);
+assert.equal(Object.keys(materials).length,74);
 assert.deepEqual(materials['moru-bronze-toned'].thicknesses,['4','5','8']);
 const bronze=model.normalize({material:'moru-bronze-toned',base:'standard',thickness:'8',ops:['temper','laminate','paint','cut','facade']},materials,()=> 'bronze');
 assert.deepEqual(bronze.ops,['temper','laminate','paint','cut']);
@@ -32,7 +32,7 @@ for(const [slug,m] of Object.entries(materials)){
  assert.ok(item);assert.ok(item.ops.every(op=>m.operations.includes(op)));
  assert.ok(!(item.ops.includes('polish')&&item.ops.includes('grind')));
  assert.equal(m.operations.includes('frame'),m.policy==='mirror');
- assert.equal(m.operations.includes('facade'),m.policy!=='mirror'&&m.policy!=='craft');
+ assert.equal(m.operations.includes('facade'),!['mirror','craft','product'].includes(m.policy));
  const migrated=model.normalize({material:slug,base:Object.keys(m.variants)[0],thickness:m.thicknesses[0],ops:['frame'],width:'450',height:'700'},materials,()=>slug);
  assert.deepEqual(migrated.ops,model.operations(m,m.thicknesses[0]).includes(m.policy==='mirror'?'frame':'facade')?[m.policy==='mirror'?'frame':'facade']:[]);
  assert.equal(migrated.width,'450');
