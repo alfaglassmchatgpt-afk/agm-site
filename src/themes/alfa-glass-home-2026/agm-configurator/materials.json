@@ -524,7 +524,7 @@
     "preserveUnknownThickness": true
   },
   "moru-dark-grey-mat": {
-    "title": "Стекло Dark Grey Mat",
+    "title": "Матовое стекло Дарк грей",
     "variants": {
       "standard": "Тонированное в массе тёмно-серое сатинированное"
     },
@@ -608,31 +608,9 @@
     }
   },
   "moru-dark-grey": {
-    "title": "Тонированное стекло Dark Grey",
+    "title": "Тонированное стекло Дарк грей",
     "variants": {
-      "standard": "Тонированное в массе тёмно-серое"
-    },
-    "thicknesses": [
-      "4",
-      "6",
-      "8",
-      "10"
-    ],
-    "operations": [
-      "cut",
-      "shape",
-      "polish",
-      "grind",
-      "drill",
-      "facade"
-    ],
-    "policy": "basic",
-    "note": "Специальные обработки включаются после подтверждения для этого материала."
-  },
-  "moru-bronze": {
-    "title": "Тонированное стекло Bronze",
-    "variants": {
-      "standard": "Тонированное в массе бронза"
+      "standard": "Дарк грей"
     },
     "thicknesses": [
       "4",
@@ -650,7 +628,30 @@
       "facade"
     ],
     "policy": "basic",
-    "note": "Специальные обработки включаются после подтверждения для этого материала."
+    "note": "Прозрачное тонированное в массе стекло. Формат листа 3210 × 2250 мм."
+  },
+  "moru-bronze": {
+    "title": "Тонированное стекло Бронза",
+    "variants": {
+      "standard": "Бронза"
+    },
+    "thicknesses": [
+      "4",
+      "5",
+      "6",
+      "8",
+      "10"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "facade"
+    ],
+    "policy": "basic",
+    "note": "Прозрачное тонированное в массе стекло. Формат листа 3210 × 2250 мм."
   },
   "tonirovannoe-v-masse-steklo-moru": {
     "title": "Рифлёное стекло MORU ( Мору) тонированное в массе.  Цвет бронза и серое. Flutes",
@@ -1233,5 +1234,28 @@
     ],
     "note": "Формат листа 3210 × 2250 мм. Изготовление по вашим размерам.",
     "preserveUnknownThickness": true
+  },
+  "tonirovannoe-steklo-grey": {
+    "title": "Тонированное стекло Серое",
+    "variants": {
+      "standard": "Серое"
+    },
+    "thicknesses": [
+      "4",
+      "5",
+      "6",
+      "8",
+      "10"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "facade"
+    ],
+    "policy": "basic",
+    "note": "Прозрачное тонированное в массе стекло. Формат листа 3210 × 2250 мм."
   }
 }
