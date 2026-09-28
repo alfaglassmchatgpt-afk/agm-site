@@ -8,7 +8,7 @@ function agm_material_groups() {
         'craft-triplex' => ['title' => 'Крафтовый триплекс', 'slugs' => ['craft-moru-bronze-mat', 'craft-moru-grey-mat', 'craft-moru-dark-grey-mat']],
         'riflenoe-steklo' => ['title' => 'Рифлёное стекло', 'slugs' => ['riflenoe-steklo-flutes', 'moru-crystal', 'moru-ultra', 'moru-bronze-toned', 'moru-grey', 'raywall90', 'raywall', 'vison-sun', 'flutes-moru-bronze', 'flutes-moru-ultra', 'flutes-moru-grey', 'flutes-moru-grey-mat', 'flutes-moru-bronze-mat', 'flutes-moru-ultra-mat', 'tonirovannoe-v-masse-steklo-moru']],
         'sostarennye-zerkala' => ['title' => 'Состаренные зеркала', 'slugs' => ['sostarennye-zerkala', 'sostarennye-zerkala-k1']],
-        'tonirovannoe-steklo' => ['title' => 'Тонированное стекло', 'slugs' => ['tonirovannoe-steklo-grey', 'moru-bronze', 'moru-dark-grey']],
+        'tonirovannoe-steklo' => ['title' => 'Тонированное стекло', 'slugs' => ['tonirovannoe-steklo-grey', 'moru-bronze', 'moru-dark-grey', 'tonirovannoe-steklo-blue']],
         'okrashennoe-steklo' => ['title' => 'Окрашенное стекло', 'slugs' => ['steklo-lacobel', 'steklo-matelak']],
         'uzorchatoe-steklo' => ['title' => 'Узорчатое стекло', 'slugs' => ['diamant', 'hithicross', 'gothic', 'silvit', 'kathedral-klein', 'monumental-atlantic', 'krepi', 'kathedralaqualite']],
         'matovoe-steklo' => ['title' => 'Матовое стекло', 'slugs' => ['steklo-matovoe-matelux', 'steklo-matovoe-osvetlyonnoe', 'moru-bronze-mat', 'moru-grey-mat', 'moru-dark-grey-mat']],

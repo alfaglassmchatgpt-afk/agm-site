@@ -1266,5 +1266,29 @@
     ],
     "policy": "basic",
     "note": "Прозрачное тонированное в массе стекло. Формат листа 3210 × 2250 мм."
+  },
+  "tonirovannoe-steklo-blue": {
+    "title": "Синее стекло, тонированное в массе",
+    "variants": {
+      "standard": "Синее"
+    },
+    "thicknesses": [
+      "4",
+      "6",
+      "8"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "facade",
+      "temper",
+      "laminate",
+      "paint"
+    ],
+    "policy": "basic",
+    "note": "Прозрачное тонированное в массе стекло. Формат листа 3210 × 2250 мм."
   }
 }
