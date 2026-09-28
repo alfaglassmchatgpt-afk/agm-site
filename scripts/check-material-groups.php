@@ -33,8 +33,9 @@ agm_check(array_map(function ($page) { return $page->post_name; }, $groups['toni
 $lacobel = agm_material_catalog_render($source, 'steklo-lacobel');
 $matelac = agm_material_catalog_render($source, 'steklo-matelak');
 agm_check(substr_count($lacobel, 'data-material-card') === 13, 'Lacobel must show thirteen colours');
-agm_check(strpos($lacobel, '/materialy/lacobel-8017/') === false, 'Discontinued colour shown');
-agm_check(substr_count($matelac, 'data-material-card') === 0, 'Matelac must not inherit Lacobel colours');
-agm_check(strpos($matelac, 'Цвета этой подгруппы пока не добавлены.') !== false, 'Missing Matelac empty state');
+agm_check(strpos($lacobel, 'materialy/lacobel-8017/') === false, 'Discontinued colour shown');
+agm_check(substr_count($matelac, 'data-material-card') === 10, 'Matelac must show ten products');
+agm_check(strpos($matelac, 'materialy/lacobel-') === false, 'Matelac must not inherit Lacobel colours');
+agm_check(strpos($matelac, 'materialy/matelac-1013-agc/') !== false && strpos($matelac, 'materialy/matelac-1013-poland/') !== false, 'Both 1013 suppliers must be present');
 agm_check(strpos($lacobel, '← Окрашенное стекло') !== false, 'Missing subgroup parent link');
 echo 'PASS: ' . count($pages) . ' published materials, ' . count($groups) . " groups; unique coverage, selection, painted subgroups and invalid-group fallback.\n";
