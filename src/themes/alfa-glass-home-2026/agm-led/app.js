@@ -1,3 +1,54 @@
+/* Image viewer: native modal keeps focus inside and restores it on close. */
+(() => {
+  const links = [...document.querySelectorAll('.led-card > a')];
+  if (!links.length || typeof HTMLDialogElement === 'undefined') return;
+  const dialog = document.createElement('dialog');
+  dialog.className = 'led-viewer';
+  dialog.setAttribute('aria-labelledby', 'led-viewer-caption');
+  dialog.innerHTML = '<div class="led-viewer-bar"><p id="led-viewer-caption" aria-live="polite"></p><button type="button" data-close aria-label="Закрыть просмотр" autofocus>×</button></div><img class="led-viewer-image" alt=""><div class="led-viewer-controls"><button type="button" data-prev aria-label="Предыдущее зеркало">←</button><span>Используйте стрелки для просмотра</span><button type="button" data-next aria-label="Следующее зеркало">→</button></div>';
+  document.body.append(dialog);
+  const image = dialog.querySelector('img');
+  const caption = dialog.querySelector('p');
+  let current = 0;
+  let opener;
+  const show = index => {
+    current = (index + links.length) % links.length;
+    const link = links[current];
+    image.src = link.href;
+    image.alt = link.querySelector('img').alt;
+    caption.textContent = link.closest('.led-card').querySelector('h3').textContent + ' · ' + (current + 1) + ' / ' + links.length;
+  };
+  links.forEach((link, index) => {
+    link.removeAttribute('target');
+    link.setAttribute('aria-haspopup', 'dialog');
+    link.addEventListener('click', event => {
+      if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      opener = link;
+      show(index);
+      dialog.showModal();
+      document.documentElement.classList.add('led-viewer-open');
+    });
+  });
+  dialog.querySelector('[data-close]').addEventListener('click', () => dialog.close());
+  dialog.querySelector('[data-prev]').addEventListener('click', () => show(current - 1));
+  dialog.querySelector('[data-next]').addEventListener('click', () => show(current + 1));
+  dialog.addEventListener('click', event => {
+    if (event.target !== dialog) return;
+    const r = dialog.getBoundingClientRect();
+    if (event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom) dialog.close();
+  });
+  dialog.addEventListener('keydown', event => {
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+      event.preventDefault();
+      show(current + (event.key === 'ArrowLeft' ? -1 : 1));
+    }
+  });
+  dialog.addEventListener('close', () => {
+    document.documentElement.classList.remove('led-viewer-open');
+    opener?.focus({preventScroll:true});
+  });
+})();
 /* Designer prototype: local brief export only, no network submissions. */
 (() => {
   'use strict';
