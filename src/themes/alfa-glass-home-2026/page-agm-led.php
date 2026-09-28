@@ -8,6 +8,7 @@ $header = preg_replace('/(<a\b[^>]*href=")#([^"]*)"/', '$1' . esc_url(home_url('
 $header = preg_replace('/<button class="icon-button search-toggle".*?<\/button>/s', '', $header);
 $header = str_replace('href="' . esc_url(home_url('/')) . '#request"', 'href="#project-brief"', $header);
 $html = file_get_contents(get_template_directory() . '/agm-led/index.html');
+add_filter('pre_get_document_title', function () { return 'Зеркала с подсветкой на заказ по размерам — ALFAGLASS'; }, 100);
 ob_start(); wp_head(); $head = ob_get_clean();
 ob_start(); wp_body_open(); $body = ob_get_clean();
 ob_start(); wp_footer(); $footer = ob_get_clean();
