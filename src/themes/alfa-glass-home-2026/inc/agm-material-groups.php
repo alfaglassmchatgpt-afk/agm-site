@@ -54,10 +54,21 @@ function agm_material_group_url($key) {
     return add_query_arg('group', $key, home_url('/materialy/'));
 }
 
-function agm_material_catalog_render($html) {
+function agm_material_catalog_render($html, $family = '') {
     $groups = agm_material_grouped_pages();
     $selected = isset($_GET['group']) && is_string($_GET['group']) ? sanitize_key(wp_unslash($_GET['group'])) : '';
     if (!isset($groups[$selected])) { $selected = ''; }
+    $families = ['steklo-lacobel' => ['title' => 'Стекло Лакобель', 'prefix' => 'lacobel-'], 'steklo-matelak' => ['title' => 'Стекло Матылак', 'prefix' => 'matelac-']];
+    if (isset($families[$family])) {
+        $selected = 'okrashennoe-steklo';
+        $groups[$selected]['title'] = $families[$family]['title'];
+        $prefix = $families[$family]['prefix'];
+        $groups[$selected]['pages'] = array_values(array_filter($groups[$selected]['pages'], function ($page) use ($prefix) { return strpos($page->post_name, $prefix) === 0; }));
+        $groups = [$selected => $groups[$selected]];
+    } elseif ($selected === 'okrashennoe-steklo') {
+        $groups[$selected]['pages'] = array_values(array_filter($groups[$selected]['pages'], function ($page) use ($families) { return isset($families[$page->post_name]); }));
+    }
+
     if ($selected) {
         // Group links open the actual collection, without the catalog introduction.
         $html = preg_replace('/<section class="container gc-intro">.*?<\/section>/s', '', $html, 1);
@@ -68,6 +79,12 @@ function agm_material_catalog_render($html) {
     foreach ($matches[0] as $card) {
         if (preg_match('/href="[^"]*materialy\/([^\/"?]+)\//', $card, $match)) { $cards[$match[1]] = $card; }
     }
+    foreach ($families as $familySlug => $details) {
+        $preview = '';
+        if (isset($cards[$familySlug]) && preg_match('/<img\b[^>]*>/', $cards[$familySlug], $image)) { $preview = $image[0]; }
+        $finish = $familySlug === 'steklo-lacobel' ? 'Глянцевое окрашенное стекло' : 'Матовое окрашенное стекло';
+        $cards[$familySlug] = '<a class="gc-card" data-material-card href="' . esc_url(home_url('/materialy/' . $familySlug . '/')) . '">' . $preview . '<div><h3>' . esc_html($details['title']) . '</h3><p>' . esc_html($finish) . '</p><strong>Смотреть цвета →</strong></div></a>';
+    }
     $out = '<section class="container gc-catalog" data-selected-group="' . esc_attr($selected) . '">';
     if ($selected) { $out .= '<h1>' . esc_html($groups[$selected]['title']) . '</h1>'; }
     $out .= '<label class="gc-search">' . ($selected ? 'Найти в этой группе' : 'Найти среди всех материалов') . '<input id="material-search" type="search" placeholder="Например: Moru, бронза, рифлёное"></label>';
@@ -77,10 +94,10 @@ function agm_material_catalog_render($html) {
         foreach ($group['pages'] as $page) {
             if (isset($cards[$page->post_name]) && preg_match('/<img\b[^>]*>/', $cards[$page->post_name], $image)) { $preview = preg_replace('/alt="[^"]*"/', 'alt=""', $image[0]); break; }
         }
-        $out .= '<a class="gc-category" href="' . esc_url(agm_material_group_url($key)) . '">' . $preview . '<div><h2>' . esc_html($group['title']) . '</h2><p>Материалов: ' . count($group['pages']) . '</p><strong>Смотреть группу →</strong></div></a>';
+        $out .= '<a class="gc-category" href="' . esc_url(agm_material_group_url($key)) . '">' . $preview . '<div><h2>' . esc_html($group['title']) . '</h2><p>Материалов: ' . ($key === 'okrashennoe-steklo' ? '2 подгруппы' : count($group['pages'])) . '</p><strong>Смотреть группу →</strong></div></a>';
     }
     $out .= '</div><p id="material-count" aria-live="polite"></p>';
-    $out .= '<a class="gc-back" href="' . esc_url(home_url('/materialy/')) . '"' . ($selected ? '' : ' hidden') . '>← Все группы материалов</a>';
+    $out .= '<a class="gc-back" href="' . esc_url($family ? agm_material_group_url('okrashennoe-steklo') : home_url('/materialy/')) . '"' . ($selected ? '' : ' hidden') . '>← ' . ($family ? 'Окрашенное стекло' : 'Все группы материалов') . '</a>';
     foreach ($groups as $key => $group) {
         $out .= '<section class="gc-material-group" data-group="' . esc_attr($key) . '"' . ($selected === $key ? '' : ' hidden') . '>' . ($selected === $key ? '' : '<h2>' . esc_html($group['title']) . '</h2>') . '<div class="gc-grid">';
         foreach ($group['pages'] as $page) {
@@ -91,7 +108,7 @@ function agm_material_catalog_render($html) {
         }
         $out .= '</div></section>';
     }
-    $out .= '<p id="no-results" hidden>Ничего не найдено. Попробуйте другое название.</p></section>';
+    $out .= '<p id="no-results" hidden>' . ($family && empty($groups[$selected]['pages']) ? 'Цвета этой подгруппы пока не добавлены.' : 'Ничего не найдено. Попробуйте другое название.') . '</p></section>';
     $assets = get_template_directory_uri() . '/agm-glass/';
     $html = str_replace('</head>', '<link rel="stylesheet" href="' . esc_url(get_template_directory_uri() . '/agm-glass/sample-standard.css?v=' . filemtime(get_template_directory() . '/agm-glass/sample-standard.css')) . '"></head>', $html);
     $html = str_replace('</head>', '<link rel="stylesheet" href="' . esc_url($assets . 'group-navigation.css?v=' . filemtime(get_template_directory() . '/agm-glass/group-navigation.css')) . '"></head>', $html);

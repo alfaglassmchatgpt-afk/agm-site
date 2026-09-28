@@ -58,6 +58,8 @@ function agm_order_render($html, $slug, $legacy = false) {
             $backLabel = $groups[$groupKey]['title'];
         }
     }
+    if (strpos($slug, 'lacobel-') === 0) { $backUrl = home_url('/materialy/steklo-lacobel/'); $backLabel = 'Стекло Лакобель'; }
+    if (strpos($slug, 'matelac-') === 0) { $backUrl = home_url('/materialy/steklo-matelak/'); $backLabel = 'Стекло Матылак'; }
     $back = '<nav class="container agm-card-back" aria-label="Возврат в каталог"><a href="' . esc_url($backUrl) . '"><span aria-hidden="true">←</span> Назад: ' . esc_html($backLabel) . '</a></nav>';
     $html = preg_replace_callback('/<main\b[^>]*>/', function ($match) use ($back) { return $match[0] . $back; }, $html, 1);
     $html = str_replace('</head>', '<link rel="stylesheet" href="' . $asset('navigation.css') . '"></head>', $html);

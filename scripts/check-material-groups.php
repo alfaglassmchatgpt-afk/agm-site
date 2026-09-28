@@ -26,8 +26,15 @@ foreach ($groups as $key => $group) {
     $_GET['group'] = $key;
     $html = agm_material_catalog_render($source);
     agm_check(strpos($html, 'data-group="' . $key . '">') !== false, 'Selected group hidden');
-    agm_check(substr_count($html, 'data-groups="' . $key . '"') === count($group['pages']), 'Wrong group size');
+    agm_check(substr_count($html, 'data-groups="' . $key . '"') === ($key === 'okrashennoe-steklo' ? 2 : count($group['pages'])), 'Wrong group size');
 }
 agm_check(array_map(function ($page) { return $page->post_name; }, $groups['matovoe-steklo']['pages']) === ['steklo-matovoe-matelux', 'steklo-matovoe-osvetlyonnoe', 'moru-bronze-mat', 'moru-grey-mat', 'moru-dark-grey-mat'], 'Matte range order or membership');
 agm_check(array_map(function ($page) { return $page->post_name; }, $groups['tonirovannoe-steklo']['pages']) === ['tonirovannoe-steklo-grey', 'moru-bronze', 'moru-dark-grey', 'tonirovannoe-steklo-blue'], 'Tinted range must contain four transparent colours');
-echo 'PASS: ' . count($pages) . ' published materials, ' . count($groups) . " groups; unique coverage, selection and invalid-group fallback.\n";
+$lacobel = agm_material_catalog_render($source, 'steklo-lacobel');
+$matelac = agm_material_catalog_render($source, 'steklo-matelak');
+agm_check(substr_count($lacobel, 'data-material-card') === 13, 'Lacobel must show thirteen colours');
+agm_check(strpos($lacobel, '/materialy/lacobel-8017/') === false, 'Discontinued colour shown');
+agm_check(substr_count($matelac, 'data-material-card') === 0, 'Matelac must not inherit Lacobel colours');
+agm_check(strpos($matelac, 'Цвета этой подгруппы пока не добавлены.') !== false, 'Missing Matelac empty state');
+agm_check(strpos($lacobel, '← Окрашенное стекло') !== false, 'Missing subgroup parent link');
+echo 'PASS: ' . count($pages) . ' published materials, ' . count($groups) . " groups; unique coverage, selection, painted subgroups and invalid-group fallback.\n";

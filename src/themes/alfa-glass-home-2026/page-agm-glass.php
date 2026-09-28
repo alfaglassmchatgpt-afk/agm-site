@@ -13,7 +13,9 @@ $allowed = ['catalog', 'lacobel-1013', 'lacobel-1014', 'lacobel-1015', 'lacobel-
 if (!in_array($slug, $allowed, true)) { status_header(404); exit; }
 $html = file_get_contents(get_template_directory() . '/agm-glass/' . $slug . '.html');
 if ($slug === 'catalog') { $html = agm_material_catalog_render($html); }
-if ($slug !== 'catalog') { $html = agm_order_render($html, $slug, false); }
+if (in_array($slug, ['steklo-lacobel', 'steklo-matelak'], true)) {
+    $html = agm_material_catalog_render(file_get_contents(get_template_directory() . '/agm-glass/catalog.html'), $slug);
+} elseif ($slug !== 'catalog') { $html = agm_order_render($html, $slug, false); }
 ob_start(); wp_head(); $head = ob_get_clean();
 ob_start(); wp_body_open(); $body = ob_get_clean();
 ob_start(); wp_footer(); $footer = ob_get_clean();
