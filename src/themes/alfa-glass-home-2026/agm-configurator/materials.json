@@ -868,7 +868,7 @@
       "standard": "По образцу"
     },
     "thicknesses": [
-      "unknown"
+      "4"
     ],
     "operations": [
       "cut",
@@ -879,7 +879,8 @@
       "facade"
     ],
     "policy": "painted",
-    "note": "Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы."
+    "note": "Толщина 4 мм. Формат листа 3210 × 2250 мм. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+    "preserveUnknownThickness": true
   },
   "steklo-matelak": {
     "title": "Стекло Matelac",
@@ -887,7 +888,7 @@
       "standard": "По образцу"
     },
     "thicknesses": [
-      "unknown"
+      "4"
     ],
     "operations": [
       "cut",
@@ -898,7 +899,8 @@
       "facade"
     ],
     "policy": "painted",
-    "note": "Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы."
+    "note": "Толщина 4 мм. Формат листа 3210 × 2250 мм. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+    "preserveUnknownThickness": true
   },
   "dihroichnoe-steklo": {
     "title": "Дихроичное стекло, купить в Москве",
@@ -1290,5 +1292,252 @@
     ],
     "policy": "basic",
     "note": "Прозрачное тонированное в массе стекло. Формат листа 3210 × 2250 мм."
+  },
+  "lacobel-1013": {
+    "title": "Лакобель 1013 RAL — Жемчужно-бежевый светлый",
+    "variants": {
+      "standard": "1013 RAL · Жемчужно-бежевый светлый"
+    },
+    "thicknesses": [
+      "4"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "facade"
+    ],
+    "policy": "painted",
+    "note": "Окрашенное глянцевое стекло 4 мм. Формат листа 3210 × 2250 мм. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы."
+  },
+  "lacobel-1014": {
+    "title": "Лакобель 1014 RAL — Бежевый классический",
+    "variants": {
+      "standard": "1014 RAL · Бежевый классический"
+    },
+    "thicknesses": [
+      "4"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "facade"
+    ],
+    "policy": "painted",
+    "note": "Окрашенное глянцевое стекло 4 мм. Формат листа 3210 × 2250 мм. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы."
+  },
+  "lacobel-1015": {
+    "title": "Лакобель 1015 RAL — Светлый бежевый",
+    "variants": {
+      "standard": "1015 RAL · Светлый бежевый"
+    },
+    "thicknesses": [
+      "4"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "facade"
+    ],
+    "policy": "painted",
+    "note": "Окрашенное глянцевое стекло 4 мм. Формат листа 3210 × 2250 мм. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы."
+  },
+  "lacobel-1236": {
+    "title": "Лакобель 1236 REF — Коричневый светлый",
+    "variants": {
+      "standard": "1236 REF · Коричневый светлый"
+    },
+    "thicknesses": [
+      "4"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "facade"
+    ],
+    "policy": "painted",
+    "note": "Окрашенное глянцевое стекло 4 мм. Формат листа 3210 × 2250 мм. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы."
+  },
+  "lacobel-5001": {
+    "title": "Лакобель 5001 REF — Радужный голубой",
+    "variants": {
+      "standard": "5001 REF · Радужный голубой"
+    },
+    "thicknesses": [
+      "4"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "facade"
+    ],
+    "policy": "painted",
+    "note": "Окрашенное глянцевое стекло 4 мм. Формат листа 3210 × 2250 мм. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы."
+  },
+  "lacobel-7000": {
+    "title": "Лакобель 7000 REF — Синяя тень",
+    "variants": {
+      "standard": "7000 REF · Синяя тень"
+    },
+    "thicknesses": [
+      "4"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "facade"
+    ],
+    "policy": "painted",
+    "note": "Окрашенное глянцевое стекло 4 мм. Формат листа 3210 × 2250 мм. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы."
+  },
+  "lacobel-7013": {
+    "title": "Лакобель 7013 REF — Натуральный коричневый",
+    "variants": {
+      "standard": "7013 REF · Натуральный коричневый"
+    },
+    "thicknesses": [
+      "4"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "facade"
+    ],
+    "policy": "painted",
+    "note": "Окрашенное глянцевое стекло 4 мм. Формат листа 3210 × 2250 мм. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы."
+  },
+  "lacobel-7016": {
+    "title": "Лакобель 7016 REF — Природный чёрный",
+    "variants": {
+      "standard": "7016 REF · Природный чёрный"
+    },
+    "thicknesses": [
+      "4"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "facade"
+    ],
+    "policy": "painted",
+    "note": "Окрашенное глянцевое стекло 4 мм. Формат листа 3210 × 2250 мм. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы."
+  },
+  "lacobel-7035": {
+    "title": "Лакобель 7035 RAL — Серый классический",
+    "variants": {
+      "standard": "7035 RAL · Серый классический"
+    },
+    "thicknesses": [
+      "4"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "facade"
+    ],
+    "policy": "painted",
+    "note": "Окрашенное глянцевое стекло 4 мм. Формат листа 3210 × 2250 мм. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы."
+  },
+  "lacobel-8815": {
+    "title": "Лакобель 8815 RAL — Терракотовый",
+    "variants": {
+      "standard": "8815 RAL · Терракотовый"
+    },
+    "thicknesses": [
+      "4"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "facade"
+    ],
+    "policy": "painted",
+    "note": "Окрашенное глянцевое стекло 4 мм. Формат листа 3210 × 2250 мм. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы."
+  },
+  "lacobel-9003": {
+    "title": "Лакобель 9003 RAL — Насыщенный белый",
+    "variants": {
+      "standard": "9003 RAL · Насыщенный белый"
+    },
+    "thicknesses": [
+      "4"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "facade"
+    ],
+    "policy": "painted",
+    "note": "Окрашенное глянцевое стекло 4 мм. Формат листа 3210 × 2250 мм. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы."
+  },
+  "lacobel-9005": {
+    "title": "Лакобель 9005 RAL — Чёрный классический",
+    "variants": {
+      "standard": "9005 RAL · Чёрный классический"
+    },
+    "thicknesses": [
+      "4"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "facade"
+    ],
+    "policy": "painted",
+    "note": "Окрашенное глянцевое стекло 4 мм. Формат листа 3210 × 2250 мм. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы."
+  },
+  "lacobel-9010": {
+    "title": "Лакобель 9010 RAL — Белый неяркий",
+    "variants": {
+      "standard": "9010 RAL · Белый неяркий"
+    },
+    "thicknesses": [
+      "4"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "facade"
+    ],
+    "policy": "painted",
+    "note": "Окрашенное глянцевое стекло 4 мм. Формат листа 3210 × 2250 мм. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы."
   }
 }
