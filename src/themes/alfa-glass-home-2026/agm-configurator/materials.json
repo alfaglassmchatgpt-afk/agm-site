@@ -625,7 +625,10 @@
       "polish",
       "grind",
       "drill",
-      "facade"
+      "facade",
+      "temper",
+      "laminate",
+      "paint"
     ],
     "policy": "basic",
     "note": "Прозрачное тонированное в массе стекло. Формат листа 3210 × 2250 мм."
@@ -648,7 +651,10 @@
       "polish",
       "grind",
       "drill",
-      "facade"
+      "facade",
+      "temper",
+      "laminate",
+      "paint"
     ],
     "policy": "basic",
     "note": "Прозрачное тонированное в массе стекло. Формат листа 3210 × 2250 мм."
@@ -1253,7 +1259,10 @@
       "polish",
       "grind",
       "drill",
-      "facade"
+      "facade",
+      "temper",
+      "laminate",
+      "paint"
     ],
     "policy": "basic",
     "note": "Прозрачное тонированное в массе стекло. Формат листа 3210 × 2250 мм."
