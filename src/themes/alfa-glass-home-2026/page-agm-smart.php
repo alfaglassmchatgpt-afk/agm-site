@@ -7,6 +7,7 @@ preg_match('/<svg[^>]*class="svg-library".*?<\/svg>/s', $home, $sprite);
 $header = preg_replace('/(<a\b[^>]*href=")#([^"]*)"/', '$1' . esc_url(home_url('/')) . '#$2"', $header[0]);
 $header = preg_replace('/<button class="icon-button search-toggle".*?<\/button>/s', '', $header);
 $html = file_get_contents(__DIR__ . '/agm-smart/index.html');
+add_filter('pre_get_document_title', function () { return 'Умные зеркала Smart Mirror на заказ для бизнеса — ALFAGLASS'; }, 100);
 ob_start(); wp_head(); $head = ob_get_clean();
 ob_start(); wp_body_open(); $body = ob_get_clean();
 ob_start(); wp_footer(); $footer = ob_get_clean();
