@@ -10,7 +10,7 @@ for(const slug of ['float-steklo-clear-m1','steklo-kristalvizhn-crystalvision','
  assert.equal(model.normalize({...prior,thickness:'7'},materials,()=>slug),null);
 }
 assert.equal(model.normalize({material:'zerkalo-serebro',base:'standard',thickness:'unknown'},materials,()=> 'invalid'),null);
-assert.equal(Object.keys(materials).length,74);
+assert.equal(Object.keys(materials).length,73);
 assert.deepEqual(materials['moru-bronze-toned'].thicknesses,['4','5','8']);
 const bronze=model.normalize({material:'moru-bronze-toned',base:'standard',thickness:'8',ops:['temper','laminate','paint','cut','facade']},materials,()=> 'bronze');
 assert.deepEqual(bronze.ops,['temper','laminate','paint','cut']);

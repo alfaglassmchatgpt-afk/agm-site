@@ -11,3 +11,5 @@
 .smart-page details.smart-faq summary{cursor:pointer;font-weight:650}
 html[data-theme="dark"] .smart-page .smart-card{background:#102437;border-color:#294156}
 @media(max-width:650px){.smart-page .smart-grid{grid-template-columns:1fr}.smart-page .smart-card{padding:19px}}
+
+.smart-page .smart-back{padding-top:24px}.smart-back a{display:inline-block;padding:12px 18px;border-radius:12px;background:var(--soft);color:var(--blue);font-weight:600}.smart-page .gc-product{align-items:start}.smart-page .gc-main-photo img{display:block;width:100%;height:auto;aspect-ratio:1;object-fit:contain}.smart-page .gc-product p{line-height:1.75;margin-bottom:18px}.smart-page .gc-section{padding-top:40px;padding-bottom:28px}

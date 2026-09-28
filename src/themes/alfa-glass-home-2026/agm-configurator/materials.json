@@ -1804,18 +1804,5 @@
     "policy": "basic",
     "note": "Лист 3210 × 2250 мм. Параметры и сочетания согласуем по толщине, размерам, стороне покрытия и чертежу.",
     "preserveUnknownThickness": false
-  },
-  "smart-mirror": {
-    "title": "Smart Mirror",
-    "variants": {
-      "frameless": "Без рамы",
-      "aluminium": "Тонкая алюминиевая рама"
-    },
-    "thicknesses": [
-      "unknown"
-    ],
-    "operations": [],
-    "policy": "product",
-    "note": "Габариты готового изделия, форму, дисплей, ОС, подсветку и управление согласуем по проекту. Укажите пожелания в расчёте."
   }
 }
