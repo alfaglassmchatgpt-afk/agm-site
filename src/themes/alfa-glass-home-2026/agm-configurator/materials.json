@@ -1804,5 +1804,71 @@
     "policy": "basic",
     "note": "Лист 3210 × 2250 мм. Параметры и сочетания согласуем по толщине, размерам, стороне покрытия и чертежу.",
     "preserveUnknownThickness": false
+  },
+  "tonirovannoe-steklo-green": {
+    "title": "Тонированное стекло зелёное (Green)",
+    "variants": {
+      "standard": "Зелёное"
+    },
+    "thicknesses": [
+      "4",
+      "8"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "facade",
+      "temper",
+      "laminate",
+      "paint"
+    ],
+    "policy": "basic",
+    "note": "Тонированное в массе стекло. Формат листа 3210 × 2250 мм. Цвет согласуется по образцу.",
+    "maxSize": {
+      "width": 3210,
+      "height": 2250
+    },
+    "operationThicknesses": {
+      "facade": [
+        "4"
+      ]
+    }
+  },
+  "tonirovannoe-steklo-black": {
+    "title": "Тонированное стекло Черное (Black)",
+    "variants": {
+      "standard": "Чёрное"
+    },
+    "thicknesses": [
+      "4",
+      "6",
+      "8",
+      "10"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "facade",
+      "temper",
+      "laminate",
+      "paint"
+    ],
+    "policy": "basic",
+    "note": "Тонированное в массе стекло. Формат листа 3300 × 2000 мм. Цвет согласуется по образцу.",
+    "maxSize": {
+      "width": 3300,
+      "height": 2000
+    },
+    "operationThicknesses": {
+      "facade": [
+        "4"
+      ]
+    }
   }
 }
