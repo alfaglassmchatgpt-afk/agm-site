@@ -11,7 +11,7 @@
   [
     ['makeup-front-v1.png', 'Гримёрное зеркало · свет направлен в лицо'],
     ['barbershop-smart-v1.png', 'Барбершоп · Smart Mirror с подсветкой'],
-    ['full-height-frame-v2.png', 'Во весь рост · узкая глубокая рама'],
+    ['full-height-frame-v3.png', 'Во весь рост · узкая глубокая рама'],
     ['curved-aluminum-v1.png', 'Криволинейное зеркало · алюминиевая рама']
   ].forEach(([file, title]) => slides.push({src:new URL(file, assets).href, title, alt:title + ' — интерьерная визуализация'}));
   const dialog = document.createElement('dialog');
