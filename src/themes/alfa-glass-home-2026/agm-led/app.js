@@ -2,6 +2,18 @@
 (() => {
   const links = [...document.querySelectorAll('.led-card > a')];
   if (!links.length || typeof HTMLDialogElement === 'undefined') return;
+  const assets = new URL('.', links[0].href);
+  const slides = links.map(link => ({
+    src: link.href,
+    alt: link.querySelector('img').alt,
+    title: link.closest('.led-card').querySelector('h3').textContent
+  }));
+  [
+    ['makeup-front-v1.png', 'Гримёрное зеркало · свет направлен в лицо'],
+    ['barbershop-smart-v1.png', 'Барбершоп · Smart Mirror с подсветкой'],
+    ['full-height-frame-v2.png', 'Во весь рост · узкая глубокая рама'],
+    ['curved-aluminum-v1.png', 'Криволинейное зеркало · алюминиевая рама']
+  ].forEach(([file, title]) => slides.push({src:new URL(file, assets).href, title, alt:title + ' — интерьерная визуализация'}));
   const dialog = document.createElement('dialog');
   dialog.className = 'led-viewer';
   dialog.setAttribute('aria-labelledby', 'led-viewer-caption');
@@ -12,11 +24,11 @@
   let current = 0;
   let opener;
   const show = index => {
-    current = (index + links.length) % links.length;
-    const link = links[current];
-    image.src = link.href;
-    image.alt = link.querySelector('img').alt;
-    caption.textContent = link.closest('.led-card').querySelector('h3').textContent + ' · ' + (current + 1) + ' / ' + links.length;
+    current = (index + slides.length) % slides.length;
+    const slide = slides[current];
+    image.src = slide.src;
+    image.alt = slide.alt;
+    caption.textContent = slide.title + ' · ' + (current + 1) + ' / ' + slides.length;
   };
   links.forEach((link, index) => {
     link.removeAttribute('target');
