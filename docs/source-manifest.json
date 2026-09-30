@@ -116,7 +116,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/page-agm-glass.php",
-    "sha256": "e44122ad7ffa5e5ac70c704700f7191e04e999b990cf8d5bfc2298e1130c3ff6",
+    "sha256": "eecc2976ddc73be04f29b2666b60be0bd314bd36e67ab679d0d6a670fe59de9b",
     "sanitised": true
   },
   {
@@ -266,7 +266,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-glass/catalog.html",
-    "sha256": "f8f8d6a684e5b8ccb7ce7751294d8eb01ae92f9741abea5d2bb961aea170c6b8",
+    "sha256": "b47b8125c5a71b5cc09cec6e3b26e3f1a6f4fe6b2d56dabbb18855e9501bbd3f",
     "sanitised": true
   },
   {
@@ -1681,7 +1681,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/inc/agm-material-groups.php",
-    "sha256": "b35350df7a543b8d7c3db463335ce4acb37644452fd71ef5e5cc94ab42c88747",
+    "sha256": "40ba68ae7d87ad5920b408b167a94ecbf6db7f591d18bc67135ee8fbb0929b64",
     "sanitised": true
   },
   {
@@ -1716,7 +1716,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-configurator/materials.json",
-    "sha256": "06859a4e8025926eb843b1702373e26e72d1b75b7856b0ee5fa52038f0b64ee0",
+    "sha256": "c60f949dcd674e8a17effc47f3d2ca1c09b3bdcb14da8b066e19a07a98b6d579",
     "sanitised": true
   },
   {
@@ -1818,5 +1818,20 @@
     "path": "src/themes/alfa-glass-home-2026/agm-glass/tinted-cascade.js",
     "sanitised": true,
     "sha256": "521517ac2d28d90b32b74761b6f6212ca472150a58b18596898cb179ff7b8825"
+  },
+  {
+    "path": "src/themes/alfa-glass-home-2026/agm-glass/estriado.html",
+    "sanitised": true,
+    "sha256": "4a814481e6ccec45be628426cb065213e6ea93f2475b226bb5624d43f19e15b9"
+  },
+  {
+    "path": "src/themes/alfa-glass-home-2026/agm-glass/estriado-crystal.html",
+    "sanitised": true,
+    "sha256": "9b20368532ddc9872368285aa094daa413495ca45248f090282c633c420620d7"
+  },
+  {
+    "path": "src/themes/alfa-glass-home-2026/agm-glass/estriado-ultra.html",
+    "sanitised": true,
+    "sha256": "4debb751d5f73244ddcab21195ffb77d2b56cf72fb83c0c82b0f3bdc353200b9"
   }
 ]

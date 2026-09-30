@@ -1094,5 +1094,113 @@
         "8"
       ]
     }
+  },
+  "estriado": {
+    "title": "Estriado",
+    "variants": {
+      "standard": "Обычное стекло с лёгким зеленоватым оттенком"
+    },
+    "thicknesses": [
+      "4",
+      "6",
+      "8"
+    ],
+    "operations": [
+      "cut",
+      "polish",
+      "grind",
+      "bevel",
+      "drill",
+      "shape",
+      "film",
+      "sandblast",
+      "laminate",
+      "temper",
+      "paint",
+      "facade",
+      "profile"
+    ],
+    "policy": "owner-confirmed",
+    "note": "Закалка, триплексование, тонирование плёнкой и окрашивание доступны. Алюминиевый фасад — только 4 мм; профильная система для дверей и перегородок — 8 мм. Сочетания обработок и конструкцию согласуем по проекту.",
+    "operationThicknesses": {
+      "facade": [
+        "4"
+      ],
+      "profile": [
+        "8"
+      ]
+    }
+  },
+  "estriado-crystal": {
+    "title": "Estriado Crystal",
+    "variants": {
+      "standard": "Полуосветлённое стекло Crystal"
+    },
+    "thicknesses": [
+      "4",
+      "6",
+      "8"
+    ],
+    "operations": [
+      "cut",
+      "polish",
+      "grind",
+      "bevel",
+      "drill",
+      "shape",
+      "film",
+      "sandblast",
+      "laminate",
+      "temper",
+      "paint",
+      "facade",
+      "profile"
+    ],
+    "policy": "owner-confirmed",
+    "note": "Закалка, триплексование, тонирование плёнкой и окрашивание доступны. Алюминиевый фасад — только 4 мм; профильная система для дверей и перегородок — 8 мм. Сочетания обработок и конструкцию согласуем по проекту.",
+    "operationThicknesses": {
+      "facade": [
+        "4"
+      ],
+      "profile": [
+        "8"
+      ]
+    }
+  },
+  "estriado-ultra": {
+    "title": "Estriado Ultra",
+    "variants": {
+      "standard": "Осветлённое стекло Ultra"
+    },
+    "thicknesses": [
+      "4",
+      "6",
+      "8"
+    ],
+    "operations": [
+      "cut",
+      "polish",
+      "grind",
+      "bevel",
+      "drill",
+      "shape",
+      "film",
+      "sandblast",
+      "laminate",
+      "temper",
+      "paint",
+      "facade",
+      "profile"
+    ],
+    "policy": "owner-confirmed",
+    "note": "Закалка, триплексование, тонирование плёнкой и окрашивание доступны. Алюминиевый фасад — только 4 мм; профильная система для дверей и перегородок — 8 мм. Сочетания обработок и конструкцию согласуем по проекту.",
+    "operationThicknesses": {
+      "facade": [
+        "4"
+      ],
+      "profile": [
+        "8"
+      ]
+    }
   }
 }
