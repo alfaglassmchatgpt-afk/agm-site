@@ -733,14 +733,25 @@
     ],
     "operations": [
       "cut",
-      "shape",
       "polish",
       "grind",
+      "bevel",
       "drill",
+      "shape",
+      "film",
+      "sandblast",
+      "laminate",
+      "temper",
+      "paint",
       "facade"
     ],
-    "policy": "basic",
-    "note": "Специальные обработки включаются после подтверждения для этого материала."
+    "policy": "owner-confirmed",
+    "note": "Доступные обработки и сочетания согласуются по проекту. Алюминиевый фасад — для стекла 4 мм.",
+    "operationThicknesses": {
+      "facade": [
+        "4"
+      ]
+    }
   },
   "kathedral-klein": {
     "title": "Kathedral Klein",
