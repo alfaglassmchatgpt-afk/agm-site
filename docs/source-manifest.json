@@ -266,7 +266,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-glass/catalog.html",
-    "sha256": "16617dee4d4125251b5c58cdebeb54bae07af2f27e6b7551071d8eb56c949631",
+    "sha256": "8b3b7c6941382306deb18937d3cada40c4f60d0dbc33e91361d501a0e4268548",
     "sanitised": true
   },
   {
@@ -1716,7 +1716,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-configurator/materials.json",
-    "sha256": "838c1974033fc5256dc60db89299a1b14d4a044cf027c4999b7a29756311cffc",
+    "sha256": "42b6666f425041e63f9f45db41ac40420c43acd3df1d977782f4c37c7598f4c0",
     "sanitised": true
   },
   {
@@ -1837,6 +1837,6 @@
   {
     "path": "src/themes/alfa-glass-home-2026/agm-glass/flutelite-s.html",
     "sanitised": true,
-    "sha256": "1a40dff8a5e22242bf99e488b8a513ab4a2e4549c1dbcc83585cc0b19072476d"
+    "sha256": "607b29d19cd7d91c0cf4736e5fa9d431005b171ac7cb3d9f565a9d77693261d1"
   }
 ]
