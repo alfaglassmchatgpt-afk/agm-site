@@ -266,7 +266,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-glass/catalog.html",
-    "sha256": "8b3b7c6941382306deb18937d3cada40c4f60d0dbc33e91361d501a0e4268548",
+    "sha256": "8b40536804c39c9961d03eba0f874dca0b567f294d8d583c427ca4046bbd03b3",
     "sanitised": true
   },
   {
@@ -326,7 +326,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-glass/kathedral-klein.html",
-    "sha256": "991b9d5a80aaf586a77ff2182737bfaf78b9b2369db18ac34957d16de021f57e",
+    "sha256": "01c359f81fe0bc0d3692c65236e90c9f5cbce80bbdc4d19496ef7281a1bfba19",
     "sanitised": true
   },
   {
@@ -1716,7 +1716,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-configurator/materials.json",
-    "sha256": "42b6666f425041e63f9f45db41ac40420c43acd3df1d977782f4c37c7598f4c0",
+    "sha256": "4df8405546ed675b469d0effc56e48fddd7f5e0e6eaba96b227ce38a7ef31843",
     "sanitised": true
   },
   {
