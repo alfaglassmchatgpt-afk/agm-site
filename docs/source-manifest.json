@@ -266,7 +266,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-glass/catalog.html",
-    "sha256": "5f30ddda60f9d0a5a967e08467e883b0e827de8573faf9593f008fb5dd0dd834",
+    "sha256": "552d4291c4f336d4e6d6617d3d48b4cbbec1693682a9b628520af2fa0f68f985",
     "sanitised": true
   },
   {
@@ -316,7 +316,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-glass/gothic.html",
-    "sha256": "57bc1b4035f2e28bed1dde9568f284dc9fc669f6dcc8cb8c87e1839b13be47d7",
+    "sha256": "46adf82f44e6cabd41831e2ae8f20c7c61ebf7aa77a261cf6fa347a4fb2e3476",
     "sanitised": true
   },
   {
@@ -1716,7 +1716,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-configurator/materials.json",
-    "sha256": "43089bc857e04d0eb933b229e9948f3e134dd745cad61884ae710fc6b3472414",
+    "sha256": "6bc0e231e12a2f6fa401af4575de329358471a8dd766859dd208dfd2768c9cd5",
     "sanitised": true
   },
   {
