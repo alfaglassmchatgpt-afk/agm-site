@@ -456,7 +456,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-homepage/index.html",
-    "sha256": "3c69b1fb142a034b8635c2f5259fae0430d1799773d4b7d6db54635d0d9803cc",
+    "sha256": "a6840077f1c28554ff6762d41437754923df8eda048697ddea1b20b9b099cc79",
     "sanitised": true
   },
   {
@@ -491,12 +491,12 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-homepage/css/style.css",
-    "sha256": "2385287ff7f36b13c00325727edd92087417c091d0e92594c6cf872144890243",
+    "sha256": "c072bfd1be4147a8d78f9a0bca3c34e751ce03af7e919c566511999bcd082b80",
     "sanitised": true
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-homepage/js/app.js",
-    "sha256": "63e5b5c7cd771bc6a963c6750fd9c16268a9557e4a66d59e92e12e71868f711b",
+    "sha256": "18306df24790060c068e29b239dafe51f8339aed87d37e60e07ee83af22eda95",
     "sanitised": true
   },
   {

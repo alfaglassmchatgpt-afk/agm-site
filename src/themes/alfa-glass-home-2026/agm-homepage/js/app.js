@@ -118,6 +118,14 @@
     const item = catalog.find(p => p.id === id);
     if (!item) return;
     state.detail = item;
+    const materialPaths = {"m-mirror-silver": "zerkalo-serebro/", "m-mirror-clear": "zerkalo-osvetlyonnoe/", "m-mirror-tinted": "tonirovannye-zerkala/", "m-mirror-aged": "sostarennye-zerkala/", "m-glass-m1": "float-steklo-clear-m1/", "m-glass-clear": "steklo-osvetlyonnoe-clearvision/", "m-glass-fluted": "?group=riflenoe-steklo", "m-glass-tinted": "?group=tonirovannoe-steklo", "m-glass-reflective": "steklo-solnczezashhitnoe-stopsol/", "m-glass-painted": "?group=okrashennoe-steklo"};
+    const materialLink = $('#detail-material-link');
+    const materialPath = materialPaths[id];
+    materialLink.hidden = !materialPath;
+    if (materialPath) {
+      materialLink.href = materialLink.dataset.materialRoot + materialPath;
+      materialLink.textContent = materialPath.startsWith('?') ? 'Выбрать материал →' : 'Перейти к материалу →';
+    }
     $('#detail-kind').textContent = item.kind;
     $('#detail-title').textContent = item.title;
     $('#detail-description').textContent = item.description;

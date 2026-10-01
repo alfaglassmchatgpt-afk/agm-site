@@ -405,3 +405,7 @@ dialog::backdrop{background:rgba(4,17,26,.65);backdrop-filter:blur(5px)}
 .production-teaser{background:var(--soft)}.production-teaser-grid{display:grid;grid-template-columns:1fr 1fr;gap:55px;align-items:center}.production-teaser-photo{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;min-height:290px;padding:30px;border:1px dashed var(--strong-line);border-radius:14px;background:var(--soft-blue);text-align:center}.production-teaser-photo>.icon{width:56px;height:56px;color:var(--blue)}.production-teaser-photo strong{font-size:19px}.production-teaser-photo span{font-size:13px;color:var(--muted)}.production-teaser p{color:var(--muted);line-height:1.8}.production-teaser .eyebrow{color:var(--blue)}.production-teaser small{display:block;margin-top:18px;color:var(--muted);font-size:11px}.production-teaser h2{text-transform:none}.production-about-link{color:var(--blue);font-weight:600}
 @media(max-width:700px){.production-teaser-grid{grid-template-columns:1fr;gap:25px}.production-teaser-photo{min-height:230px}}
 /* End production teaser */
+
+/* Material details navigation */
+#detail-material-link[hidden]{display:none}
+#detail-material-link{margin:0 8px 12px 0}
