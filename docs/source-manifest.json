@@ -266,7 +266,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-glass/catalog.html",
-    "sha256": "552d4291c4f336d4e6d6617d3d48b4cbbec1693682a9b628520af2fa0f68f985",
+    "sha256": "6493ef85bb865d726cf37126bad7a29120cb57e551d18dc508aa0d67ef034c35",
     "sanitised": true
   },
   {
@@ -346,7 +346,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-glass/monumental-atlantic.html",
-    "sha256": "6fde0c950a4e986ed20ed1ffca41afdc569e4903c69596bd200735a6e40e2a93",
+    "sha256": "56da5597f3946dcc318fb38d6c298d50b6b41e4c12864d47157457ba7e1d0136",
     "sanitised": true
   },
   {
@@ -1716,7 +1716,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-configurator/materials.json",
-    "sha256": "6bc0e231e12a2f6fa401af4575de329358471a8dd766859dd208dfd2768c9cd5",
+    "sha256": "982985c6f0f6e62ee9e3ae4354e7b6528f3c11853e2b0c5a7e832e52ca209d4c",
     "sanitised": true
   },
   {
