@@ -266,7 +266,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-glass/catalog.html",
-    "sha256": "2eaedf62d2039dc260e70afd66154816e7faf331a31a3458fb84f0dd815aa90a",
+    "sha256": "fa5a614dd107d4fc62c375149dfcd9a7ac7908257c549aefd74f148aebf0ffcc",
     "sanitised": true
   },
   {
@@ -386,7 +386,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-glass/raywall90.html",
-    "sha256": "07560c21cf403e94130a33de97428709127b08ee1e1a1e11e444fccb951a65e0",
+    "sha256": "437e247299534c724ace23da3458e0172e219b6a83d7c3f1f24be259e905b69d",
     "sanitised": true
   },
   {
@@ -1681,7 +1681,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/inc/agm-material-groups.php",
-    "sha256": "f5c2fdacd62cecf52300dbeba0b7fbc239cc9c5bdfe6545337fa5705ff5e7775",
+    "sha256": "8d1a19c2459bc55a4bd0e1630cc4589b8a392a525c501b7da854993e883e6771",
     "sanitised": true
   },
   {
@@ -1716,7 +1716,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-configurator/materials.json",
-    "sha256": "e10d94d2af9b27fde465298e57ea73a90f07b5f8f56d5d243815a7f2d766987d",
+    "sha256": "79b8a120350bfffef5b383de16586ef168184a740278117f1acb6ae6e1b7e063",
     "sanitised": true
   },
   {
