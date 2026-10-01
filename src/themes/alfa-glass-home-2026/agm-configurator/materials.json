@@ -1317,5 +1317,73 @@
         "4"
       ]
     }
+  },
+  "moru-magnetron-bronze": {
+    "title": "MORU Бронза — магнетронное напыление",
+    "variants": {
+      "standard": "Бронза"
+    },
+    "thicknesses": [
+      "4",
+      "8"
+    ],
+    "operations": [
+      "cut",
+      "polish",
+      "grind",
+      "bevel",
+      "drill",
+      "shape",
+      "film",
+      "sandblast",
+      "laminate",
+      "paint",
+      "facade",
+      "profile"
+    ],
+    "policy": "owner-confirmed",
+    "note": "Магнетронное покрытие на рифлёной стороне. Закалка недоступна. Алюминиевый фасад — только 4 мм; профильная система — 8 мм. Сочетания обработок согласуются по проекту.",
+    "operationThicknesses": {
+      "facade": [
+        "4"
+      ],
+      "profile": [
+        "8"
+      ]
+    }
+  },
+  "moru-magnetron-grey": {
+    "title": "MORU Серое — магнетронное напыление",
+    "variants": {
+      "standard": "Серое"
+    },
+    "thicknesses": [
+      "4",
+      "8"
+    ],
+    "operations": [
+      "cut",
+      "polish",
+      "grind",
+      "bevel",
+      "drill",
+      "shape",
+      "film",
+      "sandblast",
+      "laminate",
+      "paint",
+      "facade",
+      "profile"
+    ],
+    "policy": "owner-confirmed",
+    "note": "Магнетронное покрытие на рифлёной стороне. Закалка недоступна. Алюминиевый фасад — только 4 мм; профильная система — 8 мм. Сочетания обработок согласуются по проекту.",
+    "operationThicknesses": {
+      "facade": [
+        "4"
+      ],
+      "profile": [
+        "8"
+      ]
+    }
   }
 }

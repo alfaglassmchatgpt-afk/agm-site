@@ -1,7 +1,13 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const root=path.join(__dirname,'../src/themes/alfa-glass-home-2026/agm-configurator');
 const model=require(root+'/model.js'),materials=JSON.parse(fs.readFileSync(root+'/materials.json')),operations=JSON.parse(fs.readFileSync(root+'/operations.json'));
-assert.equal(Object.keys(materials).length,46);
+assert.equal(Object.keys(materials).length,48);
+for(const material of ['moru-magnetron-bronze','moru-magnetron-grey']){
+ for(const thickness of ['4','8']){
+  const item=model.normalize({material,base:'standard',thickness,ops:['temper','laminate','facade','profile']},materials,()=>material);
+  assert.deepEqual(item.ops,thickness==='4'?['laminate','facade']:['laminate','profile']);
+ }
+}
 assert.ok(!materials.hithicross.operations.includes('laminate'));
 assert.deepEqual(materials['vison-sun'].thicknesses,['4','5','6','8']);
 assert.deepEqual(materials['flutelite-s'].thicknesses,['4']);
@@ -53,6 +59,6 @@ for(const value of ['',0,-1,'0.1','200.01','200,1','abc',Infinity]) assert.equal
 const fractional=model.normalize({material:'zerkalo-serebro',base:'standard',thickness:'4',width:'200.1',height:'300'},materials,()=> 'fraction');
 assert.equal(fractional.width,'200.1'); // Preserve saved measurements; require correction rather than silently rounding.
 assert.equal(model.wholeMillimetres(fractional.width),false);
-console.log('PASS: 46 profiles, operation allowlists, MORU CRYSTAL/ULTRA/Bronze profiles, mirror/painted heat exclusions, legacy migration, invalid stored entries and whole millimetres.');
+console.log('PASS: 48 profiles, operation allowlists, MORU CRYSTAL/ULTRA/Bronze profiles, mirror/painted heat exclusions, legacy migration, invalid stored entries and whole millimetres.');
 
-for(const [slug,m] of Object.entries(materials)){if(!m.operationThicknesses)continue;for(const t of m.thicknesses){const ops=model.operations(m,t);assert.equal(ops.includes("facade"),t==="4");assert.equal(ops.includes("profile"),t==="8");for(const op of ["temper","laminate","film","paint"])assert.ok(ops.includes(op));const i=model.normalize({material:slug,base:Object.keys(m.variants)[0],thickness:t,ops:["facade","profile"]},materials,()=>slug);assert.deepEqual(i.ops,t==="4"?["facade"]:t==="8"?["profile"]:[]);}}
+for(const [slug,m] of Object.entries(materials)){if(!m.operationThicknesses)continue;for(const t of m.thicknesses){const ops=model.operations(m,t);assert.equal(ops.includes("facade"),t==="4");assert.equal(ops.includes("profile"),t==="8");for(const op of ["temper","laminate","film","paint"])assert.equal(ops.includes(op),m.operations.includes(op));const i=model.normalize({material:slug,base:Object.keys(m.variants)[0],thickness:t,ops:["facade","profile"]},materials,()=>slug);assert.deepEqual(i.ops,t==="4"?["facade"]:t==="8"?["profile"]:[]);}}

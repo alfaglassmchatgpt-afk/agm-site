@@ -116,7 +116,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/page-agm-glass.php",
-    "sha256": "88784306d09cd4d082867351768a6ca18e867a11b092cd5e8e3630d0e407b64d",
+    "sha256": "88d31b7d94de9671ab9909f6e8adb98d3ddd1b231daa68be6e00f8d29b42ea4e",
     "sanitised": true
   },
   {
@@ -266,7 +266,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-glass/catalog.html",
-    "sha256": "6e46ae22f26a8b2674904e567b8c4d494b597a39b6aa478f8739c3580aa72dcc",
+    "sha256": "2eaedf62d2039dc260e70afd66154816e7faf331a31a3458fb84f0dd815aa90a",
     "sanitised": true
   },
   {
@@ -1681,7 +1681,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/inc/agm-material-groups.php",
-    "sha256": "272d4235b63eb2ecbf4bfaab31f6ef4e5e258ea4b8776d2e6fe1d2d734582fda",
+    "sha256": "f5c2fdacd62cecf52300dbeba0b7fbc239cc9c5bdfe6545337fa5705ff5e7775",
     "sanitised": true
   },
   {
@@ -1716,7 +1716,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-configurator/materials.json",
-    "sha256": "dfe535cd9ee90e3bbf766fa949f2255704ad117a452d8d1ac2a9953486b5f80a",
+    "sha256": "e10d94d2af9b27fde465298e57ea73a90f07b5f8f56d5d243815a7f2d766987d",
     "sanitised": true
   },
   {
@@ -1838,5 +1838,15 @@
     "path": "src/themes/alfa-glass-home-2026/agm-glass/flutelite-s.html",
     "sanitised": true,
     "sha256": "607b29d19cd7d91c0cf4736e5fa9d431005b171ac7cb3d9f565a9d77693261d1"
+  },
+  {
+    "path": "src/themes/alfa-glass-home-2026/agm-glass/moru-magnetron-bronze.html",
+    "sanitised": true,
+    "sha256": "69e53675257d3b84d988fd7fc9ebec0dffe1ca24a7b204a7c1c43e3df5109281"
+  },
+  {
+    "path": "src/themes/alfa-glass-home-2026/agm-glass/moru-magnetron-grey.html",
+    "sanitised": true,
+    "sha256": "067c6a8789b274e1e18b80e73c9a110437f6df850e3772837bd28f55a9c3e5a5"
   }
 ]

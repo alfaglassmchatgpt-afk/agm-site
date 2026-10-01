@@ -5,7 +5,7 @@ defined('ABSPATH') || exit;
 function agm_material_groups() {
     return [
         'zerkala' => ['title' => 'Зеркала', 'slugs' => ['zerkalo-serebro', 'zerkalo-osvetlyonnoe', 'tonirovannye-zerkala', 'zerkalo-gezella']],
-        'riflenoe-steklo' => ['title' => 'Рифлёное стекло', 'slugs' => ['flutelite-s', 'estriado', 'estriado-crystal', 'estriado-ultra', 'riflenoe-steklo-flutes', 'moru-crystal', 'moru-ultra', 'moru-bronze-toned', 'moru-grey', 'raywall90', 'raywall', 'vison-sun', 'flutes-moru-bronze', 'flutes-moru-ultra', 'flutes-moru-grey', 'flutes-moru-grey-mat', 'flutes-moru-bronze-mat', 'flutes-moru-ultra-mat', 'tonirovannoe-v-masse-steklo-moru']],
+        'riflenoe-steklo' => ['title' => 'Рифлёное стекло', 'slugs' => ['moru-magnetron-bronze', 'moru-magnetron-grey', 'flutelite-s', 'estriado', 'estriado-crystal', 'estriado-ultra', 'riflenoe-steklo-flutes', 'moru-crystal', 'moru-ultra', 'moru-bronze-toned', 'moru-grey', 'raywall90', 'raywall', 'vison-sun', 'flutes-moru-bronze', 'flutes-moru-ultra', 'flutes-moru-grey', 'flutes-moru-grey-mat', 'flutes-moru-bronze-mat', 'flutes-moru-ultra-mat', 'tonirovannoe-v-masse-steklo-moru']],
         'sostarennye-zerkala' => ['title' => 'Состаренные зеркала', 'slugs' => ['sostarennye-zerkala', 'sostarennye-zerkala-k1']],
         'tonirovannoe-steklo' => ['title' => 'Тонированное стекло', 'slugs' => ['moru-dark-grey', 'moru-bronze', 'moru-bronze-mat', 'moru-grey-mat', 'moru-dark-grey-mat']],
         'okrashennoe-steklo' => ['title' => 'Окрашенное стекло', 'slugs' => ['steklo-lacobel', 'steklo-matelak']],
