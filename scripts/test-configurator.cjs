@@ -2,6 +2,7 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('n
 const root=path.join(__dirname,'../src/themes/alfa-glass-home-2026/agm-configurator');
 const model=require(root+'/model.js'),materials=JSON.parse(fs.readFileSync(root+'/materials.json')),operations=JSON.parse(fs.readFileSync(root+'/operations.json'));
 assert.equal(Object.keys(materials).length,46);
+assert.ok(!materials.hithicross.operations.includes('laminate'));
 assert.deepEqual(materials['vison-sun'].thicknesses,['4','5','6','8']);
 assert.deepEqual(materials['flutelite-s'].thicknesses,['4']);
 assert.deepEqual(materials['moru-bronze-toned'].thicknesses,['4','5','8']);

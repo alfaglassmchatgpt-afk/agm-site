@@ -321,7 +321,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-glass/hithicross.html",
-    "sha256": "c2358c96f2844cfaa78b9508ed778c89de1a04b076b3ab8b5db8fc42d54eee0c",
+    "sha256": "9822c2bae4b58b244d9a435f825464ad53a2bf228d3d83d6609ffc69da9a2df4",
     "sanitised": true
   },
   {
@@ -1716,7 +1716,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-configurator/materials.json",
-    "sha256": "4df8405546ed675b469d0effc56e48fddd7f5e0e6eaba96b227ce38a7ef31843",
+    "sha256": "43089bc857e04d0eb933b229e9948f3e134dd745cad61884ae710fc6b3472414",
     "sanitised": true
   },
   {
