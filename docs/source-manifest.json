@@ -266,7 +266,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-glass/catalog.html",
-    "sha256": "917facda5f6ad8051199f10b89af0bd10eaf2a4344a468161b576aaf1f6986fe",
+    "sha256": "6e46ae22f26a8b2674904e567b8c4d494b597a39b6aa478f8739c3580aa72dcc",
     "sanitised": true
   },
   {
@@ -331,7 +331,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-glass/kathedralaqualite.html",
-    "sha256": "5383340955aa62f97c9b93390f1bfe817bd47537835bf744cd43d88707b00f5f",
+    "sha256": "0760b653c0c799d2f3cfbaff1defb3820e8791189dc31513b0c697f6ab3a860e",
     "sanitised": true
   },
   {
@@ -1716,7 +1716,7 @@
   },
   {
     "path": "src/themes/alfa-glass-home-2026/agm-configurator/materials.json",
-    "sha256": "fe46b515412b0f7d985033637715cb2c82b951542f99fee2957f79e2d2b4a054",
+    "sha256": "dfe535cd9ee90e3bbf766fa949f2255704ad117a452d8d1ac2a9953486b5f80a",
     "sanitised": true
   },
   {
