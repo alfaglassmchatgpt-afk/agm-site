@@ -13,7 +13,13 @@
       5247
     ],
     "materials_parent_id": 5161,
-    "draft_import_marker": "agm-drafts-20261002-v1"
+    "draft_import_marker": "agm-drafts-20261002-v1",
+    "site_auditor": {
+      "version": "0.2.0",
+      "active": true,
+      "anonymous_http_status": 401,
+      "report_items": 266
+    }
   },
   "theme": [
     {
