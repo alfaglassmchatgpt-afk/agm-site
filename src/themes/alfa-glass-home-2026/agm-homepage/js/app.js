@@ -11,8 +11,8 @@
   const form = $('#quote-form');
   const endpoint = document.body.dataset.endpoint || 'api/quote.php';
   const state = { enabled: false, busy: false, csrf: '', requestId: '', files: [], detail: null, privacy: '', consent: '', sent: false };
-  const MAX_BYTES = 10 * 1024 * 1024;
-  const extensions = new Set(['pdf', 'docx', 'xlsx', 'png', 'jpg', 'jpeg', 'webp']);
+  const MAX_BYTES = 20 * 1024 * 1024;
+  const extensions = new Set('jpg,jpeg,png,webp,gif,bmp,tif,tiff,pdf,svg,eps,ai,cdr,dxf,dwg,cdw,frw,m3d,a3d'.split(','));
   const themeKey = 'alfaglass-home-theme' + (location.protocol === 'file:' ? location.pathname : '');
 
   function syncTheme() {
@@ -272,8 +272,8 @@
       if (!extensions.has(ext)) { errors.push('Недопустимый формат: ' + file.name); continue; }
       if (!file.size) { errors.push('Пустой файл: ' + file.name); continue; }
       if (state.files.some(f => f.name === file.name && f.size === file.size && f.lastModified === file.lastModified)) continue;
-      if (state.files.length >= 3) { errors.push('Можно добавить не более трёх файлов.'); continue; }
-      if (state.files.reduce((s, f) => s + f.size, 0) + file.size > MAX_BYTES) { errors.push('Общий размер — не более 10 МБ.'); continue; }
+      if (state.files.length >= 20) { errors.push('Можно добавить не более 20 файлов.'); continue; }
+      if (state.files.reduce((s, f) => s + f.size, 0) + file.size > MAX_BYTES) { errors.push('Общий размер — не более 20 МБ.'); continue; }
       state.files.push(file);
     }
     syncFiles(); $('#file-error').textContent = [...new Set(errors)].join(' ');
@@ -341,6 +341,7 @@
       if (!data.enabled) { previewMode(data.message); return; }
       const validURL = u => { try { const x = new URL(u); return x.protocol === 'https:' || (x.protocol === 'http:' && ['localhost','127.0.0.1'].includes(x.hostname)); } catch (_) { return false; } };
       if (!data.csrf || !data.request_id || !validURL(data.privacy_url) || !validURL(data.consent_url)) throw new Error('configuration');
+      form.elements.phone.required = true;
       state.enabled = true; state.csrf = data.csrf; state.requestId = data.request_id;
       state.privacy = data.privacy_url; state.consent = data.consent_url;
       for (const [sel, url] of [['[data-privacy-link]', state.privacy], ['[data-consent-link]', state.consent]]) {
@@ -364,6 +365,7 @@
     status('Передаём запрос. Пожалуйста, не закрывайте страницу.');
     const data = new FormData(form); data.delete('attachments[]');
     state.files.forEach(f => data.append('attachments[]', f, f.name));
+    data.set('request_text', requestText()); data.set('comment', form.elements.message.value);
     data.set('csrf', state.csrf); data.set('request_id', state.requestId);
     const controller = new AbortController(); const timer = setTimeout(() => controller.abort(), 60000);
     try {
