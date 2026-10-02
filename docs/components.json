@@ -1,4 +1,12 @@
 {
+  "production_release": {
+    "verified": "2026-10-02",
+    "active_theme": "alfa-glass",
+    "uploaded_theme": "alfa-glass-home-2026",
+    "uploaded_status": "inactive",
+    "manifest_files": 1064,
+    "requests_enabled": false
+  },
   "theme": [
     {
       "name": "alfa-glass-home-2026",

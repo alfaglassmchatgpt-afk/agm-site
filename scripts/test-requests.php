@@ -63,8 +63,15 @@ check($r->data['ok'] && strpos($r->data['message'], 'повторять') !== fa
 $bad = request_data(); $bad['csrf'] = 'broken'; $before = count($mail);
 check(AGM_Requests::submit(new Request($bad))->status === 403 && count($mail) === $before, 'csrf');
 $store = [];
-for ($i=0; $i<5; $i++) AGM_Requests::submit(new Request(request_data()));
+for ($i=0; $i<5; $i++) { $attempt = request_data(); $attempt['email'] = ''; AGM_Requests::submit(new Request($attempt)); }
 check(AGM_Requests::submit(new Request(request_data()))->status === 429, 'rate limit');
+$store = []; $first = request_data();
+AGM_Requests::submit(new Request($first));
+$before = count($mail);
+check(AGM_Requests::submit(new Request(request_data()))->status === 429 && count($mail) === $before, 'recipient cooldown');
+$store = ['agm_request_hourly' => 100];
+check(AGM_Requests::submit(new Request(request_data()))->status === 429, 'global flood limit');
+$store = [];
 $_SERVER['CONTENT_LENGTH'] = AGM_Requests::LIMIT + 1048577;
 check(AGM_Requests::submit(new Request(request_data()))->status === 413, 'post limit');
 $file = tempnam(sys_get_temp_dir(), 'agm-test-');

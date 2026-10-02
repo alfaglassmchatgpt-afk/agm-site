@@ -1,6 +1,8 @@
 <?php
 /** Project requests. Disabled until explicitly configured on production. */
 defined('ABSPATH') || exit;
+$agm_request_settings = __DIR__ . '/agm-request-settings.php';
+if (is_readable($agm_request_settings)) { require_once $agm_request_settings; }
 
 final class AGM_Requests {
     const LIMIT = 20971520;
@@ -35,13 +37,35 @@ final class AGM_Requests {
         return hash_hmac('sha256', $id . ':' . $issued . ':' . $cookie, wp_salt('nonce'));
     }
 
+    private static function spam_gate($p) {
+        $gate = 'agm_request_spam_gate';
+        if (!add_option($gate, time(), '', false)) {
+            return self::error('Запросы уже обрабатываются. Попробуйте через минуту.', 429);
+        }
+        wp_schedule_single_event(time() + 300, 'agm_request_unlock', [$gate]);
+        try {
+            $ipkey = 'agm_rate_' . hash_hmac('sha256', $_SERVER['REMOTE_ADDR'] ?? 'unknown', wp_salt('auth'));
+            $rate = (int) get_transient($ipkey);
+            $global = (int) get_transient('agm_request_hourly');
+            $emailkey = 'agm_reply_' . hash_hmac('sha256', strtolower(trim($p['email'] ?? '')), wp_salt('auth'));
+            if ($rate >= 5 || $global >= 100 || (!empty($p['email']) && get_transient($emailkey))) {
+                return self::error('Слишком много запросов. Попробуйте позднее или свяжитесь с менеджером.', 429);
+            }
+            set_transient($ipkey, $rate + 1, 900);
+            set_transient('agm_request_hourly', $global + 1, 3600);
+            return null;
+        } finally {
+            delete_option($gate);
+        }
+    }
+
     public static function settings() {
         $data = ['enabled' => (bool) self::enabled(), 'max_bytes' => self::LIMIT,
             'extensions' => explode(',', self::EXTENSIONS),
             'message' => 'Отправка пока отключена. Заявку можно сохранить в TXT.'];
         if ($data['enabled']) {
             $cookie = $_COOKIE['agm_request_session'] ?? '';
-            if (!preg_match('/^[a-f0-9]{64}$/D', $cookie)) {
+            if (!is_string($cookie) || !preg_match('/^[a-f0-9]{64}$/D', $cookie)) {
                 $cookie = bin2hex(random_bytes(32));
                 setcookie('agm_request_session', $cookie, ['expires' => time() + 7200,
                     'path' => '/', 'secure' => is_ssl(), 'httponly' => true, 'samesite' => 'Strict']);
@@ -100,7 +124,7 @@ final class AGM_Requests {
         $token = explode('.', $p['csrf'] ?? '', 2);
         $cookie = $_COOKIE['agm_request_session'] ?? '';
         $issued = (int) ($token[0] ?? 0);
-        if (!preg_match('/^[a-f0-9]{32}$/D', $id) || !$cookie || count($token) !== 2
+        if (!preg_match('/^[a-f0-9]{32}$/D', $id) || !is_string($cookie) || !preg_match('/^[a-f0-9]{64}$/D', $cookie) || count($token) !== 2
             || $issued > time() - 2 || $issued < time() - 7200
             || !hash_equals(self::signature($id, $issued, $cookie), $token[1]) || !empty($p['website'])) {
             return self::error('Обновите страницу и повторите отправку.', 403);
@@ -108,15 +132,12 @@ final class AGM_Requests {
         $key = 'agm_request_' . $id;
         $previous = get_transient($key);
         if ($previous) { return self::response($previous); }
-        $ipkey = 'agm_rate_' . hash_hmac('sha256', $_SERVER['REMOTE_ADDR'] ?? 'unknown', wp_salt('auth'));
-        $rate = (int) get_transient($ipkey);
-        if ($rate >= 5) { return self::error('Слишком много запросов. Попробуйте через 15 минут.', 429); }
+        if ($spam = self::spam_gate($p)) { return $spam; }
         if (!add_option($key . '_lock', time(), '', false)) {
             return self::error('Этот запрос уже обрабатывается. Уточните получение у менеджера перед повторной отправкой.', 409);
         }
         // The lock contains no client data; expire even after an interrupted PHP request.
         wp_schedule_single_event(time() + 86400, 'agm_request_unlock', [$key . '_lock']);
-        set_transient($ipkey, $rate + 1, 900);
         $paths = []; $directory = null;
         try {
             $previous = get_transient($key);
@@ -161,6 +182,8 @@ final class AGM_Requests {
             // Record manager acceptance before the optional second message; a retry must not resend the order.
             set_transient($key, $result, 86400);
             if (!empty($p['email'])) {
+                $emailkey = 'agm_reply_' . hash_hmac('sha256', strtolower(trim($p['email'])), wp_salt('auth'));
+                set_transient($emailkey, true, 600);
                 $reply = "Здравствуйте!\n\nВаша заявка " . $number . " передана менеджеру ALFAGLASS. Мы свяжемся с вами для уточнения деталей.\nЭто подтверждение получения запроса, а не согласование стоимости или запуск производства.\n\nКонтакт: " . AGM_REQUESTS_TO;
                 if (!wp_mail($p['email'], 'ALFAGLASS — заявка ' . $number . ' принята', $reply, array_merge($headers, ['Reply-To: ' . AGM_REQUESTS_TO]))) {
                     $result['message'] .= ' Подтверждение на email отправить не удалось; повторять заявку не нужно.';
