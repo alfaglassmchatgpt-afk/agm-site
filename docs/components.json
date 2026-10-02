@@ -5,7 +5,15 @@
     "uploaded_theme": "alfa-glass-home-2026",
     "uploaded_status": "inactive",
     "manifest_files": 1064,
-    "requests_enabled": false
+    "requests_enabled": false,
+    "draft_pages": 91,
+    "existing_published_pages": 13,
+    "draft_id_range": [
+      5157,
+      5247
+    ],
+    "materials_parent_id": 5161,
+    "draft_import_marker": "agm-drafts-20261002-v1"
   },
   "theme": [
     {
