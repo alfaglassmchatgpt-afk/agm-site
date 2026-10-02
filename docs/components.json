@@ -6,7 +6,12 @@
     "uploaded_status": "inactive",
     "manifest_files": 1064,
     "requests_enabled": false,
-    "draft_pages": 91,
+    "draft_pages": 1,
+    "new_published_pages": 90,
+    "total_published_pages": 103,
+    "remaining_draft": "nashe-proizvodstvo",
+    "layout_files_updated": 3,
+    "mail_delivery_verified": false,
     "existing_published_pages": 13,
     "draft_id_range": [
       5157,

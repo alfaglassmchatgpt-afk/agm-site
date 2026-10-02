@@ -20,6 +20,11 @@ add_action('wp_head', function () {
         echo '<style id="agm-admin-toolbar-offset">:root{--top:32px}@media(max-width:782px){:root{--top:46px}}.site-header,.header{top:32px}@media(max-width:782px){.site-header,.header{top:46px}}@media(max-width:600px){#wpadminbar{position:fixed}}</style>';
     }
 }, 99);
+/* Keep consent controls native even when a browser retains the older shared stylesheet. */
+add_action('wp_head', function () {
+    if (is_admin()) { return; }
+    echo '<style id="agm-consent-controls">.sm-setting-item input[type="checkbox"],.sm-setting-item input[type="radio"]{width:auto;min-width:0;min-height:0;padding:0}</style>';
+}, 100);
 add_filter('pre_get_document_title', function ($title) {
     if (is_page_template('page-agm-production.php')) { return 'Наше производство — ALFAGLASS'; }
     if (is_page_template('page-agm-private.php')) { return 'Частным клиентам — ALFAGLASS'; }
