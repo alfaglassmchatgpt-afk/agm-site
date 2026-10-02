@@ -12,6 +12,8 @@
     "remaining_draft": "nashe-proizvodstvo",
     "layout_files_updated": 3,
     "mail_delivery_verified": false,
+    "smtp_plugin_active": true,
+    "smtp_new_account_saved": false,
     "existing_published_pages": 13,
     "draft_id_range": [
       5157,
