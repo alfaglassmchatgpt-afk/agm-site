@@ -1049,10 +1049,15 @@
   "zerkalo-gezella": {
     "title": "Зеркало двухстороннее",
     "variants": {
-      "standard": "По образцу"
+      "chrome_plus": "Mirropane Chrome Plus · 0,1%",
+      "chrome": "Mirropane Chrome · 2%",
+      "mirastar": "MIRASTAR · 3%",
+      "chrome_spy": "Mirropane Chrome Spy · 8%"
     },
     "thicknesses": [
-      "unknown"
+      "4",
+      "6",
+      "8"
     ],
     "operations": [
       "cut",
@@ -1066,7 +1071,7 @@
       "frame"
     ],
     "policy": "mirror",
-    "note": "Закалка готового зеркала недоступна."
+    "note": "Стекло с зеркальным покрытием на одной стороне. Формат листа 3210 × 2250 мм. Наличие исполнения, монтаж и специальные обработки согласуем по проекту."
   },
   "moru-crystal": {
     "title": "Рифлёное стекло MORU CRYSTAL",
