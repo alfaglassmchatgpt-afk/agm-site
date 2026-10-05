@@ -5,10 +5,10 @@ require_once __DIR__ . '/agm-requests.php';
 function agm_redesign_front_assets() {
     if (!(is_front_page() || is_page('kompleksnye-postavki') || is_page_template('page-agm-led.php') || is_page_template('page-agm-architects.php') || is_page_template('page-agm-furniture.php') || is_page_template('page-agm-private.php') || is_page_template('page-agm-processing.php') || is_page_template('page-agm-glass.php') || is_page_template('page-agm-production.php') || is_page_template('page-agm-designers.php') || is_page_template('page-agm-catalog.php') || is_page_template('page-agm-mirror.php') || is_page_template('page-agm-tinted.php')) || is_admin()) { return; }
     foreach (wp_styles()->queue as $handle) {
-        if (!in_array($handle, ['admin-bar', 'dashicons', 'agm-company'], true)) { wp_dequeue_style($handle); }
+        if (!in_array($handle, ['admin-bar', 'dashicons', 'agm-company', 'sm_theme_style', 'sm_style'], true)) { wp_dequeue_style($handle); }
     }
     foreach (wp_scripts()->queue as $handle) {
-        if ($handle !== 'admin-bar') { wp_dequeue_script($handle); }
+        if (!in_array($handle, ['admin-bar', 'sm_script'], true)) { wp_dequeue_script($handle); }
     }
 }
 add_action('wp_enqueue_scripts', 'agm_redesign_front_assets', PHP_INT_MAX);
