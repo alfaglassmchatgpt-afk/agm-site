@@ -14,7 +14,7 @@ function agm_navigation_render($html) {
     $html = str_replace('href="#about"', 'href="' . esc_url(home_url('/about/')) . '"', $html);
     $trust = get_template_directory() . '/agm-company/trust.html';
     if (strpos($html, 'id="trusted-by"') === false && is_readable($trust)) {
-        $html = preg_replace('/(?=<section id="materials")/', file_get_contents($trust), $html, 1);
+        $html = str_replace('<!-- AGM-TEAM-END -->', '<!-- AGM-TEAM-END -->' . file_get_contents($trust), $html);
     }
     $catalog = [];
     if (preg_match('/<script[^>]*id="catalog-data"[^>]*>(.*?)<\/script>/s', $html, $match)) {
