@@ -1,5 +1,5 @@
 <?php
-/** Template Name: О компании — ALFAGLASS 2026 (черновик) */
+/** Template Name: О компании — ALFAGLASS 2026 */
 defined('ABSPATH') || exit;
 $dir = get_template_directory();
 $uri = get_template_directory_uri();
