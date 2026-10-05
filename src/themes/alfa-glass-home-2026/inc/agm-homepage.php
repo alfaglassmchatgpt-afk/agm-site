@@ -41,3 +41,22 @@ add_filter('pre_get_document_title', function ($title) {
 require_once get_template_directory() . '/inc/agm-company.php';
 
 require_once get_template_directory() . '/inc/agm-navigation.php';
+
+
+/** Consistent public office address across legacy and redesigned HTML templates. */
+function agm_public_address_html($html) {
+    $address = 'Московская область, г. Видное, Белокаменное ш. вл. 10/2';
+    $space = '(?:\s|&nbsp;|<br\s*/?>)*';
+    $prefix = '(?:(?:Московская область|М\.О\.),?' . $space . '(?:г\.?\s*Видное,?' . $space . ')?)?';
+    $pattern = '~' . $prefix . 'Белокаменное\s+(?:шоссе|ш\.),?' . $space . '(?:владение|вл\.)\s*10/2~u';
+    // Keep scripts (including SEO JSON-LD), styles and editable form values intact.
+    $parts = preg_split('~(<script\b[^>]*>.*?</script\s*>|<style\b[^>]*>.*?</style\s*>|<textarea\b[^>]*>.*?</textarea\s*>)~is', $html, -1, PREG_SPLIT_DELIM_CAPTURE);
+    foreach ($parts as $i => $part) {
+        if ($i % 2 === 0) { $parts[$i] = preg_replace($pattern, $address, $part); }
+    }
+    return implode('', $parts);
+}
+add_action('template_redirect', function () {
+    if (is_admin() || is_feed() || is_trackback() || wp_doing_ajax() || (defined('REST_REQUEST') && REST_REQUEST)) { return; }
+    ob_start('agm_public_address_html');
+}, 0);
