@@ -96,6 +96,12 @@ function agm_material_catalog_render($html) {
         $out .= '</div></section>';
     }
     $out .= '<p id="no-results" hidden>Ничего не найдено. Попробуйте другое название.</p></section>';
+    if ($selected === 'matovoe-steklo') {
+        $examples = get_template_directory() . '/agm-glass/matte-applications.html';
+        if (is_readable($examples)) {
+            $out .= strtr(file_get_contents($examples), ['__ASSETS__' => esc_url(get_template_directory_uri() . '/agm-glass'), '__HOME__' => esc_url(untrailingslashit(home_url('/')))]);
+        }
+    }
     $assets = get_template_directory_uri() . '/agm-glass/';
     $html = str_replace('</head>', '<link rel="stylesheet" href="' . esc_url($assets . 'tinted-cascade.css?v=2') . '"></head>', $html);
     $html = str_replace('</body>', '<script src="' . esc_url($assets . 'tinted-cascade.js?v=2') . '" defer></script></body>', $html);
