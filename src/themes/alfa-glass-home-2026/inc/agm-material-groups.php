@@ -13,7 +13,7 @@ function agm_material_groups() {
         'matovoe-steklo' => ['title' => 'Матовое стекло', 'slugs' => ['steklo-matovoe-matelux']],
         'prozrachnoe-steklo' => ['title' => 'Прозрачное и осветлённое стекло', 'slugs' => ['float-steklo-clear-m1', 'steklo-osvetlyonnoe-clearvision', 'steklo-kristalvizhn-crystalvision']],
         'solncezashhitnoe-steklo' => ['title' => 'Солнцезащитное стекло', 'slugs' => ['steklo-solnczezashhitnoe-stopsol']],
-        'dihroichnoe-steklo' => ['title' => 'Дихроичное стекло', 'slugs' => ['dihroichnoe-steklo']],
+        'dihroichnoe-steklo' => ['title' => 'Дихроичное стекло', 'slugs' => ['dihroichnoe-steklo'], 'direct' => 'dihroichnoe-steklo/'],
         'other' => ['title' => 'Другие материалы', 'slugs' => []],
     ];
 }
@@ -41,7 +41,16 @@ function agm_material_grouped_pages() {
     return array_filter($groups, function ($group) { return !empty($group['pages']); });
 }
 
+add_action('template_redirect', function () {
+    if (is_page('materialy') && isset($_GET['group']) && is_string($_GET['group']) && wp_unslash($_GET['group']) === 'dihroichnoe-steklo') {
+        wp_safe_redirect(home_url('/materialy/dihroichnoe-steklo/'), 301);
+        exit;
+    }
+});
+
 function agm_material_group_url($key) {
+    $group = agm_material_groups()[$key] ?? [];
+    if (!empty($group['direct'])) { return home_url('/materialy/' . $group['direct']); }
     return add_query_arg('group', $key, home_url('/materialy/'));
 }
 
@@ -69,6 +78,10 @@ function agm_material_catalog_render($html) {
         foreach ($group['pages'] as $page) {
             if (isset($cards[$page->post_name]) && preg_match('/<img\b[^>]*>/', $cards[$page->post_name], $image)) { $preview = preg_replace('/alt="[^"]*"/', 'alt=""', $image[0]); break; }
         }
+        if (!empty($group['direct'])) {
+            $out .= '<a class="gc-category" href="' . esc_url(agm_material_group_url($key)) . '">' . $preview . '<div><h2>' . esc_html($group['title']) . '</h2><p>Стекло с цветовыми эффектами</p><strong>Смотреть материал →</strong></div></a>';
+            continue;
+        }
         $out .= '<a class="gc-category" href="' . esc_url(agm_material_group_url($key)) . '">' . $preview . '<div><h2>' . esc_html($group['title']) . '</h2><p>Материалов: ' . count($group['pages']) . '</p><strong>Смотреть группу →</strong></div></a>';
     }
     $out .= '</div><p id="material-count" aria-live="polite"></p>';
@@ -95,6 +108,7 @@ add_action('add_meta_boxes_page', function () {
         $value = get_post_meta($post->ID, '_agm_material_group', true);
         echo '<select name="agm_material_group" style="width:100%"><option value="">Автоматически по материалу</option>';
         foreach (agm_material_groups() as $key => $group) {
+            if (!empty($group['direct'])) { continue; }
             echo '<option value="' . esc_attr($key) . '" ' . selected($value, $key, false) . '>' . esc_html($group['title']) . '</option>';
         }
         echo '</select><p>Для опубликованных страниц раздела «Материалы».</p>';

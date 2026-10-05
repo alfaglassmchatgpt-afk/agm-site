@@ -950,18 +950,27 @@
       "standard": "По образцу"
     },
     "thicknesses": [
-      "unknown"
+      "4",
+      "6",
+      "8"
     ],
     "operations": [
       "cut",
       "shape",
       "polish",
       "grind",
+      "bevel",
       "drill",
+      "film",
+      "sandblast",
+      "laminate",
+      "temper",
+      "paint",
+      "frame",
       "facade"
     ],
     "policy": "basic",
-    "note": "Специальные обработки включаются после подтверждения для этого материала."
+    "note": "Лист 3210 × 2250 мм. Параметры и сочетания обработок согласуем по толщине стекла, размерам изделия и чертежу."
   },
   "steklo-osvetlyonnoe-clearvision": {
     "title": "Стекло осветлённое (Clearvision, Optiwhite)",
