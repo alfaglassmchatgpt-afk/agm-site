@@ -1405,5 +1405,27 @@
     ],
     "policy": "mirror",
     "note": "Лист 2400 × 1830 мм. Закалка и триплексование готового зеркала недоступны."
+  },
+  "sostarennye-zerkala-a1": {
+    "title": "Состаренное зеркало А-1",
+    "variants": {
+      "standard": "А-1 — светлое"
+    },
+    "thicknesses": [
+      "4"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "bevel",
+      "drill",
+      "film",
+      "sandblast",
+      "frame"
+    ],
+    "policy": "mirror",
+    "note": "Листы 2400 × 1830 мм; 3210 × 2500 мм. Закалка готового зеркала недоступна."
   }
 }
