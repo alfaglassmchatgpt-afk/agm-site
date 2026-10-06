@@ -1383,5 +1383,27 @@
         "8"
       ]
     }
+  },
+  "sostarennye-zerkala-k1-gold": {
+    "title": "Состаренное зеркало K-1 Gold",
+    "variants": {
+      "standard": "K-1 Gold — золотистое"
+    },
+    "thicknesses": [
+      "4"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "bevel",
+      "drill",
+      "film",
+      "sandblast",
+      "frame"
+    ],
+    "policy": "mirror",
+    "note": "Лист 2400 × 1830 мм. Закалка и триплексование готового зеркала недоступны."
   }
 }
