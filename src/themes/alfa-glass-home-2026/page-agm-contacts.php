@@ -11,6 +11,7 @@ $header = preg_replace('/<button class="icon-button search-toggle".*?<\/button>/
 $replace = ['__AGM_HOME__' => esc_url(home_url('/')), '__AGM_ASSETS__' => esc_url($uri . '/agm-homepage')];
 // Approved business contact content is maintained privately, outside the public repository.
 $body = is_readable($dir . '/agm-contacts/content.html') ? file_get_contents($dir . '/agm-contacts/content.html') : '';
+$body = str_replace('<div class="logo">ALFA<span>GLASS</span></div>', '<a href="' . esc_url(home_url('/')) . '" aria-label="ALFAGLASS — на главную"><img src="' . esc_url($uri . '/agm-homepage/assets/logo-dark.svg') . '" alt="ALFAGLASS — стекольная компания с 2003 года" width="330" height="87" style="display:block;width:260px;max-width:100%;height:auto"></a>', $body);
 ?><!doctype html><html lang="ru" data-theme="light"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <script>try{document.documentElement.dataset.theme=localStorage.getItem('alfaglass-home-theme')==='dark'?'dark':'light'}catch(e){}</script>
 <?php wp_head(); ?>
