@@ -14,3 +14,6 @@
 .agm-requisites{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.agm-requisites>div{padding:16px;background:#fff;border:1px solid #dbe3e8;border-radius:8px}.agm-requisites dt{font-size:13px;color:#526671}.agm-requisites dd{margin:6px 0 0;overflow-wrap:anywhere}
 @media(max-width:900px){.agm-team-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.agm-cert-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:600px){.agm-company-section{width:calc(100% - 32px);padding:40px 0}.agm-company-section h2{font-size:25px}.agm-team-grid{gap:12px}.agm-person>div{padding:12px}.agm-person h3{font-size:15px}.agm-person p{font-size:12px}.agm-cert-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.agm-certificate img{height:190px}.agm-requisites{grid-template-columns:1fr}}
+
+/* Requisites stay legible on their white cards in both themes. */
+.agm-requisites dt,.agm-requisites dd,.agm-requisites dd a{color:#000}
