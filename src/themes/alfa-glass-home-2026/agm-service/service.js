@@ -1,0 +1,1 @@
+(()=>{const km=document.querySelector('#agm-service #km'),total=document.querySelector('#agm-service #total');if(!km||!total)return;km.addEventListener('input',()=>{const n=km.valueAsNumber;total.textContent=Number.isFinite(n)&&n>=1?'от '+(n*150).toLocaleString('ru-RU')+' ₽':'Укажите расстояние';});})();
