@@ -1,0 +1,34 @@
+<dialog id="agm-service-dialog" aria-labelledby="agm-service-title">
+  <button type="button" class="asr-close" aria-label="Закрыть заявку">×</button>
+  <p class="asr-kicker">Сервис ALFAGLASS</p>
+  <h2 id="agm-service-title">Поможем реализовать ваш проект</h2>
+  <p class="asr-intro">Расскажите, что планируете изготовить и где находится объект. Наш специалист свяжется с вами, уточнит детали и согласует условия.</p>
+  <a class="asr-service-link" href="/service/">Подробнее о сервисе ↗</a>
+  <form id="agm-service-form">
+    <fieldset><legend>Какая помощь нужна? *</legend><div class="asr-services">
+      <label><input type="checkbox" name="services" value="measure" checked> Замер</label>
+      <label><input type="checkbox" name="services" value="delivery"> Доставка</label>
+      <label><input type="checkbox" name="services" value="install"> Монтаж</label>
+    </div></fieldset>
+    <p class="asr-install-note" hidden>Монтируем изделия, изготовленные нашей компанией.</p>
+    <div class="asr-grid">
+      <label>Что нужно изготовить? *<select name="service_product" required><option value="">Выберите изделие</option><option>Зеркало</option><option>Душевая перегородка</option><option>Перегородка</option><option>Стеклянная дверь</option><option>Мебельные фасады</option><option>Полки</option><option>Ограждение</option><option>Другое изделие</option></select></label>
+      <label>Материал<select name="service_material"><option>Нужна консультация</option></select></label>
+    </div>
+    <label>Где находится объект? *<input name="service_address" autocomplete="street-address" maxlength="350" required placeholder="Город, улица, дом"></label>
+    <div class="asr-grid">
+      <label>Как к вам обращаться? *<input name="name" autocomplete="name" maxlength="100" required placeholder="Ваше имя или ФИО"></label>
+      <label>Телефон *<input name="phone" type="tel" autocomplete="tel" maxlength="30" required placeholder="+7 ___ ___-__-__"></label>
+    </div>
+    <label>Почта — по желанию<input name="email" type="email" autocomplete="email" maxlength="160" placeholder="Для ответа и подтверждения заявки"></label>
+    <label>Пожелания и детали<textarea name="comment" maxlength="3000" rows="3" placeholder="Примерные размеры, сроки, особенности доступа. Для монтажа можно указать номер заказа."></textarea></label>
+    <label class="asr-upload">Фото или чертёж<input type="file" name="attachments[]" multiple accept=".jpg,.jpeg,.png,.webp,.pdf,.svg,.eps,.ai,.cdr,.dxf,.dwg,.cdw,.frw,.m3d,.a3d,.gif,.bmp,.tif,.tiff"></label>
+    <p class="asr-help">До 20 файлов, суммарно до 20 МБ. Фото, PDF или чертежи.</p>
+    <ul class="asr-file-list" aria-label="Прикреплённые файлы"></ul>
+    <div class="asr-honey" aria-hidden="true"><label>Сайт<input name="website" tabindex="-1" autocomplete="off"></label></div>
+    <label class="asr-consent"><input name="consent" value="1" type="checkbox" required><span>Даю согласие на обработку персональных данных и принимаю <a class="asr-privacy" href="/privacy-policy/" target="_blank" rel="noopener">условия обработки данных</a>.</span></label>
+    <button class="asr-submit" type="submit">Отправить заявку</button>
+    <p class="asr-help">Свяжемся с вами для уточнения деталей. Поля со * обязательны.</p>
+    <p class="asr-status" role="status" aria-live="polite"></p>
+  </form>
+</dialog>

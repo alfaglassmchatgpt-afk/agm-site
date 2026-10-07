@@ -678,3 +678,5 @@ function render_breads() {
 	<?php }
 }
 require_once __DIR__ . '/inc/agm-processing.php';
+
+require_once __DIR__ . '/inc/agm-service-request.php';
