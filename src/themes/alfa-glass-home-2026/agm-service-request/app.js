@@ -25,6 +25,16 @@ function open(event){
  dialog.showModal();document.documentElement.classList.add('asr-open');
  if(!settings)prepare().catch(error=>tell(error.message,true));
 }
+document.addEventListener('agm:request-measure',event=>{
+ const detail=event.detail;if(!detail?.material)return;
+ open({currentTarget:detail.opener});
+ if(sent)return;
+ if(![...field('service_material').options].some(o=>o.value===detail.material))field('service_material').add(new Option(detail.material,detail.material));
+ field('service_material').value=detail.material;
+ form.querySelector('[name="services"][value="measure"]').checked=true;
+ if(!field('service_product').value&&/зеркал/i.test(detail.material))field('service_product').value='Зеркало';
+ if(detail.summary&&!field('comment').value.includes(detail.summary))field('comment').value=[field('comment').value,detail.summary].filter(Boolean).join('\n\n').slice(0,3000);
+});
 function button(){const b=document.createElement('button');b.type='button';b.className='asr-trigger';b.textContent='Замер и монтаж';b.setAttribute('aria-haspopup','dialog');b.setAttribute('aria-controls',dialog.id);b.addEventListener('click',open);return b;}
 const header=document.querySelector('.header-main');if(header){const target=header.querySelector('.header-tools');header.insertBefore(button(),target||null);}
 const mobile=document.querySelector('.mobile-actions');if(mobile)mobile.append(button());

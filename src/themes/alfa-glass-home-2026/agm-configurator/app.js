@@ -58,7 +58,16 @@
     if(!entries.length)ul.append(node('li','Обработки пока не выбраны'));
     entries.forEach(o=>{const li=node('li');const b=node('button','×');b.type='button';b.dataset.removeOp=o.id;b.setAttribute('aria-label','Убрать: '+o.title);li.append(node('span',o.title),b);ul.append(li);});
   }
+  const measureButton=node('button','Заявка на замер','btn full');
+  measureButton.type='button';measureButton.id='cart-measure-request';measureButton.hidden=true;
+  measureButton.setAttribute('aria-haspopup','dialog');measureButton.setAttribute('aria-controls','agm-service-dialog');
+  $('#unknown').closest('label').after(measureButton);
+  measureButton.addEventListener('click',()=>{
+    const i=active();if(!i||!i.unknown)return;
+    document.dispatchEvent(new CustomEvent('agm:request-measure',{detail:{opener:measureButton,material:materialName(i),summary:materialName(i)+' · '+baseName(i)+' · '+thicknessName(i)+' · '+i.quantity+' шт.\nРазмеры пока не знаю — нужна консультация.'+(i.note?'\nПожелания: '+i.note:'')}}));
+  });
   function render(){
+    measureButton.hidden=!active()?.unknown||materials[active()?.material||current].policy==='craft';
     renderList();renderOps();renderProcessing();$('#cart-error').hidden=true;
     const i=active(), selection=onThisPage(i)?i:nextDraft;
     if(i){$('#width').value=i.width;$('#height').value=i.height;$('#quantity').value=i.quantity;$('#unknown').checked=i.unknown;$('#width').disabled=i.unknown;$('#height').disabled=i.unknown;$('#item-note').value=i.note;$('#active-item-label').textContent='Параметры изделия '+(state.items.indexOf(i)+1);}
