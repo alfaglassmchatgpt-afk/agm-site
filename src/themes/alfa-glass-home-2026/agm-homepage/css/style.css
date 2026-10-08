@@ -438,3 +438,6 @@ html[data-theme="dark"] .hero-caption #slide-label{color:var(--blue);text-shadow
 .hero-caption{width:40%;max-width:440px;min-width:0;padding:0 20px;min-height:2.8em}
 .hero-caption #slide-label{display:block;min-width:0;max-width:100%;white-space:normal;overflow-wrap:anywhere;text-wrap:balance;font-size:clamp(20px,2vw,28px);line-height:1.35}
 @media(max-width:700px){.hero-caption{width:calc(100% - 88px);max-width:360px;padding:0}.hero-caption #slide-label{font-size:18px}}
+/* Lift slide titles by approximately two text lines. */
+.hero-caption{transform:translateY(-2.7em);font-size:clamp(20px,2vw,28px)}
+@media(max-width:700px){.hero-caption{font-size:18px}}
