@@ -456,3 +456,11 @@ html[data-theme="dark"] .hero-caption #slide-label{color:#9fddfc}
 .hero-caption #slide-label.caption-hidden{background-size:0% 1px;transition:opacity .35s ease}
 .hero-paused .hero-caption #slide-label{transition:opacity .35s ease}
 @media(prefers-reduced-motion:reduce){.hero-caption #slide-label{transition:none}}
+/* Trial pencil outline aligned to the Smart Mirror photograph. */
+.hero-sketch{position:absolute;inset:0;pointer-events:none;overflow:hidden;transform:scale(1.035);z-index:2;opacity:0}
+.hero-sketch svg{position:absolute;max-width:none;overflow:visible}
+.hero-sketch path{fill:none;stroke:#e7f6ff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke;stroke-dasharray:1000;stroke-dashoffset:1000;filter:drop-shadow(0 1px 1px #183748)}
+.hero-sketch.is-drawing{opacity:1}.hero-sketch.is-drawing path{animation:mirror-pencil 5.6s ease forwards}
+@keyframes mirror-pencil{0%,12%{stroke-dashoffset:1000;opacity:0}16%{opacity:.9}48%{stroke-dashoffset:0;opacity:1}58%{stroke-dashoffset:0;opacity:.3}68%{stroke-dashoffset:0;opacity:1}78%{stroke-dashoffset:0;opacity:.3}88%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:0;opacity:0}}
+.hero-paused .hero-sketch path{animation-play-state:paused}
+@media(prefers-reduced-motion:reduce){.hero-sketch{display:none}}

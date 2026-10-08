@@ -211,6 +211,21 @@
   let slide=0,timer,typing,captionTimer,paused=false,version=0;
   const second=photo.cloneNode();second.removeAttribute('id');second.removeAttribute('fetchpriority');second.classList.add('hero-next');photo.after(second);
   let front=photo,back=second;
+  const sketch=document.createElement('div');sketch.className='hero-sketch';sketch.setAttribute('aria-hidden','true');
+  sketch.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1672 941"><path pathLength="1000" d="M 844 52 L 1398 0 Q 1438 -3 1439 32 L 1440 703 Q 1440 742 1410 745 L 846 707 Q 813 704 813 672 L 813 86 Q 813 57 844 52 Z"/></svg>';
+  photo.parentElement.append(sketch);
+  function alignSketch(){
+    const box=photo.parentElement.getBoundingClientRect(),scale=Math.max(box.width/1672,box.height/941);
+    const svg=sketch.firstElementChild,position=matchMedia('(max-width:700px)').matches?.3:.55;
+    Object.assign(svg.style,{width:1672*scale+'px',height:941*scale+'px',left:(box.width-1672*scale)*position+'px',top:(box.height-941*scale)/2+'px'});
+  }
+  new ResizeObserver(alignSketch).observe(photo.parentElement);alignSketch();
+  function startSketch(){
+    sketch.classList.remove('is-drawing');
+    if(slides[slide][0]!=='hero-smart-mirror'||reduce.matches)return;
+    void sketch.offsetWidth;sketch.classList.add('is-drawing');
+  }
+  startSketch();
   function stop(){clearTimeout(timer);clearTimeout(typing);clearTimeout(captionTimer);}
   function typePhrase(text){
     clearTimeout(typing);let n=0;
@@ -234,8 +249,9 @@
   function schedule(){clearTimeout(timer);if(!paused&&!reduce.matches&&!document.hidden)timer=setTimeout(()=>showSlide((slide+1)%slides.length),6200);}
   function showSlide(n){
     const token=++version;slide=n;stop();
+    sketch.classList.remove('is-drawing');
     const src=asset(slides[n][0]);
-    back.onload=()=>{if(token!==version)return;front.classList.add('hero-next');back.classList.remove('hero-next');[front,back]=[back,front];};
+    back.onload=()=>{if(token!==version)return;front.classList.add('hero-next');back.classList.remove('hero-next');[front,back]=[back,front];startSketch();};
     back.src=src;
     fadeCaption(slides[n][1]);
     $$('[data-slide]').forEach(b=>{const active=Number(b.dataset.slide)===n;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});
