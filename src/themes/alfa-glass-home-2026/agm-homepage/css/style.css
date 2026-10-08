@@ -424,3 +424,6 @@ dialog::backdrop{background:rgba(4,17,26,.65);backdrop-filter:blur(5px)}
 .hero-caption{background:none;border:0;backdrop-filter:none;box-shadow:none;border-radius:0;padding:0 24px;min-height:2.8em;max-width:70%;justify-content:flex-end;text-align:right;pointer-events:none}
 .hero-caption #slide-label{font-size:clamp(18px,2vw,28px);font-weight:600;letter-spacing:.025em;color:#e7f4fa;text-shadow:0 1px 3px rgba(9,29,40,.95),0 2px 12px rgba(9,29,40,.65)}
 @media(max-width:700px){.hero-caption{padding:0;max-width:calc(100% - 88px);min-height:2.7em}.hero-caption #slide-label{font-size:16px}}
+.hero-caption #slide-label{opacity:1;transition:opacity .35s ease}
+.hero-caption #slide-label.caption-hidden{opacity:0}
+@media(prefers-reduced-motion:reduce){.hero-caption #slide-label{transition:none}}
