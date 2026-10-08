@@ -450,3 +450,9 @@ html[data-theme="dark"] .hero-caption #slide-label{color:#9fddfc}
 .hero-caption #slide-label,html[data-theme="dark"] .hero-caption #slide-label{color:#fff;text-shadow:none;-webkit-text-stroke:.65px #173342;paint-order:stroke fill}
 /* Underline every hero slide caption. */
 .hero-caption #slide-label{text-decoration-line:underline;text-decoration-thickness:1px;text-underline-offset:.22em;text-decoration-color:currentColor;text-decoration-skip-ink:auto}
+/* Draw the underline left to right when each full caption appears. */
+.hero-caption #slide-label{text-decoration:none;position:relative;padding-bottom:.24em;width:fit-content}
+.hero-caption #slide-label::after{content:'';position:absolute;left:0;right:0;bottom:0;height:1px;background:currentColor;transform:scaleX(1);transform-origin:left center;transition:transform 1.15s ease .3s}
+.hero-caption #slide-label.caption-hidden::after{transform:scaleX(0);transition:none}
+.hero-paused .hero-caption #slide-label::after{transition:none}
+@media(prefers-reduced-motion:reduce){.hero-caption #slide-label::after{transition:none}}
