@@ -228,7 +228,12 @@
     };
     const key=slides[slide][0];
     if(!paths[key]||reduce.matches)return;
-    sketch.querySelector('path').setAttribute('d',paths[key]);
+    const outlines=Array.isArray(paths[key])?paths[key]:[paths[key]];
+    sketch.firstElementChild.replaceChildren(...outlines.map(d=>{
+      const path=document.createElementNS('http://www.w3.org/2000/svg','path');
+      path.setAttribute('d',d);path.setAttribute('pathLength','1000');
+      return path;
+    }));
     sketch.style.setProperty('--sketch-duration',key==='hero-tinted-panel'?'5.4s':'5.2s');
     void sketch.offsetWidth;sketch.classList.add('is-drawing');
     const started=performance.now();
