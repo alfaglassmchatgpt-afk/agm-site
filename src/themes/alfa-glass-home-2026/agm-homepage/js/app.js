@@ -212,11 +212,11 @@
   const second=photo.cloneNode();second.removeAttribute('id');second.removeAttribute('fetchpriority');second.classList.add('hero-next');photo.after(second);
   let front=photo,back=second;
   const sketch=document.createElement('div');sketch.className='hero-sketch';sketch.setAttribute('aria-hidden','true');
-  sketch.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1672 941"><path pathLength="1000" d="M 844 52 L 1398 0 Q 1438 -3 1439 32 L 1440 703 Q 1440 742 1410 745 L 846 707 Q 813 704 813 672 L 813 86 Q 813 57 844 52 Z"/></svg>';
+  sketch.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1672 941"><path pathLength="1000" d="M 849 55 L 1397 -1 C 1416 -3 1427 8 1427 29 L 1427 699 C 1427 723 1418 736 1398 735 L 850 695 C 834 694 827 685 827 665 L 827 85 C 827 66 834 58 849 55 Z"/></svg>';
   photo.parentElement.append(sketch);
   function alignSketch(){
     const box=photo.parentElement.getBoundingClientRect(),scale=Math.max(box.width/1672,box.height/941);
-    const svg=sketch.firstElementChild,position=matchMedia('(max-width:700px)').matches?.3:.55;
+    const svg=sketch.firstElementChild,position=parseFloat(getComputedStyle(front).objectPosition)/100;
     Object.assign(svg.style,{width:1672*scale+'px',height:941*scale+'px',left:(box.width-1672*scale)*position+'px',top:(box.height-941*scale)/2+'px'});
   }
   new ResizeObserver(alignSketch).observe(photo.parentElement);alignSketch();
@@ -224,6 +224,13 @@
     sketch.classList.remove('is-drawing');
     if(slides[slide][0]!=='hero-smart-mirror'||reduce.matches)return;
     void sketch.offsetWidth;sketch.classList.add('is-drawing');
+    const started=performance.now();
+    function followPhoto(){
+      if(!sketch.classList.contains('is-drawing'))return;
+      sketch.style.transform=getComputedStyle(front).transform;
+      if(performance.now()-started<6200)requestAnimationFrame(followPhoto);
+    }
+    followPhoto();
   }
   startSketch();
   function stop(){clearTimeout(timer);clearTimeout(typing);clearTimeout(captionTimer);}
