@@ -195,7 +195,7 @@
   ],
   [
     "hero-interior-hq",
-    "Зеркала с подсветкой"
+    "Зеркала для ванной"
   ],
   [
     "hero-facades-hq",
@@ -206,11 +206,12 @@
     "Зеркала в алюминиевых рамах"
   ]
 ];
-  const phrases=["ДЛЯ ДОМА И БИЗНЕСА","ДЛЯ ИНТЕРЬЕРОВ","ДЛЯ МЕБЕЛИ","ДЛЯ СМЕЛЫХ РЕШЕНИЙ","ДЛЯ АРХИТЕКТУРЫ","ДЛЯ ИНТЕРЬЕРОВ","ДЛЯ МЕБЕЛИ","ДЛЯ ДОМА И БИЗНЕСА"];
+  const phrases=["ДЛЯ ДОМА И БИЗНЕСА","ДЛЯ ИНТЕРЬЕРОВ","ДЛЯ МЕБЕЛИ","ДЛЯ СМЕЛЫХ РЕШЕНИЙ","ДЛЯ АРХИТЕКТУРЫ"];
   const hero=$('.hero'), typed=$('#hero-typed'), photo=$('#hero-photo'), pause=$('#hero-pause');
   const nextSlide=document.createElement('button');nextSlide.type='button';nextSlide.id='hero-next-slide';
   nextSlide.setAttribute('aria-label','Следующий слайд');nextSlide.title='Следующий слайд';nextSlide.textContent='›';
   pause.after(nextSlide);nextSlide.addEventListener('click',()=>showSlide((slide+1)%slides.length));
+  let phraseIndex=0;
   let slide=0,timer,typing,captionTimer,paused=false,version=0;
   const second=photo.cloneNode();second.removeAttribute('id');second.removeAttribute('fetchpriority');second.classList.add('hero-next');photo.after(second);
   let front=photo,back=second;
@@ -260,7 +261,9 @@
       ],
       'hero-reeded-facades':[
         'M 541 -40 L 959 -40 L 959 981 L 541 981 Z',
-        'M 963 -40 L 1536 -40 L 1536 981 L 963 981 Z'
+        'M 963 -40 L 1536 -40 L 1536 981 L 963 981 Z',
+        'M 935 379 L 953 381 L 953 556 L 935 557 Z',
+        'M 964 378 L 984 380 L 984 556 L 964 557 Z'
       ],
       'hero-tinted-panel':[
         'M 443 166 L 1533 8 L 1533 767 L 444 642 Z',
@@ -318,19 +321,19 @@
   function slideDuration(){return 6000;}
   function schedule(){clearTimeout(timer);if(!paused&&!reduce.matches&&!document.hidden)timer=setTimeout(()=>showSlide((slide+1)%slides.length),slideDuration());}
   function showSlide(n){
-    const token=++version;slide=n;stop();
+    const token=++version;slide=n;phraseIndex=(phraseIndex+1)%phrases.length;stop();
     sketch.classList.remove('is-drawing');
     const src=asset(slides[n][0]);
     back.onload=()=>{if(token!==version)return;front.classList.add('hero-next');back.classList.remove('hero-next');[front,back]=[back,front];startSketch();};
     back.src=src;
     fadeCaption(slides[n][1]);
     $$('[data-slide]').forEach(b=>{const active=Number(b.dataset.slide)===n;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});
-    typePhrase(phrases[n]);schedule();
+    typePhrase(phrases[phraseIndex]);schedule();
   }
   $$('[data-slide]').forEach(b=>b.addEventListener('click',()=>showSlide(Number(b.dataset.slide))));
-  pause.addEventListener('click',()=>{paused=!paused;pause.setAttribute('aria-pressed',String(paused));pause.setAttribute('aria-label',paused?'Продолжить слайды':'Приостановить слайды');pause.textContent=paused?'▶':'Ⅱ';hero.classList.toggle('hero-paused',paused);stop();typed.textContent=phrases[slide];fadeCaption(slides[slide][1]);schedule();});
-  document.addEventListener('visibilitychange',()=>{stop();typed.textContent=phrases[slide];fadeCaption(slides[slide][1]);schedule();});
-  reduce.addEventListener('change',()=>{stop();typed.textContent=phrases[slide];fadeCaption(slides[slide][1]);schedule();});
+  pause.addEventListener('click',()=>{paused=!paused;pause.setAttribute('aria-pressed',String(paused));pause.setAttribute('aria-label',paused?'Продолжить слайды':'Приостановить слайды');pause.textContent=paused?'▶':'Ⅱ';hero.classList.toggle('hero-paused',paused);stop();typed.textContent=phrases[phraseIndex];fadeCaption(slides[slide][1]);schedule();});
+  document.addEventListener('visibilitychange',()=>{stop();typed.textContent=phrases[phraseIndex];fadeCaption(slides[slide][1]);schedule();});
+  reduce.addEventListener('change',()=>{stop();typed.textContent=phrases[phraseIndex];fadeCaption(slides[slide][1]);schedule();});
   typePhrase(phrases[0]);fadeCaption(slides[0][1]);schedule();
 
 
