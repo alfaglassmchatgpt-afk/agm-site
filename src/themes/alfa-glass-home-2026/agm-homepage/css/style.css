@@ -470,3 +470,6 @@ html[data-theme="dark"] .hero-caption #slide-label{color:#9fddfc}
 #hero-next-slide:hover{background:var(--soft-blue)}
 #hero-next-slide:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
 @media(max-width:700px){.hero-caption{width:calc(100% - 120px);max-width:calc(100% - 120px)}}
+
+/* Keep playback controls below captions on desktop. */
+@media(min-width:701px){.hero-controls{bottom:24px}}
