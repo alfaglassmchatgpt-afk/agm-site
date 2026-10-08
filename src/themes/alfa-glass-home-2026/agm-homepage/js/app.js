@@ -185,6 +185,7 @@
   $$('[data-product-filter]').forEach(b => b.addEventListener('click', () => filterCards('product', b.dataset.productFilter)));
 
   const slides = [
+["hero-smart-mirror","Умные зеркала Smart Mirror"],
 ["hero-tinted-panel","Панно из тонированных зеркал"],
 ["hero-reeded-facades","Фасады с рифлёным стеклом"],
 ["hero-lighted-mirrors","Зеркала с подсветкой"],
@@ -205,7 +206,7 @@
     "Зеркала в алюминиевых рамах"
   ]
 ];
-  const phrases=["ДЛЯ ИНТЕРЬЕРОВ","ДЛЯ МЕБЕЛИ","ДЛЯ ИНТЕРЬЕРОВ",'ДЛЯ АРХИТЕКТУРЫ','ДЛЯ ИНТЕРЬЕРОВ','ДЛЯ МЕБЕЛИ','ДЛЯ ИНТЕРЬЕРОВ'];
+  const phrases=["ДЛЯ ИНТЕРЬЕРОВ","ДЛЯ ИНТЕРЬЕРОВ","ДЛЯ МЕБЕЛИ","ДЛЯ ИНТЕРЬЕРОВ",'ДЛЯ АРХИТЕКТУРЫ','ДЛЯ ИНТЕРЬЕРОВ','ДЛЯ МЕБЕЛИ','ДЛЯ ИНТЕРЬЕРОВ'];
   const hero=$('.hero'), typed=$('#hero-typed'), photo=$('#hero-photo'), pause=$('#hero-pause');
   let slide=0,timer,typing,captionTimer,paused=false,version=0;
   const second=photo.cloneNode();second.removeAttribute('id');second.removeAttribute('fetchpriority');second.classList.add('hero-next');photo.after(second);
