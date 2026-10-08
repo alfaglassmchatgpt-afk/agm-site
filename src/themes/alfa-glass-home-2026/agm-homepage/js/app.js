@@ -224,6 +224,10 @@
     sketch.classList.remove('is-drawing');
     const paths={
       'hero-smart-mirror':'M 849 55 L 1397 -1 C 1416 -3 1427 8 1427 29 L 1427 699 C 1427 723 1418 736 1398 735 L 850 695 C 834 694 827 685 827 665 L 827 85 C 827 66 834 58 849 55 Z',
+      'hero-reeded-facades':[
+        'M 541 -40 L 959 -40 L 959 981 L 541 981 Z',
+        'M 963 -40 L 1536 -40 L 1536 981 L 963 981 Z'
+      ],
       'hero-tinted-panel':[
         'M 443 166 L 1533 8 L 1533 767 L 444 642 Z',
         'M 590 145 L 590 655',
@@ -246,7 +250,7 @@
       path.setAttribute('d',d);path.setAttribute('pathLength','1000');
       return path;
     }));
-    sketch.style.setProperty('--sketch-duration',key==='hero-tinted-panel'?'5.4s':'5.2s');
+    sketch.style.setProperty('--sketch-duration',key==='hero-smart-mirror'?'5.2s':'5.4s');
     void sketch.offsetWidth;sketch.classList.add('is-drawing');
     const started=performance.now();
     function followPhoto(){
