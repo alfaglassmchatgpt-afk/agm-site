@@ -409,3 +409,9 @@ dialog::backdrop{background:rgba(4,17,26,.65);backdrop-filter:blur(5px)}
 /* Material details navigation */
 #detail-material-link[hidden]{display:none}
 #detail-material-link{margin:0 8px 12px 0}
+/* Animated first screen; fixed line height prevents layout shifts. */
+.hero-typed-line{display:block;min-height:2.28em;font-size:.85em;padding-top:.18em;max-width:100%}.hero-caret{display:inline-block;height:.9em;border-right:2px solid var(--blue);margin-left:5px;animation:hero-caret 1s steps(1) infinite}.hero-accessible{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+.hero-art>img{position:absolute;inset:0;opacity:1;transform:scale(1.035);transition:opacity 1.2s ease,transform 6.2s ease,filter .25s}.hero-art>img.hero-next{opacity:0;transform:scale(1)}.hero-shade{z-index:1}#hero-pause{width:32px;height:32px;border:1px solid var(--line);border-radius:50%;font-size:13px;color:var(--blue);margin-right:9px}.hero-paused .hero-caret{animation:none}.hero-paused .hero-art>img{transition:opacity .3s}
+@keyframes hero-caret{50%{opacity:0}}
+@media(prefers-reduced-motion:reduce){.hero-caret{animation:none;display:none}.hero-art>img{transition:none;transform:none!important}}
+.hero-art{overflow:hidden}

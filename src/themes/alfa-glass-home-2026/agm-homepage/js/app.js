@@ -202,15 +202,36 @@
     "Круглые зеркала в алюминиевых рамах"
   ]
 ];
-  $$('[data-slide]').forEach(b => b.addEventListener('click', () => {
-    const n = Number(b.dataset.slide);
-    $('#hero-photo').src = asset(slides[n][0]);
-    $('#slide-label').textContent = slides[n][1];
-    $('#slide-count').textContent = String(n + 1).padStart(2, '0') + ' / ' + String(slides.length).padStart(2, '0');
-    $$('[data-slide]').forEach(btn => {
-      const active = btn === b; btn.classList.toggle('active', active); btn.setAttribute('aria-pressed', String(active));
-    });
-  }));
+  const phrases=['ДЛЯ АРХИТЕКТУРЫ','ДЛЯ ИНТЕРЬЕРОВ','ДЛЯ МЕБЕЛИ','ДЛЯ ИНТЕРЬЕРОВ'];
+  const hero=$('.hero'), typed=$('#hero-typed'), photo=$('#hero-photo'), pause=$('#hero-pause');
+  let slide=0,timer,typing,paused=false,version=0;
+  const second=photo.cloneNode();second.removeAttribute('id');second.removeAttribute('fetchpriority');second.classList.add('hero-next');photo.after(second);
+  let front=photo,back=second;
+  function stop(){clearTimeout(timer);clearTimeout(typing);}
+  function typePhrase(text){
+    clearTimeout(typing);let n=0;
+    if(reduce.matches||paused||document.hidden){typed.textContent=text;return;}
+    typed.textContent='';
+    function tick(){typed.textContent=text.slice(0,++n);if(n<text.length)typing=setTimeout(tick,65);}
+    tick();
+  }
+  function schedule(){clearTimeout(timer);if(!paused&&!reduce.matches&&!document.hidden)timer=setTimeout(()=>showSlide((slide+1)%slides.length),6200);}
+  function showSlide(n){
+    const token=++version;slide=n;stop();
+    const src=asset(slides[n][0]);
+    back.onload=()=>{if(token!==version)return;front.classList.add('hero-next');back.classList.remove('hero-next');[front,back]=[back,front];};
+    back.src=src;
+    $('#slide-label').textContent=slides[n][1];
+    $('#slide-count').textContent=String(n+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');
+    $$('[data-slide]').forEach(b=>{const active=Number(b.dataset.slide)===n;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});
+    typePhrase(phrases[n]);schedule();
+  }
+  $$('[data-slide]').forEach(b=>b.addEventListener('click',()=>showSlide(Number(b.dataset.slide))));
+  pause.addEventListener('click',()=>{paused=!paused;pause.setAttribute('aria-pressed',String(paused));pause.setAttribute('aria-label',paused?'Продолжить слайды':'Приостановить слайды');pause.textContent=paused?'▶':'Ⅱ';hero.classList.toggle('hero-paused',paused);stop();typed.textContent=phrases[slide];schedule();});
+  document.addEventListener('visibilitychange',()=>{stop();typed.textContent=phrases[slide];schedule();});
+  reduce.addEventListener('change',()=>{stop();typed.textContent=phrases[slide];schedule();});
+  typePhrase(phrases[0]);schedule();
+
 
   const norm = s => s.toLowerCase().replace(/ё/g, 'е').trim();
   function search() {
