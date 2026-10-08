@@ -206,7 +206,7 @@
     "Зеркала в алюминиевых рамах"
   ]
 ];
-  const phrases=["ДЛЯ ИНТЕРЬЕРОВ","ДЛЯ ИНТЕРЬЕРОВ","ДЛЯ МЕБЕЛИ","ДЛЯ ИНТЕРЬЕРОВ",'ДЛЯ АРХИТЕКТУРЫ','ДЛЯ ИНТЕРЬЕРОВ','ДЛЯ МЕБЕЛИ','ДЛЯ ИНТЕРЬЕРОВ'];
+  const phrases=["ДЛЯ ДОМА И БИЗНЕСА","ДЛЯ ИНТЕРЬЕРОВ","ДЛЯ МЕБЕЛИ","ДЛЯ СМЕЛЫХ РЕШЕНИЙ","ДЛЯ АРХИТЕКТУРЫ","ДЛЯ ИНТЕРЬЕРОВ","ДЛЯ МЕБЕЛИ","ДЛЯ ДОМА И БИЗНЕСА"];
   const hero=$('.hero'), typed=$('#hero-typed'), photo=$('#hero-photo'), pause=$('#hero-pause');
   let slide=0,timer,typing,captionTimer,paused=false,version=0;
   const second=photo.cloneNode();second.removeAttribute('id');second.removeAttribute('fetchpriority');second.classList.add('hero-next');photo.after(second);
