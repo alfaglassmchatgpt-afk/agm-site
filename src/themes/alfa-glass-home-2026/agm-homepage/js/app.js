@@ -208,6 +208,9 @@
 ];
   const phrases=["ДЛЯ ДОМА И БИЗНЕСА","ДЛЯ ИНТЕРЬЕРОВ","ДЛЯ МЕБЕЛИ","ДЛЯ СМЕЛЫХ РЕШЕНИЙ","ДЛЯ АРХИТЕКТУРЫ","ДЛЯ ИНТЕРЬЕРОВ","ДЛЯ МЕБЕЛИ","ДЛЯ ДОМА И БИЗНЕСА"];
   const hero=$('.hero'), typed=$('#hero-typed'), photo=$('#hero-photo'), pause=$('#hero-pause');
+  const nextSlide=document.createElement('button');nextSlide.type='button';nextSlide.id='hero-next-slide';
+  nextSlide.setAttribute('aria-label','Следующий слайд');nextSlide.title='Следующий слайд';nextSlide.textContent='›';
+  pause.after(nextSlide);nextSlide.addEventListener('click',()=>showSlide((slide+1)%slides.length));
   let slide=0,timer,typing,captionTimer,paused=false,version=0;
   const second=photo.cloneNode();second.removeAttribute('id');second.removeAttribute('fetchpriority');second.classList.add('hero-next');photo.after(second);
   let front=photo,back=second;
