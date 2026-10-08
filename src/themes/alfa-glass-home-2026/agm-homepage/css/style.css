@@ -442,7 +442,7 @@ html[data-theme="dark"] .hero-caption #slide-label{color:var(--blue);text-shadow
 .hero-caption{transform:translateY(-2.7em);font-size:clamp(20px,2vw,28px)}
 @media(max-width:700px){.hero-caption{font-size:18px}}
 /* Selected Playfair Display caption styling. */
-@font-face{font-family:'Playfair Display';src:url('../assets/playfair-display-italic.ttf') format('truetype');font-style:italic;font-weight:400;font-display:swap}
+@font-face{font-family:'Playfair Display';src:url('../assets/playfair-display-semibold-italic.ttf') format('truetype');font-style:italic;font-weight:600;font-display:swap}
 .hero-caption{transform:translateY(-1.35em)}
-.hero-caption #slide-label{font-family:'Playfair Display',Georgia,serif;font-style:italic;color:#153e56}
+.hero-caption #slide-label{font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:600;color:#153e56}
 html[data-theme="dark"] .hero-caption #slide-label{color:#9fddfc}
