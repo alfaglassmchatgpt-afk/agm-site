@@ -207,15 +207,25 @@
 ];
   const phrases=["ДЛЯ ИНТЕРЬЕРОВ","ДЛЯ МЕБЕЛИ","ДЛЯ ИНТЕРЬЕРОВ",'ДЛЯ АРХИТЕКТУРЫ','ДЛЯ ИНТЕРЬЕРОВ','ДЛЯ МЕБЕЛИ','ДЛЯ ИНТЕРЬЕРОВ'];
   const hero=$('.hero'), typed=$('#hero-typed'), photo=$('#hero-photo'), pause=$('#hero-pause');
-  let slide=0,timer,typing,paused=false,version=0;
+  let slide=0,timer,typing,captionTyping,paused=false,version=0;
   const second=photo.cloneNode();second.removeAttribute('id');second.removeAttribute('fetchpriority');second.classList.add('hero-next');photo.after(second);
   let front=photo,back=second;
-  function stop(){clearTimeout(timer);clearTimeout(typing);}
+  function stop(){clearTimeout(timer);clearTimeout(typing);clearTimeout(captionTyping);}
   function typePhrase(text){
     clearTimeout(typing);let n=0;
     if(reduce.matches||paused||document.hidden){typed.textContent=text;return;}
     typed.textContent='';
     function tick(){typed.textContent=text.slice(0,++n);if(n<text.length)typing=setTimeout(tick,65);}
+    tick();
+  }
+  function typeCaption(text){
+    clearTimeout(captionTyping);
+    const label=$('#slide-label');let n=0;
+    label.parentElement.setAttribute('aria-label',text);
+    label.setAttribute('aria-hidden','true');
+    if(reduce.matches||paused||document.hidden){label.textContent=text;return;}
+    label.textContent='';
+    function tick(){label.textContent=text.slice(0,++n);if(n<text.length)captionTyping=setTimeout(tick,45);}
     tick();
   }
   function schedule(){clearTimeout(timer);if(!paused&&!reduce.matches&&!document.hidden)timer=setTimeout(()=>showSlide((slide+1)%slides.length),6200);}
@@ -224,15 +234,15 @@
     const src=asset(slides[n][0]);
     back.onload=()=>{if(token!==version)return;front.classList.add('hero-next');back.classList.remove('hero-next');[front,back]=[back,front];};
     back.src=src;
-    $('#slide-label').textContent=slides[n][1];
+    typeCaption(slides[n][1]);
     $$('[data-slide]').forEach(b=>{const active=Number(b.dataset.slide)===n;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});
     typePhrase(phrases[n]);schedule();
   }
   $$('[data-slide]').forEach(b=>b.addEventListener('click',()=>showSlide(Number(b.dataset.slide))));
-  pause.addEventListener('click',()=>{paused=!paused;pause.setAttribute('aria-pressed',String(paused));pause.setAttribute('aria-label',paused?'Продолжить слайды':'Приостановить слайды');pause.textContent=paused?'▶':'Ⅱ';hero.classList.toggle('hero-paused',paused);stop();typed.textContent=phrases[slide];schedule();});
-  document.addEventListener('visibilitychange',()=>{stop();typed.textContent=phrases[slide];schedule();});
-  reduce.addEventListener('change',()=>{stop();typed.textContent=phrases[slide];schedule();});
-  typePhrase(phrases[0]);schedule();
+  pause.addEventListener('click',()=>{paused=!paused;pause.setAttribute('aria-pressed',String(paused));pause.setAttribute('aria-label',paused?'Продолжить слайды':'Приостановить слайды');pause.textContent=paused?'▶':'Ⅱ';hero.classList.toggle('hero-paused',paused);stop();typed.textContent=phrases[slide];typeCaption(slides[slide][1]);schedule();});
+  document.addEventListener('visibilitychange',()=>{stop();typed.textContent=phrases[slide];typeCaption(slides[slide][1]);schedule();});
+  reduce.addEventListener('change',()=>{stop();typed.textContent=phrases[slide];typeCaption(slides[slide][1]);schedule();});
+  typePhrase(phrases[0]);typeCaption(slides[0][1]);schedule();
 
 
   const norm = s => s.toLowerCase().replace(/ё/g, 'е').trim();
