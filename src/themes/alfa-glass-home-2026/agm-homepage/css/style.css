@@ -448,3 +448,5 @@ html[data-theme="dark"] .hero-caption #slide-label{color:var(--blue);text-shadow
 html[data-theme="dark"] .hero-caption #slide-label{color:#9fddfc}
 /* Crisp contrast over photographs, without glow or a background panel. */
 .hero-caption #slide-label,html[data-theme="dark"] .hero-caption #slide-label{color:#fff;text-shadow:none;-webkit-text-stroke:.65px #173342;paint-order:stroke fill}
+/* Underline every hero slide caption. */
+.hero-caption #slide-label{text-decoration-line:underline;text-decoration-thickness:1px;text-underline-offset:.22em;text-decoration-color:currentColor;text-decoration-skip-ink:auto}
