@@ -222,7 +222,6 @@
     back.onload=()=>{if(token!==version)return;front.classList.add('hero-next');back.classList.remove('hero-next');[front,back]=[back,front];};
     back.src=src;
     $('#slide-label').textContent=slides[n][1];
-    $('#slide-count').textContent=String(n+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');
     $$('[data-slide]').forEach(b=>{const active=Number(b.dataset.slide)===n;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});
     typePhrase(phrases[n]);schedule();
   }
