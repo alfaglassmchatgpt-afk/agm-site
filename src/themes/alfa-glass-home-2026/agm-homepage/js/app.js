@@ -229,7 +229,7 @@
     const key=slides[slide][0];
     if(!paths[key]||reduce.matches)return;
     sketch.querySelector('path').setAttribute('d',paths[key]);
-    sketch.style.setProperty('--sketch-duration',key==='hero-tinted-panel'?'7.4s':'5.6s');
+    sketch.style.setProperty('--sketch-duration',key==='hero-tinted-panel'?'5.4s':'5.2s');
     void sketch.offsetWidth;sketch.classList.add('is-drawing');
     const started=performance.now();
     function followPhoto(){
@@ -260,7 +260,7 @@
       label.classList.remove('caption-hidden');
     },350);
   }
-  function slideDuration(){return slides[slide][0]==='hero-tinted-panel'?8000:6200;}
+  function slideDuration(){return 6000;}
   function schedule(){clearTimeout(timer);if(!paused&&!reduce.matches&&!document.hidden)timer=setTimeout(()=>showSlide((slide+1)%slides.length),slideDuration());}
   function showSlide(n){
     const token=++version;slide=n;stop();
