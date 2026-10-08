@@ -444,5 +444,5 @@ html[data-theme="dark"] .hero-caption #slide-label{color:var(--blue);text-shadow
 /* Selected Playfair Display caption styling. */
 @font-face{font-family:'Playfair Display';src:url('../assets/playfair-display-italic.ttf') format('truetype');font-style:italic;font-weight:400;font-display:swap}
 .hero-caption{transform:translateY(-1.35em)}
-.hero-caption #slide-label{font-family:'Playfair Display',Georgia,serif;font-style:italic;color:#4097c4}
+.hero-caption #slide-label{font-family:'Playfair Display',Georgia,serif;font-style:italic;color:#153e56}
 html[data-theme="dark"] .hero-caption #slide-label{color:#9fddfc}
