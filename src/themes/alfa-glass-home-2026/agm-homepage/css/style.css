@@ -490,3 +490,35 @@ html[data-theme="dark"] .hero-caption #slide-label{color:#9fddfc}
 .hero-caption #slide-label{color:var(--blue)!important;-webkit-text-stroke:0;font-size:19px;line-height:1.25}
 .hero-controls{bottom:18px;z-index:3}
 }
+
+/* Compact homepage team and partner logos, 2026-10-09. */
+#team.agm-home-team.agm-company-section{padding:44px 0 30px}
+#team.agm-home-team .agm-team-grid{grid-template-columns:repeat(6,minmax(0,1fr));gap:14px}
+#team.agm-home-team .agm-person>div{padding:13px 12px}
+#team.agm-home-team .agm-person h3{font-size:16px;line-height:1.35;margin-bottom:7px}
+#team.agm-home-team .agm-person p{font-size:12px;line-height:1.45}
+#team.agm-home-team .agm-company-links{margin-top:18px;font-size:14px}
+.agm-swipe-hint{display:none}
+#trusted-by.agm-trust{padding:32px 0 44px}
+#trusted-by .section-head{margin-bottom:18px}
+#trusted-by .agm-trust-grid{grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin:18px 0}
+#trusted-by .agm-trust-grid li{min-height:78px;padding:12px 16px;border-radius:10px}
+#trusted-by .agm-trust-grid img{height:48px;max-width:160px;object-fit:contain}
+#trusted-by .agm-trust-grid .agm-logo-dark{background:#343a40;border-color:#343a40}
+#trusted-by .agm-logo-pair{flex-direction:column;gap:8px}
+#trusted-by .agm-logo-pair img{height:23px;max-width:125px}
+@media(max-width:1050px) and (min-width:701px){#team.agm-home-team .agm-team-grid{grid-template-columns:repeat(3,minmax(0,1fr))}#team.agm-home-team .agm-person>img{aspect-ratio:1/1;object-position:center 20%}#trusted-by .agm-trust-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:700px){
+#team.agm-home-team.agm-company-section{width:calc(100% - 32px);padding:32px 0 20px}
+#team.agm-home-team .agm-team-grid{display:grid;grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:70%;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;padding-bottom:12px;scrollbar-width:thin;scrollbar-color:var(--blue) transparent}
+#team.agm-home-team .agm-person{scroll-snap-align:start}
+#team.agm-home-team .agm-person>img{aspect-ratio:1/1;object-position:center 20%}
+#team.agm-home-team .agm-person h3{font-size:16px}
+#team.agm-home-team .agm-company-links{gap:12px}
+.agm-swipe-hint{display:block;margin:0 0 12px;font-size:12px;color:var(--muted)}
+#trusted-by.agm-trust{padding:24px 0 32px}
+#trusted-by .agm-trust-grid{grid-template-columns:none;grid-template-rows:repeat(2,78px);grid-auto-flow:column;grid-auto-columns:142px;overflow-x:auto;scroll-snap-type:x proximity;padding-bottom:12px;scrollbar-width:thin;scrollbar-color:var(--blue) transparent}
+#trusted-by .agm-trust-grid li{min-height:0;padding:10px;scroll-snap-align:start}
+#trusted-by .agm-trust-grid img{max-width:120px;height:46px}
+#trusted-by .agm-logo-pair img{height:22px}
+}
