@@ -473,3 +473,20 @@ html[data-theme="dark"] .hero-caption #slide-label{color:#9fddfc}
 
 /* Keep playback controls below captions on desktop. */
 @media(min-width:701px){.hero-controls{bottom:24px}}
+
+/* Mobile review: separate copy and full-width product image. */
+@media(max-width:700px){
+.hero{display:flex;flex-direction:column;padding-bottom:76px}
+.hero-inner{order:1;position:static;min-height:0;padding:24px 0 26px;gap:0}
+.hero-brand{display:none}
+.hero-copy h1{font-size:27px}
+.hero-intro{margin-top:12px}
+.hero-buttons{margin-top:18px}
+.hero-chips{margin-top:15px}
+.hero-art{order:2;position:relative;inset:auto;width:100%;height:auto;aspect-ratio:1672/941;z-index:0;overflow:hidden;opacity:1}
+.hero-art>img{object-position:50% 50%;filter:none!important}
+.hero-shade{display:none}
+.hero-caption{bottom:17px;right:16px;transform:none;min-height:44px;display:flex;align-items:center;width:calc(100% - 120px);max-width:none;padding:0;text-align:right}
+.hero-caption #slide-label{color:var(--blue)!important;-webkit-text-stroke:0;font-size:19px;line-height:1.25}
+.hero-controls{bottom:18px;z-index:3}
+}
