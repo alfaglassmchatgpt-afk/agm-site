@@ -1427,5 +1427,35 @@
     ],
     "policy": "mirror",
     "note": "Листы 2400 × 1830 мм; 3210 × 2500 мм. Закалка готового зеркала недоступна."
+  },
+  "krezet": {
+    "title": "Krezet (Крезет)",
+    "variants": {
+      "standard": "Прозрачное узорчатое стекло"
+    },
+    "thicknesses": [
+      "4"
+    ],
+    "operations": [
+      "cut",
+      "polish",
+      "grind",
+      "bevel",
+      "drill",
+      "shape",
+      "film",
+      "sandblast",
+      "laminate",
+      "temper",
+      "paint",
+      "facade"
+    ],
+    "policy": "owner-confirmed",
+    "note": "Доступные обработки и сочетания согласуются по проекту. Алюминиевый фасад — для стекла 4 мм.",
+    "operationThicknesses": {
+      "facade": [
+        "4"
+      ]
+    }
   }
 }
