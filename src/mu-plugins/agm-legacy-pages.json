@@ -1,0 +1,1031 @@
+[
+  {
+    "id": 0,
+    "source": "/bezopasnost-i-zashhita/",
+    "status": 410,
+    "target": "",
+    "reason": "Старый архив или исторический адрес"
+  },
+  {
+    "id": 0,
+    "source": "/catalog/dihroichnoe-steklo/",
+    "status": 301,
+    "target": "/materialy/dihroichnoe-steklo/",
+    "reason": "Старая категория"
+  },
+  {
+    "id": 0,
+    "source": "/catalog/izdeliya-iz-stekla-i-zerkala/",
+    "status": 410,
+    "target": "",
+    "reason": "Старая категория"
+  },
+  {
+    "id": 0,
+    "source": "/catalog/izdeliya/",
+    "status": 410,
+    "target": "",
+    "reason": "Старая категория"
+  },
+  {
+    "id": 0,
+    "source": "/catalog/matovoe-steklo/",
+    "status": 301,
+    "target": "/materialy/?group=matovoe-steklo",
+    "reason": "Старая категория"
+  },
+  {
+    "id": 0,
+    "source": "/catalog/okrashennoe-steklo/",
+    "status": 301,
+    "target": "/materialy/?group=okrashennoe-steklo",
+    "reason": "Старая категория"
+  },
+  {
+    "id": 0,
+    "source": "/catalog/osvetlennoe-steklo/",
+    "status": 301,
+    "target": "/materialy/steklo-osvetlyonnoe-clearvision/",
+    "reason": "Старая категория"
+  },
+  {
+    "id": 0,
+    "source": "/catalog/peregorodki-iz-stekla/",
+    "status": 410,
+    "target": "",
+    "reason": "Старая категория"
+  },
+  {
+    "id": 0,
+    "source": "/catalog/riflenoe-steklo/",
+    "status": 301,
+    "target": "/materialy/?group=riflenoe-steklo",
+    "reason": "Старая категория"
+  },
+  {
+    "id": 0,
+    "source": "/catalog/solntsezashhitnoe-steklo-steklo/",
+    "status": 301,
+    "target": "/materialy/?group=solncezashhitnoe-steklo",
+    "reason": "Старая категория"
+  },
+  {
+    "id": 0,
+    "source": "/catalog/steklo/",
+    "status": 301,
+    "target": "/materialy/",
+    "reason": "Старая категория"
+  },
+  {
+    "id": 0,
+    "source": "/catalog/steklyannye-dveri/",
+    "status": 410,
+    "target": "",
+    "reason": "Старая категория"
+  },
+  {
+    "id": 0,
+    "source": "/catalog/syrevoe-steklo-steklo/",
+    "status": 301,
+    "target": "/materialy/?group=prozrachnoe-steklo",
+    "reason": "Старая категория"
+  },
+  {
+    "id": 0,
+    "source": "/catalog/tonirovannoe-steklo/",
+    "status": 301,
+    "target": "/materialy/?group=tonirovannoe-steklo",
+    "reason": "Старая категория"
+  },
+  {
+    "id": 0,
+    "source": "/catalog/uslugi/",
+    "status": 301,
+    "target": "/obrabotka-stekla-i-zerkal/",
+    "reason": "Старая категория"
+  },
+  {
+    "id": 0,
+    "source": "/catalog/uzorchatoe-steklo/",
+    "status": 301,
+    "target": "/materialy/?group=uzorchatoe-steklo",
+    "reason": "Старая категория"
+  },
+  {
+    "id": 0,
+    "source": "/catalog/zerkala-2/",
+    "status": 301,
+    "target": "/materialy/?group=zerkala",
+    "reason": "Старая категория"
+  },
+  {
+    "id": 0,
+    "source": "/catalog/zerkala-s-podsvetkoj/",
+    "status": 301,
+    "target": "/zerkala-s-podsvetkoj/",
+    "reason": "Старая категория"
+  },
+  {
+    "id": 0,
+    "source": "/catalog/zerkala/",
+    "status": 301,
+    "target": "/materialy/?group=zerkala",
+    "reason": "Старая категория"
+  },
+  {
+    "id": 0,
+    "source": "/catalog/zerkalo-na-zakaz/",
+    "status": 410,
+    "target": "",
+    "reason": "Старая категория"
+  },
+  {
+    "id": 173,
+    "source": "/delivery/",
+    "status": 301,
+    "target": "/service/#delivery",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 181,
+    "source": "/faq/",
+    "status": 410,
+    "target": "",
+    "reason": "Старая страница без прямого аналога"
+  },
+  {
+    "id": 1098,
+    "source": "/glavnaya/",
+    "status": 301,
+    "target": "/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 4981,
+    "source": "/materials/sostarennoe-zerkalo/",
+    "status": 301,
+    "target": "/materialy/?group=sostarennye-zerkala",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 4983,
+    "source": "/materials/tonirovannoe-zerkalo/",
+    "status": 301,
+    "target": "/materialy/tonirovannye-zerkala/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 4984,
+    "source": "/materials/zerkalo-gezella/",
+    "status": 301,
+    "target": "/materialy/zerkalo-gezella/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 4813,
+    "source": "/materials/zerkalo-osvetlennoe/",
+    "status": 301,
+    "target": "/materialy/zerkalo-osvetlyonnoe/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 4817,
+    "source": "/materials/zerkalo-sostarennoe/",
+    "status": 301,
+    "target": "/materialy/?group=sostarennye-zerkala",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 4819,
+    "source": "/materials/zerkalo-sostarennoe2/",
+    "status": 301,
+    "target": "/materialy/?group=sostarennye-zerkala",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 4815,
+    "source": "/materials/zerkalo-tonirovannoe-v-masse/",
+    "status": 301,
+    "target": "/materialy/tonirovannye-zerkala/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 4811,
+    "source": "/materials/zerkalo/",
+    "status": 301,
+    "target": "/materialy/zerkalo-serebro/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 0,
+    "source": "/materials_cat/styokla/",
+    "status": 301,
+    "target": "/materialy/",
+    "reason": "Старый архив или исторический адрес"
+  },
+  {
+    "id": 0,
+    "source": "/materials_cat/zerkala/",
+    "status": 301,
+    "target": "/materialy/?group=zerkala",
+    "reason": "Старый архив или исторический адрес"
+  },
+  {
+    "id": 177,
+    "source": "/mounting-and-installation/",
+    "status": 301,
+    "target": "/service/#installation",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 624,
+    "source": "/notfound/",
+    "status": 410,
+    "target": "",
+    "reason": "Старая страница без прямого аналога"
+  },
+  {
+    "id": 175,
+    "source": "/payment/",
+    "status": 410,
+    "target": "",
+    "reason": "Старая страница без прямого аналога"
+  },
+  {
+    "id": 0,
+    "source": "/product/atlantic/",
+    "status": 301,
+    "target": "/materialy/kathedralaqualite/",
+    "reason": "Старый архив или исторический адрес"
+  },
+  {
+    "id": 1416,
+    "source": "/product/czelnosteklyannaya-peregorodka-v-gostinuyu/",
+    "status": 410,
+    "target": "",
+    "reason": "Старая страница без прямого аналога"
+  },
+  {
+    "id": 1364,
+    "source": "/product/diamant/",
+    "status": 301,
+    "target": "/materialy/diamant/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 2102,
+    "source": "/product/dihroichnoe-steklo/",
+    "status": 301,
+    "target": "/materialy/dihroichnoe-steklo/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 4422,
+    "source": "/product/dveri-iz-alyuminievogo-profilya-so-steklom/",
+    "status": 410,
+    "target": "",
+    "reason": "Старая страница без прямого аналога"
+  },
+  {
+    "id": 4434,
+    "source": "/product/fasady-iz-alyuminievogo-profilya-so-steklom/",
+    "status": 410,
+    "target": "",
+    "reason": "Старая страница без прямого аналога"
+  },
+  {
+    "id": 2055,
+    "source": "/product/float-steklo-clear-m1/",
+    "status": 301,
+    "target": "/materialy/float-steklo-clear-m1/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 1693,
+    "source": "/product/flutes-moru-bronze-mat/",
+    "status": 301,
+    "target": "/materialy/flutes-moru-bronze-mat/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 1677,
+    "source": "/product/flutes-moru-bronze/",
+    "status": 301,
+    "target": "/materialy/flutes-moru-bronze/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 1689,
+    "source": "/product/flutes-moru-grey-mat/",
+    "status": 301,
+    "target": "/materialy/flutes-moru-grey-mat/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 1686,
+    "source": "/product/flutes-moru-grey/",
+    "status": 301,
+    "target": "/materialy/flutes-moru-grey/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 1697,
+    "source": "/product/flutes-moru-ultra-mat/",
+    "status": 301,
+    "target": "/materialy/flutes-moru-ultra-mat/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 1683,
+    "source": "/product/flutes-moru-ultra/",
+    "status": 301,
+    "target": "/materialy/flutes-moru-ultra/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 1649,
+    "source": "/product/gothic/",
+    "status": 301,
+    "target": "/materialy/gothic/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 1639,
+    "source": "/product/hithicross/",
+    "status": 301,
+    "target": "/materialy/hithicross/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 2009,
+    "source": "/product/izgotovlenie-zerkal-na-zakaz/",
+    "status": 410,
+    "target": "",
+    "reason": "Старая страница без прямого аналога"
+  },
+  {
+    "id": 1657,
+    "source": "/product/kathedral-klein/",
+    "status": 301,
+    "target": "/materialy/kathedral-klein/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 1737,
+    "source": "/product/kathedralaqualite/",
+    "status": 301,
+    "target": "/materialy/kathedralaqualite/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 1733,
+    "source": "/product/krepi/",
+    "status": 301,
+    "target": "/materialy/krepi/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 0,
+    "source": "/product/mnogoslojnoe-steklo-tripleks/",
+    "status": 301,
+    "target": "/obrabotka-stekla-i-zerkal/#laminate",
+    "reason": "Старый архив или исторический адрес"
+  },
+  {
+    "id": 1661,
+    "source": "/product/monumental-atlantic/",
+    "status": 301,
+    "target": "/materialy/monumental-atlantic/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 1713,
+    "source": "/product/moru-bronze-mat/",
+    "status": 301,
+    "target": "/materialy/moru-bronze-mat/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 1709,
+    "source": "/product/moru-bronze/",
+    "status": 301,
+    "target": "/materialy/moru-bronze/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 1721,
+    "source": "/product/moru-dark-grey-mat/",
+    "status": 301,
+    "target": "/materialy/moru-dark-grey-mat/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 1705,
+    "source": "/product/moru-dark-grey/",
+    "status": 301,
+    "target": "/materialy/moru-dark-grey/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 1717,
+    "source": "/product/moru-grey-mat/",
+    "status": 301,
+    "target": "/materialy/moru-grey-mat/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 1701,
+    "source": "/product/moru-grey/",
+    "status": 301,
+    "target": "/materialy/moru-grey/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 2012,
+    "source": "/product/peregorodki-iz-riflyonogo-stekla/",
+    "status": 410,
+    "target": "",
+    "reason": "Старая страница без прямого аналога"
+  },
+  {
+    "id": 2108,
+    "source": "/product/prosvetlyonnoe-riflyonoe-steklo-moru/",
+    "status": 301,
+    "target": "/materialy/moru-ultra/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 1665,
+    "source": "/product/raywall/",
+    "status": 301,
+    "target": "/materialy/raywall/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 1643,
+    "source": "/product/raywall90/",
+    "status": 301,
+    "target": "/materialy/raywall90/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 4425,
+    "source": "/product/razdvizhnye-peregorodki-v-alyuminievom-profile/",
+    "status": 410,
+    "target": "",
+    "reason": "Старая страница без прямого аналога"
+  },
+  {
+    "id": 2096,
+    "source": "/product/riflyonoe-steklo/",
+    "status": 301,
+    "target": "/materialy/?group=riflenoe-steklo",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 1653,
+    "source": "/product/silvit/",
+    "status": 301,
+    "target": "/materialy/silvit/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 1933,
+    "source": "/product/skinali-kuhonnye-fartuki/",
+    "status": 410,
+    "target": "",
+    "reason": "Старая страница без прямого аналога"
+  },
+  {
+    "id": 4299,
+    "source": "/product/smart-zerkala/",
+    "status": 301,
+    "target": "/smart-mirror/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 2033,
+    "source": "/product/sostarennye-zerkala/",
+    "status": 301,
+    "target": "/materialy/sostarennye-zerkala/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 2062,
+    "source": "/product/steklo-kristalvizhn-crystalvision/",
+    "status": 301,
+    "target": "/materialy/steklo-kristalvizhn-crystalvision/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 4317,
+    "source": "/product/steklo-lacobel/",
+    "status": 301,
+    "target": "/materialy/steklo-lacobel/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 4378,
+    "source": "/product/steklo-matelak/",
+    "status": 301,
+    "target": "/materialy/steklo-matelak/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 2065,
+    "source": "/product/steklo-matovoe-matelux/",
+    "status": 301,
+    "target": "/materialy/steklo-matovoe-matelux/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 2059,
+    "source": "/product/steklo-osvetlyonnoe-clearvision/",
+    "status": 301,
+    "target": "/materialy/steklo-osvetlyonnoe-clearvision/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 2072,
+    "source": "/product/steklo-solnczezashhitnoe-stopsol/",
+    "status": 301,
+    "target": "/materialy/steklo-solnczezashhitnoe-stopsol/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 2069,
+    "source": "/product/steklo-tonirovannoe-v-masse/",
+    "status": 301,
+    "target": "/materialy/?group=tonirovannoe-steklo",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 1900,
+    "source": "/product/steklyannye-dushevye-peregorodki/",
+    "status": 410,
+    "target": "",
+    "reason": "Старая страница без прямого аналога"
+  },
+  {
+    "id": 1923,
+    "source": "/product/steklyannye-dveri/",
+    "status": 410,
+    "target": "",
+    "reason": "Старая страница без прямого аналога"
+  },
+  {
+    "id": 1939,
+    "source": "/product/steklyannye-lestnichnye-ograzhdeniya/",
+    "status": 410,
+    "target": "",
+    "reason": "Старая страница без прямого аналога"
+  },
+  {
+    "id": 2111,
+    "source": "/product/tonirovannoe-v-masse-steklo-moru/",
+    "status": 301,
+    "target": "/materialy/tonirovannoe-v-masse-steklo-moru/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 2092,
+    "source": "/product/uzorchatoe-steklo/",
+    "status": 301,
+    "target": "/materialy/?group=uzorchatoe-steklo",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 1669,
+    "source": "/product/vison-sun/",
+    "status": 301,
+    "target": "/materialy/vison-sun/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 1998,
+    "source": "/product/vitrazhi/",
+    "status": 410,
+    "target": "",
+    "reason": "Старая страница без прямого аналога"
+  },
+  {
+    "id": 1971,
+    "source": "/product/zerkalnoe-panno/",
+    "status": 410,
+    "target": "",
+    "reason": "Старая страница без прямого аналога"
+  },
+  {
+    "id": 3663,
+    "source": "/product/zerkalo-black-v-alyuminievoj-rame/",
+    "status": 410,
+    "target": "",
+    "reason": "Старая страница без прямого аналога"
+  },
+  {
+    "id": 3593,
+    "source": "/product/zerkalo-blue-v-rame/",
+    "status": 410,
+    "target": "",
+    "reason": "Старая страница без прямого аналога"
+  },
+  {
+    "id": 3716,
+    "source": "/product/zerkalo-bronze-v-alyuminievoj-rame/",
+    "status": 410,
+    "target": "",
+    "reason": "Старая страница без прямого аналога"
+  },
+  {
+    "id": 2820,
+    "source": "/product/zerkalo-figurnoe-s-led-podsvetkoj-avelis/",
+    "status": 301,
+    "target": "/zerkala-s-podsvetkoj/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 2814,
+    "source": "/product/zerkalo-figurnoe-s-led-podsvetkoj-celestia/",
+    "status": 301,
+    "target": "/zerkala-s-podsvetkoj/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 2789,
+    "source": "/product/zerkalo-figurnoe-s-led-podsvetkoj-elara/",
+    "status": 301,
+    "target": "/zerkala-s-podsvetkoj/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 2775,
+    "source": "/product/zerkalo-figurnoe-s-led-podsvetkoj-liora/",
+    "status": 301,
+    "target": "/zerkala-s-podsvetkoj/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 2857,
+    "source": "/product/zerkalo-figurnoe-s-led-podsvetkoj-lumiera/",
+    "status": 301,
+    "target": "/zerkala-s-podsvetkoj/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 2827,
+    "source": "/product/zerkalo-figurnoe-s-led-podsvetkoj-lumora/",
+    "status": 301,
+    "target": "/zerkala-s-podsvetkoj/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 2808,
+    "source": "/product/zerkalo-figurnoe-s-led-podsvetkoj-nivara/",
+    "status": 301,
+    "target": "/zerkala-s-podsvetkoj/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 2795,
+    "source": "/product/zerkalo-figurnoe-s-led-podsvetkoj-orelia/",
+    "status": 301,
+    "target": "/zerkala-s-podsvetkoj/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 2833,
+    "source": "/product/zerkalo-figurnoe-s-led-podsvetkoj-serelis/",
+    "status": 301,
+    "target": "/zerkala-s-podsvetkoj/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 2768,
+    "source": "/product/zerkalo-figurnoe-s-led-podsvetkoj-solara/",
+    "status": 301,
+    "target": "/zerkala-s-podsvetkoj/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 2782,
+    "source": "/product/zerkalo-figurnoe-s-led-podsvetkoj-veyra/",
+    "status": 301,
+    "target": "/zerkala-s-podsvetkoj/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 2045,
+    "source": "/product/zerkalo-gezella/",
+    "status": 301,
+    "target": "/materialy/zerkalo-gezella/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 3679,
+    "source": "/product/zerkalo-gold-v-alyuminievoj-rame/",
+    "status": 410,
+    "target": "",
+    "reason": "Старая страница без прямого аналога"
+  },
+  {
+    "id": 3731,
+    "source": "/product/zerkalo-grey-v-alyuminievoj-rame/",
+    "status": 410,
+    "target": "",
+    "reason": "Старая страница без прямого аналога"
+  },
+  {
+    "id": 2975,
+    "source": "/product/zerkalo-krugloe-s-led-podsvetkoj-aurora/",
+    "status": 301,
+    "target": "/zerkala-s-podsvetkoj/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 3003,
+    "source": "/product/zerkalo-krugloe-s-led-podsvetkoj-eterna/",
+    "status": 301,
+    "target": "/zerkala-s-podsvetkoj/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 2997,
+    "source": "/product/zerkalo-krugloe-s-led-podsvetkoj-halo/",
+    "status": 301,
+    "target": "/zerkala-s-podsvetkoj/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 2985,
+    "source": "/product/zerkalo-krugloe-s-led-podsvetkoj-luna/",
+    "status": 301,
+    "target": "/zerkala-s-podsvetkoj/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 3015,
+    "source": "/product/zerkalo-krugloe-s-led-podsvetkoj-nova/",
+    "status": 301,
+    "target": "/zerkala-s-podsvetkoj/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 3022,
+    "source": "/product/zerkalo-krugloe-s-led-podsvetkoj-orbis/",
+    "status": 301,
+    "target": "/zerkala-s-podsvetkoj/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 2991,
+    "source": "/product/zerkalo-krugloe-s-led-podsvetkoj-solara/",
+    "status": 301,
+    "target": "/zerkala-s-podsvetkoj/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 3009,
+    "source": "/product/zerkalo-krugloe-s-led-podsvetkoj-stella/",
+    "status": 301,
+    "target": "/zerkala-s-podsvetkoj/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 1506,
+    "source": "/product/zerkalo-na-zakaz/",
+    "status": 410,
+    "target": "",
+    "reason": "Старая страница без прямого аналога"
+  },
+  {
+    "id": 2030,
+    "source": "/product/zerkalo-osvetlyonnoe/",
+    "status": 301,
+    "target": "/materialy/zerkalo-osvetlyonnoe/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 3610,
+    "source": "/product/zerkalo-pink-v-alyuminievoj-rame/",
+    "status": 410,
+    "target": "",
+    "reason": "Старая страница без прямого аналога"
+  },
+  {
+    "id": 2869,
+    "source": "/product/zerkalo-pryamougolnoe-s-led-podsvetkoj-aqualis/",
+    "status": 301,
+    "target": "/zerkala-s-podsvetkoj/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 2888,
+    "source": "/product/zerkalo-pryamougolnoe-s-led-podsvetkoj-aurora/",
+    "status": 301,
+    "target": "/zerkala-s-podsvetkoj/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 2863,
+    "source": "/product/zerkalo-pryamougolnoe-s-led-podsvetkoj-brilliance/",
+    "status": 301,
+    "target": "/zerkala-s-podsvetkoj/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 2917,
+    "source": "/product/zerkalo-pryamougolnoe-s-led-podsvetkoj-celestia/",
+    "status": 301,
+    "target": "/zerkala-s-podsvetkoj/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 2900,
+    "source": "/product/zerkalo-pryamougolnoe-s-led-podsvetkoj-eternity/",
+    "status": 301,
+    "target": "/zerkala-s-podsvetkoj/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 2882,
+    "source": "/product/zerkalo-pryamougolnoe-s-led-podsvetkoj-glowline/",
+    "status": 301,
+    "target": "/zerkala-s-podsvetkoj/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 2910,
+    "source": "/product/zerkalo-pryamougolnoe-s-led-podsvetkoj-harmony/",
+    "status": 301,
+    "target": "/zerkala-s-podsvetkoj/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 2905,
+    "source": "/product/zerkalo-pryamougolnoe-s-led-podsvetkoj-momentum/",
+    "status": 301,
+    "target": "/zerkala-s-podsvetkoj/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 2894,
+    "source": "/product/zerkalo-pryamougolnoe-s-led-podsvetkoj-vision/",
+    "status": 301,
+    "target": "/zerkala-s-podsvetkoj/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 2875,
+    "source": "/product/zerkalo-pryamougolnoe-s-led-podsvetkoj-vitrae/",
+    "status": 301,
+    "target": "/zerkala-s-podsvetkoj/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 3648,
+    "source": "/product/zerkalo-purple-v-alyuminievoj-rame/",
+    "status": 410,
+    "target": "",
+    "reason": "Старая страница без прямого аналога"
+  },
+  {
+    "id": 3693,
+    "source": "/product/zerkalo-rainbow-v-alyuminievoj-rame/",
+    "status": 410,
+    "target": "",
+    "reason": "Старая страница без прямого аналога"
+  },
+  {
+    "id": 3633,
+    "source": "/product/zerkalo-redwine-v-alyuminievoj-rame/",
+    "status": 410,
+    "target": "",
+    "reason": "Старая страница без прямого аналога"
+  },
+  {
+    "id": 2724,
+    "source": "/product/zerkalo-s-led-podsvetkoy-aquilo/",
+    "status": 301,
+    "target": "/zerkala-s-podsvetkoj/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 1982,
+    "source": "/product/zerkalo-s-podsvetkoj/",
+    "status": 301,
+    "target": "/zerkala-s-podsvetkoj/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 2027,
+    "source": "/product/zerkalo-serebro/",
+    "status": 301,
+    "target": "/materialy/zerkalo-serebro/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 2037,
+    "source": "/product/zerkalo-tonirovannoe/",
+    "status": 301,
+    "target": "/materialy/tonirovannye-zerkala/",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 4248,
+    "source": "/sitemap/",
+    "status": 410,
+    "target": "",
+    "reason": "Старая страница без прямого аналога"
+  },
+  {
+    "id": 0,
+    "source": "/uslugi/",
+    "status": 301,
+    "target": "/obrabotka-stekla-i-zerkal/",
+    "reason": "Старый архив или исторический адрес"
+  },
+  {
+    "id": 2244,
+    "source": "/uslugi/evrokromka-shlifovka-kromki-stekla/",
+    "status": 301,
+    "target": "/obrabotka-stekla-i-zerkal/#polish",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 2304,
+    "source": "/uslugi/fyuzing-stekla/",
+    "status": 410,
+    "target": "",
+    "reason": "Старая страница без прямого аналога"
+  },
+  {
+    "id": 2284,
+    "source": "/uslugi/gravirovka-na-zerkale/",
+    "status": 410,
+    "target": "",
+    "reason": "Старая страница без прямого аналога"
+  },
+  {
+    "id": 0,
+    "source": "/uslugi/hudozhestvennoe-mollirovanie/",
+    "status": 410,
+    "target": "",
+    "reason": "Старый архив или исторический адрес"
+  },
+  {
+    "id": 2315,
+    "source": "/uslugi/montazh-zerkal-i-izdelij-iz-stekla/",
+    "status": 301,
+    "target": "/service/#installation",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 2258,
+    "source": "/uslugi/peskostujnaya-gravirovka/",
+    "status": 301,
+    "target": "/obrabotka-stekla-i-zerkal/#sandblast",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 2184,
+    "source": "/uslugi/rezka-stekla-i-zerkal/",
+    "status": 301,
+    "target": "/obrabotka-stekla-i-zerkal/#cut",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 2267,
+    "source": "/uslugi/tonirovka-plyonkami/",
+    "status": 301,
+    "target": "/obrabotka-stekla-i-zerkal/#film",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 2281,
+    "source": "/uslugi/tripleksovanie-stekla/",
+    "status": 301,
+    "target": "/obrabotka-stekla-i-zerkal/#laminate",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 2301,
+    "source": "/uslugi/zakalka-stekla/",
+    "status": 301,
+    "target": "/obrabotka-stekla-i-zerkal/#temper",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 2251,
+    "source": "/uslugi/zerkalo-s-fatsetom-steklo-obrabotka/",
+    "status": 301,
+    "target": "/obrabotka-stekla-i-zerkal/#bevel",
+    "reason": "Актуальная замена"
+  },
+  {
+    "id": 179,
+    "source": "/warranty/",
+    "status": 410,
+    "target": "",
+    "reason": "Старая страница без прямого аналога"
+  }
+]
