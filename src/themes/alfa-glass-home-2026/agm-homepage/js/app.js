@@ -220,9 +220,9 @@
   photo.parentElement.append(sketch);
   function alignSketch(){
     const box=photo.parentElement.getBoundingClientRect(),w=front.naturalWidth||1672,h=front.naturalHeight||941,scale=Math.max(box.width/w,box.height/h);
-    const svg=sketch.firstElementChild,position=front.classList.contains('mirror-fit')?.5:parseFloat(getComputedStyle(front).objectPosition)/100;
+    const svg=sketch.firstElementChild,positions=getComputedStyle(front).objectPosition.split(/\s+/),position=parseFloat(positions[0])/100,positionY=parseFloat(positions[1]||'50%')/100;
     svg.setAttribute('viewBox','0 0 '+w+' '+h);
-    Object.assign(svg.style,{width:w*scale+'px',height:h*scale+'px',left:(box.width-w*scale)*position+'px',top:(box.height-h*scale)/2+'px'});
+    Object.assign(svg.style,{width:w*scale+'px',height:h*scale+'px',left:(box.width-w*scale)*position+'px',top:(box.height-h*scale)*positionY+'px'});
   }
   new ResizeObserver(alignSketch).observe(photo.parentElement);alignSketch();
   function fitMirror(img,key){img.classList.toggle('mirror-fit',['hero-lighted-mirrors','hero-interior-hq','hero-round-hq'].includes(key));}

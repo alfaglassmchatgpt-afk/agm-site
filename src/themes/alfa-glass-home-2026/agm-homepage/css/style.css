@@ -528,3 +528,7 @@ html[data-theme="dark"] .hero-caption #slide-label{color:#9fddfc}
 
 /* Reframed photographs fill the hero; contours share the image transform. */
 .hero-art>img.mirror-fit{object-fit:cover;transform:scale(1.035)!important;object-position:50% 50%}
+
+/* Keep mirror products inside wide hero frames; SVG uses the same object position. */
+.hero-art>img.mirror-fit{object-position:50% 25%}
+@media(min-width:2000px){.hero-inner{min-height:max(550px,22vw)}}
