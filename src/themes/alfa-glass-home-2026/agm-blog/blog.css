@@ -13,3 +13,8 @@ body.agm-blog-page{background:var(--bg);color:var(--ink);font-family:Arial,Helve
 .agm-blog-page .filter.active,.agm-blog-page .blog-cta .button{color:var(--button-ink);background:var(--button);border-color:var(--button)}
 .agm-blog-page .read,.agm-blog-page .blog-cta,.agm-blog-page .blog-footer{border-color:var(--line)}
 .agm-blog-page :is(a,button,input):focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+
+/* High-contrast actions in both themes. */
+html[data-theme="dark"] body.agm-blog-page{--button:#8cdeee;--button-ink:#0a1721}
+.agm-blog-page .site-header .button,.agm-blog-page .blog-cta .button,.agm-blog-page .filter.active{background:var(--button);color:var(--button-ink);border-color:var(--button)}
+.agm-blog-page .site-header .button:hover,.agm-blog-page .blog-cta .button:hover,.agm-blog-page .filter.active:hover{filter:brightness(.94)}
