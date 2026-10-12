@@ -525,3 +525,6 @@ html[data-theme="dark"] .hero-caption #slide-label{color:#9fddfc}
 
 /* Keep the complete mirror products inside their slides. */
 .hero-art>img.mirror-fit{object-fit:contain;object-position:50% 50%;padding:0;box-sizing:border-box;transform:scale(.94)!important}
+
+/* Reframed photographs fill the hero; contours share the image transform. */
+.hero-art>img.mirror-fit{object-fit:cover;transform:scale(1.035)!important;object-position:50% 50%}

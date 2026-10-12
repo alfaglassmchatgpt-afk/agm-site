@@ -219,9 +219,10 @@
   sketch.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1672 941"><path pathLength="1000" d="M 849 55 L 1397 -1 C 1416 -3 1427 8 1427 29 L 1427 699 C 1427 723 1418 736 1398 735 L 850 695 C 834 694 827 685 827 665 L 827 85 C 827 66 834 58 849 55 Z"/></svg>';
   photo.parentElement.append(sketch);
   function alignSketch(){
-    const box=photo.parentElement.getBoundingClientRect(),fit=front.classList.contains('mirror-fit'),scale=fit?Math.min(box.width/1672,box.height/941):Math.max(box.width/1672,box.height/941);
+    const box=photo.parentElement.getBoundingClientRect(),w=front.naturalWidth||1672,h=front.naturalHeight||941,scale=Math.max(box.width/w,box.height/h);
     const svg=sketch.firstElementChild,position=front.classList.contains('mirror-fit')?.5:parseFloat(getComputedStyle(front).objectPosition)/100;
-    Object.assign(svg.style,{width:1672*scale+'px',height:941*scale+'px',left:(box.width-1672*scale)*position+'px',top:(box.height-941*scale)/2+'px'});
+    svg.setAttribute('viewBox','0 0 '+w+' '+h);
+    Object.assign(svg.style,{width:w*scale+'px',height:h*scale+'px',left:(box.width-w*scale)*position+'px',top:(box.height-h*scale)/2+'px'});
   }
   new ResizeObserver(alignSketch).observe(photo.parentElement);alignSketch();
   function fitMirror(img,key){img.classList.toggle('mirror-fit',['hero-lighted-mirrors','hero-interior-hq','hero-round-hq'].includes(key));}
@@ -281,6 +282,7 @@
         'M 1368 452 L 1368 748'
       ]
     };
+    Object.assign(paths,{"hero-round-hq":["M 523 388 C 591 388 646 444 646 512 C 646 580 591 636 523 636 C 455 636 400 580 400 512 C 400 444 455 388 523 388 Z","M 875 276 C 982 276 1066 365 1066 473 C 1066 581 982 669 875 669 C 768 669 683 581 683 473 C 683 365 768 276 875 276 Z"],"hero-interior-hq":["M 497 269 L 1132 269 C 1168 269 1195 296 1195 332 L 1195 536 C 1195 573 1168 601 1132 601 L 496 601 C 459 601 433 573 433 536 L 433 333 C 433 295 459 269 497 269 Z"],"hero-lighted-mirrors":["M 279 241 C 350 241 403 315 403 406 C 403 500 350 573 279 573 C 208 573 156 500 156 406 C 156 315 208 241 279 241 Z","M 678 236 C 711 235 718 265 730 291 C 743 318 771 322 791 340 C 825 369 823 402 809 437 C 795 468 785 490 789 525 C 793 560 789 584 757 599 C 730 610 709 634 679 633 C 644 632 628 606 611 578 C 590 551 568 530 567 500 C 564 464 583 437 590 407 C 606 363 589 340 591 310 C 590 273 631 239 678 236 Z","M 1020 254 L 1188 254 Q 1220 254 1220 287 L 1220 536 Q 1220 569 1188 569 L 1020 569 Q 990 569 990 538 L 990 286 Q 990 254 1020 254 Z","M 1012 299 L 1012 527","M 1198 300 L 1198 527"]});
     const key=slides[slide][0];
     if(!paths[key]||reduce.matches)return;
     const outlines=Array.isArray(paths[key])?paths[key]:[paths[key]];
