@@ -522,3 +522,6 @@ html[data-theme="dark"] .hero-caption #slide-label{color:#9fddfc}
 #trusted-by .agm-trust-grid img{max-width:120px;height:46px}
 #trusted-by .agm-logo-pair img{height:22px}
 }
+
+/* Keep the complete mirror products inside their slides. */
+.hero-art>img.mirror-fit{object-fit:contain;object-position:50% 50%;padding:0;box-sizing:border-box;transform:scale(.94)!important}

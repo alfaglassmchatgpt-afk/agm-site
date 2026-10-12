@@ -219,12 +219,14 @@
   sketch.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1672 941"><path pathLength="1000" d="M 849 55 L 1397 -1 C 1416 -3 1427 8 1427 29 L 1427 699 C 1427 723 1418 736 1398 735 L 850 695 C 834 694 827 685 827 665 L 827 85 C 827 66 834 58 849 55 Z"/></svg>';
   photo.parentElement.append(sketch);
   function alignSketch(){
-    const box=photo.parentElement.getBoundingClientRect(),scale=Math.max(box.width/1672,box.height/941);
-    const svg=sketch.firstElementChild,position=parseFloat(getComputedStyle(front).objectPosition)/100;
+    const box=photo.parentElement.getBoundingClientRect(),fit=front.classList.contains('mirror-fit'),scale=fit?Math.min(box.width/1672,box.height/941):Math.max(box.width/1672,box.height/941);
+    const svg=sketch.firstElementChild,position=front.classList.contains('mirror-fit')?.5:parseFloat(getComputedStyle(front).objectPosition)/100;
     Object.assign(svg.style,{width:1672*scale+'px',height:941*scale+'px',left:(box.width-1672*scale)*position+'px',top:(box.height-941*scale)/2+'px'});
   }
   new ResizeObserver(alignSketch).observe(photo.parentElement);alignSketch();
+  function fitMirror(img,key){img.classList.toggle('mirror-fit',['hero-lighted-mirrors','hero-interior-hq','hero-round-hq'].includes(key));}
   function startSketch(){
+    alignSketch();
     sketch.classList.remove('is-drawing');
     const paths={
       'hero-smart-mirror':'M 849 55 L 1397 -1 C 1416 -3 1427 8 1427 29 L 1427 699 C 1427 723 1418 736 1398 735 L 850 695 C 834 694 827 685 827 665 L 827 85 C 827 66 834 58 849 55 Z',
@@ -297,7 +299,7 @@
     }
     followPhoto();
   }
-  startSketch();
+  fitMirror(front,slides[slide][0]);startSketch();
   function stop(){clearTimeout(timer);clearTimeout(typing);clearTimeout(captionTimer);}
   function typePhrase(text){
     clearTimeout(typing);let n=0;
@@ -325,6 +327,7 @@
     sketch.classList.remove('is-drawing');
     const src=asset(slides[n][0]);
     back.onload=()=>{if(token!==version)return;front.classList.add('hero-next');back.classList.remove('hero-next');[front,back]=[back,front];startSketch();};
+    fitMirror(back,slides[n][0]);
     back.src=src;
     fadeCaption(slides[n][1]);
     $$('[data-slide]').forEach(b=>{const active=Number(b.dataset.slide)===n;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});
