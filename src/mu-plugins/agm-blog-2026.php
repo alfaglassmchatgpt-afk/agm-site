@@ -7,8 +7,7 @@ add_filter('template_include', function($template){
 }, 99);
 add_action('wp_footer', function(){
     if(!is_front_page()) return;
-    ?><script>document.querySelectorAll('a[href]').forEach(function(a){if(a.textContent.trim()==='Обработка стекла и зеркал'&&!a.parentElement.querySelector('[data-agm-blog-link]')){var link=document.createElement('a');link.href=<?php echo wp_json_encode(home_url('/blog/')); ?>;link.textContent='Блог';link.dataset.agmBlogLink='1';link.style.marginInlineStart='24px';a.after(link);}});</script><?php
-}, 99);
+    ?><script>(()=>{const target=document.querySelector('footer nav[aria-label="Навигация в подвале"]');const source=document.querySelector('body>nav[aria-label="Полезная информация"]');if(!target||!source)return;source.querySelectorAll('a').forEach(a=>target.append(a));if(!target.querySelector('[data-agm-blog-link]')){const a=document.createElement('a');a.href=<?php echo wp_json_encode(home_url('/blog/')); ?>;a.textContent='Блог';a.dataset.agmBlogLink='1';target.append(a);}source.remove();})();</script><?php }, 99);
 
 add_action('wp_head', function(){
     if (is_admin()) return;
