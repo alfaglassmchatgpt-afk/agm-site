@@ -30,7 +30,7 @@ export function railGeometry(id,w,h,side,{start=0,end=1,miter=true}={}){
     const lo=miter&&start===0?u:length*start;
     const hi=miter&&end===1?length-u:length*end;
     const along=lo+(hi-lo)*t;
-    uv.setXY(i,(p.getX(i)+z)/4,along/300);
+    uv.setXY(i,(p.getX(i)+z)/12,along/300);
     let x,y;
     if(side==='left'){x=-w/2+u;y=-h/2+along;}
     if(side==='right'){x=w/2-u;y=h/2-along;}
@@ -44,6 +44,6 @@ export function railGeometry(id,w,h,side,{start=0,end=1,miter=true}={}){
 export function sampleGeometry(id){
   const q=sections[id],g=new T.ExtrudeGeometry(sectionShape(id),{depth:90,steps:1,bevelEnabled:false});
   const p=g.attributes.position,uv=g.attributes.uv;
-  for(let i=0;i<p.count;i++)uv.setXY(i,(p.getX(i)+p.getY(i))/4,p.getZ(i)/300);
+  for(let i=0;i<p.count;i++)uv.setXY(i,(p.getX(i)+p.getY(i))/12,p.getZ(i)/300);
   g.translate(-q.b/2,-q.d/2,-45);return g;
 }

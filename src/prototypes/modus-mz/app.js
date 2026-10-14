@@ -13,6 +13,7 @@ for(const item of catalogue.items)glasses[item.id]=[item.title,item.color];
 const $=s=>document.querySelector(s), s={profile:'01',w:450,h:900,color:'00',glass:'zerkalo-serebro__standard',glassOpaque:true,backdrop:true,hinge:'narrow',side:'left',origin:'top',hinges:[100,450,800],handle:false,mask:false,reed:'vertical',view:'3d'};
 const scene=new T.Scene();scene.background=new T.Color('#e7eef0');
 const camera=new T.PerspectiveCamera(34,1,5,50000), renderer=new T.WebGLRenderer({antialias:true});
+renderer.toneMapping=T.ACESFilmicToneMapping;renderer.toneMappingExposure=.9;
 renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setClearColor('#e7eef0');$('#scene').append(renderer.domElement);
 const orbit=new OrbitControls(camera,renderer.domElement);orbit.enableDamping=true;
 scene.add(new T.HemisphereLight(0xffffff,0x748b96,3));const light=new T.DirectionalLight(0xffffff,4);light.position.set(-800,1500,2000);scene.add(light);
