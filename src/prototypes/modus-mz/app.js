@@ -90,6 +90,7 @@ $('#count').onchange=e=>{s.hinges=Array(+e.target.value).fill(0);even();};functi
 $('#handle').onchange=e=>{s.handle=e.target.checked;if(s.handle&&!['00','21','25'].includes(s.color))s.color='00';controls();update();if(s.view==='profile')fit();};$('#mask').onchange=e=>{s.mask=e.target.checked;update();};
 document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>{s.view=b.dataset.view;document.querySelectorAll('[data-view]').forEach(t=>t.classList.toggle('active',t===b));$('#drawing').toggleAttribute('hidden',s.view!=='drawing');$('#scene').style.visibility=s.view==='drawing'?'hidden':'visible';$('#gesture').textContent=s.view==='drawing'?'Перемещайте синие точки · координаты в миллиметрах':s.view==='profile'?'Отрезок 90 мм · вращайте, чтобы рассмотреть открытый торец':'Вращайте мышью или пальцем · колесо — масштаб';update();fit();});$('#reset').onclick=fit;
 function renderProject(){
+ $('#facade-navigation').hidden=project.items.length<2;
  const select=$('#facade-select');select.replaceChildren();
  for(const item of project.items){const option=document.createElement('option');option.value=item.id;option.textContent=item.name+(item.pairId?' · пара':'');select.append(option);}select.value=project.activeId;
  if(document.activeElement!==$('#facade-name'))$('#facade-name').value=project.current().name;

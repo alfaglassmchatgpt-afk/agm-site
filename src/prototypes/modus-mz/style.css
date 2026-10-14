@@ -5,3 +5,5 @@
 .project-bar{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:22px}.project-fields{display:flex;align-items:end;gap:14px}.project-fields label{flex:1;min-width:0}.project-fields input{width:100%;padding:12px 10px;min-height:43px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);margin-top:6px}.project-fields button{min-height:43px}.add-options>div{display:flex;align-items:start;gap:10px;margin:14px 0}.add-options>div>button{flex:1;text-align:left}.add-options details{max-width:220px}.add-options summary{cursor:pointer;border:1px solid var(--line);border-radius:50%;width:30px;height:30px;text-align:center;padding:5px;color:var(--blue)}.add-options details p{font-size:12px;color:var(--muted)}#add-dialog{width:540px;max-width:calc(100vw - 24px)}@media(max-width:650px){.project-fields{flex-direction:column;align-items:stretch}.add-options>div{flex-wrap:wrap}.add-options details{max-width:100%}}
 
 .add-options summary{list-style:none}.add-options summary::-webkit-details-marker{display:none}
+
+#facade-navigation[hidden]{display:none}
