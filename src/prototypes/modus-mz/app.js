@@ -4,6 +4,7 @@ import {Reflector} from './vendor/Reflector.js';
 import {profiles,colors,glasses,validate,source} from './data.js';
 import {sections,svgSection,sectionNotes} from './sections.js';
 import {railGeometry,sampleGeometry} from './profile-mesh.js';
+import {profileMetal} from './metal.js';
 import {studioEnvironment,glassMaterial,backdrop} from './glass-render.js';
 const catalogue=await fetch('./glass-catalog.json').then(r=>{if(!r.ok)throw new Error('Не удалось загрузить каталог стекла');return r.json();});
 const glassItems=Object.fromEntries(catalogue.items.map(m=>[m.id,m]));
@@ -27,12 +28,12 @@ let opticalBackdrop=new T.Group();scene.add(opticalBackdrop);
 let model=new T.Group();scene.add(model);
 function box(w,h,d,x,y,z,mat){const m=new T.Mesh(new T.BoxGeometry(w,h,d),mat);m.position.set(x,y,z);model.add(m);return m;}
 function fit(){const inspect=s.view==='profile',distance=inspect?Math.max(s.handle?155:125,150/camera.aspect)*1.1:Math.max(s.h,s.w/camera.aspect)*2;camera.position.set(inspect?distance*.5:s.view==='3d'?distance*.4:0,inspect?distance*.35:s.view==='3d'?distance*.15:0,s.view==='back'?-distance:distance);orbit.target.set(0,0,0);orbit.update();}
-function build(){scene.remove(opticalBackdrop);opticalBackdrop.traverse(o=>{o.geometry?.dispose();o.material?.dispose();});opticalBackdrop=new T.Group();scene.remove(model);model.traverse(o=>{o.getRenderTarget?.().dispose();o.geometry?.dispose();if(o.material){o.material.map?.dispose();o.material.normalMap?.dispose();o.material.dispose();}});model=new T.Group();scene.add(model);const p=profiles.find(p=>p.id===s.profile),mat=new T.MeshStandardMaterial({color:colors[s.color][1],metalness:.65,roughness:s.color==='16'?.16:.36});
+function build(){scene.remove(opticalBackdrop);opticalBackdrop.traverse(o=>{o.geometry?.dispose();o.material?.dispose();});opticalBackdrop=new T.Group();scene.remove(model);model.traverse(o=>{o.getRenderTarget?.().dispose();o.geometry?.dispose();if(o.material){o.material.map?.dispose();o.material.normalMap?.dispose();o.material.roughnessMap?.dispose();o.material.dispose();}});model=new T.Group();scene.add(model);const p=profiles.find(p=>p.id===s.profile),mat=profileMetal(s.color);
  const w=s.w,h=s.h,b=p.b,d=p.d,q=sections[p.id];mat.side=T.DoubleSide;
  if(s.view==='profile'){
    const id=s.handle&&p.id==='13'?'13-01':p.id;
    const mesh=new T.Mesh(sampleGeometry(id),mat);model.add(mesh);
-   const edges=new T.LineSegments(new T.EdgesGeometry(mesh.geometry,28),new T.LineBasicMaterial({color:'#5e7784',transparent:true,opacity:.35}));model.add(edges);
+   const edges=new T.LineSegments(new T.EdgesGeometry(mesh.geometry,28),new T.LineBasicMaterial({color:'#5e7784',transparent:true,opacity:.35}));if(!['13','13-01'].includes(id))model.add(edges);else{edges.geometry.dispose();edges.material.dispose();}
    return;
  }
  for(const side of ['left','right','top','bottom']){
