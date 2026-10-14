@@ -29,7 +29,7 @@ let opticalBackdrop=new T.Group();scene.add(opticalBackdrop);
 let model=new T.Group();scene.add(model);
 function box(w,h,d,x,y,z,mat){const m=new T.Mesh(new T.BoxGeometry(w,h,d),mat);m.position.set(x,y,z);model.add(m);return m;}
 function fit(){const inspect=s.view==='profile',distance=inspect?Math.max(s.handle?155:125,150/camera.aspect)*1.1:Math.max(s.h,s.w/camera.aspect)*2;camera.position.set(inspect?distance*.5:s.view==='3d'?distance*.4:0,inspect?distance*.35:s.view==='3d'?distance*.15:0,s.view==='back'?-distance:distance);orbit.target.set(0,0,0);orbit.update();}
-function build(){scene.remove(opticalBackdrop);opticalBackdrop.traverse(o=>{o.geometry?.dispose();o.material?.dispose();});opticalBackdrop=new T.Group();scene.remove(model);model.traverse(o=>{o.getRenderTarget?.().dispose();o.geometry?.dispose();if(o.material){o.material.map?.dispose();o.material.normalMap?.dispose();o.material.roughnessMap?.dispose();o.material.dispose();}});model=new T.Group();scene.add(model);const p=profiles.find(p=>p.id===s.profile),mat=profileMetal(s.color);
+function build(){light.intensity=s.view==='profile'?1:4;scene.remove(opticalBackdrop);opticalBackdrop.traverse(o=>{o.geometry?.dispose();o.material?.dispose();});opticalBackdrop=new T.Group();scene.remove(model);model.traverse(o=>{o.getRenderTarget?.().dispose();o.geometry?.dispose();if(o.material){o.material.map?.dispose();o.material.normalMap?.dispose();o.material.roughnessMap?.dispose();o.material.dispose();}});model=new T.Group();scene.add(model);const p=profiles.find(p=>p.id===s.profile),mat=profileMetal(s.color);
  const w=s.w,h=s.h,b=p.b,d=p.d,q=sections[p.id];mat.side=T.DoubleSide;
  if(s.view==='profile'){
    const id=s.handle&&p.id==='13'?'13-01':p.id;
