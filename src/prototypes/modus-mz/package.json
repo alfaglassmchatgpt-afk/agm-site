@@ -1,0 +1,1 @@
+{"name":"agm-modus-mz-prototype","private":true,"type":"module","scripts":{"prepare":"node prepare.mjs","test":"node --test rules.test.mjs"},"dependencies":{"three":"0.180.0"}}
