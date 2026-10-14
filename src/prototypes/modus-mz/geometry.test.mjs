@@ -34,3 +34,17 @@ test('split rails have square inner ends for the handle segment',()=>{
     g.dispose();
   }
 });
+
+test('MZ13-01 grip stays at the outer edge on either side of the facade',()=>{
+  for(const w of [200,450,550])for(const side of ['left','right']){
+    const g=railGeometry('13-01',w,250,side,{miter:false}),p=g.attributes.position;
+    let gripVertices=0;
+    for(let i=0;i<p.count;i++)if(p.getZ(i)>.3){
+      gripVertices++;
+      const distanceFromEdge=side==='left'?p.getX(i)+w/2:w/2-p.getX(i);
+      assert.ok(distanceFromEdge>=-.001&&distanceFromEdge<=10.001,
+        `${side}: grip displaced ${distanceFromEdge} mm from outer edge`);
+    }
+    assert.ok(gripVertices>0);g.dispose();
+  }
+});

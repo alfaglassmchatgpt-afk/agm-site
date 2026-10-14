@@ -36,7 +36,9 @@ export const sections={
   '12': {b:45,d:20,outline:[[0,0],[45,0],[45,20],[43.8,20],[43.8,16],[0,16]],holes:[rectHole(45,16)],glassY:16},
   '13': capped(45,20.4,8,14),
   '17': capped(45,20.2,3.2,13.8,false,true),
-  '13-01': {b:45,d:37,outline:[[0,0],[45,0],[45,14],[1.2,14],[1.2,19.4],[8,19.4],[8,20.6],[1.2,20.6],[1.2,35.8],[10,35.8],[10,37],[0,37]],holes:[rectHole(45,14)],glassY:14.6}
+  // The catalogue draws this section facing the opposite direction to MZ13.
+  // Normalize both contours to the same inner-to-outer x axis: grip at x=45.
+  '13-01': {b:45,d:37,outline:[[0,0],[45,0],[45,14],[1.2,14],[1.2,19.4],[8,19.4],[8,20.6],[1.2,20.6],[1.2,35.8],[10,35.8],[10,37],[0,37]].map(([x,y])=>[45-x,y]),holes:[rectHole(45,14).map(([x,y])=>[45-x,y])],glassY:14.6}
 };
 export const sectionNotes='Форма восстановлена по странице 64. Габариты — по каталогу; непроставленные стенки, рёбра и радиусы приблизительные. Не производственный чертёж.';
 export function svgSection(id,color='#8e9da5',large=false){
