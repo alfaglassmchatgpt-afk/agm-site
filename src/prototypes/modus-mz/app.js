@@ -90,6 +90,7 @@ $('#count').onchange=e=>{s.hinges=Array(+e.target.value).fill(0);even();};functi
 $('#handle').onchange=e=>{s.handle=e.target.checked;if(s.handle&&!['00','21','25'].includes(s.color))s.color='00';controls();update();if(s.view==='profile')fit();};$('#mask').onchange=e=>{s.mask=e.target.checked;update();};
 document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>{s.view=b.dataset.view;document.querySelectorAll('[data-view]').forEach(t=>t.classList.toggle('active',t===b));$('#drawing').toggleAttribute('hidden',s.view!=='drawing');$('#scene').style.visibility=s.view==='drawing'?'hidden':'visible';$('#gesture').textContent=s.view==='drawing'?'Перемещайте синие точки · координаты в миллиметрах':s.view==='profile'?'Отрезок 90 мм · вращайте, чтобы рассмотреть открытый торец':'Вращайте мышью или пальцем · колесо — масштаб';update();fit();});$('#reset').onclick=fit;
 function renderProject(){
+ $('#remove-facade').hidden=project.items.length<2;$('#undo-remove').hidden=project.removals.length===0;
  $('#facade-navigation').hidden=project.items.length<2;
  const select=$('#facade-select');select.replaceChildren();
  for(const item of project.items){const option=document.createElement('option');option.value=item.id;option.textContent=item.name+(item.pairId?' · пара':'');select.append(option);}select.value=project.activeId;
@@ -102,6 +103,8 @@ function activate(id){project.activeId=id;const view=s.view;Object.assign(s,stru
  $('#width').value=s.w;$('#height').value=s.h;for(const id of ['glass','side','reed','origin','count'])$('#'+id).value=id==='count'?s.hinges.length:s[id];controls();update();fit();}
 $('#facade-select').onchange=e=>activate(e.target.value);
 $('#facade-name').oninput=e=>{project.current().name=e.target.value.trim()||'Без названия';renderProject();};
+$('#remove-facade').onclick=()=>{project.update(s);if(project.remove())activate(project.activeId);};
+$('#undo-remove').onclick=()=>{project.update(s);if(project.undoRemove())activate(project.activeId);};
 $('#add-facade').onclick=()=>$('#add-dialog').showModal();
 $('#close-add').onclick=()=>$('#add-dialog').close();
 for(const kind of ['mirror','copy','new'])$('#add-'+kind).onclick=()=>{project.update(s);const item=project.add(kind);$('#add-dialog').close();activate(item.id);};

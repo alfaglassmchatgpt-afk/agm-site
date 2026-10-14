@@ -17,3 +17,10 @@ test('copy and new facade are independent; arbitrary additions and stable select
  for(let i=0;i<30;i++)p.add('new');assert.equal(p.items.length,34);assert.equal(new Set(p.items.map(i=>i.id)).size,34);
  p.activeId=duplicate.id;assert.equal(p.current().config.w,700);const pair=p.add('mirror');assert.equal(pair.config.w,700);assert.notEqual(pair.pairId,first.pairId);
 });
+test('removal keeps one facade, unlinks pair and supports undo',()=>{
+ const p=new FacadeProject(base),first=p.current();assert.equal(p.remove(),false);
+ const second=p.add('mirror');assert.equal(p.remove(),true);assert.equal(p.items.length,1);assert.equal(first.pairId,null);assert.equal(p.partner(),undefined);
+ p.update({...first.config,w:510});assert.equal(p.undoRemove(),true);assert.equal(p.current().id,second.id);assert.equal(p.current().config.w,510);assert.equal(p.partner().id,first.id);
+ p.remove();p.add('mirror');assert.equal(p.undoRemove(),true);assert.equal(p.current().pairId,null);assert.equal(p.items.length,3);
+ const third=p.add('new');p.remove();p.add('new');assert.equal(new Set(p.items.map(i=>i.id)).size,p.items.length);assert.ok(!p.items.some(i=>i.id===third.id));
+});

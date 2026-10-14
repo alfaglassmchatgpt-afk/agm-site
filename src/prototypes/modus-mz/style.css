@@ -7,3 +7,5 @@
 .add-options summary{list-style:none}.add-options summary::-webkit-details-marker{display:none}
 
 #facade-navigation[hidden]{display:none}
+
+#remove-facade[hidden],#undo-remove[hidden]{display:none}.project-fields{flex-wrap:wrap}#remove-facade{color:var(--warn)}
