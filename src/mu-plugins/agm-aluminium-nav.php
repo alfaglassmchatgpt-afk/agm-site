@@ -8,7 +8,10 @@ add_action('template_redirect',function(){
  $target=untrailingslashit(wp_parse_url(home_url('/aluminium/'),PHP_URL_PATH));
  if($path!==$target)return;
  nocache_headers();
- wp_safe_redirect(home_url('/'),302);
+ if(is_user_logged_in()){
+  wp_die('Доступ к странице доступен только редакторам сайта.','Доступ ограничен',array('response'=>403));
+ }
+ wp_safe_redirect(wp_login_url(home_url('/aluminium/')),302);
  exit;
 },0);
 add_action('template_redirect',function(){
