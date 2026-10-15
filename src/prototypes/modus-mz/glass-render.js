@@ -31,7 +31,7 @@ function reliefTexture(pattern){
 }
 // Visual presets, not measured spectral data. Millimetres match the facade geometry.
 export const clearGlassOptics={
-  'float-steklo-clear-m1':{attenuation:'#a9d3b4',distance:180,edge:'#739c80'},
+  'float-steklo-clear-m1':{attenuation:'#a9d3b4',distance:20,edge:'#739c80'},
   'steklo-kristalvizhn-crystalvision':{attenuation:'#edf5f2',distance:500,edge:'#c9ded7'}
 };
 export function glassMaterial(item,width,height,direction,renderer){
