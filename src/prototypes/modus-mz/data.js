@@ -17,8 +17,8 @@ export const glasses={clear:['Прозрачное М1','#c4e0dc'],bronze:['То
 export function validate(s){const p=profiles.find(p=>p.id===s.profile), errors=[],warnings=[];
  if(!Number.isInteger(s.w)||!Number.isInteger(s.h)||s.w<200||s.h<200||s.w>6000||s.h>6000)errors.push('Введите целые размеры от 200 до 6000 мм. Значения выше 6000 мм в прототипе не поддерживаются.');
  if(s.h>p.h||s.w>p.w)warnings.push(`За пределами рекомендации MODUS: ${p.h} × ${p.w} мм (высота × ширина). Требуется согласование.`);
- if(p.id==='07'&&!(s.glassOpaque??['opaque','mirror'].includes(s.glass))&&s.hinge!=='blum')errors.push('Для прозрачного наполнения MZ 07 каталог указывает BLUM 71B950A. Выберите эту петлю либо непрозрачное стекло.');
- if(['07','17'].includes(p.id)&&!(s.glassOpaque??['opaque','mirror'].includes(s.glass))&&!s.mask)errors.push('Для MZ 07/17 область приклейки стекла к профилю должна быть непрозрачной. Подтвердите непрозрачную зону.');
+ if(s.glass!=='none'&&s.hinges.length&&p.id==='07'&&!(s.glassOpaque??['opaque','mirror'].includes(s.glass))&&s.hinge!=='blum')errors.push('Для прозрачного наполнения MZ 07 каталог указывает BLUM 71B950A. Выберите эту петлю либо непрозрачное стекло.');
+ if(s.glass!=='none'&&['07','17'].includes(p.id)&&!(s.glassOpaque??['opaque','mirror'].includes(s.glass))&&!s.mask)errors.push('Для MZ 07/17 область приклейки стекла к профилю должна быть непрозрачной. Подтвердите непрозрачную зону.');
  if(s.hinges.some(v=>!Number.isInteger(v)||v<=0||v>=s.h))errors.push('Центры петель задаются целыми миллиметрами внутри высоты фасада.');
  if(new Set(s.hinges).size!==s.hinges.length)errors.push('Две петли не могут иметь одинаковую координату.');
  if(s.hinges.some((v,i)=>s.hinges.some((q,j)=>j!==i&&Math.abs(v-q)<60)))warnings.push('Петли расположены близко. Порог 60 мм используется только как демонстрационная проверка, не норма MODUS.');
