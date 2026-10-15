@@ -59,3 +59,13 @@ test('Stopsol category matches all three live Phoenix materials',async()=>{
  assert.equal(items.length,3);
  for(const item of items){assert.equal(item.thickness,4);assert.ok(item.verifiedSource.thicknesses.includes(4));assert.equal(item.mirror,false);}
 });
+
+test('reed category contains all 14 live products and MORU Grey differs from flat Grey',async()=>{
+ const {reedItems}=await import('./glass-groups.js');
+ const decisions=await read('../../../docs/facade-glass-categories.json');
+ const items=reedItems(catalog.items);
+ assert.deepEqual(items.map(({slug,title})=>({slug,title})),decisions.reed.items);
+ assert.equal(items.length,14);
+ assert.notEqual(items.find(i=>i.slug==='moru-grey').id,catalog.items.find(i=>i.slug==='tonirovannoe-steklo-grey').id);
+ for(const item of items){assert.equal(item.thickness,4);assert.ok(item.verifiedSource.thicknesses.includes(4));}
+});

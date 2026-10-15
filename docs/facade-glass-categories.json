@@ -79,5 +79,68 @@
         "title": "Стопсол Феникс Серый (Phoenix Gray)"
       }
     ]
+  },
+  "reed": {
+    "name": "Рифлёное стекло",
+    "source": "https://alfaglass.ru/materialy/?group=riflenoe-steklo",
+    "verifiedAt": "2026-10-15",
+    "items": [
+      {
+        "slug": "estriado",
+        "title": "Estriado"
+      },
+      {
+        "slug": "estriado-crystal",
+        "title": "Estriado Crystal"
+      },
+      {
+        "slug": "estriado-ultra",
+        "title": "Estriado Ultra"
+      },
+      {
+        "slug": "flutelite-s",
+        "title": "Flutelit-C"
+      },
+      {
+        "slug": "flutes-moru-ultra-mat",
+        "title": "MORU Ultra матовое (на осветлённом стекле)"
+      },
+      {
+        "slug": "moru-magnetron-bronze",
+        "title": "MORU Бронза — магнетронное напыление"
+      },
+      {
+        "slug": "moru-magnetron-grey",
+        "title": "MORU Серое — магнетронное напыление"
+      },
+      {
+        "slug": "moru-bronze-toned",
+        "title": "MORU тонированное в массе Bronze"
+      },
+      {
+        "slug": "moru-grey",
+        "title": "MORU тонированное в массе Grey"
+      },
+      {
+        "slug": "raywall90",
+        "title": "Рифлёное стекло Raywall 90T"
+      },
+      {
+        "slug": "vison-sun",
+        "title": "Vision Sun Ultra"
+      },
+      {
+        "slug": "riflenoe-steklo-flutes",
+        "title": "Рифлёное стекло Flutes AGC"
+      },
+      {
+        "slug": "moru-crystal",
+        "title": "Рифлёное стекло MORU CRYSTAL"
+      },
+      {
+        "slug": "moru-ultra",
+        "title": "Рифлёное стекло MORU ULTRA"
+      }
+    ]
   }
 }
