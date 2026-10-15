@@ -140,7 +140,7 @@
       "standard": "По образцу"
     },
     "thicknesses": [
-      "unknown"
+      "4"
     ],
     "operations": [
       "cut",
@@ -529,7 +529,7 @@
       "standard": "По образцу"
     },
     "thicknesses": [
-      "unknown"
+      "4"
     ],
     "operations": [
       "cut",
@@ -627,7 +627,7 @@
       "standard": "По образцу"
     },
     "thicknesses": [
-      "unknown"
+      "4"
     ],
     "operations": [
       "cut",
@@ -893,7 +893,7 @@
       "standard": "По образцу"
     },
     "thicknesses": [
-      "unknown"
+      "4"
     ],
     "operations": [
       "cut",
@@ -912,7 +912,7 @@
       "standard": "По образцу"
     },
     "thicknesses": [
-      "unknown"
+      "4"
     ],
     "operations": [
       "cut",
@@ -931,7 +931,7 @@
       "standard": "По образцу"
     },
     "thicknesses": [
-      "unknown"
+      "4"
     ],
     "operations": [
       "cut",
@@ -950,7 +950,7 @@
       "standard": "По образцу"
     },
     "thicknesses": [
-      "unknown"
+      "4"
     ],
     "operations": [
       "cut",
@@ -983,12 +983,12 @@
     "note": "Специальные обработки включаются после подтверждения для этого материала."
   },
   "steklo-kristalvizhn-crystalvision": {
-    "title": "Стекло Crystalvision (Кристалвижн) ультраосветлённое",
+    "title": "Осветлённое стекло Crystalvision",
     "variants": {
       "standard": "По образцу"
     },
     "thicknesses": [
-      "unknown"
+      "4"
     ],
     "operations": [
       "cut",
@@ -1047,12 +1047,12 @@
     "note": "Закалка готового зеркала недоступна."
   },
   "zerkalo-gezella": {
-    "title": "Зеркало двухстороннее",
+    "title": "Двухстороннее зеркало",
     "variants": {
       "standard": "По образцу"
     },
     "thicknesses": [
-      "unknown"
+      "4"
     ],
     "operations": [
       "cut",

@@ -18,10 +18,19 @@ test('physical texture pitch does not stretch with facade size or orientation',(
 });
 test('optical materials are transmissive or reflective and unknown patterns are not invented',()=>{
   const renderer={capabilities:{getMaxAnisotropy:()=>8}};
-  for(const m of catalog.items){const mat=glassMaterial(m,450,900,'vertical',renderer);assert.equal(mat.transmission,m.mirror?0:1);if(m.texturePending)assert.equal(mat.normalMap,null);mat.normalMap?.dispose();mat.dispose();}
+  for(const m of catalog.items){const mat=glassMaterial(m,450,900,'vertical',renderer);assert.equal(mat.transmission,m.mirror||m.opaque?0:1);if(m.texturePending)assert.equal(mat.normalMap,null);mat.normalMap?.dispose();mat.dispose();}
 });
 test('catalogue material opacity participates in MZ07 compatibility',()=>{
   const s={profile:'07',w:450,h:900,glass:'arbitrary-catalogue-slug',hinge:'narrow',hinges:[100,800],mask:false};
   assert.equal(validate({...s,glassOpaque:true}).errors.length,0);
   assert.equal(validate({...s,glassOpaque:false}).errors.length,2);
+});
+test('owner confirmations remain available and excluded Clearvision stays out',async()=>{
+ const decisions=await read('../../../docs/material-confirmations.json');
+ for(const [slug,decision] of Object.entries(decisions.materials)){
+  if(decision.facadeSelectable){assert.ok(shared[slug].thicknesses.includes('4'));assert.equal(shared[slug].title,decision.title);assert.ok(catalog.items.some(i=>i.slug===slug&&i.thickness===4));}
+  else assert.ok(!catalog.items.some(i=>i.slug===slug));
+ }
+ assert.equal(shared['steklo-kristalvizhn-crystalvision'].title,'Осветлённое стекло Crystalvision');
+ assert.equal(shared['zerkalo-gezella'].title,'Двухстороннее зеркало');
 });

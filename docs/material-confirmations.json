@@ -1,0 +1,74 @@
+{
+  "date": "2026-10-15",
+  "source": "Подтверждено владельцем",
+  "scope": "Толщина и названия материалов; не подтверждает новые цвета, обработки или оптические параметры",
+  "materials": {
+    "float-steklo-clear-m1": {
+      "thicknesses": [
+        "4"
+      ],
+      "title": "Флоат стекло Clear М1",
+      "facadeSelectable": true
+    },
+    "steklo-kristalvizhn-crystalvision": {
+      "thicknesses": [
+        "4"
+      ],
+      "title": "Осветлённое стекло Crystalvision",
+      "facadeSelectable": true
+    },
+    "steklo-matovoe-matelux": {
+      "thicknesses": [
+        "4"
+      ],
+      "title": "Стекло Matelux матовое &quot;сатинато&quot;  (Satinato)",
+      "facadeSelectable": true
+    },
+    "steklo-solnczezashhitnoe-stopsol": {
+      "thicknesses": [
+        "4"
+      ],
+      "title": "Солнцезащитное стекло Stopsol (рефлективное)",
+      "facadeSelectable": true
+    },
+    "dihroichnoe-steklo": {
+      "thicknesses": [
+        "4"
+      ],
+      "title": "Дихроичное стекло, купить в Москве",
+      "facadeSelectable": true
+    },
+    "steklo-lacobel": {
+      "thicknesses": [
+        "4"
+      ],
+      "title": "Стекло Lacobel",
+      "facadeSelectable": true
+    },
+    "steklo-matelak": {
+      "thicknesses": [
+        "4"
+      ],
+      "title": "Стекло Matelac",
+      "facadeSelectable": true
+    },
+    "tonirovannoe-v-masse-steklo-moru": {
+      "thicknesses": [
+        "4"
+      ],
+      "title": "Рифлёное стекло MORU ( Мору) тонированное в массе.  Цвет бронза и серое. Flutes",
+      "facadeSelectable": true
+    },
+    "zerkalo-gezella": {
+      "thicknesses": [
+        "4"
+      ],
+      "title": "Двухстороннее зеркало",
+      "facadeSelectable": true
+    },
+    "steklo-osvetlyonnoe-clearvision": {
+      "facadeSelectable": false,
+      "reason": "Исключить Clearvision / Optiwhite из выбора по указанию владельца"
+    }
+  }
+}

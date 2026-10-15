@@ -32,7 +32,7 @@ function reliefTexture(pattern){
 export function glassMaterial(item,width,height,direction,renderer){
   const mat=new T.MeshPhysicalMaterial({
     color:item.color,metalness:item.mirror?1:0,roughness:item.mirror?.055:item.matte?.38:.055,
-    transmission:item.mirror?0:1,thickness:4,ior:1.5,envMapIntensity:item.mirror?1.25:1,
+    transmission:item.mirror||item.opaque?0:1,thickness:4,ior:1.5,envMapIntensity:item.mirror?1.25:1,
     attenuationColor:new T.Color(item.color),attenuationDistance:250,
     side:T.FrontSide,clearcoat:item.mirror?1:.2,clearcoatRoughness:.06
   });
