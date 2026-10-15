@@ -10,3 +10,7 @@ export function glassGroup(item){
  return 1;
 }
 export const pendingGlass=[];
+
+// Owner-approved first category; other memberships remain provisional.
+export const transparentSlugs=["float-steklo-clear-m1", "steklo-kristalvizhn-crystalvision", "moru-bronze", "tonirovannoe-steklo-grey", "tonirovannoe-steklo-black", "tonirovannoe-steklo-green", "tonirovannoe-steklo-blue"];
+export function transparentItems(items){return transparentSlugs.map(slug=>items.find(i=>i.slug===slug)).filter(Boolean);}

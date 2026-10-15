@@ -313,9 +313,9 @@
     },
     {
       "id": "moru-grey__standard",
-      "slug": "moru-grey",
+      "slug": "tonirovannoe-steklo-grey",
       "variant": "standard",
-      "title": "MORU тонированное в массе Grey",
+      "title": "Тонированное Серое",
       "thickness": 4,
       "mirror": false,
       "color": "#87949c",
@@ -323,7 +323,18 @@
       "pitch": null,
       "pattern": null,
       "texturePending": false,
-      "note": "Закалка, триплексование, тонирование плёнкой и окрашивание доступны. Алюминиевый фасад — только 4 мм; профильная система для дверей и перегородок — 8 мм. Сочетания обработок и конструкцию согласуем по проекту."
+      "note": "Закалка, триплексование, тонирование плёнкой и окрашивание доступны. Алюминиевый фасад — только 4 мм; профильная система для дверей и перегородок — 8 мм. Сочетания обработок и конструкцию согласуем по проекту.",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/tonirovannoe-steklo-grey/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4,
+          5,
+          6,
+          8,
+          10
+        ]
+      }
     },
     {
       "id": "moru-dark-grey__standard",
@@ -343,7 +354,7 @@
       "id": "moru-bronze__standard",
       "slug": "moru-bronze",
       "variant": "standard",
-      "title": "Тонированное стекло Bronze",
+      "title": "Тонированное Бронза",
       "thickness": 4,
       "mirror": false,
       "color": "#b69c73",
@@ -693,7 +704,7 @@
       "id": "float-steklo-clear-m1__standard",
       "slug": "float-steklo-clear-m1",
       "variant": "standard",
-      "title": "Флоат стекло Clear М1",
+      "title": "Стекло обычное М1",
       "thickness": 4,
       "mirror": false,
       "opaque": false,
@@ -711,7 +722,7 @@
       "id": "steklo-kristalvizhn-crystalvision__standard",
       "slug": "steklo-kristalvizhn-crystalvision",
       "variant": "standard",
-      "title": "Осветлённое стекло Crystalvision",
+      "title": "Стекло осветлённое Crystalvision",
       "thickness": 4,
       "mirror": false,
       "opaque": false,
@@ -850,6 +861,78 @@
       "confirmedBy": "owner",
       "confirmedAt": "2026-10-15",
       "visualizationNote": "Цвет и оптика ориентировочные; конкретный образец согласуется отдельно."
+    },
+    {
+      "id": "tonirovannoe-steklo-black__standard",
+      "slug": "tonirovannoe-steklo-black",
+      "variant": "standard",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": false,
+      "color": "#454b50",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Оттенок и прозрачность визуализации ориентировочные. Подбор по образцу.",
+      "title": "Тонированное Черное",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/tonirovannoe-steklo-black/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4,
+          6,
+          8,
+          10
+        ]
+      }
+    },
+    {
+      "id": "tonirovannoe-steklo-green__standard",
+      "slug": "tonirovannoe-steklo-green",
+      "variant": "standard",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": false,
+      "color": "#80a798",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Оттенок и прозрачность визуализации ориентировочные. Подбор по образцу.",
+      "title": "Тонированное Green",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/tonirovannoe-steklo-green/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4,
+          8
+        ]
+      }
+    },
+    {
+      "id": "tonirovannoe-steklo-blue__standard",
+      "slug": "tonirovannoe-steklo-blue",
+      "variant": "standard",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": false,
+      "color": "#7196b3",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Оттенок и прозрачность визуализации ориентировочные. Подбор по образцу.",
+      "title": "Тонированное Синее",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/tonirovannoe-steklo-blue/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4,
+          6,
+          8
+        ]
+      }
     }
   ],
   "confirmationSource": "../../../docs/material-confirmations.json",

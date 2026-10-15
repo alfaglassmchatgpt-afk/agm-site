@@ -1,0 +1,37 @@
+{
+  "name": "Стекло прозрачное",
+  "confirmedAt": "2026-10-15",
+  "source": "owner",
+  "items": [
+    {
+      "slug": "float-steklo-clear-m1",
+      "title": "Стекло обычное М1"
+    },
+    {
+      "slug": "steklo-kristalvizhn-crystalvision",
+      "title": "Стекло осветлённое Crystalvision"
+    },
+    {
+      "slug": "moru-bronze",
+      "title": "Тонированное Бронза"
+    },
+    {
+      "slug": "tonirovannoe-steklo-grey",
+      "title": "Тонированное Серое"
+    },
+    {
+      "slug": "tonirovannoe-steklo-black",
+      "title": "Тонированное Черное"
+    },
+    {
+      "slug": "tonirovannoe-steklo-green",
+      "title": "Тонированное Green"
+    },
+    {
+      "slug": "tonirovannoe-steklo-blue",
+      "title": "Тонированное Синее"
+    }
+  ],
+  "liveCatalogue": "https://alfaglass.ru/materialy/?group=tonirovannoe-steklo",
+  "note": "Состав и порядок подтверждены владельцем. Black — отдельная карточка, не Dark Grey. Остальные категории ожидают списков владельца."
+}
