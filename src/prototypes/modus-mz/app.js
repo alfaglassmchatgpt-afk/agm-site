@@ -6,10 +6,10 @@ import {sections,svgSection,sectionNotes} from './sections.js';
 import {railGeometry,sampleGeometry} from './profile-mesh.js';
 import {profileMetal} from './metal.js';
 import {FacadeProject} from './project.js?v=20261015-groups';
-import {transparentSlugs,transparentItems,matteSlugs,matteItems,stopsolSlugs,stopsolItems,reedSlugs,reedItems,patternedSlugs,patternedItems} from './glass-groups.js?v=scene-buttons-20261015';
+import {transparentSlugs,transparentItems,matteSlugs,matteItems,stopsolSlugs,stopsolItems,reedSlugs,reedItems,patternedSlugs,patternedItems} from './glass-groups.js?v=clear-optics-20261015';
 import {ProjectConfirmation} from './confirmation.js';
-import {studioEnvironment,glassMaterial,interiorScene} from './glass-render.js?v=scene-buttons-20261015';
-const catalogue=await fetch('./glass-catalog.json?v=scene-buttons-20261015').then(r=>{if(!r.ok)throw new Error('Не удалось загрузить каталог стекла');return r.json();});
+import {studioEnvironment,glassMaterial,glassEdgeMaterial,interiorScene} from './glass-render.js?v=clear-optics-20261015';
+const catalogue=await fetch('./glass-catalog.json?v=clear-optics-20261015').then(r=>{if(!r.ok)throw new Error('Не удалось загрузить каталог стекла');return r.json();});
 const glassItems=Object.fromEntries(catalogue.items.map(m=>[m.id,m]));
 Object.keys(glasses).forEach(k=>delete glasses[k]);
 glassItems.none={id:'none',title:'Без наполнения',color:'none',mirror:false};
@@ -36,13 +36,13 @@ for(let i=-12;i<=12;i++){
 scene.add(reflectionStudio);
 let model=new T.Group();scene.add(model);
 function fit(){const inspect=s.view==='profile',distance=inspect?Math.max(s.handle?155:125,150/camera.aspect)*1.1:Math.max(s.h,(pair()?s.w*2+40:s.w)/camera.aspect)*2;camera.position.set(inspect?distance*.5:s.view==='3d'?distance*.4:0,inspect?distance*.35:s.view==='3d'?distance*.15:0,s.view==='back'?-distance:distance);orbit.target.set(0,0,0);orbit.update();}
-function disposeModel(root){root.traverse(o=>{o.getRenderTarget?.().dispose();o.geometry?.dispose();if(o.material){o.material.map?.dispose();o.material.normalMap?.dispose();o.material.roughnessMap?.dispose();if(o.material.bumpMap!==o.material.map)o.material.bumpMap?.dispose();o.material.dispose();}});}
+function disposeModel(root){const materials=new Set(),textures=new Set();root.traverse(o=>{o.getRenderTarget?.().dispose();o.geometry?.dispose();for(const m of (Array.isArray(o.material)?o.material:[o.material]))if(m)materials.add(m);});for(const m of materials){for(const key of ['map','normalMap','roughnessMap','bumpMap'])if(m[key])textures.add(m[key]);m.dispose();}for(const texture of textures)texture.dispose();}
 function build(){
  reflectionStudio.visible=selectedScene!=='empty';
  light.intensity=s.view==='profile'?1:3.4;scene.remove(model);disposeModel(model);model=new T.Group();scene.add(model);
  const extent=Math.max(s.h,s.w*(pair()?2:1))*1.4;Object.assign(light.shadow.camera,{left:-extent,right:extent,top:extent,bottom:-extent});light.shadow.camera.updateProjectionMatrix();
  const other=pair(), states=other&&s.view!=='profile'?[project.current(),other].sort((a,b)=>a.config.side==='left'?-1:1):[project.current()];
- states.forEach((item,i)=>{const part=buildFacade({...item.config,view:s.view,backdrop:s.backdrop});part.traverse(o=>{if(o.isMesh&&!o.material?.transmission){o.castShadow=true;o.receiveShadow=true;}});if(states.length===2)part.position.x=(i===0?-1:1)*(s.w+40)/2;model.add(part);});
+ states.forEach((item,i)=>{const part=buildFacade({...item.config,view:s.view,backdrop:s.backdrop});part.traverse(o=>{if(o.isMesh&&!(Array.isArray(o.material)?o.material.some(m=>m.transmission):o.material?.transmission)){o.castShadow=true;o.receiveShadow=true;}});if(states.length===2)part.position.x=(i===0?-1:1)*(s.w+40)/2;model.add(part);});
  if(selectedScene!=='empty'&&['3d','front'].includes(s.view)){model.add(interiorScene(selectedScene,states.length===2?s.w*2+40:s.w,s.h));}
 }
 function buildFacade(s){
@@ -68,7 +68,8 @@ function buildFacade(s){
  if(s.glass!=='none'){
  const gm=glassMaterial(glassItems[s.glass],w-p.delta,h-p.delta,s.reed,renderer);
 
- box(w-p.delta,h-p.delta,4,0,0,q.glassY+2-d,gm);
+ const edge=glassEdgeMaterial(glassItems[s.glass],gm);
+ box(w-p.delta,h-p.delta,4,0,0,q.glassY+2-d,edge?[edge,edge,edge,edge,gm,gm]:gm);
  if(glassItems[s.glass].mirror){
    const mirror=new Reflector(new T.PlaneGeometry(w-p.delta,h-p.delta),{textureWidth:1024,textureHeight:1024,color:glassItems[s.glass].color==='#d7eeea'?'#858585':glassItems[s.glass].color,clipBias:.003});
    mirror.position.z=q.glassY+4-d+.1;model.add(mirror);

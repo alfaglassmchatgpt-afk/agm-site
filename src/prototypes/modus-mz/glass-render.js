@@ -29,6 +29,11 @@ function reliefTexture(pattern){
   texture.magFilter=T.LinearFilter;texture.minFilter=T.LinearMipmapLinearFilter;texture.generateMipmaps=true;texture.needsUpdate=true;
   return texture;
 }
+// Visual presets, not measured spectral data. Millimetres match the facade geometry.
+export const clearGlassOptics={
+  'float-steklo-clear-m1':{attenuation:'#a9d3b4',distance:180,edge:'#739c80'},
+  'steklo-kristalvizhn-crystalvision':{attenuation:'#edf5f2',distance:500,edge:'#c9ded7'}
+};
 export function glassMaterial(item,width,height,direction,renderer){
   const mat=new T.MeshPhysicalMaterial({
     color:item.color,metalness:item.mirror?1:0,roughness:item.mirror?.055:item.matte?.38:.055,
@@ -36,12 +41,22 @@ export function glassMaterial(item,width,height,direction,renderer){
     attenuationColor:new T.Color(item.color),attenuationDistance:250,
     side:T.FrontSide,clearcoat:item.mirror?1:.2,clearcoatRoughness:.06
   });
+  const clear=clearGlassOptics[item.slug];
+  if(clear){
+    // Keep face neutral: tint comes from bulk absorption, not a coloured surface coating.
+    mat.color.set('#ffffff');mat.attenuationColor.set(clear.attenuation);mat.attenuationDistance=clear.distance;
+    mat.roughness=.012;mat.ior=1.52;mat.clearcoat=0;mat.envMapIntensity=1;mat.thickness=4;
+  }
   if(item.pitch&&item.pattern){
     const texture=reliefTexture(item.pattern),[rx,ry]=textureRepeat(width,height,item.pitch,direction);
     texture.repeat.set(rx,ry);if(direction==='horizontal')texture.rotation=Math.PI/2;
     texture.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());mat.normalMap=texture;mat.normalScale.set(.35,.35);
   }
   return mat;
+}
+export function glassEdgeMaterial(item,face){
+  const preset=clearGlassOptics[item.slug];if(!preset)return null;
+  const edge=face.clone();edge.color.set(preset.edge);edge.roughness=.08;edge.transmission=.85;return edge;
 }
 // Procedural surface maps: no external images or client assets.
 function surfaceMap(kind){

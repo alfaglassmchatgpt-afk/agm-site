@@ -79,3 +79,13 @@ test('patterned category includes all nine live products and keeps Krezet pitch'
  assert.equal(items.find(i=>i.slug==='krezet').pitch,2);
  for(const item of items){assert.equal(item.thickness,4);assert.ok(item.verifiedSource.thicknesses.includes(4));}
 });
+
+test('clear glass uses neutral faces and keeps the 4 mm optical thickness',async()=>{
+ const {glassEdgeMaterial}=await import('./glass-render.js');
+ const m1=glassMaterial({slug:'float-steklo-clear-m1',color:'#d7eeea'},350,600,'vertical',{});
+ const cv=glassMaterial({slug:'steklo-kristalvizhn-crystalvision',color:'#d7eeea'},350,600,'vertical',{});
+ for(const m of [m1,cv]){assert.equal(m.color.getHexString(),'ffffff');assert.equal(m.thickness,4);assert.equal(m.transmission,1);assert.equal(m.clearcoat,0);assert.equal(m.metalness,0);}
+ assert.ok(cv.attenuationDistance>m1.attenuationDistance);
+ const edge=glassEdgeMaterial({slug:'float-steklo-clear-m1'},m1);assert.notEqual(edge,m1);assert.notEqual(edge.color.getHex(),m1.color.getHex());
+ edge.dispose();m1.dispose();cv.dispose();
+});
