@@ -149,3 +149,15 @@ export function sampleCabinet(width,height,kind='books'){
  }
  g.userData={width,height,depth:312,bookHeight:210,sphereDiameter:60};return g;
 }
+
+// Contact-zone approximation: reduce blur only where glass overlaps the rail.
+// Distances are in mm; the open centre keeps the original satin roughness.
+export function satinContactMap(width,height,overlap){
+ const n=256,bytes=new Uint8Array(n*n*4);
+ for(let y=0;y<n;y++)for(let x=0;x<n;x++){
+  const edge=Math.min((x+.5)/n*width,(n-x-.5)/n*width,(y+.5)/n*height,(n-y-.5)/n*height);
+  const t=T.MathUtils.clamp((edge-overlap+1)/2,0,1),value=Math.round(255*(.18+.82*t*t*(3-2*t))),i=(y*n+x)*4;
+  bytes[i]=bytes[i+1]=bytes[i+2]=value;bytes[i+3]=255;
+ }
+ const map=new T.DataTexture(bytes,n,n);map.magFilter=T.LinearFilter;map.minFilter=T.LinearFilter;map.needsUpdate=true;return map;
+}

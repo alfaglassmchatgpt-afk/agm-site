@@ -6,10 +6,10 @@ import {sections,svgSection,sectionNotes} from './sections.js';
 import {railGeometry,sampleGeometry} from './profile-mesh.js';
 import {profileMetal} from './metal.js';
 import {FacadeProject} from './project.js?v=20261015-groups';
-import {transparentSlugs,transparentItems,matteSlugs,matteItems,stopsolSlugs,stopsolItems,reedSlugs,reedItems,patternedSlugs,patternedItems} from './glass-groups.js?v=kitchen-cabinet-20261015';
+import {transparentSlugs,transparentItems,matteSlugs,matteItems,stopsolSlugs,stopsolItems,reedSlugs,reedItems,patternedSlugs,patternedItems} from './glass-groups.js?v=matte-contact-20261015';
 import {ProjectConfirmation} from './confirmation.js';
-import {studioEnvironment,glassMaterial,glassEdgeMaterial,stopsolGlassOptics,sampleCabinet} from './glass-render.js?v=kitchen-cabinet-20261015';
-const catalogue=await fetch('./glass-catalog.json?v=kitchen-cabinet-20261015').then(r=>{if(!r.ok)throw new Error('Не удалось загрузить каталог стекла');return r.json();});
+import {studioEnvironment,glassMaterial,glassEdgeMaterial,stopsolGlassOptics,sampleCabinet,satinContactMap} from './glass-render.js?v=matte-contact-20261015';
+const catalogue=await fetch('./glass-catalog.json?v=matte-contact-20261015').then(r=>{if(!r.ok)throw new Error('Не удалось загрузить каталог стекла');return r.json();});
 const glassItems=Object.fromEntries(catalogue.items.map(m=>[m.id,m]));
 Object.keys(glasses).forEach(k=>delete glasses[k]);
 glassItems.none={id:'none',title:'Без наполнения',color:'none',mirror:false};
@@ -65,6 +65,7 @@ function buildFacade(s){
  const gm=glassMaterial(glassItems[s.glass],w-p.delta,h-p.delta,s.reed,renderer);
 
  const edge=glassEdgeMaterial(glassItems[s.glass],gm);
+ if(glassItems[s.glass].matte&&!glassItems[s.glass].opaque&&b>20&&b>p.delta/2)gm.roughnessMap=satinContactMap(w-p.delta,h-p.delta,b-p.delta/2);
  box(w-p.delta,h-p.delta,4,0,0,q.glassY+2-d,edge?[edge,edge,edge,edge,gm,gm]:gm);
  if(stopsolGlassOptics[glassItems[s.glass].slug]){
    const coating=new Reflector(new T.PlaneGeometry(w-p.delta,h-p.delta),{textureWidth:1024,textureHeight:1024,color:stopsolGlassOptics[glassItems[s.glass].slug].coating,clipBias:.003});

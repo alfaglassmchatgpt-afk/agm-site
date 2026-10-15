@@ -135,3 +135,11 @@ test('kitchen contents retain physical sizes and omit bottles in short cabinets'
   for(const o of g.children){o.geometry?.dispose();o.material?.dispose();}
  }
 });
+test('satin contact mask retains centre blur and follows physical rail overlap',async()=>{
+ const {satinContactMap}=await import('./glass-render.js');
+ for(const w of [326,576]){
+  const map=satinContactMap(w,576,38),n=map.image.width,pixel=x=>map.image.data[(128*n+x)*4+1];
+  assert.ok(pixel(0)<60);assert.equal(pixel(128),255);
+  assert.ok(pixel(Math.floor(30/w*n))<60);assert.equal(pixel(Math.ceil(45/w*n)),255);map.dispose();
+ }
+});
