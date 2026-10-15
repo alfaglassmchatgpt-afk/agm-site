@@ -101,3 +101,56 @@ export function backdrop(width,height){
   floor.material.bumpMap=surfaceMap('stone');floor.material.bumpMap.repeat.set(60,60);floor.material.bumpScale=.3;
   return group;
 }
+
+export const sceneOptions=['empty','studio','kitchen','living','wardrobe'];
+export function interiorScene(kind,width,height){
+  if(kind==='empty')return new T.Group();
+  if(kind==='studio')return backdrop(width,height);
+  const group=new T.Group();group.name=kind;
+  const k=Math.min(width/350,height/600),floor=-height/2-24;
+  const block=(w,h,d,x,y,z,color,r=2)=>{
+    const mesh=new T.Mesh(roundedBlock(w*k,h*k,d*k,r*k),new T.MeshStandardMaterial({color,roughness:.65}));
+    mesh.position.set(x*k,floor+y*k,z*k);mesh.castShadow=true;mesh.receiveShadow=true;group.add(mesh);return mesh;
+  };
+  const cylinder=(r,h,x,y,z,color)=>{
+    const m=new T.Mesh(new T.CylinderGeometry(r*k,r*k,h*k,48),new T.MeshStandardMaterial({color,roughness:.4}));m.position.set(x*k,floor+y*k,z*k);m.castShadow=true;m.receiveShadow=true;group.add(m);return m;
+  };
+  const plane=(color,y,z,ground=false)=>{const m=new T.Mesh(new T.PlaneGeometry(30000,30000),new T.MeshStandardMaterial({color,roughness:.9}));m.position.set(0,y,z);if(ground)m.rotation.x=-Math.PI/2;m.receiveShadow=true;group.add(m);};
+  plane(kind==='wardrobe'?'#a99d8d':'#ddd8ce',0,-700*k);plane('#c0af98',floor,0,true);
+  if(kind==='kitchen'){
+    block(820,205,155,0,107,-310,'#b7b5aa');block(850,12,175,0,216,-310,'#eee7d9');
+    for(let i=-2;i<=2;i++){block(150,190,6,i*158,108,-229,'#cbc8bd');block(50,3,6,i*158,180,-222,'#56564f',1);}
+    for(const y of [350,480]){
+      const shelf=block(550,10,100,0,y,-360,'#9a8062');shelf.material.map=surfaceMap('wood');
+      for(let i=0;i<3;i++)cylinder(15,32,-140+i*40,y+21,-350,'#eee7dc');
+      for(let i=0;i<4;i++)cylinder(30,4,105,y+8+i*4,-350,'#d7d2c7');
+    }
+    block(70,100,10,100,272,-350,'#ae8a62',5);cylinder(22,53,-60,249,-310,'#565f58');
+  }else if(kind==='living'){
+    const cabinet=block(560,130,150,0,110,-310,'#927759');cabinet.material.map=surfaceMap('wood');
+    for(const x of [-235,235])block(12,55,110,x,27,-310,'#4a4943');
+    for(let j=0;j<4;j++)block(65,9,48,-110,180+j*10,-300,['#e2d5bc','#595f58','#b09777','#e2d5bc'][j]);
+    cylinder(28,85,100,220,-310,'#c4b398');cylinder(14,35,155,194,-300,'#6b7067');
+    block(200,190,8,0,370,-630,'#665c4d');block(180,170,3,0,370,-624,'#ded3bd');
+    const art=cylinder(40,3,0,370,-619,'#a58d70');art.rotation.x=Math.PI/2;
+    block(175,95,160,-420,100,-350,'#b2afa0',14);block(175,160,35,-420,170,-420,'#b2afa0',14);
+    block(180,12,85,270,280,-540,'#9b856a');
+  }else if(kind==='wardrobe'){
+    const wood='#8d7860';block(580,12,190,0,540,-330,wood);block(580,12,190,0,30,-330,wood);
+    for(const x of [-290,290])block(14,520,190,x,280,-330,wood);
+    const rail=cylinder(5,500,0,480,-300,'#888984');rail.rotation.z=Math.PI/2;
+    for(let i=0;i<5;i++){
+      const x=-150+i*70,color=['#ded8cc','#70756b','#b09d85','#4b5051','#c7bda9'][i];
+      const shape=new T.Shape();shape.moveTo(-24,0);shape.lineTo(-42,-26);shape.lineTo(-29,-62);shape.lineTo(-22,-50);shape.lineTo(-25,-180);shape.lineTo(25,-180);shape.lineTo(22,-50);shape.lineTo(29,-62);shape.lineTo(42,-26);shape.lineTo(24,0);shape.closePath();
+      const g=new T.ExtrudeGeometry(shape,{depth:8,bevelEnabled:true,bevelSize:2,bevelThickness:2,bevelSegments:3,steps:1});g.scale(k,k,k);
+      const shirt=new T.Mesh(g,new T.MeshStandardMaterial({color,roughness:1}));shirt.position.set(x*k,floor+455*k,-300*k);shirt.castShadow=true;shirt.receiveShadow=true;group.add(shirt);
+      block(1,150,1,x,360,-289,'#bcb6aa',.1);
+      const hangerPoints=[new T.Vector3(x-26,451,-300),new T.Vector3(x,474,-300),new T.Vector3(x+26,451,-300),new T.Vector3(x-26,451,-300)].map(v=>new T.Vector3(v.x*k,floor+v.y*k,v.z*k));
+      const hanger=new T.Mesh(new T.TubeGeometry(new T.CatmullRomCurve3(hangerPoints,false,'catmullrom',0),24,1*k,6,false),new T.MeshStandardMaterial({color:'#776d5e',metalness:.5,roughness:.5}));group.add(hanger);
+
+    }
+    for(let j=0;j<3;j++)block(130,20,100,-90,57+j*22,-300,['#c5b6a0','#e0d8ca','#928a7e'][j],5);
+    block(145,65,115,110,70,-300,'#696963',4);
+  }
+  return group;
+}

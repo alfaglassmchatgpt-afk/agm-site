@@ -6,19 +6,20 @@ import {sections,svgSection,sectionNotes} from './sections.js';
 import {railGeometry,sampleGeometry} from './profile-mesh.js';
 import {profileMetal} from './metal.js';
 import {FacadeProject} from './project.js?v=20261015-groups';
-import {transparentSlugs,transparentItems,matteSlugs,matteItems,stopsolSlugs,stopsolItems,reedSlugs,reedItems,patternedSlugs,patternedItems} from './glass-groups.js?v=studio-hq2-20261015';
+import {transparentSlugs,transparentItems,matteSlugs,matteItems,stopsolSlugs,stopsolItems,reedSlugs,reedItems,patternedSlugs,patternedItems} from './glass-groups.js?v=interiors-v2-20261015';
 import {ProjectConfirmation} from './confirmation.js';
-import {studioEnvironment,glassMaterial,backdrop} from './glass-render.js?v=studio-hq2-20261015';
-const catalogue=await fetch('./glass-catalog.json?v=studio-hq2-20261015').then(r=>{if(!r.ok)throw new Error('Не удалось загрузить каталог стекла');return r.json();});
+import {studioEnvironment,glassMaterial,interiorScene} from './glass-render.js?v=interiors-v2-20261015';
+const catalogue=await fetch('./glass-catalog.json?v=interiors-v2-20261015').then(r=>{if(!r.ok)throw new Error('Не удалось загрузить каталог стекла');return r.json();});
 const glassItems=Object.fromEntries(catalogue.items.map(m=>[m.id,m]));
 Object.keys(glasses).forEach(k=>delete glasses[k]);
 glassItems.none={id:'none',title:'Без наполнения',color:'none',mirror:false};
 glasses.none=['Без наполнения','none'];
 for(const item of catalogue.items)glasses[item.id]=[item.title,item.color];
-const $=s=>document.querySelector(s), s={profile:profiles[0].id,w:350,h:600,color:profiles[0].colors[0],glass:'none',glassOpaque:false,backdrop:true,hinge:'none',side:'left',origin:'top',hinges:[],handle:false,mask:false,reed:'vertical',view:'3d'};
+const $=s=>document.querySelector(s), s={profile:profiles[0].id,w:350,h:600,color:profiles[0].colors[0],glass:'none',glassOpaque:false,backdrop:false,hinge:'none',side:'left',origin:'top',hinges:[],handle:false,mask:false,reed:'vertical',view:'3d'};
 const defaults=structuredClone(s), project=new FacadeProject(defaults), confirmation=new ProjectConfirmation();
 const pair=()=>project.partner();
 const previewSide=()=>s.side;
+let selectedScene='empty';
 const scene=new T.Scene();scene.background=new T.Color('#e4e1da');
 const camera=new T.PerspectiveCamera(34,1,5,50000), renderer=new T.WebGLRenderer({antialias:true});
 renderer.toneMapping=T.ACESFilmicToneMapping;renderer.toneMappingExposure=.9;
@@ -37,11 +38,12 @@ let model=new T.Group();scene.add(model);
 function fit(){const inspect=s.view==='profile',distance=inspect?Math.max(s.handle?155:125,150/camera.aspect)*1.1:Math.max(s.h,(pair()?s.w*2+40:s.w)/camera.aspect)*2;camera.position.set(inspect?distance*.5:s.view==='3d'?distance*.4:0,inspect?distance*.35:s.view==='3d'?distance*.15:0,s.view==='back'?-distance:distance);orbit.target.set(0,0,0);orbit.update();}
 function disposeModel(root){root.traverse(o=>{o.getRenderTarget?.().dispose();o.geometry?.dispose();if(o.material){o.material.map?.dispose();o.material.normalMap?.dispose();o.material.roughnessMap?.dispose();if(o.material.bumpMap!==o.material.map)o.material.bumpMap?.dispose();o.material.dispose();}});}
 function build(){
+ reflectionStudio.visible=selectedScene!=='empty';
  light.intensity=s.view==='profile'?1:3.4;scene.remove(model);disposeModel(model);model=new T.Group();scene.add(model);
  const extent=Math.max(s.h,s.w*(pair()?2:1))*1.4;Object.assign(light.shadow.camera,{left:-extent,right:extent,top:extent,bottom:-extent});light.shadow.camera.updateProjectionMatrix();
  const other=pair(), states=other&&s.view!=='profile'?[project.current(),other].sort((a,b)=>a.config.side==='left'?-1:1):[project.current()];
  states.forEach((item,i)=>{const part=buildFacade({...item.config,view:s.view,backdrop:s.backdrop});part.traverse(o=>{if(o.isMesh&&!o.material?.transmission){o.castShadow=true;o.receiveShadow=true;}});if(states.length===2)part.position.x=(i===0?-1:1)*(s.w+40)/2;model.add(part);});
- if(s.backdrop&&['3d','front'].includes(s.view)){model.add(backdrop(states.length===2?s.w*2+40:s.w,s.h));}
+ if(selectedScene!=='empty'&&['3d','front'].includes(s.view)){model.add(interiorScene(selectedScene,states.length===2?s.w*2+40:s.w,s.h));}
 }
 function buildFacade(s){
  const model=new T.Group();
@@ -83,7 +85,7 @@ function controls(){glassChoices();const p=profiles.find(p=>p.id===s.profile);$(
  $('#color-name').textContent=`${colors[s.color][0]} · ${s.color}. Наличие уточняется.`;$('#profile-name').textContent=`MZ ${p.id}`;$('#profile-dims').textContent=`${p.b} × ${p.d} мм · схема сечения`;
  $('#section-svg').innerHTML=svgSection(p.id,colors[s.color][1]);
  $('#handle-wrap').hidden=!p.handle;$('#handle').checked=s.handle;$('#mask-wrap').hidden=s.glass==='none'||!['07','17'].includes(p.id);$('#mask').checked=s.mask;$('#reed-wrap').hidden=!glassItems[s.glass].pitch||glassItems[s.glass].pattern==='grid';
- const item=glassItems[s.glass];$('#glass-link').hidden=s.glass==='none';$('#backdrop').parentElement.hidden=false;$('#glass-link').href='https://alfaglass.ru/materialy/'+item.slug+'/';$('#glass-note').textContent=s.glass==='none'?'Только алюминиевая рамка по указанным размерам, без стекла.':item.texturePending?'Точная фактура пока не воспроизведена — показаны только базовые цвет и прозрачность.':item.pitch?`Рельеф с шагом ${item.pitch.toFixed(2)} мм; масштаб сохраняется при изменении размера. Оптика приблизительная.`:'Студийная визуализация. Оттенок и отражение ориентировочные.';$('#glass-count').textContent=`${transparentItems(catalogue.items).length+matteItems(catalogue.items).length+stopsolItems(catalogue.items).length+reedItems(catalogue.items).length+patternedItems(catalogue.items).length+1} материалов · 4 мм`;$('#backdrop').disabled=false;$('#backdrop').checked=s.backdrop;
+ const item=glassItems[s.glass];$('#glass-link').hidden=s.glass==='none';$('#glass-link').href='https://alfaglass.ru/materialy/'+item.slug+'/';$('#glass-note').textContent=s.glass==='none'?'Только алюминиевая рамка по указанным размерам, без стекла.':item.texturePending?'Точная фактура пока не воспроизведена — показаны только базовые цвет и прозрачность.':item.pitch?`Рельеф с шагом ${item.pitch.toFixed(2)} мм; масштаб сохраняется при изменении размера. Оптика приблизительная.`:'Студийная визуализация. Оттенок и отражение ориентировочные.';$('#glass-count').textContent=`${transparentItems(catalogue.items).length+matteItems(catalogue.items).length+stopsolItems(catalogue.items).length+reedItems(catalogue.items).length+patternedItems(catalogue.items).length+1} материалов · 4 мм`;
  $('#hinge').innerHTML=[['none','Без петель и присадок'],...(p.b<20?[['narrow','Специальная для узкого профиля'],['mzf','MZF 63 · подбор присадки'],...(p.id==='07'?[['blum','BLUM 71B950A']]:[])]:[['cup','Чашка 35 мм · модель уточнить']])].map(([v,l])=>`<option value="${v}">${l}</option>`).join('');$('#hinge').value=s.hinge;$('#count').value=s.hinges.length;for(const id of ['side','origin','even'])$('#'+id).disabled=!s.hinges.length;hingeFields();}
 function hingeFields(){ $('#hinges').innerHTML=s.hinges.map((v,i)=>`<div class="hinge-row"><b>${i+1}</b><input aria-label="Положение петли ${i+1}" type="range" min="1" max="${s.h-1}" value="${s.origin==='top'?v:s.h-v}" data-i="${i}"><input aria-label="Петля ${i+1}, мм" type="number" step="1" value="${s.origin==='top'?v:s.h-v}" data-i="${i}"></div>`).join('');$('#hinges').querySelectorAll('input').forEach(el=>el.oninput=()=>{s.hinges[+el.dataset.i]=s.origin==='top'?+el.value:s.h-+el.value;el.parentElement.querySelectorAll('input').forEach(other=>{if(other!==el)other.value=el.value;});update();});}
 let geometry;
@@ -147,7 +149,7 @@ $('#undo-remove').onclick=()=>{project.update(s);if(project.undoRemove())activat
 $('#add-facade').onclick=()=>$('#add-dialog').showModal();
 $('#close-add').onclick=()=>$('#add-dialog').close();
 for(const kind of ['mirror','copy','new'])$('#add-'+kind).onclick=()=>{project.update(s);const item=project.add(kind);$('#add-dialog').close();activate(item.id);};
-$('#backdrop').onchange=e=>{s.backdrop=e.target.checked;update();};
+$('#environment').onchange=e=>{selectedScene=e.target.value;build();};
 $('#theme').onclick=()=>document.body.classList.toggle('dark');
 $('#profile-details').onclick=()=>{const p=profiles.find(p=>p.id===s.profile);$('#detail-title').textContent=`MODUS MZ ${p.id}`;$('#detail-body').innerHTML=svgSection(p.id,colors[s.color][1],true)+(s.handle?svgSection('13-01',colors[s.color][1],true):'')+`<p class="section-source">${sectionNotes}</p><p>Габарит сечения ${p.b} × ${p.d} мм. Стекло 4 мм. Минимальный фасад 200 × 200 мм. Рекомендуемые максимальные размеры: высота ${p.h}, ширина ${p.w} мм.</p><p>Для стекла из внешней ширины и высоты вычитается по ${p.delta} мм. ${p.edge?'Кромки стекла дополнительно обрабатываются; заполнение вклеивается.':''}</p><p>${p.note||'Цвета указаны по каталогу; доступность проверяется при заказе.'}</p><p>Сечения построены по каталогу, неуказанные толщины и радиусы оценочные. Петли условные. Чертежи обработки на странице 65 относятся к сборочным уголкам, а не к присадке петель. Для производства необходима выбранная модель петли и согласованный чертёж.</p>`;$('#details').showModal();};$('#close-details').onclick=()=>$('#details').close();
 $('#confirm-project').onclick=()=>{project.update(s);confirmation.confirm(project.items,!project.items.some(item=>validate(item.config).errors.length));confirmationControls();};
