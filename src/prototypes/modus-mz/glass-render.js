@@ -42,6 +42,14 @@ export const tintedGlassOptics={
   'tonirovannoe-steklo-green':{attenuation:'#77b89c',distance:6,edge:'#316a51'},
   'tonirovannoe-steklo-blue':{attenuation:'#668ea8',distance:6,edge:'#304f65'}
 };
+// Satin faces blur transmitted detail; colours follow catalogue sample renders.
+export const matteGlassOptics={
+  'steklo-matovoe-matelux':{attenuation:'#c5dfce',distance:45,edge:'#739c80'},
+  'steklo-matovoe-osvetlyonnoe':{attenuation:'#f0f5f3',distance:500,edge:'#c9ded7'},
+  'moru-bronze-mat':{attenuation:'#b3916d',distance:8,edge:'#63503a'},
+  'moru-grey-mat':{attenuation:'#a0a3a4',distance:5,edge:'#53585a'},
+  'moru-dark-grey-mat':{attenuation:'#55585c',distance:5,edge:'#303438'}
+};
 export function glassMaterial(item,width,height,direction,renderer){
   const mat=new T.MeshPhysicalMaterial({
     color:item.color,metalness:item.mirror?1:0,roughness:item.mirror?.055:item.matte?.38:.055,
@@ -55,6 +63,11 @@ export function glassMaterial(item,width,height,direction,renderer){
     mat.color.set('#ffffff');mat.attenuationColor.set(clear.attenuation);mat.attenuationDistance=clear.distance;
     mat.roughness=.012;mat.ior=1.52;mat.clearcoat=0;mat.envMapIntensity=1;mat.thickness=4;
   }
+  const satin=matteGlassOptics[item.slug];
+  if(satin){
+    mat.color.set('#ffffff');mat.attenuationColor.set(satin.attenuation);mat.attenuationDistance=satin.distance;
+    mat.transmission=.96;mat.roughness=.55;mat.ior=1.52;mat.clearcoat=0;mat.metalness=0;mat.thickness=4;
+  }
   if(item.pitch&&item.pattern){
     const texture=reliefTexture(item.pattern),[rx,ry]=textureRepeat(width,height,item.pitch,direction);
     texture.repeat.set(rx,ry);if(direction==='horizontal')texture.rotation=Math.PI/2;
@@ -63,7 +76,7 @@ export function glassMaterial(item,width,height,direction,renderer){
   return mat;
 }
 export function glassEdgeMaterial(item,face){
-  const preset=clearGlassOptics[item.slug]||tintedGlassOptics[item.slug];if(!preset)return null;
+  const preset=clearGlassOptics[item.slug]||tintedGlassOptics[item.slug]||matteGlassOptics[item.slug];if(!preset)return null;
   const edge=face.clone();edge.color.set(preset.edge);edge.roughness=.08;edge.transmission=.85;return edge;
 }
 // Procedural surface maps: no external images or client assets.

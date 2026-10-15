@@ -34,5 +34,18 @@
       "sample": "tinted-blue-4mm-v1.png",
       "archivedSampleReviewed": false
     }
-  ]
+  ],
+  "matte": {
+    "verifiedAt": "2026-10-15",
+    "group": "https://alfaglass.ru/materialy/?group=matovoe-steklo",
+    "slugs": [
+      "steklo-matovoe-matelux",
+      "steklo-matovoe-osvetlyonnoe",
+      "moru-bronze-mat",
+      "moru-grey-mat",
+      "moru-dark-grey-mat"
+    ],
+    "archivedSampleReviewed": "moru-bronze-mat-v1.png",
+    "note": "Satin blur and visual colours from catalogue renders; not measured scattering or spectral data."
+  }
 }

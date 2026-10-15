@@ -18,7 +18,7 @@ test('physical texture pitch does not stretch with facade size or orientation',(
 });
 test('optical materials are transmissive or reflective and unknown patterns are not invented',()=>{
   const renderer={capabilities:{getMaxAnisotropy:()=>8}};
-  for(const m of catalog.items){const mat=glassMaterial(m,450,900,'vertical',renderer);assert.equal(mat.transmission,m.mirror||m.opaque?0:1);if(m.texturePending)assert.equal(mat.normalMap,null);mat.normalMap?.dispose();mat.dispose();}
+  for(const m of catalog.items){const mat=glassMaterial(m,450,900,'vertical',renderer);if(m.mirror||m.opaque)assert.equal(mat.transmission,0);else assert.ok(mat.transmission>=.9);if(m.texturePending)assert.equal(mat.normalMap,null);mat.normalMap?.dispose();mat.dispose();}
 });
 test('catalogue material opacity participates in MZ07 compatibility',()=>{
   const s={profile:'07',w:450,h:900,glass:'arbitrary-catalogue-slug',hinge:'narrow',hinges:[100,800],mask:false};
@@ -100,4 +100,13 @@ test('tinted flat glass stays transmissive, neutral on the face, and distinct fr
   absorption.add(mat.attenuationColor.getHex());const edge=glassEdgeMaterial(item,mat);assert.ok(edge);edge.dispose();mat.dispose();
  }
  assert.equal(absorption.size,5);
+});
+test('flat satin glass blurs transmission without becoming opaque or changing thickness',async()=>{
+ const {matteGlassOptics}=await import('./glass-render.js');
+ assert.equal(Object.keys(matteGlassOptics).length,5);
+ for(const slug of Object.keys(matteGlassOptics)){
+  const item=catalog.items.find(i=>i.slug===slug);assert.ok(item);
+  const mat=glassMaterial(item,350,600,'vertical',{});
+  assert.ok(mat.transmission>.9);assert.ok(mat.roughness>=.5);assert.equal(mat.thickness,4);assert.equal(mat.clearcoat,0);assert.equal(mat.metalness,0);assert.equal(mat.normalMap,null);mat.dispose();
+ }
 });
