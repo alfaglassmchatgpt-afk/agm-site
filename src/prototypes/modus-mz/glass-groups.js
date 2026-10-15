@@ -14,3 +14,6 @@ export const pendingGlass=[];
 // Owner-approved first category; other memberships remain provisional.
 export const transparentSlugs=["float-steklo-clear-m1", "steklo-kristalvizhn-crystalvision", "moru-bronze", "tonirovannoe-steklo-grey", "tonirovannoe-steklo-black", "tonirovannoe-steklo-green", "tonirovannoe-steklo-blue"];
 export function transparentItems(items){return transparentSlugs.map(slug=>items.find(i=>i.slug===slug)).filter(Boolean);}
+
+export const matteSlugs=["steklo-matovoe-matelux", "steklo-matovoe-osvetlyonnoe", "moru-bronze-mat", "moru-grey-mat", "moru-dark-grey-mat"];
+export function matteItems(items){return matteSlugs.map(slug=>items.find(i=>i.slug===slug)).filter(Boolean);}

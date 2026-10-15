@@ -41,3 +41,12 @@ test('transparent category has exactly the seven approved glasses in order, with
  assert.deepEqual(transparentItems(catalog.items).map(({slug,title})=>({slug,title})),decisions.items);
  assert.equal(transparentItems(catalog.items).length,7);
 });
+
+test('matte category matches the five live catalogue materials, all matte 4 mm',async()=>{
+ const {matteItems}=await import('./glass-groups.js');
+ const decisions=await read('../../../docs/facade-glass-categories.json');
+ const items=matteItems(catalog.items);
+ assert.deepEqual(items.map(({slug,title})=>({slug,title})),decisions.matte.items);
+ assert.equal(items.length,5);
+ for(const item of items){assert.equal(item.matte,true);assert.equal(item.thickness,4);assert.ok(item.verifiedSource.thicknesses.includes(4));}
+});

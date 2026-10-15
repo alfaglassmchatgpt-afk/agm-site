@@ -33,5 +33,32 @@
     }
   ],
   "liveCatalogue": "https://alfaglass.ru/materialy/?group=tonirovannoe-steklo",
-  "note": "Состав и порядок подтверждены владельцем. Black — отдельная карточка, не Dark Grey. Остальные категории ожидают списков владельца."
+  "note": "Состав и порядок подтверждены владельцем. Black — отдельная карточка, не Dark Grey. Остальные категории ожидают списков владельца.",
+  "matte": {
+    "name": "Стекло матовое",
+    "source": "https://alfaglass.ru/materialy/?group=matovoe-steklo",
+    "verifiedAt": "2026-10-15",
+    "items": [
+      {
+        "slug": "steklo-matovoe-matelux",
+        "title": "Матовое стекло Matelux"
+      },
+      {
+        "slug": "steklo-matovoe-osvetlyonnoe",
+        "title": "Матовое осветлённое стекло"
+      },
+      {
+        "slug": "moru-bronze-mat",
+        "title": "Матовое бронзовое стекло"
+      },
+      {
+        "slug": "moru-grey-mat",
+        "title": "Матовое серое стекло"
+      },
+      {
+        "slug": "moru-dark-grey-mat",
+        "title": "Матовое стекло Дарк грей"
+      }
+    ]
+  }
 }

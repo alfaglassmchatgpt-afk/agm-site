@@ -6,10 +6,10 @@ import {sections,svgSection,sectionNotes} from './sections.js';
 import {railGeometry,sampleGeometry} from './profile-mesh.js';
 import {profileMetal} from './metal.js';
 import {FacadeProject} from './project.js?v=20261015-groups';
-import {transparentSlugs,transparentItems} from './glass-groups.js?v=glass-buttons-20261015';
+import {transparentSlugs,transparentItems,matteSlugs,matteItems} from './glass-groups.js?v=matte-20261015';
 import {ProjectConfirmation} from './confirmation.js';
-import {studioEnvironment,glassMaterial,backdrop} from './glass-render.js?v=glass-buttons-20261015';
-const catalogue=await fetch('./glass-catalog.json?v=glass-buttons-20261015').then(r=>{if(!r.ok)throw new Error('Не удалось загрузить каталог стекла');return r.json();});
+import {studioEnvironment,glassMaterial,backdrop} from './glass-render.js?v=matte-20261015';
+const catalogue=await fetch('./glass-catalog.json?v=matte-20261015').then(r=>{if(!r.ok)throw new Error('Не удалось загрузить каталог стекла');return r.json();});
 const glassItems=Object.fromEntries(catalogue.items.map(m=>[m.id,m]));
 Object.keys(glasses).forEach(k=>delete glasses[k]);
 glassItems.none={id:'none',title:'Без наполнения',color:'none',mirror:false};
@@ -81,7 +81,7 @@ function controls(){glassChoices();const p=profiles.find(p=>p.id===s.profile);$(
  $('#color-name').textContent=`${colors[s.color][0]} · ${s.color}. Наличие уточняется.`;$('#profile-name').textContent=`MZ ${p.id}`;$('#profile-dims').textContent=`${p.b} × ${p.d} мм · схема сечения`;
  $('#section-svg').innerHTML=svgSection(p.id,colors[s.color][1]);
  $('#handle-wrap').hidden=!p.handle;$('#handle').checked=s.handle;$('#mask-wrap').hidden=s.glass==='none'||!['07','17'].includes(p.id);$('#mask').checked=s.mask;$('#reed-wrap').hidden=!glassItems[s.glass].pitch||glassItems[s.glass].pattern==='grid';
- const item=glassItems[s.glass];$('#glass-link').hidden=s.glass==='none';$('#backdrop').parentElement.hidden=s.glass==='none';$('#glass-link').href='https://alfaglass.ru/materialy/'+item.slug+'/';$('#glass-note').textContent=s.glass==='none'?'Только алюминиевая рамка по указанным размерам, без стекла.':item.texturePending?'Точная фактура пока не воспроизведена — показаны только базовые цвет и прозрачность.':item.pitch?`Рельеф с шагом ${item.pitch.toFixed(2)} мм; масштаб сохраняется при изменении размера. Оптика приблизительная.`:'Студийная визуализация. Оттенок и отражение ориентировочные.';$('#glass-count').textContent=`${transparentItems(catalogue.items).length} материалов · 4 мм`;$('#backdrop').disabled=item.mirror||item.opaque;$('#backdrop').checked=s.backdrop;
+ const item=glassItems[s.glass];$('#glass-link').hidden=s.glass==='none';$('#backdrop').parentElement.hidden=s.glass==='none';$('#glass-link').href='https://alfaglass.ru/materialy/'+item.slug+'/';$('#glass-note').textContent=s.glass==='none'?'Только алюминиевая рамка по указанным размерам, без стекла.':item.texturePending?'Точная фактура пока не воспроизведена — показаны только базовые цвет и прозрачность.':item.pitch?`Рельеф с шагом ${item.pitch.toFixed(2)} мм; масштаб сохраняется при изменении размера. Оптика приблизительная.`:'Студийная визуализация. Оттенок и отражение ориентировочные.';$('#glass-count').textContent=`${transparentItems(catalogue.items).length+matteItems(catalogue.items).length} материалов · 4 мм`;$('#backdrop').disabled=item.mirror||item.opaque;$('#backdrop').checked=s.backdrop;
  $('#hinge').innerHTML=[['none','Без петель и присадок'],...(p.b<20?[['narrow','Специальная для узкого профиля'],['mzf','MZF 63 · подбор присадки'],...(p.id==='07'?[['blum','BLUM 71B950A']]:[])]:[['cup','Чашка 35 мм · модель уточнить']])].map(([v,l])=>`<option value="${v}">${l}</option>`).join('');$('#hinge').value=s.hinge;$('#count').value=s.hinges.length;for(const id of ['side','origin','even'])$('#'+id).disabled=!s.hinges.length;hingeFields();}
 function hingeFields(){ $('#hinges').innerHTML=s.hinges.map((v,i)=>`<div class="hinge-row"><b>${i+1}</b><input aria-label="Положение петли ${i+1}" type="range" min="1" max="${s.h-1}" value="${s.origin==='top'?v:s.h-v}" data-i="${i}"><input aria-label="Петля ${i+1}, мм" type="number" step="1" value="${s.origin==='top'?v:s.h-v}" data-i="${i}"></div>`).join('');$('#hinges').querySelectorAll('input').forEach(el=>el.oninput=()=>{s.hinges[+el.dataset.i]=s.origin==='top'?+el.value:s.h-+el.value;el.parentElement.querySelectorAll('input').forEach(other=>{if(other!==el)other.value=el.value;});update();});}
 let geometry;
@@ -93,17 +93,22 @@ function glassChoices(){
  $('#glass-selected').textContent='Выбрано: '+glassItems[s.glass].title;
  $('#glass-categories').querySelectorAll('[data-glass]').forEach(b=>{const active=b.dataset.glass===s.glass;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});
  $('#transparent-toggle').classList.toggle('active',transparentSlugs.includes(glassItems[s.glass].slug));
+ $('#matte-toggle').classList.toggle('active',matteSlugs.includes(glassItems[s.glass].slug));
 }
-for(const item of transparentItems(catalogue.items)){
- const b=document.createElement('button');b.type='button';b.dataset.glass=item.id;b.textContent=item.title;$('#transparent-materials').append(b);
+const materialCategories=[['transparent',transparentItems],['matte',matteItems]];
+for(const [category,items] of materialCategories){
+ for(const item of items(catalogue.items)){
+  const b=document.createElement('button');b.type='button';b.dataset.glass=item.id;b.dataset.category=category;b.textContent=item.title;$('#'+category+'-materials').append(b);
+ }
+ $('#'+category+'-toggle').onclick=()=>{
+  const list=$('#'+category+'-materials');list.hidden=!list.hidden;$('#'+category+'-toggle').setAttribute('aria-expanded',String(!list.hidden));
+ };
 }
 $('#glass-categories').querySelectorAll('[data-glass]').forEach(b=>b.onclick=()=>{
  s.glass=b.dataset.glass;s.glassOpaque=!!(glassItems[s.glass].mirror||glassItems[s.glass].opaque);controls();update();
- $('#transparent-materials').hidden=true;$('#transparent-toggle').setAttribute('aria-expanded','false');if(b.dataset.glass!=='none')$('#transparent-toggle').focus({preventScroll:true});
+ for(const [category] of materialCategories){$('#'+category+'-materials').hidden=true;$('#'+category+'-toggle').setAttribute('aria-expanded','false');}
+ if(b.dataset.category)$('#'+b.dataset.category+'-toggle').focus({preventScroll:true});
 });
-$('#transparent-toggle').onclick=()=>{
- const list=$('#transparent-materials');list.hidden=!list.hidden;$('#transparent-toggle').setAttribute('aria-expanded',String(!list.hidden));
-};
 glassChoices();
 ['width','height'].forEach((id,i)=>$('#'+id).oninput=e=>{s[i?'h':'w']=Number(e.target.value);update();if(s.w>=200&&s.h>=200)fit();});
 for(const id of ['hinge','side','reed','origin'])$('#'+id).onchange=e=>{s[id]=e.target.value;if(id==='hinge'){if(s.hinge==='none')s.hinges=[];else if(!s.hinges.length)s.hinges=[100,s.h-100];}s.glassOpaque=!!(glassItems[s.glass].mirror||glassItems[s.glass].opaque);controls();update();};

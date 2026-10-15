@@ -273,7 +273,7 @@
       "id": "moru-bronze-mat__standard",
       "slug": "moru-bronze-mat",
       "variant": "standard",
-      "title": "Тонированное стекло Bronze Satin",
+      "title": "Матовое бронзовое стекло",
       "thickness": 4,
       "mirror": false,
       "color": "#b69c73",
@@ -281,13 +281,23 @@
       "pitch": null,
       "pattern": null,
       "texturePending": false,
-      "note": "Специальные обработки включаются после подтверждения для этого материала."
+      "note": "Специальные обработки включаются после подтверждения для этого материала.",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/moru-bronze-mat/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4,
+          6,
+          8,
+          10
+        ]
+      }
     },
     {
       "id": "moru-grey-mat__standard",
       "slug": "moru-grey-mat",
       "variant": "standard",
-      "title": "Тонированное стекло Grey Satin",
+      "title": "Матовое серое стекло",
       "thickness": 4,
       "mirror": false,
       "color": "#87949c",
@@ -295,13 +305,23 @@
       "pitch": null,
       "pattern": null,
       "texturePending": false,
-      "note": "Специальные обработки включаются после подтверждения для этого материала."
+      "note": "Специальные обработки включаются после подтверждения для этого материала.",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/moru-grey-mat/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4,
+          6,
+          8,
+          10
+        ]
+      }
     },
     {
       "id": "moru-dark-grey-mat__standard",
       "slug": "moru-dark-grey-mat",
       "variant": "standard",
-      "title": "Стекло Dark Grey Mat",
+      "title": "Матовое стекло Дарк грей",
       "thickness": 4,
       "mirror": false,
       "color": "#434c54",
@@ -309,7 +329,17 @@
       "pitch": null,
       "pattern": null,
       "texturePending": false,
-      "note": "Специальные обработки включаются после подтверждения для этого материала."
+      "note": "Специальные обработки включаются после подтверждения для этого материала.",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/moru-dark-grey-mat/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4,
+          6,
+          8,
+          10
+        ]
+      }
     },
     {
       "id": "moru-grey__standard",
@@ -740,7 +770,7 @@
       "id": "steklo-matovoe-matelux__standard",
       "slug": "steklo-matovoe-matelux",
       "variant": "standard",
-      "title": "Стекло Matelux матовое &quot;сатинато&quot;  (Satinato)",
+      "title": "Матовое стекло Matelux",
       "thickness": 4,
       "mirror": false,
       "opaque": false,
@@ -752,7 +782,17 @@
       "note": "Специальные обработки включаются после подтверждения для этого материала.",
       "confirmedBy": "owner",
       "confirmedAt": "2026-10-15",
-      "visualizationNote": "Цвет и оптика ориентировочные; конкретный образец согласуется отдельно."
+      "visualizationNote": "Цвет и оптика ориентировочные; конкретный образец согласуется отдельно.",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/steklo-matovoe-matelux/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4,
+          6,
+          8,
+          10
+        ]
+      }
     },
     {
       "id": "steklo-solnczezashhitnoe-stopsol__standard",
@@ -931,6 +971,31 @@
           4,
           6,
           8
+        ]
+      }
+    },
+    {
+      "id": "steklo-matovoe-osvetlyonnoe__standard",
+      "slug": "steklo-matovoe-osvetlyonnoe",
+      "variant": "standard",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": false,
+      "color": "#eef3f2",
+      "matte": true,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Матовое осветлённое стекло. Оптика визуализации ориентировочная.",
+      "title": "Матовое осветлённое стекло",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/steklo-matovoe-osvetlyonnoe/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4,
+          6,
+          8,
+          10
         ]
       }
     }
