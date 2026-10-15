@@ -2,12 +2,12 @@ import * as T from './vendor/three.module.js';
 
 // Studio illumination, not a photograph or a claim about a client's interior.
 export function studioEnvironment(renderer){
-  const studio=new T.Scene();studio.background=new T.Color('#aebbc0');
+  const studio=new T.Scene();studio.background=new T.Color('#bcbab4');
   const panel=(w,h,x,y,z,color)=>{const m=new T.Mesh(new T.PlaneGeometry(w,h),new T.MeshBasicMaterial({color,side:T.DoubleSide}));m.position.set(x,y,z);studio.add(m);return m;};
   panel(1800,2000,-1200,200,1200,'#f8f4e9');
   panel(450,2200,900,100,1200,'#ffffff');
-  panel(90,2400,500,100,1100,'#38464e');
-  panel(2800,1800,0,1200,-1500,'#e5eaf0');
+  panel(90,2400,500,100,1100,'#55534e');
+  panel(2800,1800,0,1200,-1500,'#e8e5df');
   const floor=panel(5000,5000,0,-1400,0,'#777d7c');floor.rotation.x=-Math.PI/2;
   const target=new T.WebGLCubeRenderTarget(256,{type:T.HalfFloatType});
   new T.CubeCamera(1,8000,target).update(renderer,studio);
@@ -44,11 +44,25 @@ export function glassMaterial(item,width,height,direction,renderer){
   return mat;
 }
 export function backdrop(width,height){
-  const group=new T.Group(),material=new T.MeshStandardMaterial({color:'#bec4bb',roughness:.9});
-  // Explicitly optional optical test background, not parts of the facade.
-  for(const [i,color] of ['#d5b68a','#819399','#3c565e'].entries()){
-    const m=new T.Mesh(new T.BoxGeometry(width*.17,height*.5,70),material.clone());
-    m.material.color.set(color);m.position.set((i-1)*width*.26,-height*.05,-220-i*60);group.add(m);
+  const group=new T.Group();group.name='Neutral studio';
+  // Scenery only: no effect on facade dimensions or production data.
+  const add=(geometry,color,x,y,z)=>{
+    const mesh=new T.Mesh(geometry,new T.MeshStandardMaterial({color,roughness:.82}));
+    mesh.position.set(x,y,z);mesh.castShadow=true;mesh.receiveShadow=true;group.add(mesh);return mesh;
+  };
+  const scale=Math.min(width/350,height/600),base=-height*.28,depth=-180*scale;
+  // Low limestone shelf, books and a ceramic vase give clear/blurred glass a readable reference.
+  const plinthHeight=base+height/2+24;
+  add(new T.BoxGeometry(width*.8,plinthHeight,110*scale),'#c6bcae',0,base-plinthHeight/2,depth);
+  const books=[[-.27,112,'#55544f'],[-.20,132,'#c1b7a8'],[-.13,104,'#ece7dc']];
+  for(const [x,h,color] of books){
+    add(new T.BoxGeometry(18*scale,h*scale,65*scale),color,width*x,base+h*scale/2,depth);
+    add(new T.BoxGeometry(13*scale,2*scale,1*scale),'#d9d2c5',width*x,base+h*scale*.78,depth+33*scale);
   }
-  material.dispose();return group;
+  const points=[[0,0],[23,0],[30,8],[34,35],[29,62],[18,80],[16,105],[12,105],[12,81],[0,8]].map(([r,y])=>new T.Vector2(r*scale,y*scale));
+  add(new T.LatheGeometry(points,48),'#ded5c6',width*.19,base,depth);
+  // Matte cyclorama: neutral wall and floor, softly lit from the left.
+  add(new T.PlaneGeometry(30000,30000),'#e1ded7',0,0,-650*scale);
+  const floor=add(new T.PlaneGeometry(30000,30000),'#d2cec6',0,-height/2-24,0);floor.rotation.x=-Math.PI/2;
+  return group;
 }

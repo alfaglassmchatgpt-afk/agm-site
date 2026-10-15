@@ -6,10 +6,10 @@ import {sections,svgSection,sectionNotes} from './sections.js';
 import {railGeometry,sampleGeometry} from './profile-mesh.js';
 import {profileMetal} from './metal.js';
 import {FacadeProject} from './project.js?v=20261015-groups';
-import {transparentSlugs,transparentItems,matteSlugs,matteItems,stopsolSlugs,stopsolItems,reedSlugs,reedItems,patternedSlugs,patternedItems} from './glass-groups.js?v=dichroic-20261015';
+import {transparentSlugs,transparentItems,matteSlugs,matteItems,stopsolSlugs,stopsolItems,reedSlugs,reedItems,patternedSlugs,patternedItems} from './glass-groups.js?v=studio-v2-20261015';
 import {ProjectConfirmation} from './confirmation.js';
-import {studioEnvironment,glassMaterial,backdrop} from './glass-render.js?v=dichroic-20261015';
-const catalogue=await fetch('./glass-catalog.json?v=dichroic-20261015').then(r=>{if(!r.ok)throw new Error('Не удалось загрузить каталог стекла');return r.json();});
+import {studioEnvironment,glassMaterial,backdrop} from './glass-render.js?v=studio-v2-20261015';
+const catalogue=await fetch('./glass-catalog.json?v=studio-v2-20261015').then(r=>{if(!r.ok)throw new Error('Не удалось загрузить каталог стекла');return r.json();});
 const glassItems=Object.fromEntries(catalogue.items.map(m=>[m.id,m]));
 Object.keys(glasses).forEach(k=>delete glasses[k]);
 glassItems.none={id:'none',title:'Без наполнения',color:'none',mirror:false};
@@ -19,17 +19,17 @@ const $=s=>document.querySelector(s), s={profile:profiles[0].id,w:350,h:600,colo
 const defaults=structuredClone(s), project=new FacadeProject(defaults), confirmation=new ProjectConfirmation();
 const pair=()=>project.partner();
 const previewSide=()=>s.side;
-const scene=new T.Scene();scene.background=new T.Color('#e7eef0');
+const scene=new T.Scene();scene.background=new T.Color('#e4e1da');
 const camera=new T.PerspectiveCamera(34,1,5,50000), renderer=new T.WebGLRenderer({antialias:true});
 renderer.toneMapping=T.ACESFilmicToneMapping;renderer.toneMappingExposure=.9;
-renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setClearColor('#e7eef0');$('#scene').append(renderer.domElement);
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setClearColor('#e4e1da');$('#scene').append(renderer.domElement);
 const orbit=new OrbitControls(camera,renderer.domElement);orbit.enableDamping=true;
-scene.add(new T.HemisphereLight(0xffffff,0x748b96,3));const light=new T.DirectionalLight(0xffffff,4);light.position.set(-800,1500,2000);scene.add(light);
+scene.add(new T.HemisphereLight(0xfffaf2,0x8c8880,2));const light=new T.DirectionalLight(0xfff5e7,3);light.position.set(-900,1200,1400);light.castShadow=true;light.shadow.mapSize.set(2048,2048);Object.assign(light.shadow.camera,{left:-3000,right:3000,top:3000,bottom:-3000,near:1,far:10000});light.shadow.bias=-.0002;light.shadow.normalBias=2;light.shadow.radius=4;scene.add(light);renderer.shadowMap.enabled=true;renderer.shadowMap.type=T.PCFSoftShadowMap;const fill=new T.DirectionalLight(0xf5f7ff,.7);fill.position.set(1200,400,500);scene.add(fill);
 const env=studioEnvironment(renderer);scene.environment=env.texture;
 // A wall behind the observer is visible only in the planar mirror reflection.
 const reflectionStudio=new T.Group();
 for(let i=-12;i<=12;i++){
- const panel=new T.Mesh(new T.PlaneGeometry(750,14000),new T.MeshBasicMaterial({color:i%4===0?'#445e6a':i%4===1?'#b4c1c6':'#e9e7e0',side:T.DoubleSide}));
+ const panel=new T.Mesh(new T.PlaneGeometry(750,14000),new T.MeshBasicMaterial({color:i%4===0?'#55534f':i%4===1?'#bcb9b1':'#e9e7e0',side:T.DoubleSide}));
  panel.position.set(i*750,0,12000);reflectionStudio.add(panel);
 }
 scene.add(reflectionStudio);
@@ -37,9 +37,10 @@ let model=new T.Group();scene.add(model);
 function fit(){const inspect=s.view==='profile',distance=inspect?Math.max(s.handle?155:125,150/camera.aspect)*1.1:Math.max(s.h,(pair()?s.w*2+40:s.w)/camera.aspect)*2;camera.position.set(inspect?distance*.5:s.view==='3d'?distance*.4:0,inspect?distance*.35:s.view==='3d'?distance*.15:0,s.view==='back'?-distance:distance);orbit.target.set(0,0,0);orbit.update();}
 function disposeModel(root){root.traverse(o=>{o.getRenderTarget?.().dispose();o.geometry?.dispose();if(o.material){o.material.map?.dispose();o.material.normalMap?.dispose();o.material.roughnessMap?.dispose();o.material.dispose();}});}
 function build(){
- light.intensity=s.view==='profile'?1:4;scene.remove(model);disposeModel(model);model=new T.Group();scene.add(model);
+ light.intensity=s.view==='profile'?1:3;scene.remove(model);disposeModel(model);model=new T.Group();scene.add(model);
  const other=pair(), states=other&&s.view!=='profile'?[project.current(),other].sort((a,b)=>a.config.side==='left'?-1:1):[project.current()];
- states.forEach((item,i)=>{const part=buildFacade({...item.config,view:s.view,backdrop:s.backdrop});if(states.length===2)part.position.x=(i===0?-1:1)*(s.w+40)/2;model.add(part);});
+ states.forEach((item,i)=>{const part=buildFacade({...item.config,view:s.view,backdrop:s.backdrop});part.traverse(o=>{if(o.isMesh&&!o.material?.transmission){o.castShadow=true;o.receiveShadow=true;}});if(states.length===2)part.position.x=(i===0?-1:1)*(s.w+40)/2;model.add(part);});
+ if(s.backdrop&&['3d','front'].includes(s.view)){model.add(backdrop(states.length===2?s.w*2+40:s.w,s.h));}
 }
 function buildFacade(s){
  const model=new T.Group();
@@ -63,7 +64,7 @@ function buildFacade(s){
  }
  if(s.glass!=='none'){
  const gm=glassMaterial(glassItems[s.glass],w-p.delta,h-p.delta,s.reed,renderer);
- if(s.backdrop&&!glassItems[s.glass].mirror&&!glassItems[s.glass].opaque){model.add(backdrop(w,h));}
+
  box(w-p.delta,h-p.delta,4,0,0,q.glassY+2-d,gm);
  if(glassItems[s.glass].mirror){
    const mirror=new Reflector(new T.PlaneGeometry(w-p.delta,h-p.delta),{textureWidth:1024,textureHeight:1024,color:glassItems[s.glass].color==='#d7eeea'?'#858585':glassItems[s.glass].color,clipBias:.003});
@@ -81,7 +82,7 @@ function controls(){glassChoices();const p=profiles.find(p=>p.id===s.profile);$(
  $('#color-name').textContent=`${colors[s.color][0]} · ${s.color}. Наличие уточняется.`;$('#profile-name').textContent=`MZ ${p.id}`;$('#profile-dims').textContent=`${p.b} × ${p.d} мм · схема сечения`;
  $('#section-svg').innerHTML=svgSection(p.id,colors[s.color][1]);
  $('#handle-wrap').hidden=!p.handle;$('#handle').checked=s.handle;$('#mask-wrap').hidden=s.glass==='none'||!['07','17'].includes(p.id);$('#mask').checked=s.mask;$('#reed-wrap').hidden=!glassItems[s.glass].pitch||glassItems[s.glass].pattern==='grid';
- const item=glassItems[s.glass];$('#glass-link').hidden=s.glass==='none';$('#backdrop').parentElement.hidden=s.glass==='none';$('#glass-link').href='https://alfaglass.ru/materialy/'+item.slug+'/';$('#glass-note').textContent=s.glass==='none'?'Только алюминиевая рамка по указанным размерам, без стекла.':item.texturePending?'Точная фактура пока не воспроизведена — показаны только базовые цвет и прозрачность.':item.pitch?`Рельеф с шагом ${item.pitch.toFixed(2)} мм; масштаб сохраняется при изменении размера. Оптика приблизительная.`:'Студийная визуализация. Оттенок и отражение ориентировочные.';$('#glass-count').textContent=`${transparentItems(catalogue.items).length+matteItems(catalogue.items).length+stopsolItems(catalogue.items).length+reedItems(catalogue.items).length+patternedItems(catalogue.items).length+1} материалов · 4 мм`;$('#backdrop').disabled=item.mirror||item.opaque;$('#backdrop').checked=s.backdrop;
+ const item=glassItems[s.glass];$('#glass-link').hidden=s.glass==='none';$('#backdrop').parentElement.hidden=false;$('#glass-link').href='https://alfaglass.ru/materialy/'+item.slug+'/';$('#glass-note').textContent=s.glass==='none'?'Только алюминиевая рамка по указанным размерам, без стекла.':item.texturePending?'Точная фактура пока не воспроизведена — показаны только базовые цвет и прозрачность.':item.pitch?`Рельеф с шагом ${item.pitch.toFixed(2)} мм; масштаб сохраняется при изменении размера. Оптика приблизительная.`:'Студийная визуализация. Оттенок и отражение ориентировочные.';$('#glass-count').textContent=`${transparentItems(catalogue.items).length+matteItems(catalogue.items).length+stopsolItems(catalogue.items).length+reedItems(catalogue.items).length+patternedItems(catalogue.items).length+1} материалов · 4 мм`;$('#backdrop').disabled=false;$('#backdrop').checked=s.backdrop;
  $('#hinge').innerHTML=[['none','Без петель и присадок'],...(p.b<20?[['narrow','Специальная для узкого профиля'],['mzf','MZF 63 · подбор присадки'],...(p.id==='07'?[['blum','BLUM 71B950A']]:[])]:[['cup','Чашка 35 мм · модель уточнить']])].map(([v,l])=>`<option value="${v}">${l}</option>`).join('');$('#hinge').value=s.hinge;$('#count').value=s.hinges.length;for(const id of ['side','origin','even'])$('#'+id).disabled=!s.hinges.length;hingeFields();}
 function hingeFields(){ $('#hinges').innerHTML=s.hinges.map((v,i)=>`<div class="hinge-row"><b>${i+1}</b><input aria-label="Положение петли ${i+1}" type="range" min="1" max="${s.h-1}" value="${s.origin==='top'?v:s.h-v}" data-i="${i}"><input aria-label="Петля ${i+1}, мм" type="number" step="1" value="${s.origin==='top'?v:s.h-v}" data-i="${i}"></div>`).join('');$('#hinges').querySelectorAll('input').forEach(el=>el.oninput=()=>{s.hinges[+el.dataset.i]=s.origin==='top'?+el.value:s.h-+el.value;el.parentElement.querySelectorAll('input').forEach(other=>{if(other!==el)other.value=el.value;});update();});}
 let geometry;
