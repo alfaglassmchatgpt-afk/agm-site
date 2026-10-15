@@ -185,5 +185,14 @@
         "title": "Узорчатое стекло Silvit"
       }
     ]
-  }
+  },
+  "standalone": [
+    {
+      "slug": "dihroichnoe-steklo",
+      "title": "Дихроичное стекло",
+      "thickness": 4,
+      "source": "owner",
+      "confirmedAt": "2026-10-15"
+    }
+  ]
 }
