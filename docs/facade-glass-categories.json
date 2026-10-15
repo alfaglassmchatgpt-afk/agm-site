@@ -60,5 +60,24 @@
         "title": "Матовое стекло Дарк грей"
       }
     ]
+  },
+  "stopsol": {
+    "name": "Стопсол Феникс",
+    "source": "https://alfaglass.ru/materialy/?group=solncezashhitnoe-steklo",
+    "verifiedAt": "2026-10-15",
+    "items": [
+      {
+        "slug": "steklo-solnczezashhitnoe-stopsol",
+        "title": "Стопсол Феникс Клеар (Phoenix Clear)"
+      },
+      {
+        "slug": "stopsol-phoenix-bronze",
+        "title": "Стопсол Феникс Бронза (Phoenix Bronze)"
+      },
+      {
+        "slug": "stopsol-phoenix-gray",
+        "title": "Стопсол Феникс Серый (Phoenix Gray)"
+      }
+    ]
   }
 }

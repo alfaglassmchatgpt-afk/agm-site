@@ -17,3 +17,6 @@ export function transparentItems(items){return transparentSlugs.map(slug=>items.
 
 export const matteSlugs=["steklo-matovoe-matelux", "steklo-matovoe-osvetlyonnoe", "moru-bronze-mat", "moru-grey-mat", "moru-dark-grey-mat"];
 export function matteItems(items){return matteSlugs.map(slug=>items.find(i=>i.slug===slug)).filter(Boolean);}
+
+export const stopsolSlugs=["steklo-solnczezashhitnoe-stopsol", "stopsol-phoenix-bronze", "stopsol-phoenix-gray"];
+export function stopsolItems(items){return stopsolSlugs.map(slug=>items.find(i=>i.slug===slug)).filter(Boolean);}

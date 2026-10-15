@@ -798,7 +798,7 @@
       "id": "steklo-solnczezashhitnoe-stopsol__standard",
       "slug": "steklo-solnczezashhitnoe-stopsol",
       "variant": "standard",
-      "title": "Солнцезащитное стекло Stopsol (рефлективное)",
+      "title": "Стопсол Феникс Клеар (Phoenix Clear)",
       "thickness": 4,
       "mirror": false,
       "opaque": false,
@@ -807,10 +807,20 @@
       "pitch": null,
       "pattern": null,
       "texturePending": true,
-      "note": "Специальные обработки включаются после подтверждения для этого материала.",
+      "note": "Стекло с отражающим солнцезащитным покрытием. Точные оптические свойства покрытия в прототипе не воспроизведены.",
       "confirmedBy": "owner",
       "confirmedAt": "2026-10-15",
-      "visualizationNote": "Цвет и оптика ориентировочные; конкретный образец согласуется отдельно."
+      "visualizationNote": "Цвет и оптика ориентировочные; конкретный образец согласуется отдельно.",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/steklo-solnczezashhitnoe-stopsol/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4,
+          6,
+          8,
+          10
+        ]
+      }
     },
     {
       "id": "dihroichnoe-steklo__standard",
@@ -990,6 +1000,56 @@
       "title": "Матовое осветлённое стекло",
       "verifiedSource": {
         "url": "https://alfaglass.ru/materialy/steklo-matovoe-osvetlyonnoe/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4,
+          6,
+          8,
+          10
+        ]
+      }
+    },
+    {
+      "id": "stopsol-phoenix-bronze__standard",
+      "slug": "stopsol-phoenix-bronze",
+      "variant": "standard",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": false,
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "title": "Стопсол Феникс Бронза (Phoenix Bronze)",
+      "color": "#b69c73",
+      "texturePending": true,
+      "note": "Стекло с отражающим солнцезащитным покрытием. Точные оптические свойства покрытия в прототипе не воспроизведены.",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/stopsol-phoenix-bronze/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4,
+          6,
+          8,
+          10
+        ]
+      }
+    },
+    {
+      "id": "stopsol-phoenix-gray__standard",
+      "slug": "stopsol-phoenix-gray",
+      "variant": "standard",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": false,
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "title": "Стопсол Феникс Серый (Phoenix Gray)",
+      "color": "#87949c",
+      "texturePending": true,
+      "note": "Стекло с отражающим солнцезащитным покрытием. Точные оптические свойства покрытия в прототипе не воспроизведены.",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/stopsol-phoenix-gray/",
         "date": "2026-10-15",
         "thicknesses": [
           4,

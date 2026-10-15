@@ -50,3 +50,12 @@ test('matte category matches the five live catalogue materials, all matte 4 mm',
  assert.equal(items.length,5);
  for(const item of items){assert.equal(item.matte,true);assert.equal(item.thickness,4);assert.ok(item.verifiedSource.thicknesses.includes(4));}
 });
+
+test('Stopsol category matches all three live Phoenix materials',async()=>{
+ const {stopsolItems}=await import('./glass-groups.js');
+ const decisions=await read('../../../docs/facade-glass-categories.json');
+ const items=stopsolItems(catalog.items);
+ assert.deepEqual(items.map(({slug,title})=>({slug,title})),decisions.stopsol.items);
+ assert.equal(items.length,3);
+ for(const item of items){assert.equal(item.thickness,4);assert.ok(item.verifiedSource.thicknesses.includes(4));assert.equal(item.mirror,false);}
+});
