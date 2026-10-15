@@ -99,6 +99,7 @@ for(const item of transparentItems(catalogue.items)){
 }
 $('#glass-categories').querySelectorAll('[data-glass]').forEach(b=>b.onclick=()=>{
  s.glass=b.dataset.glass;s.glassOpaque=!!(glassItems[s.glass].mirror||glassItems[s.glass].opaque);controls();update();
+ $('#transparent-materials').hidden=true;$('#transparent-toggle').setAttribute('aria-expanded','false');if(b.dataset.glass!=='none')$('#transparent-toggle').focus({preventScroll:true});
 });
 $('#transparent-toggle').onclick=()=>{
  const list=$('#transparent-materials');list.hidden=!list.hidden;$('#transparent-toggle').setAttribute('aria-expanded',String(!list.hidden));
