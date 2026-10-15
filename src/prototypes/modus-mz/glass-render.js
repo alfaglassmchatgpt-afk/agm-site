@@ -138,10 +138,56 @@ export function backdrop(width,height){
   return group;
 }
 
-export const sceneOptions=['empty','studio','kitchen','living','wardrobe'];
+// Fixed millimetre dimensions: environment never rescales the ordered facade.
+export const wallCabinetDimensions={width:3600,height:2500,depth:420};
+export function wallCabinet(){
+ const g=new T.Group();g.name='wall-cabinet';const floor=-1250;
+ const wood=new T.MeshStandardMaterial({color:'#a38a6c',roughness:.65,map:surfaceMap('wood')});
+ const back=new T.MeshStandardMaterial({color:'#6d6254',roughness:.9});
+ const box=(w,h,d,x,y,z,material=wood)=>{const m=new T.Mesh(new T.BoxGeometry(w,h,d),material);m.position.set(x,floor+y,z);m.castShadow=true;m.receiveShadow=true;g.add(m);return m;};
+ const ceramic=new T.MeshStandardMaterial({color:'#c5b9a4',roughness:.45});
+ const ball=(rx,ry,rz,x,y,z,mat=ceramic)=>{const m=new T.Mesh(new T.SphereGeometry(1,24,16),mat);m.scale.set(rx,ry,rz);m.position.set(x,floor+y,z);m.castShadow=true;g.add(m);return m;};
+ box(4000,18,2000,0,-9,-200,new T.MeshStandardMaterial({color:'#c6b9a5',roughness:.85}));
+ box(4000,2700,30,0,1350,-530,new T.MeshStandardMaterial({color:'#d8d1c5',roughness:.9}));
+ box(3600,2500,18,0,1250,-490,back);
+ for(const x of [-1788,-1192,-596,0,596,1192,1788])box(24,2500,420,x,1250,-280);
+ for(const y of [12,100,580,1060,1540,2020,2488])box(3600,24,420,0,y,-280);
+ const led=new T.MeshBasicMaterial({color:'#ffe0a6'});
+ const bookColors=['#576b68','#b5a182','#b9b4a5','#725b50','#3f4b50','#917d62'];
+ for(let col=0;col<6;col++)for(let row=0;row<5;row++){
+  const x=-1490+596*col,base=112+row*480,top=base+444;
+  box(540,6,8,x,top,-100,led);
+  const glow=new T.PointLight('#ffd9a0',160,600,1);glow.position.set(x,floor+top-30,-250);g.add(glow);
+  if((col+row)%3!==1){
+   for(let j=0;j<5;j++){
+    const h=210+((col*31+row*43+j*29)%100),bx=x-210+j*48;
+    const cover=new T.MeshStandardMaterial({color:bookColors[(j+col+row)%6],roughness:.8});
+    box(40,h,170,bx,base+h/2,-260,cover);
+    box(30,h-14,164,bx,base+h/2,-255,new T.MeshStandardMaterial({color:'#ded5c4',roughness:1}));
+    box(40,h,5,bx,base+h/2,-171,cover);
+    for(const offset of [25,h-30])box(27,2,1,bx,base+offset,-167,ceramic);
+   }
+  }
+  if((col+row)%3===1){
+   // Small ceramic bear: body, head, ears, muzzle and paws.
+   ball(65,85,48,x,base+85,-235);ball(51,47,42,x,base+195,-235);
+   for(const side of [-1,1]){ball(19,22,16,x+side*38,base+231,-235);ball(28,25,35,x+side*40,base+25,-205);ball(20,45,23,x+side*64,base+92,-235);}
+   ball(27,19,18,x,base+181,-197);
+   const dark=new T.MeshStandardMaterial({color:'#453e37',roughness:.65});
+   for(const side of [-1,1])ball(4,4,3,x+side*19,base+204,-195,dark);
+   ball(7,5,4,x,base+186,-179,dark);
+  }else{
+   ball(43,65,43,x+150,base+65,-245);
+   box(46,65,46,x+150,base+135,-245,ceramic);
+  }
+ }
+ return g;
+}
+export const sceneOptions=['empty','studio','kitchen','living','wardrobe','wall-cabinet'];
 export function interiorScene(kind,width,height){
   if(kind==='empty')return new T.Group();
   if(kind==='studio')return backdrop(width,height);
+  if(kind==='wall-cabinet')return wallCabinet();
   const group=new T.Group();group.name=kind;
   const k=Math.min(width/350,height/600),floor=-height/2-24;
   const block=(w,h,d,x,y,z,color,r=2)=>{
