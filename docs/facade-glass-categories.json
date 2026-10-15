@@ -142,5 +142,48 @@
         "title": "Рифлёное стекло MORU ULTRA"
       }
     ]
+  },
+  "patterned": {
+    "name": "Узорчатое стекло",
+    "source": "https://alfaglass.ru/materialy/?group=uzorchatoe-steklo",
+    "verifiedAt": "2026-10-15",
+    "items": [
+      {
+        "slug": "kathedral-klein",
+        "title": "Kathedral Klein"
+      },
+      {
+        "slug": "krezet",
+        "title": "Krezet (Крезет)"
+      },
+      {
+        "slug": "diamant",
+        "title": "Узорчатое стекло Diamant"
+      },
+      {
+        "slug": "gothic",
+        "title": "Узорчатое стекло Gothic"
+      },
+      {
+        "slug": "hithicross",
+        "title": "Узорчатое стекло HitHiCross"
+      },
+      {
+        "slug": "kathedralaqualite",
+        "title": "Узорчатое стекло Kathedral Aqualite"
+      },
+      {
+        "slug": "krepi",
+        "title": "Узорчатое стекло Crepi"
+      },
+      {
+        "slug": "monumental-atlantic",
+        "title": "Узорчатое стекло Monumental Atlantic"
+      },
+      {
+        "slug": "silvit",
+        "title": "Узорчатое стекло Silvit"
+      }
+    ]
   }
 }

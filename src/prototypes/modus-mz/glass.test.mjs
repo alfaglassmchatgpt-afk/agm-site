@@ -69,3 +69,13 @@ test('reed category contains all 14 live products and MORU Grey differs from fla
  assert.notEqual(items.find(i=>i.slug==='moru-grey').id,catalog.items.find(i=>i.slug==='tonirovannoe-steklo-grey').id);
  for(const item of items){assert.equal(item.thickness,4);assert.ok(item.verifiedSource.thicknesses.includes(4));}
 });
+
+test('patterned category includes all nine live products and keeps Krezet pitch',async()=>{
+ const {patternedItems}=await import('./glass-groups.js');
+ const decisions=await read('../../../docs/facade-glass-categories.json');
+ const items=patternedItems(catalog.items);
+ assert.deepEqual(items.map(({slug,title})=>({slug,title})),decisions.patterned.items);
+ assert.equal(items.length,9);
+ assert.equal(items.find(i=>i.slug==='krezet').pitch,2);
+ for(const item of items){assert.equal(item.thickness,4);assert.ok(item.verifiedSource.thicknesses.includes(4));}
+});

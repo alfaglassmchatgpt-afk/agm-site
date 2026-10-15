@@ -434,7 +434,14 @@
       "pitch": null,
       "pattern": null,
       "texturePending": true,
-      "note": "Специальные обработки включаются после подтверждения для этого материала."
+      "note": "Специальные обработки включаются после подтверждения для этого материала.",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/diamant/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4
+        ]
+      }
     },
     {
       "id": "hithicross__standard",
@@ -448,7 +455,14 @@
       "pitch": null,
       "pattern": null,
       "texturePending": true,
-      "note": "Триплексование недоступно для этого материала. Остальные обработки — по профилю материала и согласованию проекта."
+      "note": "Триплексование недоступно для этого материала. Остальные обработки — по профилю материала и согласованию проекта.",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/hithicross/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4
+        ]
+      }
     },
     {
       "id": "gothic__standard",
@@ -462,7 +476,14 @@
       "pitch": null,
       "pattern": null,
       "texturePending": true,
-      "note": "Доступные обработки и сочетания согласуются по проекту. Алюминиевый фасад — для стекла 4 мм."
+      "note": "Доступные обработки и сочетания согласуются по проекту. Алюминиевый фасад — для стекла 4 мм.",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/gothic/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4
+        ]
+      }
     },
     {
       "id": "silvit__standard",
@@ -476,7 +497,14 @@
       "pitch": null,
       "pattern": null,
       "texturePending": true,
-      "note": "Доступные обработки и сочетания согласуются по проекту. Алюминиевый фасад — для стекла 4 мм."
+      "note": "Доступные обработки и сочетания согласуются по проекту. Алюминиевый фасад — для стекла 4 мм.",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/silvit/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4
+        ]
+      }
     },
     {
       "id": "kathedral-klein__standard",
@@ -490,7 +518,14 @@
       "pitch": null,
       "pattern": null,
       "texturePending": true,
-      "note": "Доступные обработки и сочетания согласуются по проекту. Алюминиевый фасад — для стекла 4 мм."
+      "note": "Доступные обработки и сочетания согласуются по проекту. Алюминиевый фасад — для стекла 4 мм.",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/kathedral-klein/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4
+        ]
+      }
     },
     {
       "id": "monumental-atlantic__standard",
@@ -504,13 +539,20 @@
       "pitch": null,
       "pattern": null,
       "texturePending": true,
-      "note": "Доступные обработки и сочетания согласуются по проекту. Алюминиевый фасад — для стекла 4 мм."
+      "note": "Доступные обработки и сочетания согласуются по проекту. Алюминиевый фасад — для стекла 4 мм.",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/monumental-atlantic/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4
+        ]
+      }
     },
     {
       "id": "krepi__standard",
       "slug": "krepi",
       "variant": "standard",
-      "title": "Узорчатое стекло Crepi · Прозрачное",
+      "title": "Узорчатое стекло Crepi",
       "thickness": 4,
       "mirror": false,
       "color": "#d7eeea",
@@ -518,7 +560,14 @@
       "pitch": null,
       "pattern": null,
       "texturePending": true,
-      "note": "Доступные обработки и сочетания согласуются по проекту. Алюминиевый фасад — для стекла 4 мм."
+      "note": "Доступные обработки и сочетания согласуются по проекту. Алюминиевый фасад — для стекла 4 мм.",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/krepi/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4
+        ]
+      }
     },
     {
       "id": "krepi__grey",
@@ -560,7 +609,15 @@
       "pitch": null,
       "pattern": null,
       "texturePending": true,
-      "note": "Доступные обработки и сочетания согласуются по проекту. Алюминиевый фасад — для стекла 4 мм."
+      "note": "Доступные обработки и сочетания согласуются по проекту. Алюминиевый фасад — для стекла 4 мм.",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/kathedralaqualite/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4,
+          6
+        ]
+      }
     },
     {
       "id": "zerkalo-osvetlyonnoe__standard",
@@ -819,7 +876,14 @@
       "pitch": 2,
       "pattern": "grid",
       "texturePending": false,
-      "note": "Доступные обработки и сочетания согласуются по проекту. Алюминиевый фасад — для стекла 4 мм."
+      "note": "Доступные обработки и сочетания согласуются по проекту. Алюминиевый фасад — для стекла 4 мм.",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/krezet/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4
+        ]
+      }
     },
     {
       "id": "float-steklo-clear-m1__standard",

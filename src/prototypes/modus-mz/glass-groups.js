@@ -23,3 +23,6 @@ export function stopsolItems(items){return stopsolSlugs.map(slug=>items.find(i=>
 
 export const reedSlugs=["estriado", "estriado-crystal", "estriado-ultra", "flutelite-s", "flutes-moru-ultra-mat", "moru-magnetron-bronze", "moru-magnetron-grey", "moru-bronze-toned", "moru-grey", "raywall90", "vison-sun", "riflenoe-steklo-flutes", "moru-crystal", "moru-ultra"];
 export function reedItems(items){return reedSlugs.map(slug=>items.find(i=>i.slug===slug)).filter(Boolean);}
+
+export const patternedSlugs=["kathedral-klein", "krezet", "diamant", "gothic", "hithicross", "kathedralaqualite", "krepi", "monumental-atlantic", "silvit"];
+export function patternedItems(items){return patternedSlugs.map(slug=>items.find(i=>i.slug===slug)).filter(Boolean);}
