@@ -92,7 +92,7 @@ export function glassEdgeMaterial(item,face){
 }
 
 // Millimetres, same coordinate system as the facade. Props are never scaled.
-export function sampleCabinet(width,height){
+export function sampleCabinet(width,height,kind='books'){
  const g=new T.Group();g.name='sample-cabinet';
  const wood=new T.MeshStandardMaterial({color:'#9a8064',roughness:.7});
  const box=(w,h,d,x,y,z,material=wood)=>{const m=new T.Mesh(new T.BoxGeometry(w,h,d),material);m.position.set(x,y,z);m.castShadow=true;m.receiveShadow=true;g.add(m);return m;};
@@ -106,7 +106,7 @@ export function sampleCabinet(width,height){
   const base=bottom+row*step;
   if(row)box(inside,18,280,0,base-9,-198);
   // 30 x 210 x 140 mm books; omit if the compartment is too short.
-  if(step>230){
+  if(kind==='books'&&step>230){
    const count=Math.min(6,Math.floor((inside-90)/34));
    for(let j=0;j<count;j++){
     const x=-inside/2+25+j*34;
@@ -116,8 +116,32 @@ export function sampleCabinet(width,height){
    }
   }
   // 60 mm ceramic sphere gives a consistent small reference object.
-  if(step>90&&inside>140){
+  if(kind==='books'&&step>90&&inside>140){
    const ball=new T.Mesh(new T.SphereGeometry(30,32,24),new T.MeshStandardMaterial({color:'#e3d9c5',roughness:.3}));ball.position.set(inside/2-50,base+30,-190);ball.castShadow=true;g.add(ball);
+  }
+  if(kind==='kitchen'){
+   const ceramic=new T.MeshStandardMaterial({color:'#e9dfcc',roughness:.25});
+   const lathe=(points,x,y,z,mat,name)=>{const m=new T.Mesh(new T.LatheGeometry(points.map(p=>new T.Vector2(...p)),48),mat);m.position.set(x,y,z);m.name=name;m.castShadow=true;m.receiveShadow=true;g.add(m);return m;};
+   // Real-size 240 mm bottles, including shoulders, neck and cap.
+   if(row%2===1&&step>265){
+    const count=Math.min(4,Math.floor((inside-20)/80));
+    for(let j=0;j<count;j++){
+     const x=(j-(count-1)/2)*80;
+     lathe([[0,0],[32,0],[34,5],[34,160],[31,175],[13,199],[12,230],[0,230]],x,base,-200,new T.MeshStandardMaterial({color:j%2?'#765736':'#344d36',roughness:.18,metalness:.05}),'bottle-240mm');
+     lathe([[0,0],[13,0],[13,10],[0,10]],x,base+230,-200,new T.MeshStandardMaterial({color:'#b8a276',roughness:.45}),'bottle-cap');
+     box(42,55,1,x,base+95,-165,ceramic);
+    }
+   }else{
+    if(inside>=150&&step>95){
+     const x=-inside/2+72;
+     for(let j=0;j<4;j++)lathe([[0,0],[42,0],[60,6],[65,11],[63,14],[44,6],[0,5]],x,base+j*14,-205,ceramic,'plate-130mm');
+    }
+    if(inside>=255&&step>115){
+     const x=inside/2-64;
+     lathe([[0,0],[29,0],[33,5],[37,80],[33,80],[29,8],[0,8]],x,base,-190,ceramic,'cup-80mm');
+     const handle=new T.Mesh(new T.TorusGeometry(23,5,12,32),ceramic);handle.position.set(x+39,base+43,-190);handle.castShadow=true;g.add(handle);
+    }
+   }
   }
   const led=new T.MeshBasicMaterial({color:'#ffe0a3'});
   box(inside-16,3,6,0,base+step-22,-70,led);

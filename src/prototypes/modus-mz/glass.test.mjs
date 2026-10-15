@@ -125,3 +125,13 @@ test('sample cabinet follows facade dimensions while props keep millimetre dimen
   for(const o of g.children){o.geometry?.dispose();o.material?.dispose();}
  }
 });
+test('kitchen contents retain physical sizes and omit bottles in short cabinets',async()=>{
+ const {sampleCabinet}=await import('./glass-render.js');
+ for(const [w,h] of [[350,600],[600,1200],[200,200]]){
+  const g=sampleCabinet(w,h,'kitchen');assert.equal(g.userData.width,w);assert.equal(g.userData.height,h);
+  const bottles=g.children.filter(o=>o.name==='bottle-240mm');if(h===200)assert.equal(bottles.length,0);else assert.ok(bottles.length);
+  for(const b of bottles){assert.equal(b.scale.y,1);b.geometry.computeBoundingBox();assert.equal(b.geometry.boundingBox.max.y,230);}
+  assert.ok(g.children.some(o=>o.name==='plate-130mm'));
+  for(const o of g.children){o.geometry?.dispose();o.material?.dispose();}
+ }
+});
