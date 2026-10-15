@@ -108,8 +108,6 @@ function renderProject(){
  const select=$('#facade-select');select.replaceChildren();
  const groups=project.groups(),activeGroup=groups.find(group=>group.members.some(item=>item.id===project.activeId));
  for(const group of groups){const option=document.createElement('option');option.value=group.id;option.textContent=group.members[0].name+(group.members.length===2?' · пара (2 створки)':'');select.append(option);}select.value=activeGroup.id;
- $('#pair-member-wrap').hidden=activeGroup.members.length<2;const members=$('#pair-member');members.replaceChildren();
- for(const item of activeGroup.members){const option=document.createElement('option');option.value=item.id;option.textContent=item.name;members.append(option);}members.value=project.activeId;
  if(document.activeElement!==$('#facade-name'))$('#facade-name').value=project.current().name;
  $('#project-note').textContent=pair()?'Связанная пара: размеры, материалы и петли меняются у обоих. Имена индивидуальные. В 3D показаны оба фасада; зазор 40 мм только для просмотра. Схема — выбранный фасад.':'Самостоятельный фасад: изменения не затрагивают остальные позиции.';
  $('#kit-summary').textContent=`Фасадов в проекте: ${project.items.length}. Выбран: ${project.current().name}.`;
@@ -118,7 +116,6 @@ function renderProject(){
 function activate(id){project.activeId=id;const view=s.view;Object.assign(s,structuredClone(project.current().config),{view});
  $('#width').value=s.w;$('#height').value=s.h;for(const id of ['glass','side','reed','origin','count'])$('#'+id).value=id==='count'?s.hinges.length:s[id];controls();update();fit();}
 $('#facade-select').onchange=e=>activate(e.target.value);
-$('#pair-member').onchange=e=>activate(e.target.value);
 $('#facade-name').oninput=e=>{project.current().name=e.target.value.trim()||'Без названия';renderProject();};
 $('#remove-facade').onclick=()=>{project.update(s);if(project.remove())activate(project.activeId);};
 $('#undo-remove').onclick=()=>{project.update(s);if(project.undoRemove())activate(project.activeId);};
