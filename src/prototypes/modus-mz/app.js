@@ -92,8 +92,10 @@ function update(){project.update(s);const p=profiles.find(p=>p.id===s.profile),v
 function glassChoices(){
  $('#glass-selected').textContent='Выбрано: '+glassItems[s.glass].title;
  $('#glass-categories').querySelectorAll('[data-glass]').forEach(b=>{const active=b.dataset.glass===s.glass;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});
- $('#transparent-toggle').classList.toggle('active',transparentSlugs.includes(glassItems[s.glass].slug));
- $('#matte-toggle').classList.toggle('active',matteSlugs.includes(glassItems[s.glass].slug));
+ for(const [category,slugs,title] of [['transparent',transparentSlugs,'Стекло прозрачное'],['matte',matteSlugs,'Стекло матовое']]){
+  const active=slugs.includes(glassItems[s.glass].slug),button=$('#'+category+'-toggle');
+  button.classList.toggle('active',active);button.querySelector('.category-title').textContent=active?glassItems[s.glass].title:title;
+ }
 }
 const materialCategories=[['transparent',transparentItems],['matte',matteItems]];
 for(const [category,items] of materialCategories){
