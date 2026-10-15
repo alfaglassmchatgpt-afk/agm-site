@@ -89,3 +89,15 @@ test('clear glass uses neutral faces and keeps the 4 mm optical thickness',async
  const edge=glassEdgeMaterial({slug:'float-steklo-clear-m1'},m1);assert.notEqual(edge,m1);assert.notEqual(edge.color.getHex(),m1.color.getHex());
  edge.dispose();m1.dispose();cv.dispose();
 });
+
+test('tinted flat glass stays transmissive, neutral on the face, and distinct from MORU',async()=>{
+ const {tintedGlassOptics,glassEdgeMaterial}=await import('./glass-render.js');
+ assert.equal(Object.keys(tintedGlassOptics).length,5);assert.equal(tintedGlassOptics['moru-grey'],undefined);
+ const absorption=new Set();
+ for(const slug of Object.keys(tintedGlassOptics)){
+  const item=catalog.items.find(i=>i.slug===slug);assert.ok(item);
+  const mat=glassMaterial(item,350,600,'vertical',{});assert.equal(mat.transmission,1);assert.equal(mat.thickness,4);assert.equal(mat.metalness,0);assert.equal(mat.color.getHexString(),'ffffff');assert.equal(mat.normalMap,null);
+  absorption.add(mat.attenuationColor.getHex());const edge=glassEdgeMaterial(item,mat);assert.ok(edge);edge.dispose();mat.dispose();
+ }
+ assert.equal(absorption.size,5);
+});

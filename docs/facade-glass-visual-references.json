@@ -1,0 +1,38 @@
+{
+  "verifiedAt": "2026-10-15",
+  "scope": "Five approved flat tinted glasses, 4 mm",
+  "method": "Visual comparison with live catalogue renders and archived glass sample. These are visual references, not measured spectral data. Tinted mirror archives excluded.",
+  "group": "https://alfaglass.ru/materialy/?group=tonirovannoe-steklo",
+  "references": [
+    {
+      "slug": "moru-bronze",
+      "page": "https://alfaglass.ru/materialy/moru-bronze/",
+      "sample": "moru-bronze-v1.png",
+      "archivedSampleReviewed": true
+    },
+    {
+      "slug": "tonirovannoe-steklo-grey",
+      "page": "https://alfaglass.ru/materialy/tonirovannoe-steklo-grey/",
+      "sample": "tinted-grey-v1.png",
+      "archivedSampleReviewed": false
+    },
+    {
+      "slug": "tonirovannoe-steklo-black",
+      "page": "https://alfaglass.ru/materialy/tonirovannoe-steklo-black/",
+      "sample": "tinted-black-4mm-v1.png",
+      "archivedSampleReviewed": false
+    },
+    {
+      "slug": "tonirovannoe-steklo-green",
+      "page": "https://alfaglass.ru/materialy/tonirovannoe-steklo-green/",
+      "sample": "tinted-green-4mm-v1.png",
+      "archivedSampleReviewed": false
+    },
+    {
+      "slug": "tonirovannoe-steklo-blue",
+      "page": "https://alfaglass.ru/materialy/tonirovannoe-steklo-blue/",
+      "sample": "tinted-blue-4mm-v1.png",
+      "archivedSampleReviewed": false
+    }
+  ]
+}

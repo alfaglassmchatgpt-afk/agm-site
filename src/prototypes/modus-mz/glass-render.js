@@ -34,6 +34,14 @@ export const clearGlassOptics={
   'float-steklo-clear-m1':{attenuation:'#a9d3b4',distance:20,edge:'#739c80'},
   'steklo-kristalvizhn-crystalvision':{attenuation:'#edf5f2',distance:500,edge:'#c9ded7'}
 };
+// Matched visually to the live sample cards; not laboratory transmittance values.
+export const tintedGlassOptics={
+  'moru-bronze':{attenuation:'#b3916d',distance:8,edge:'#63503a'},
+  'tonirovannoe-steklo-grey':{attenuation:'#a0a3a4',distance:5,edge:'#53585a'},
+  'tonirovannoe-steklo-black':{attenuation:'#45464a',distance:5,edge:'#25282b'},
+  'tonirovannoe-steklo-green':{attenuation:'#77b89c',distance:6,edge:'#316a51'},
+  'tonirovannoe-steklo-blue':{attenuation:'#668ea8',distance:6,edge:'#304f65'}
+};
 export function glassMaterial(item,width,height,direction,renderer){
   const mat=new T.MeshPhysicalMaterial({
     color:item.color,metalness:item.mirror?1:0,roughness:item.mirror?.055:item.matte?.38:.055,
@@ -41,7 +49,7 @@ export function glassMaterial(item,width,height,direction,renderer){
     attenuationColor:new T.Color(item.color),attenuationDistance:250,
     side:T.FrontSide,clearcoat:item.mirror?1:.2,clearcoatRoughness:.06
   });
-  const clear=clearGlassOptics[item.slug];
+  const clear=clearGlassOptics[item.slug]||tintedGlassOptics[item.slug];
   if(clear){
     // Keep face neutral: tint comes from bulk absorption, not a coloured surface coating.
     mat.color.set('#ffffff');mat.attenuationColor.set(clear.attenuation);mat.attenuationDistance=clear.distance;
@@ -55,7 +63,7 @@ export function glassMaterial(item,width,height,direction,renderer){
   return mat;
 }
 export function glassEdgeMaterial(item,face){
-  const preset=clearGlassOptics[item.slug];if(!preset)return null;
+  const preset=clearGlassOptics[item.slug]||tintedGlassOptics[item.slug];if(!preset)return null;
   const edge=face.clone();edge.color.set(preset.edge);edge.roughness=.08;edge.transmission=.85;return edge;
 }
 // Procedural surface maps: no external images or client assets.
