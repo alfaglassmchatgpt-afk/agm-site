@@ -11,5 +11,3 @@
 #remove-facade[hidden],#undo-remove[hidden]{display:none}.project-fields{flex-wrap:wrap}#remove-facade{color:var(--warn)}
 
 .configuration-actions{display:flex;flex-direction:column;gap:10px;max-width:340px;min-width:0}.configuration-actions button{white-space:normal}.configuration-actions .hint{margin:0}#send-items{padding-left:20px;max-height:40vh;overflow:auto;overflow-wrap:anywhere}@media(max-width:650px){.configuration-actions{max-width:none;width:100%}}
-
-
