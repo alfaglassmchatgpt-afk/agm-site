@@ -19,6 +19,11 @@ export class FacadeProject {
  }
  this.items.splice(Math.min(saved.index,this.items.length),0,item);this.activeId=item.id;return true;
  }
+ groups(){
+ const groups=[];
+ for(const item of this.items){const existing=item.pairId&&groups.find(group=>group.pairId===item.pairId);if(existing)existing.members.push(item);else groups.push({id:item.id,pairId:item.pairId,members:[item]});}
+ return groups;
+ }
  current(){return this.items.find(item=>item.id===this.activeId);}
  partner(){const item=this.current();return item?.pairId?this.items.find(other=>other.id!==item.id&&other.pairId===item.pairId):undefined;}
  update(config){const item=this.current();item.config=copy(config);const other=this.partner();if(other)other.config={...copy(config),side:opposite(config.side)};}

@@ -24,3 +24,8 @@ test('removal keeps one facade, unlinks pair and supports undo',()=>{
  p.remove();p.add('mirror');assert.equal(p.undoRemove(),true);assert.equal(p.current().pairId,null);assert.equal(p.items.length,3);
  const third=p.add('new');p.remove();p.add('new');assert.equal(new Set(p.items.map(i=>i.id)).size,p.items.length);assert.ok(!p.items.some(i=>i.id===third.id));
 });
+test('navigation lists each mirror pair once alongside independent facades',()=>{
+ const p=new FacadeProject(base),first=p.current();const second=p.add('mirror');assert.equal(p.items.length,2);assert.equal(p.groups().length,1);assert.equal(p.groups()[0].members.length,2);
+ const single=p.add('copy');assert.equal(p.groups().length,2);p.add('mirror');assert.equal(p.groups().length,2);assert.deepEqual(p.groups().map(g=>g.members.length),[2,2]);
+ p.activeId=second.id;p.remove();assert.equal(p.groups().length,2);assert.deepEqual(p.groups().map(g=>g.members.length),[1,2]);p.undoRemove();assert.deepEqual(p.groups().map(g=>g.members.length),[2,2]);
+});
