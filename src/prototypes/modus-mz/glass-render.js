@@ -90,3 +90,38 @@ export function glassEdgeMaterial(item,face){
   const preset=clearGlassOptics[item.slug]||tintedGlassOptics[item.slug]||matteGlassOptics[item.slug]||stopsolGlassOptics[item.slug];if(!preset)return null;
   const edge=face.clone();edge.color.set(preset.edge);edge.roughness=.08;edge.transmission=.85;edge.metalness=0;return edge;
 }
+
+// Millimetres, same coordinate system as the facade. Props are never scaled.
+export function sampleCabinet(width,height){
+ const g=new T.Group();g.name='sample-cabinet';
+ const wood=new T.MeshStandardMaterial({color:'#9a8064',roughness:.7});
+ const box=(w,h,d,x,y,z,material=wood)=>{const m=new T.Mesh(new T.BoxGeometry(w,h,d),material);m.position.set(x,y,z);m.castShadow=true;m.receiveShadow=true;g.add(m);return m;};
+ const bottom=-height/2+18,inside=width-36;
+ box(width,height,12,0,0,-344);
+ for(const x of [-width/2+9,width/2-9])box(18,height,300,x,0,-188);
+ for(const y of [-height/2+9,height/2-9])box(inside,18,300,0,y,-188);
+ const rows=Math.max(1,Math.floor((height-36)/280)),step=(height-36)/rows;
+ const colours=['#46616b','#c6bba3','#815e4b','#68806b','#b59b73'];
+ for(let row=0;row<rows;row++){
+  const base=bottom+row*step;
+  if(row)box(inside,18,280,0,base-9,-198);
+  // 30 x 210 x 140 mm books; omit if the compartment is too short.
+  if(step>230){
+   const count=Math.min(6,Math.floor((inside-90)/34));
+   for(let j=0;j<count;j++){
+    const x=-inside/2+25+j*34;
+    const cover=new T.MeshStandardMaterial({color:colours[(j+row)%5],roughness:.8});
+    box(30,210,140,x,base+105,-190,cover);
+    for(const y of [30,180])box(23,3,1,x,base+y,-119,new T.MeshStandardMaterial({color:'#e6dcc7',roughness:.8}));
+   }
+  }
+  // 60 mm ceramic sphere gives a consistent small reference object.
+  if(step>90&&inside>140){
+   const ball=new T.Mesh(new T.SphereGeometry(30,32,24),new T.MeshStandardMaterial({color:'#e3d9c5',roughness:.3}));ball.position.set(inside/2-50,base+30,-190);ball.castShadow=true;g.add(ball);
+  }
+  const led=new T.MeshBasicMaterial({color:'#ffe0a3'});
+  box(inside-16,3,6,0,base+step-22,-70,led);
+  const light=new T.PointLight('#ffe2b4',55,450,1);light.position.set(0,base+step-45,-120);g.add(light);
+ }
+ g.userData={width,height,depth:312,bookHeight:210,sphereDiameter:60};return g;
+}

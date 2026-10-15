@@ -117,3 +117,11 @@ test('Stopsol retains transmission and a smooth reflective coating for all three
   assert.equal(item.mirror,false);assert.equal(mat.thickness,4);assert.equal(mat.transmission,1);assert.ok(mat.metalness>0&&mat.metalness<1);assert.ok(mat.roughness<.05);assert.equal(mat.normalMap,null);mat.dispose();
  }
 });
+test('sample cabinet follows facade dimensions while props keep millimetre dimensions',async()=>{
+ const {sampleCabinet}=await import('./glass-render.js');
+ for(const [w,h] of [[350,600],[600,1200],[200,200]]){
+  const g=sampleCabinet(w,h);assert.equal(g.userData.width,w);assert.equal(g.userData.height,h);assert.equal(g.userData.bookHeight,210);
+  const spheres=g.children.filter(o=>o.geometry?.type==='SphereGeometry');assert.ok(spheres.length);for(const ball of spheres){assert.equal(ball.geometry.parameters.radius,30);assert.equal(ball.scale.x,1);}
+  for(const o of g.children){o.geometry?.dispose();o.material?.dispose();}
+ }
+});
