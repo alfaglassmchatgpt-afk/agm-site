@@ -110,3 +110,10 @@ test('flat satin glass blurs transmission without becoming opaque or changing th
   assert.ok(mat.transmission>.9);assert.ok(mat.roughness>=.5);assert.equal(mat.thickness,4);assert.equal(mat.clearcoat,0);assert.equal(mat.metalness,0);assert.equal(mat.normalMap,null);mat.dispose();
  }
 });
+test('Stopsol retains transmission and a smooth reflective coating for all three colours',async()=>{
+ const {stopsolGlassOptics}=await import('./glass-render.js');assert.equal(Object.keys(stopsolGlassOptics).length,3);
+ for(const slug of Object.keys(stopsolGlassOptics)){
+  const item=catalog.items.find(i=>i.slug===slug);const mat=glassMaterial(item,350,600,'vertical',{});
+  assert.equal(item.mirror,false);assert.equal(mat.thickness,4);assert.equal(mat.transmission,1);assert.ok(mat.metalness>0&&mat.metalness<1);assert.ok(mat.roughness<.05);assert.equal(mat.normalMap,null);mat.dispose();
+ }
+});

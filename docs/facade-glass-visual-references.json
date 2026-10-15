@@ -47,5 +47,15 @@
     ],
     "archivedSampleReviewed": "moru-bronze-mat-v1.png",
     "note": "Satin blur and visual colours from catalogue renders; not measured scattering or spectral data."
+  },
+  "stopsol": {
+    "verifiedAt": "2026-10-15",
+    "group": "https://alfaglass.ru/materialy/?group=solncezashhitnoe-steklo",
+    "slugs": [
+      "steklo-solnczezashhitnoe-stopsol",
+      "stopsol-phoenix-bronze",
+      "stopsol-phoenix-gray"
+    ],
+    "note": "Live sample renders: neutral, bronze and grey reflective glass. Coating is an artistic metalness/transmission approximation, not measured reflectance."
   }
 }

@@ -50,6 +50,12 @@ export const matteGlassOptics={
   'moru-grey-mat':{attenuation:'#a0a3a4',distance:5,edge:'#53585a'},
   'moru-dark-grey-mat':{attenuation:'#55585c',distance:5,edge:'#303438'}
 };
+// Artistic coating approximation: partially reflective, still transmissive.
+export const stopsolGlassOptics={
+ 'steklo-solnczezashhitnoe-stopsol':{attenuation:'#d2ded7',distance:60,edge:'#819989',coating:'#e3e7e4'},
+ 'stopsol-phoenix-bronze':{attenuation:'#b3916d',distance:10,edge:'#63503a',coating:'#c7ad91'},
+ 'stopsol-phoenix-gray':{attenuation:'#949b9f',distance:8,edge:'#53585a',coating:'#aeb6bb'}
+};
 export function glassMaterial(item,width,height,direction,renderer){
   const mat=new T.MeshPhysicalMaterial({
     color:item.color,metalness:item.mirror?1:0,roughness:item.mirror?.055:item.matte?.38:.055,
@@ -68,6 +74,11 @@ export function glassMaterial(item,width,height,direction,renderer){
     mat.color.set('#ffffff');mat.attenuationColor.set(satin.attenuation);mat.attenuationDistance=satin.distance;
     mat.transmission=.96;mat.roughness=.55;mat.ior=1.52;mat.clearcoat=0;mat.metalness=0;mat.thickness=4;
   }
+  const coating=stopsolGlassOptics[item.slug];
+  if(coating){
+    mat.color.set(coating.coating);mat.attenuationColor.set(coating.attenuation);mat.attenuationDistance=coating.distance;
+    mat.metalness=.38;mat.transmission=1;mat.roughness=.025;mat.clearcoat=0;mat.ior=1.52;mat.envMapIntensity=1.3;
+  }
   if(item.pitch&&item.pattern){
     const texture=reliefTexture(item.pattern),[rx,ry]=textureRepeat(width,height,item.pitch,direction);
     texture.repeat.set(rx,ry);if(direction==='horizontal')texture.rotation=Math.PI/2;
@@ -76,6 +87,6 @@ export function glassMaterial(item,width,height,direction,renderer){
   return mat;
 }
 export function glassEdgeMaterial(item,face){
-  const preset=clearGlassOptics[item.slug]||tintedGlassOptics[item.slug]||matteGlassOptics[item.slug];if(!preset)return null;
-  const edge=face.clone();edge.color.set(preset.edge);edge.roughness=.08;edge.transmission=.85;return edge;
+  const preset=clearGlassOptics[item.slug]||tintedGlassOptics[item.slug]||matteGlassOptics[item.slug]||stopsolGlassOptics[item.slug];if(!preset)return null;
+  const edge=face.clone();edge.color.set(preset.edge);edge.roughness=.08;edge.transmission=.85;edge.metalness=0;return edge;
 }

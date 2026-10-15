@@ -6,10 +6,10 @@ import {sections,svgSection,sectionNotes} from './sections.js';
 import {railGeometry,sampleGeometry} from './profile-mesh.js';
 import {profileMetal} from './metal.js';
 import {FacadeProject} from './project.js?v=20261015-groups';
-import {transparentSlugs,transparentItems,matteSlugs,matteItems,stopsolSlugs,stopsolItems,reedSlugs,reedItems,patternedSlugs,patternedItems} from './glass-groups.js?v=empty-only-20261015';
+import {transparentSlugs,transparentItems,matteSlugs,matteItems,stopsolSlugs,stopsolItems,reedSlugs,reedItems,patternedSlugs,patternedItems} from './glass-groups.js?v=stopsol-optics-v3-20261015';
 import {ProjectConfirmation} from './confirmation.js';
-import {studioEnvironment,glassMaterial,glassEdgeMaterial} from './glass-render.js?v=empty-only-20261015';
-const catalogue=await fetch('./glass-catalog.json?v=empty-only-20261015').then(r=>{if(!r.ok)throw new Error('Не удалось загрузить каталог стекла');return r.json();});
+import {studioEnvironment,glassMaterial,glassEdgeMaterial,stopsolGlassOptics} from './glass-render.js?v=stopsol-optics-v3-20261015';
+const catalogue=await fetch('./glass-catalog.json?v=stopsol-optics-v3-20261015').then(r=>{if(!r.ok)throw new Error('Не удалось загрузить каталог стекла');return r.json();});
 const glassItems=Object.fromEntries(catalogue.items.map(m=>[m.id,m]));
 Object.keys(glasses).forEach(k=>delete glasses[k]);
 glassItems.none={id:'none',title:'Без наполнения',color:'none',mirror:false};
@@ -26,6 +26,11 @@ renderer.setPixelRatio((innerWidth>900?2:Math.min(devicePixelRatio,1.5)));render
 const orbit=new OrbitControls(camera,renderer.domElement);orbit.enableDamping=true;
 scene.add(new T.HemisphereLight(0xfffaf2,0x8c8880,.8));const light=new T.DirectionalLight(0xfff5e7,3.4);light.position.set(-900,1200,1400);light.castShadow=true;light.shadow.mapSize.set(2048,2048);Object.assign(light.shadow.camera,{left:-3000,right:3000,top:3000,bottom:-3000,near:1,far:10000});light.shadow.bias=-.0002;light.shadow.normalBias=2;light.shadow.radius=18;light.shadow.blurSamples=8;scene.add(light);renderer.shadowMap.enabled=true;renderer.shadowMap.type=T.VSMShadowMap;const fill=new T.DirectionalLight(0xf5f7ff,.7);fill.position.set(1200,400,500);scene.add(fill);
 const env=studioEnvironment(renderer);scene.environment=env.texture;
+const coatingLights=new T.Group();coatingLights.visible=false;
+for(const [x,w,color] of [[-1100,180,'#f4f2ec'],[-850,60,'#454b50'],[-600,160,'#f4f2ec'],[-370,45,'#454b50'],[-120,140,'#deded9'],[140,40,'#454b50']]){
+ const card=new T.Mesh(new T.PlaneGeometry(w,3000),new T.MeshBasicMaterial({color,side:T.DoubleSide}));card.position.set(x,0,1600);coatingLights.add(card);
+}
+scene.add(coatingLights);
 let model=new T.Group();scene.add(model);
 function fit(){const inspect=s.view==='profile',distance=inspect?Math.max(s.handle?155:125,150/camera.aspect)*1.1:Math.max(s.h,(pair()?s.w*2+40:s.w)/camera.aspect)*2;camera.position.set(inspect?distance*.5:s.view==='3d'?distance*.4:0,inspect?distance*.35:s.view==='3d'?distance*.15:0,s.view==='back'?-distance:distance);orbit.target.set(0,0,0);orbit.update();}
 function disposeModel(root){const materials=new Set(),textures=new Set();root.traverse(o=>{o.getRenderTarget?.().dispose();o.geometry?.dispose();for(const m of (Array.isArray(o.material)?o.material:[o.material]))if(m)materials.add(m);});for(const m of materials){for(const key of ['map','normalMap','roughnessMap','bumpMap'])if(m[key])textures.add(m[key]);m.dispose();}for(const texture of textures)texture.dispose();}
@@ -60,6 +65,14 @@ function buildFacade(s){
 
  const edge=glassEdgeMaterial(glassItems[s.glass],gm);
  box(w-p.delta,h-p.delta,4,0,0,q.glassY+2-d,edge?[edge,edge,edge,edge,gm,gm]:gm);
+ if(stopsolGlassOptics[glassItems[s.glass].slug]){
+   const coating=new Reflector(new T.PlaneGeometry(w-p.delta,h-p.delta),{textureWidth:1024,textureHeight:1024,color:stopsolGlassOptics[glassItems[s.glass].slug].coating,clipBias:.003});
+   coating.material.fragmentShader=coating.material.fragmentShader.replace('blendOverlay( base.rgb, color ), 1.0','blendOverlay( base.rgb, color ), 0.32');
+   coating.material.transparent=true;coating.material.depthWrite=false;
+   const reflect=coating.onBeforeRender;
+   coating.onBeforeRender=function(...args){coatingLights.visible=true;try{reflect.apply(this,args);}finally{coatingLights.visible=false;}};
+   coating.position.z=q.glassY+4-d+.15;model.add(coating);
+ }
  if(glassItems[s.glass].mirror){
    const mirror=new Reflector(new T.PlaneGeometry(w-p.delta,h-p.delta),{textureWidth:1024,textureHeight:1024,color:glassItems[s.glass].color==='#d7eeea'?'#858585':glassItems[s.glass].color,clipBias:.003});
    mirror.position.z=q.glassY+4-d+.1;model.add(mirror);
