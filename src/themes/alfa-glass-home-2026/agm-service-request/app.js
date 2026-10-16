@@ -35,9 +35,10 @@ document.addEventListener('agm:request-measure',event=>{
  if(!field('service_product').value&&/зеркал/i.test(detail.material))field('service_product').value='Зеркало';
  if(detail.summary&&!field('comment').value.includes(detail.summary))field('comment').value=[field('comment').value,detail.summary].filter(Boolean).join('\n\n').slice(0,3000);
 });
+document.querySelectorAll('.asr-trigger').forEach(b=>b.addEventListener('click',open));
 function button(){const b=document.createElement('button');b.type='button';b.className='asr-trigger';b.textContent='Замер и монтаж';b.setAttribute('aria-haspopup','dialog');b.setAttribute('aria-controls',dialog.id);b.addEventListener('click',open);return b;}
-const header=document.querySelector('.header-main');if(header){const target=header.querySelector('.header-tools');header.insertBefore(button(),target||null);}
-const mobile=document.querySelector('.mobile-actions');if(mobile)mobile.append(button());
+const header=document.querySelector('.header-main');if(header&&!header.querySelector('.asr-trigger')){const target=header.querySelector('.header-tools');header.insertBefore(button(),target||null);}
+const mobile=document.querySelector('.mobile-actions');if(mobile&&!mobile.querySelector('.asr-trigger'))mobile.append(button());
 if(location.pathname.startsWith('/materialy/')&&location.pathname!='/materialy/'){
  const target=document.querySelector('#material-request')||document.querySelector('#agm-order')||document.querySelector('main');
  if(target){const box=document.createElement('aside');box.className='asr-material-cta';const text=document.createElement('div');const title=document.createElement('strong');title.textContent='Поможем с замером и установкой';const p=document.createElement('p');p.textContent='Расскажите о проекте — согласуем детали и удобный порядок работ.';text.append(title,p);box.append(text,button());target.before(box);}

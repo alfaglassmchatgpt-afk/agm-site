@@ -46,8 +46,14 @@ add_action('wp_footer', function () {
     $materials = array_values(array_unique(array_column($registry, 'title')));
     sort($materials, SORT_STRING);
     $config = ['endpoint' => rest_url('agm/v1/requests'), 'serviceUrl' => home_url('/service/'), 'privacyUrl' => get_privacy_policy_url(), 'materials' => $materials];
-    echo '<link rel="stylesheet" href="' . esc_url($uri . '/style.css?v=' . filemtime($dir . '/style.css')) . '">';
     echo file_get_contents($dir . '/dialog.html');
     echo '<script type="application/json" id="agm-service-request-data">' . wp_json_encode($config, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE) . '</script>';
     echo '<script src="' . esc_url($uri . '/app.js?v=' . filemtime($dir . '/app.js')) . '" defer></script>';
 }, 30);
+
+add_action('wp_head', function () {
+    if (is_admin() || is_feed()) return;
+    $dir = get_template_directory() . '/agm-service-request';
+    $uri = get_template_directory_uri() . '/agm-service-request';
+    echo '<link rel="stylesheet" href="' . esc_url($uri . '/style.css?v=' . filemtime($dir . '/style.css')) . '">';
+}, 5);
