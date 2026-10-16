@@ -14,10 +14,14 @@ get_header();
 
 		<?php
 // Получаем содержимое страницы 404 по её ID
-$page_id = get_theme_mod('alfa_selected_page_404'); // Замените 123 на ID вашей страницы 404, созданной в Elementor
-$page = get_post($page_id);
+// A deleted or unconfigured Elementor page has no document.
+$page_id = absint(get_theme_mod('alfa_selected_page_404'));
+$document = null;
+if ($page_id && did_action('elementor/loaded')) {
+    $document = \Elementor\Plugin::instance()->documents->get($page_id);
+}
 
-if ( did_action( 'elementor/loaded' ) && \Elementor\Plugin::instance()->documents->get( $page_id )->is_built_with_elementor() ) {
+if ($document && $document->is_built_with_elementor()) {
     // Если страница создана в Elementor, рендерим её
     echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $page_id );
 } else {
