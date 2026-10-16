@@ -18,7 +18,7 @@ add_action('wp_footer', static function () {
 [data-theme=dark] .agm-alpha.agm-lamp-start:before,[data-theme=dark] .agm-alpha.agm-lamp-start:after{animation:agm-alpha-start 1.5s linear both}
 @keyframes agm-alpha-start{0%,17%{opacity:0}18%,25%{opacity:calc(var(--alpha-level,.8)*.55)}26%,57%{opacity:.04}58%,70%{opacity:calc(var(--alpha-level,.8)*.85)}71%,81%{opacity:.12}90%,100%{opacity:var(--alpha-level,.8)}}
 @media(prefers-reduced-motion:reduce){.agm-alpha-shine:after{animation:none;opacity:0}.agm-alpha:before,.agm-alpha:after{transition:none}[data-theme=dark] .agm-alpha.agm-lamp-start:before,[data-theme=dark] .agm-alpha.agm-lamp-start:after{animation:none}}
-.agm-alpha-sound{position:absolute;top:calc(100% + 12px);left:50%;transform:translateX(-50%);z-index:3;white-space:nowrap;border:1px solid currentColor;border-radius:16px;background:transparent;color:inherit;font-size:11px;line-height:1.4;font-family:inherit;padding:5px 10px;cursor:pointer;opacity:.75}.agm-alpha-sound:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+.hero-controls .agm-alpha-sound{position:static;transform:none;width:auto;min-width:88px;height:32px;padding:0 10px;white-space:nowrap;font-size:11px;line-height:1.4;font-family:inherit;cursor:pointer}.agm-alpha-sound:focus-visible{outline:2px solid currentColor;outline-offset:3px}
 </style>
 <script>
 (() => {
@@ -46,7 +46,8 @@ add_action('wp_footer', static function () {
         toggle.setAttribute('aria-pressed', String(enabled));
     };
     updateButton();
-    mark.append(toggle);
+    const controls = document.querySelector('.hero-controls');
+    if (controls) controls.prepend(toggle);
     let context, activeGain, timer;
     const stopSound = () => {
         clearTimeout(timer);
