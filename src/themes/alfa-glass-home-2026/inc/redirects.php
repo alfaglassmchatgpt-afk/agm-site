@@ -37,7 +37,6 @@ function ag_get_redirect_map() {
 		'/bezopasnost-i-zashhita/'                     => '/warranty/',
 		'/uslugi/hudozhestvennoe-mollirovanie'         => '/uslugi/',
 		'/uslugi/hudozhestvennoe-mollirovanie/'        => '/uslugi/',
-        '/peskostrujnaya-obrabotka-dlya-chego-nuzhna/' => '/',
 	);
 
 	return apply_filters( 'ag_redirect_map', $map );

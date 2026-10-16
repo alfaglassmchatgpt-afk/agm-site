@@ -7,9 +7,9 @@ function add_filter($name, $callback, $priority) { $GLOBALS['filters'][$name] = 
 require __DIR__ . '/../src/mu-plugins/agm-seo-metadata.php';
 foreach (['/', '/materialy/', '/blog/', '/service/'] as $path) {
  $_SERVER['REQUEST_URI'] = $path . '?check=test';
- foreach ($filters as $filter) {
-  if ($filter('original') === 'original' || !$filter('original')) { throw new Exception('Missing override'); }
- }
+ if ($filters['wpseo_title']('original') === 'original') { throw new Exception('Missing title'); }
+ $description = $filters['wpseo_metadesc']('original');
+ if (in_array($path, ['/blog/', '/service/'], true) ? $description === 'original' : $description !== 'original') { throw new Exception('Description routing'); }
 }
 foreach (['/aluminium/', '/materialy/krezet/', '/other/'] as $path) {
  $_SERVER['REQUEST_URI'] = $path;

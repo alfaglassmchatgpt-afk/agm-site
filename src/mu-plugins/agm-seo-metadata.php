@@ -19,5 +19,7 @@ add_filter('wpseo_title', function ($title) {
 }, 20);
 add_filter('wpseo_metadesc', function ($description) {
     $meta = agm_public_search_metadata();
-    return $meta ? $meta[1] : $description;
+    // Home and catalogue templates already supply their own description.
+    $path = wp_parse_url(isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '/', PHP_URL_PATH);
+    return $meta && in_array($path, ['/blog/', '/service/'], true) ? $meta[1] : $description;
 }, 20);

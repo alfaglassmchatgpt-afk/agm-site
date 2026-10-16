@@ -1,0 +1,11 @@
+User-agent: *
+
+Disallow: /wp-admin/
+Disallow: /wp-login.php
+Disallow: /xmlrpc.php
+Allow: /wp-content/uploads/
+
+Clean-Param: utm_source&utm_medium&utm_campaign&product_order&product_count&product_sort&paged&attempt&s&etext&ver&admin&author&block&source&type&s
+
+Sitemap: https://alfaglass.ru/sitemap_index.xml
+Host: alfaglass.ru
