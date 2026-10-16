@@ -1,4 +1,5 @@
 {
+  "client_motion": {"file": "agm-client-motion.php", "deployed": ["dev", "production"], "date": "2026-10-17"},
   "alpha_hero_effect": {"file": "agm-alpha-light.php", "deployed": ["dev", "production"], "date": "2026-10-17"},
   "production_release": {
     "verified": "2026-10-02",
