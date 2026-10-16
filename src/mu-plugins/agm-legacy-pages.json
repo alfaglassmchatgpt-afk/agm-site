@@ -51,8 +51,8 @@
   {
     "id": 0,
     "source": "/catalog/peregorodki-iz-stekla/",
-    "status": 410,
-    "target": "",
+    "status": 301,
+    "target": "/aluminium/",
     "reason": "Старая категория"
   },
   {
@@ -289,8 +289,8 @@
   {
     "id": 4434,
     "source": "/product/fasady-iz-alyuminievogo-profilya-so-steklom/",
-    "status": 410,
-    "target": "",
+    "status": 301,
+    "target": "/aluminium/",
     "reason": "Старая страница без прямого аналога"
   },
   {
@@ -492,8 +492,8 @@
   {
     "id": 1933,
     "source": "/product/skinali-kuhonnye-fartuki/",
-    "status": 410,
-    "target": "",
+    "status": 301,
+    "target": "/izdeliya/kuhonnye-fartuki/",
     "reason": "Старая страница без прямого аналога"
   },
   {
@@ -569,15 +569,15 @@
   {
     "id": 1923,
     "source": "/product/steklyannye-dveri/",
-    "status": 410,
-    "target": "",
+    "status": 301,
+    "target": "/izdeliya/steklyannye-dveri/",
     "reason": "Старая страница без прямого аналога"
   },
   {
     "id": 1939,
     "source": "/product/steklyannye-lestnichnye-ograzhdeniya/",
-    "status": 410,
-    "target": "",
+    "status": 301,
+    "target": "/izdeliya/steklyannye-ograzhdeniya/",
     "reason": "Старая страница без прямого аналога"
   },
   {
@@ -611,8 +611,8 @@
   {
     "id": 1971,
     "source": "/product/zerkalnoe-panno/",
-    "status": 410,
-    "target": "",
+    "status": 301,
+    "target": "/izdeliya/zerkalnye-panno/",
     "reason": "Старая страница без прямого аналога"
   },
   {
