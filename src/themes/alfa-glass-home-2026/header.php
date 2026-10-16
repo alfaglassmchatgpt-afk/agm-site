@@ -300,7 +300,7 @@ $rights = get_field('rights','option');
                 <?php if(!empty($rights)) { ?>
                     <div class="mobile-bot__rights"><?=$rights?></div>
                 <?php } ?>
-                
+
             </div>
         </div>
     </header>

@@ -159,7 +159,7 @@ $email = get_field('email','option');
             <?php if(!empty($rights)) { ?>
                 <div class="footer-primary__rights"><?=$rights?></div>
             <?php } ?>
-            
+
         </div>
     </div>
 </footer>
