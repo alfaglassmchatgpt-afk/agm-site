@@ -26,5 +26,12 @@ add_action('template_redirect',function(){
  });
 });
 add_action('wp_head',function(){if(!is_front_page())return;?>
-<style>.desktop-nav>.agm-aluminium-link{display:flex;align-items:center;justify-content:center;min-height:51px;margin-bottom:-1px;border-bottom:2px solid transparent}.mobile-nav>.agm-aluminium-link{display:flex;align-items:center;min-height:48px;border-bottom:1px solid var(--line)}.agm-aluminium-link{cursor:default;font-family:'Trebuchet MS',Arial,sans-serif!important;font-size:17px!important;font-weight:700!important;letter-spacing:.06em;white-space:nowrap}.agm-aluminium-link span:first-child{color:#20282c}.agm-aluminium-link span:last-child{color:#08799d}[data-theme=dark] .agm-aluminium-link span:first-child{color:#eef4f7}[data-theme=dark] .agm-aluminium-link span:last-child{color:#64c9e9}</style>
+<style>.desktop-nav>.agm-aluminium-link{display:flex;align-items:center;justify-content:center;min-height:51px;margin-bottom:-1px;border-bottom:2px solid transparent}.mobile-nav>.agm-aluminium-link{display:flex;align-items:center;min-height:48px;border-bottom:1px solid var(--line)}.agm-aluminium-link{cursor:default;font-family:'Trebuchet MS',Arial,sans-serif!important;font-size:17px!important;font-weight:700!important;letter-spacing:.06em;white-space:nowrap}.agm-aluminium-link span:first-child{color:#20282c}.agm-aluminium-link span:last-child{color:#08799d}[data-theme=dark] .agm-aluminium-link span:first-child{color:#eef4f7}[data-theme=dark] .agm-aluminium-link span:last-child{color:#64c9e9}
+/* Approved option 3: animated blue/turquoise outline, no navigation action. */
+.agm-aluminium-link{position:relative;isolation:isolate;padding-inline:14px}
+.agm-aluminium-link::before{content:"";position:absolute;inset:7px 0;border-radius:12px;padding:1.5px;background:linear-gradient(110deg,#2263c5,#2cc9bc,#63b9e9,#2263c5,#2cc9bc);background-size:300% 100%;animation:agm-aluminium-flow 5s ease-in-out infinite;-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.mobile-nav>.agm-aluminium-link{width:max-content;max-width:100%;border-bottom:0}
+@keyframes agm-aluminium-flow{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+@media(prefers-reduced-motion:reduce){.agm-aluminium-link::before{animation:none}}
+</style>
 <?php });
