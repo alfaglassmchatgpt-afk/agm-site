@@ -159,7 +159,7 @@ $email = get_field('email','option');
             <?php if(!empty($rights)) { ?>
                 <div class="footer-primary__rights"><?=$rights?></div>
             <?php } ?>
-            <div class="developer">Сайт разработан <a href="seolebedev.ru" class="developer">SEO Lebedev</a></div>
+            
         </div>
     </div>
 </footer>
