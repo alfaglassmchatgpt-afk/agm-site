@@ -948,7 +948,7 @@
     "id": 2244,
     "source": "/uslugi/evrokromka-shlifovka-kromki-stekla/",
     "status": 301,
-    "target": "/obrabotka-stekla-i-zerkal/#polish",
+    "target": "/obrabotka-stekla-i-zerkal/evrokromka/",
     "reason": "Актуальная замена"
   },
   {
@@ -983,42 +983,42 @@
     "id": 2258,
     "source": "/uslugi/peskostujnaya-gravirovka/",
     "status": 301,
-    "target": "/obrabotka-stekla-i-zerkal/#sandblast",
+    "target": "/obrabotka-stekla-i-zerkal/peskostruynaya-obrabotka/",
     "reason": "Актуальная замена"
   },
   {
     "id": 2184,
     "source": "/uslugi/rezka-stekla-i-zerkal/",
     "status": 301,
-    "target": "/obrabotka-stekla-i-zerkal/#cut",
+    "target": "/obrabotka-stekla-i-zerkal/rezka-stekla/",
     "reason": "Актуальная замена"
   },
   {
     "id": 2267,
     "source": "/uslugi/tonirovka-plyonkami/",
     "status": 301,
-    "target": "/obrabotka-stekla-i-zerkal/#film",
+    "target": "/obrabotka-stekla-i-zerkal/tonirovka-plyonkoy/",
     "reason": "Актуальная замена"
   },
   {
     "id": 2281,
     "source": "/uslugi/tripleksovanie-stekla/",
     "status": 301,
-    "target": "/obrabotka-stekla-i-zerkal/#laminate",
+    "target": "/obrabotka-stekla-i-zerkal/tripleksovanie/",
     "reason": "Актуальная замена"
   },
   {
     "id": 2301,
     "source": "/uslugi/zakalka-stekla/",
     "status": 301,
-    "target": "/obrabotka-stekla-i-zerkal/#temper",
+    "target": "/obrabotka-stekla-i-zerkal/zakalka-stekla/",
     "reason": "Актуальная замена"
   },
   {
     "id": 2251,
     "source": "/uslugi/zerkalo-s-fatsetom-steklo-obrabotka/",
     "status": 301,
-    "target": "/obrabotka-stekla-i-zerkal/#bevel",
+    "target": "/obrabotka-stekla-i-zerkal/facet/",
     "reason": "Актуальная замена"
   },
   {
