@@ -3,7 +3,7 @@
 defined('ABSPATH') || exit;
 add_action('init', function () {
     $path = wp_parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
-    $paths = ['/izdeliya/', '/izdeliya/steklyannye-dveri/', '/izdeliya/steklyannye-ograzhdeniya/', '/izdeliya/zerkalnye-panno/'];
+    $paths = ['/izdeliya/', '/izdeliya/steklyannye-dveri/', '/izdeliya/steklyannye-ograzhdeniya/'];
     if (!in_array(trailingslashit($path), $paths, true)) return;
     nocache_headers();
     header('X-Robots-Tag: noindex, nofollow', true);
