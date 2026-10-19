@@ -5,6 +5,9 @@ require_once __DIR__ . '/agm-material-groups.php';
 function agm_navigation_pages($section) {
     $root = get_page_by_path($section === 'materials' ? 'materialy' : 'izdeliya');
     $pages = get_pages(['post_status' => 'publish', 'sort_column' => 'menu_order,post_title']);
+    // Include the published backsplash while its parent catalog remains private.
+    $backsplash=get_page_by_path("izdeliya/kuhonnye-fartuki");
+    if ($section === "products" && $backsplash && $backsplash->post_status === "publish") $pages[]=$backsplash;
     return array_values(array_filter($pages, function ($page) use ($section, $root) {
         return get_post_meta($page->ID, '_agm_navigation_section', true) === $section
             || ($root && in_array((int) $root->ID, array_map('intval', get_post_ancestors($page)), true));

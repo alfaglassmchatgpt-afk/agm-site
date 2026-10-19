@@ -1,0 +1,9 @@
+--- a/inc/agm-material-layout.php
++++ b/inc/agm-material-layout.php
+@@ -2,4 +2,6 @@
+ /** Shared material layout: gallery, choices, calculation sidebar. */
+ defined('ABSPATH') || exit;
+ function agm_order_material_layout($html, $slug) {
++    // Product landing retains its editorial layout and shared calculation block.
++    if ($slug === "kuhonnye-fartuki") return $html;
+     return preg_replace_callback('~<main\b[^>]*>.*?</main>~s', function ($match) use ($slug) {
