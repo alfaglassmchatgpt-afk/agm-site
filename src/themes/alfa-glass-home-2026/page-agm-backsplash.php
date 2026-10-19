@@ -8,7 +8,7 @@ $description=get_post_meta($pid,'_yoast_wpseo_metadesc',true);
 add_filter('pre_get_document_title',function()use($pid){return get_the_title($pid).' — ALFAGLASS';},999);
 add_filter('wpseo_title',function()use($pid){return get_the_title($pid).' — ALFAGLASS';},999);
 add_filter('wpseo_metadesc',function()use($description){return $description;},999);
-$cleanup=function(){foreach(wp_styles()->queue as $h){if(!in_array($h,['admin-bar','dashicons','agm-company'],true))wp_dequeue_style($h);}foreach(wp_scripts()->queue as $h){if($h!=='admin-bar')wp_dequeue_script($h);}};
+$cleanup=function(){foreach(wp_styles()->queue as $h){if(!in_array($h,['admin-bar','dashicons','agm-company','sm_theme_style','sm_style'],true))wp_dequeue_style($h);}foreach(wp_scripts()->queue as $h){if(!in_array($h,['admin-bar','sm_script'],true))wp_dequeue_script($h);}};
 add_action('wp_enqueue_scripts',$cleanup,PHP_INT_MAX);
 add_action('wp_footer',$cleanup,0);
 $home=agm_navigation_render(file_get_contents($dir.'/agm-homepage/index.html'));
