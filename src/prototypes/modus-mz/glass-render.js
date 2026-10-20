@@ -299,6 +299,10 @@ export function glassMaterial(item,width,height,direction,renderer,contactOverla
     attenuationColor:new T.Color(item.color),attenuationDistance:250,
     side:T.FrontSide,clearcoat:item.mirror?1:.2,clearcoatRoughness:.06
   });
+  if(item.slug.startsWith('lacobel-')||item.slug.startsWith('matelac-')){
+    mat.transmission=0;mat.metalness=0;mat.roughness=item.matte?.62:.09;
+    mat.clearcoat=item.matte?0:.65;mat.clearcoatRoughness=.06;mat.envMapIntensity=item.matte?.35:.65;
+  }
   const clear=clearGlassOptics[item.slug]||tintedGlassOptics[item.slug];
   if(clear){
     // Keep face neutral: tint comes from bulk absorption, not a coloured surface coating.

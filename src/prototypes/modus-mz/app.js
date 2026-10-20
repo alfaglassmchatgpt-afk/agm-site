@@ -6,10 +6,10 @@ import {sections,svgSection,sectionNotes} from './sections.js';
 import {railGeometry,sampleGeometry} from './profile-mesh.js';
 import {profileMetal} from './metal.js';
 import {FacadeProject} from './project.js?v=20261015-groups';
-import {transparentSlugs,transparentItems,matteSlugs,matteItems,stopsolSlugs,stopsolItems,reedSlugs,reedItems,patternedSlugs,patternedItems} from './glass-groups.js?v=estriado-20261020';
+import {transparentSlugs,transparentItems,matteSlugs,matteItems,stopsolSlugs,stopsolItems,reedSlugs,reedItems,patternedSlugs,patternedItems,lacobelSlugs,lacobelItems,matelacSlugs,matelacItems} from './glass-groups.js?v=painted-20261020';
 import {ProjectConfirmation} from './confirmation.js';
-import {studioEnvironment,studioBackdrop,refractionSurround,moruOptics,estriadoOptics,glassMaterial,glassEdgeMaterial,stopsolGlassOptics,sampleCabinet,satinContactMap} from './glass-render.js?v=dichroic-20261020';
-const catalogue=await fetch('./glass-catalog.json?v=dichroic-20261020').then(r=>{if(!r.ok)throw new Error('Не удалось загрузить каталог стекла');return r.json();});
+import {studioEnvironment,studioBackdrop,refractionSurround,moruOptics,estriadoOptics,glassMaterial,glassEdgeMaterial,stopsolGlassOptics,sampleCabinet,satinContactMap} from './glass-render.js?v=painted-20261020';
+const catalogue=await fetch('./glass-catalog.json?v=painted-20261020').then(r=>{if(!r.ok)throw new Error('Не удалось загрузить каталог стекла');return r.json();});
 const glassItems=Object.fromEntries(catalogue.items.map(m=>[m.id,m]));
 Object.keys(glasses).forEach(k=>delete glasses[k]);
 glassItems.none={id:'none',title:'Без наполнения',color:'none',mirror:false};
@@ -101,7 +101,7 @@ function controls(){glassChoices();const p=profiles.find(p=>p.id===s.profile);$(
  $('#color-name').textContent=`${colors[s.color][0]} · ${s.color}. Наличие уточняется.`;$('#profile-name').textContent=`MZ ${p.id}`;$('#profile-dims').textContent=`${p.b} × ${p.d} мм · схема сечения`;
  $('#section-svg').innerHTML=svgSection(p.id,colors[s.color][1]);
  $('#handle-wrap').hidden=!p.handle;$('#handle').checked=s.handle;$('#mask-wrap').hidden=s.glass==='none'||!['07','17'].includes(p.id);$('#mask').checked=s.mask;$('#reed-wrap').hidden=!glassItems[s.glass].pitch||glassItems[s.glass].pattern==='grid';
- const item=glassItems[s.glass];$('#glass-card-access').hidden=s.glass==='none';$('#glass-link').setAttribute('aria-label','Посмотреть '+item.title+' в каталоге — новая вкладка');$('#glass-link').href='https://alfaglass.ru/materialy/'+item.slug+'/';$('#glass-note').textContent=s.glass==='none'?'Только алюминиевая рамка по указанным размерам, без стекла.':item.texturePending?'Точная фактура пока не воспроизведена — показаны только базовые цвет и прозрачность.':item.pitch?`${item.pitchEstimated?"Приблизительный шаг":"Рельеф с шагом"} ${item.pitch.toFixed(2)} мм; масштаб сохраняется при изменении размера. Оптика приблизительная.`:'Студийная визуализация. Оттенок и отражение ориентировочные.';$('#glass-count').textContent=`${transparentItems(catalogue.items).length+matteItems(catalogue.items).length+stopsolItems(catalogue.items).length+reedItems(catalogue.items).length+patternedItems(catalogue.items).length+1} материалов · 4 мм`;
+ const item=glassItems[s.glass];$('#glass-card-access').hidden=s.glass==='none';$('#glass-link').setAttribute('aria-label','Посмотреть '+item.title+' в каталоге — новая вкладка');$('#glass-link').href='https://alfaglass.ru/materialy/'+item.slug+'/';$('#glass-note').textContent=s.glass==='none'?'Только алюминиевая рамка по указанным размерам, без стекла.':item.texturePending?'Точная фактура пока не воспроизведена — показаны только базовые цвет и прозрачность.':item.pitch?`${item.pitchEstimated?"Приблизительный шаг":"Рельеф с шагом"} ${item.pitch.toFixed(2)} мм; масштаб сохраняется при изменении размера. Оптика приблизительная.`:'Студийная визуализация. Оттенок и отражение ориентировочные.';$('#glass-count').textContent=`${transparentItems(catalogue.items).length+matteItems(catalogue.items).length+stopsolItems(catalogue.items).length+reedItems(catalogue.items).length+patternedItems(catalogue.items).length+lacobelItems(catalogue.items).length+matelacItems(catalogue.items).length+1} материалов · 4 мм`;
  $('#hinge').innerHTML=[['none','Без петель и присадок'],...(p.b<20?[['narrow','Специальная для узкого профиля'],['mzf','MZF 63 · подбор присадки'],...(p.id==='07'?[['blum','BLUM 71B950A']]:[])]:[['cup','Чашка 35 мм · модель уточнить']])].map(([v,l])=>`<option value="${v}">${l}</option>`).join('');$('#hinge').value=s.hinge;$('#count').value=s.hinges.length;for(const id of ['side','origin','even'])$('#'+id).disabled=!s.hinges.length;hingeFields();}
 function hingeFields(){ $('#hinges').innerHTML=s.hinges.map((v,i)=>`<div class="hinge-row"><b>${i+1}</b><input aria-label="Положение петли ${i+1}" type="range" min="1" max="${s.h-1}" value="${s.origin==='top'?v:s.h-v}" data-i="${i}"><input aria-label="Петля ${i+1}, мм" type="number" step="1" value="${s.origin==='top'?v:s.h-v}" data-i="${i}"></div>`).join('');$('#hinges').querySelectorAll('input').forEach(el=>el.oninput=()=>{s.hinges[+el.dataset.i]=s.origin==='top'?+el.value:s.h-+el.value;el.parentElement.querySelectorAll('input').forEach(other=>{if(other!==el)other.value=el.value;});update();});}
 let geometry;
@@ -116,15 +116,15 @@ function update(){project.update(s);const p=profiles.find(p=>p.id===s.profile),v
 function glassChoices(){
  $('#glass-selected').textContent='Выбрано: '+glassItems[s.glass].title;
  $('#glass-categories').querySelectorAll('[data-glass]').forEach(b=>{const active=b.dataset.glass===s.glass;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});
- for(const [category,slugs,title] of [['transparent',transparentSlugs,'Стекло прозрачное'],['matte',matteSlugs,'Стекло матовое'],['stopsol',stopsolSlugs,'Стопсол Феникс'],['reed',reedSlugs,'Рифлёное стекло'],['patterned',patternedSlugs,'Узорчатое стекло']]){
+ for(const [category,slugs,title] of [['transparent',transparentSlugs,'Стекло прозрачное'],['matte',matteSlugs,'Стекло матовое'],['stopsol',stopsolSlugs,'Стопсол Феникс'],['reed',reedSlugs,'Рифлёное стекло'],['patterned',patternedSlugs,'Узорчатое стекло'],['lacobel',lacobelSlugs,'Окрашенное стекло Lacobel'],['matelac',matelacSlugs,'Матовое окрашенное Matelac']]){
   const active=slugs.includes(glassItems[s.glass].slug),button=$('#'+category+'-toggle');
   button.classList.toggle('active',active);button.querySelector('.category-title').textContent=active?glassItems[s.glass].title:title;
  }
 }
-const materialCategories=[['transparent',transparentItems],['matte',matteItems],['stopsol',stopsolItems],['reed',reedItems],['patterned',patternedItems]];
+const materialCategories=[['transparent',transparentItems],['matte',matteItems],['stopsol',stopsolItems],['reed',reedItems],['patterned',patternedItems],['lacobel',lacobelItems],['matelac',matelacItems]];
 for(const [category,items] of materialCategories){
  for(const item of items(catalogue.items)){
-  const b=document.createElement('button');b.type='button';b.dataset.glass=item.id;b.dataset.category=category;b.textContent=item.title;$('#'+category+'-materials').append(b);
+  const b=document.createElement('button');b.type='button';b.dataset.glass=item.id;b.dataset.category=category;b.textContent=item.title;if(['lacobel','matelac'].includes(category)){const chip=document.createElement('span');chip.className='painted-chip';chip.style.backgroundColor=item.color;chip.setAttribute('aria-hidden','true');b.prepend(chip);}$('#'+category+'-materials').append(b);
  }
  $('#'+category+'-toggle').onclick=()=>{
   const list=$('#'+category+'-materials');list.hidden=!list.hidden;$('#'+category+'-toggle').setAttribute('aria-expanded',String(!list.hidden));
@@ -216,3 +216,5 @@ if(new URLSearchParams(location.search).get('preview')==='atlantic-studio'){s.gl
 if(new URLSearchParams(location.search).get('preview')==='hithicross-studio'){s.glass='hithicross__standard';showSampleCabinet=false;project.update(s);controls();update();fit();}
 
 if(new URLSearchParams(location.search).get('preview')==='dichroic-studio'){s.glass='dihroichnoe-steklo__standard';showSampleCabinet=false;project.update(s);controls();update();fit();}
+
+if(new URLSearchParams(location.search).get('preview')==='painted-studio'){s.glass='lacobel-1014__standard';showSampleCabinet=false;project.update(s);controls();update();fit();}

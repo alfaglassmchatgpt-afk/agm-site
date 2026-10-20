@@ -204,5 +204,11 @@
     "reference": "Archived product sample dihroichnoe-steklo-v1.",
     "method": "Thin-film reflection plus illustrative view-dependent transmission tint, transparent smooth surface. Not measured spectral optics.",
     "status": "Local preview awaiting owner review."
+  },
+  "painted": {
+    "date": "2026-10-20",
+    "reference": "Saved ALFAGLASS catalogue material profiles: 13 lacobel and 10 matelac cards. Owner explicitly selected ALFAGLASS rather than manufacturer catalogue.",
+    "method": "Approximate RGB colours, opaque glossy Lacobel and rough matte Matelac. Not measured colour samples.",
+    "status": "Local palette awaiting owner review; light-colour finish contrast needs further tuning."
   }
 }

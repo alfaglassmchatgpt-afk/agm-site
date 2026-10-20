@@ -1262,6 +1262,466 @@
       },
       "pitchConfirmedBy": "owner",
       "pitchConfirmedAt": "2026-10-20"
+    },
+    {
+      "id": "lacobel-1013__standard",
+      "slug": "lacobel-1013",
+      "variant": "standard",
+      "title": "Лакобель 1013 RAL — Жемчужно-бежевый светлый",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#e7dfcb",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Окрашенное глянцевое стекло 4 мм. Формат листа 3210 × 2250 мм. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "source": {
+        "url": "https://alfaglass.ru/materialy/lacobel-1013/",
+        "evidence": "Saved ALFAGLASS material catalogue, 4 mm."
+      },
+      "visualizationNote": "Цвет на экране приблизительный. Точный оттенок согласуется по образцу."
+    },
+    {
+      "id": "lacobel-1014__standard",
+      "slug": "lacobel-1014",
+      "variant": "standard",
+      "title": "Лакобель 1014 RAL — Бежевый классический",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#d9c8a2",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Окрашенное глянцевое стекло 4 мм. Формат листа 3210 × 2250 мм. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "source": {
+        "url": "https://alfaglass.ru/materialy/lacobel-1014/",
+        "evidence": "Saved ALFAGLASS material catalogue, 4 mm."
+      },
+      "visualizationNote": "Цвет на экране приблизительный. Точный оттенок согласуется по образцу."
+    },
+    {
+      "id": "lacobel-1015__standard",
+      "slug": "lacobel-1015",
+      "variant": "standard",
+      "title": "Лакобель 1015 RAL — Светлый бежевый",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#e8d9b8",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Окрашенное глянцевое стекло 4 мм. Формат листа 3210 × 2250 мм. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "source": {
+        "url": "https://alfaglass.ru/materialy/lacobel-1015/",
+        "evidence": "Saved ALFAGLASS material catalogue, 4 mm."
+      },
+      "visualizationNote": "Цвет на экране приблизительный. Точный оттенок согласуется по образцу."
+    },
+    {
+      "id": "lacobel-1236__standard",
+      "slug": "lacobel-1236",
+      "variant": "standard",
+      "title": "Лакобель 1236 REF — Коричневый светлый",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#b4a18c",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Окрашенное глянцевое стекло 4 мм. Формат листа 3210 × 2250 мм. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "source": {
+        "url": "https://alfaglass.ru/materialy/lacobel-1236/",
+        "evidence": "Saved ALFAGLASS material catalogue, 4 mm."
+      },
+      "visualizationNote": "Цвет на экране приблизительный. Точный оттенок согласуется по образцу."
+    },
+    {
+      "id": "lacobel-5001__standard",
+      "slug": "lacobel-5001",
+      "variant": "standard",
+      "title": "Лакобель 5001 REF — Радужный голубой",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#91adb5",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Окрашенное глянцевое стекло 4 мм. Формат листа 3210 × 2250 мм. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "source": {
+        "url": "https://alfaglass.ru/materialy/lacobel-5001/",
+        "evidence": "Saved ALFAGLASS material catalogue, 4 mm."
+      },
+      "visualizationNote": "Цвет на экране приблизительный. Точный оттенок согласуется по образцу."
+    },
+    {
+      "id": "lacobel-7000__standard",
+      "slug": "lacobel-7000",
+      "variant": "standard",
+      "title": "Лакобель 7000 REF — Синяя тень",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#788d98",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Окрашенное глянцевое стекло 4 мм. Формат листа 3210 × 2250 мм. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "source": {
+        "url": "https://alfaglass.ru/materialy/lacobel-7000/",
+        "evidence": "Saved ALFAGLASS material catalogue, 4 mm."
+      },
+      "visualizationNote": "Цвет на экране приблизительный. Точный оттенок согласуется по образцу."
+    },
+    {
+      "id": "lacobel-7013__standard",
+      "slug": "lacobel-7013",
+      "variant": "standard",
+      "title": "Лакобель 7013 REF — Натуральный коричневый",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#60594d",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Окрашенное глянцевое стекло 4 мм. Формат листа 3210 × 2250 мм. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "source": {
+        "url": "https://alfaglass.ru/materialy/lacobel-7013/",
+        "evidence": "Saved ALFAGLASS material catalogue, 4 mm."
+      },
+      "visualizationNote": "Цвет на экране приблизительный. Точный оттенок согласуется по образцу."
+    },
+    {
+      "id": "lacobel-7016__standard",
+      "slug": "lacobel-7016",
+      "variant": "standard",
+      "title": "Лакобель 7016 REF — Природный чёрный",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#383e42",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Окрашенное глянцевое стекло 4 мм. Формат листа 3210 × 2250 мм. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "source": {
+        "url": "https://alfaglass.ru/materialy/lacobel-7016/",
+        "evidence": "Saved ALFAGLASS material catalogue, 4 mm."
+      },
+      "visualizationNote": "Цвет на экране приблизительный. Точный оттенок согласуется по образцу."
+    },
+    {
+      "id": "lacobel-7035__standard",
+      "slug": "lacobel-7035",
+      "variant": "standard",
+      "title": "Лакобель 7035 RAL — Серый классический",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#c5c7c4",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Окрашенное глянцевое стекло 4 мм. Формат листа 3210 × 2250 мм. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "source": {
+        "url": "https://alfaglass.ru/materialy/lacobel-7035/",
+        "evidence": "Saved ALFAGLASS material catalogue, 4 mm."
+      },
+      "visualizationNote": "Цвет на экране приблизительный. Точный оттенок согласуется по образцу."
+    },
+    {
+      "id": "lacobel-8815__standard",
+      "slug": "lacobel-8815",
+      "variant": "standard",
+      "title": "Лакобель 8815 RAL — Терракотовый",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#a4513d",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Окрашенное глянцевое стекло 4 мм. Формат листа 3210 × 2250 мм. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "source": {
+        "url": "https://alfaglass.ru/materialy/lacobel-8815/",
+        "evidence": "Saved ALFAGLASS material catalogue, 4 mm."
+      },
+      "visualizationNote": "Цвет на экране приблизительный. Точный оттенок согласуется по образцу."
+    },
+    {
+      "id": "lacobel-9003__standard",
+      "slug": "lacobel-9003",
+      "variant": "standard",
+      "title": "Лакобель 9003 RAL — Насыщенный белый",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#f7f8f4",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Окрашенное глянцевое стекло 4 мм. Формат листа 3210 × 2250 мм. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "source": {
+        "url": "https://alfaglass.ru/materialy/lacobel-9003/",
+        "evidence": "Saved ALFAGLASS material catalogue, 4 mm."
+      },
+      "visualizationNote": "Цвет на экране приблизительный. Точный оттенок согласуется по образцу."
+    },
+    {
+      "id": "lacobel-9005__standard",
+      "slug": "lacobel-9005",
+      "variant": "standard",
+      "title": "Лакобель 9005 RAL — Чёрный классический",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#141619",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Окрашенное глянцевое стекло 4 мм. Формат листа 3210 × 2250 мм. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "source": {
+        "url": "https://alfaglass.ru/materialy/lacobel-9005/",
+        "evidence": "Saved ALFAGLASS material catalogue, 4 mm."
+      },
+      "visualizationNote": "Цвет на экране приблизительный. Точный оттенок согласуется по образцу."
+    },
+    {
+      "id": "lacobel-9010__standard",
+      "slug": "lacobel-9010",
+      "variant": "standard",
+      "title": "Лакобель 9010 RAL — Белый неяркий",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#e9e8da",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Окрашенное глянцевое стекло 4 мм. Формат листа 3210 × 2250 мм. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "source": {
+        "url": "https://alfaglass.ru/materialy/lacobel-9010/",
+        "evidence": "Saved ALFAGLASS material catalogue, 4 mm."
+      },
+      "visualizationNote": "Цвет на экране приблизительный. Точный оттенок согласуется по образцу."
+    },
+    {
+      "id": "matelac-1013-agc__standard",
+      "slug": "matelac-1013-agc",
+      "variant": "standard",
+      "title": "Мателак 1013 RAL (AGC) — Жемчужный бежевый",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#e7dfcb",
+      "matte": true,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Матовое по лицу окрашенное стекло 4 мм. Формат листа 3210 × 2250 мм. Наличие уточняйте у менеджера. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "source": {
+        "url": "https://alfaglass.ru/materialy/matelac-1013-agc/",
+        "evidence": "Saved ALFAGLASS material catalogue, 4 mm."
+      },
+      "visualizationNote": "Цвет на экране приблизительный. Точный оттенок согласуется по образцу."
+    },
+    {
+      "id": "matelac-8815-agc__standard",
+      "slug": "matelac-8815-agc",
+      "variant": "standard",
+      "title": "Мателак 8815 RAL (AGC) — Терракотовый",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#a4513d",
+      "matte": true,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Матовое по лицу окрашенное стекло 4 мм. Формат листа 3210 × 2250 мм. Наличие уточняйте у менеджера. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "source": {
+        "url": "https://alfaglass.ru/materialy/matelac-8815-agc/",
+        "evidence": "Saved ALFAGLASS material catalogue, 4 mm."
+      },
+      "visualizationNote": "Цвет на экране приблизительный. Точный оттенок согласуется по образцу."
+    },
+    {
+      "id": "matelac-9005-agc__standard",
+      "slug": "matelac-9005-agc",
+      "variant": "standard",
+      "title": "Мателак 9005 RAL (AGC) — Чёрный классический",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#141619",
+      "matte": true,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Матовое по лицу окрашенное стекло 4 мм. Формат листа 3210 × 2250 мм. Наличие уточняйте у менеджера. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "source": {
+        "url": "https://alfaglass.ru/materialy/matelac-9005-agc/",
+        "evidence": "Saved ALFAGLASS material catalogue, 4 mm."
+      },
+      "visualizationNote": "Цвет на экране приблизительный. Точный оттенок согласуется по образцу."
+    },
+    {
+      "id": "matelac-9006-agc__standard",
+      "slug": "matelac-9006-agc",
+      "variant": "standard",
+      "title": "Мателак 9006 RAL (AGC) — Серый металлик",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#a6aaa9",
+      "matte": true,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Матовое по лицу окрашенное стекло 4 мм. Формат листа 3210 × 2250 мм. Наличие уточняйте у менеджера. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "source": {
+        "url": "https://alfaglass.ru/materialy/matelac-9006-agc/",
+        "evidence": "Saved ALFAGLASS material catalogue, 4 mm."
+      },
+      "visualizationNote": "Цвет на экране приблизительный. Точный оттенок согласуется по образцу."
+    },
+    {
+      "id": "matelac-9010-agc__standard",
+      "slug": "matelac-9010-agc",
+      "variant": "standard",
+      "title": "Мателак 9010 RAL (AGC) — Белый неяркий",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#e9e8da",
+      "matte": true,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Матовое по лицу окрашенное стекло 4 мм. Формат листа 3210 × 2250 мм.  Акция. Условия уточняйте у менеджера. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "source": {
+        "url": "https://alfaglass.ru/materialy/matelac-9010-agc/",
+        "evidence": "Saved ALFAGLASS material catalogue, 4 mm."
+      },
+      "visualizationNote": "Цвет на экране приблизительный. Точный оттенок согласуется по образцу."
+    },
+    {
+      "id": "matelac-1236-agc__standard",
+      "slug": "matelac-1236-agc",
+      "variant": "standard",
+      "title": "Мателак 1236 REF (AGC) — Коричневый светлый",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#b4a18c",
+      "matte": true,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Матовое по лицу окрашенное стекло 4 мм. Формат листа 3210 × 2250 мм. Наличие уточняйте у менеджера. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "source": {
+        "url": "https://alfaglass.ru/materialy/matelac-1236-agc/",
+        "evidence": "Saved ALFAGLASS material catalogue, 4 mm."
+      },
+      "visualizationNote": "Цвет на экране приблизительный. Точный оттенок согласуется по образцу."
+    },
+    {
+      "id": "matelac-7000-agc__standard",
+      "slug": "matelac-7000-agc",
+      "variant": "standard",
+      "title": "Мателак 7000 REF (AGC) — Серо-голубой",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#788d98",
+      "matte": true,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Матовое по лицу окрашенное стекло 4 мм. Формат листа 3210 × 2250 мм. Наличие уточняйте у менеджера. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "source": {
+        "url": "https://alfaglass.ru/materialy/matelac-7000-agc/",
+        "evidence": "Saved ALFAGLASS material catalogue, 4 mm."
+      },
+      "visualizationNote": "Цвет на экране приблизительный. Точный оттенок согласуется по образцу."
+    },
+    {
+      "id": "matelac-7013-agc__standard",
+      "slug": "matelac-7013-agc",
+      "variant": "standard",
+      "title": "Мателак 7013 REF (AGC) — Натуральный коричневый",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#60594d",
+      "matte": true,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Матовое по лицу окрашенное стекло 4 мм. Формат листа 3210 × 2250 мм.  Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "source": {
+        "url": "https://alfaglass.ru/materialy/matelac-7013-agc/",
+        "evidence": "Saved ALFAGLASS material catalogue, 4 mm."
+      },
+      "visualizationNote": "Цвет на экране приблизительный. Точный оттенок согласуется по образцу."
+    },
+    {
+      "id": "matelac-1013-poland__standard",
+      "slug": "matelac-1013-poland",
+      "variant": "standard",
+      "title": "Мателак 1013 RAL (Польша) — Жемчужный бежевый",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#e7dfcb",
+      "matte": true,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Матовое по лицу окрашенное стекло 4 мм. Формат листа 3210 × 2250 мм. Наличие уточняйте у менеджера. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "source": {
+        "url": "https://alfaglass.ru/materialy/matelac-1013-poland/",
+        "evidence": "Saved ALFAGLASS material catalogue, 4 mm."
+      },
+      "visualizationNote": "Цвет на экране приблизительный. Точный оттенок согласуется по образцу."
+    },
+    {
+      "id": "matelac-9003__standard",
+      "slug": "matelac-9003",
+      "variant": "standard",
+      "title": "Мателак 9003 RAL — Ярко-белый",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#f7f8f4",
+      "matte": true,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Матовое по лицу окрашенное стекло 4 мм. Формат листа 3210 × 2250 мм.  Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "source": {
+        "url": "https://alfaglass.ru/materialy/matelac-9003/",
+        "evidence": "Saved ALFAGLASS material catalogue, 4 mm."
+      },
+      "visualizationNote": "Цвет на экране приблизительный. Точный оттенок согласуется по образцу."
     }
   ],
   "confirmationSource": "../../../docs/material-confirmations.json",
