@@ -31,22 +31,34 @@ export function studioBackdrop(){
 }
 // Physical studio surround: included in the transmission pass, unlike a flat
 // background colour. The diagonal soft bands reveal both rib orientations.
-export function refractionSurround(width,height){
- const radius=Math.max(width,height)*.8+400,wallHeight=Math.max(height*5,3000);
+export function refractionSurround(width,height,kind=0){
+ const g=new T.Group();g.name='refraction-studio-surround';
+ const radius=Math.max(width,height)*2.8+300,wallHeight=Math.max(height*3,2200);
  const canvas=document.createElement('canvas');canvas.width=512;canvas.height=512;
- const ctx=canvas.getContext('2d'),data=ctx.createImageData(512,512);
+ const ctx=canvas.getContext('2d');
+ const palettes=[['#dce3e4','#a5b8be','#c6ced1'],['#e6dfd2','#b5aa98','#d1c6b5'],['#d9e1df','#8ca8a0','#bdcfca'],['#dddce6','#a5a1b8','#c7c4d3']];
+ const colors=palettes[kind].map(c=>[parseInt(c.slice(1,3),16),parseInt(c.slice(3,5),16),parseInt(c.slice(5,7),16)]),data=ctx.createImageData(512,512);
  for(let y=0;y<512;y++)for(let x=0;x<512;x++){
-  const wave=.5+.5*Math.sin(2*Math.PI*(x+y)/512);
-  const i=(y*512+x)*4;
-  data.data[i]=155+wave*66;data.data[i+1]=169+wave*55;
-  data.data[i+2]=179+wave*43;data.data[i+3]=255;
+  const wave=.5+.5*Math.cos((x+y)*Math.PI*2/512),mix=kind===0?wave:Math.pow(wave,3),i=(y*512+x)*4;
+  for(let c=0;c<3;c++)data.data[i+c]=colors[0][c]*(1-mix)+colors[1][c]*mix;data.data[i+3]=255;
  }
  ctx.putImageData(data,0,0);
- const map=new T.CanvasTexture(canvas);map.colorSpace=T.SRGBColorSpace;
- map.wrapS=map.wrapT=T.RepeatWrapping;map.repeat.set(2*Math.PI*radius/350,wallHeight/350);
- const mesh=new T.Mesh(new T.CylinderGeometry(radius,radius,wallHeight,96,1,true),
-  new T.MeshBasicMaterial({map,side:T.BackSide,toneMapped:false}));
- mesh.name='refraction-studio-surround';return mesh;
+ const map=new T.CanvasTexture(canvas);map.colorSpace=T.SRGBColorSpace;map.wrapS=map.wrapT=T.RepeatWrapping;map.repeat.set(kind===0?12:3,2);
+ const material=new T.MeshBasicMaterial({map,side:T.BackSide});
+ if(kind===0)g.add(new T.Mesh(new T.CylinderGeometry(radius,radius,wallHeight,96,1,true),material));
+ else{
+  const x=radius*(kind===1?1.35:1),z=radius*(kind===1?.75:1);
+  const points=kind===3?[[-x,-z],[x,-z],[x*.62,z],[-x*.62,z]]:[[-x,-z],[x,-z],[x,z],[-x,z]];
+  for(let i=0;i<4;i++){
+   const a=points[i],b=points[(i+1)%4],len=Math.hypot(b[0]-a[0],b[1]-a[1]);
+   const wall=new T.Mesh(new T.PlaneGeometry(len,wallHeight),material);wall.position.set((a[0]+b[0])/2,0,(a[1]+b[1])/2);wall.rotation.y=Math.atan2(-(b[1]-a[1]),b[0]-a[0])+Math.PI;g.add(wall);
+  }
+ }
+ const surface=(y,color,ceiling)=>{const m=new T.Mesh(new T.PlaneGeometry(radius*4,radius*4),new T.MeshStandardMaterial({color,roughness:.9}));m.rotation.x=ceiling?Math.PI/2:-Math.PI/2;m.position.y=y;g.add(m);};
+ surface(-wallHeight/2,'#b2b2ad',false);surface(wallHeight/2,'#e9e5df',true);
+ const panel=new T.Mesh(new T.PlaneGeometry(radius*.8,radius*.45),new T.MeshBasicMaterial({color:kind%2?'#ffe4bd':'#e1f1ff'}));panel.rotation.x=Math.PI/2;panel.position.set(0,wallHeight/2-2,0);g.add(panel);
+ const lamp=new T.PointLight(kind%2?0xffe4bd:0xe1f1ff,wallHeight*wallHeight*.035,wallHeight*4,2);lamp.position.set(0,wallHeight/2-40,0);g.add(lamp);
+ return g;
 }
 function reliefTexture(pattern){
   const n=128,bytes=new Uint8Array(n*n*4);
