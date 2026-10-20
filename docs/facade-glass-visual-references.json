@@ -57,5 +57,25 @@
       "stopsol-phoenix-gray"
     ],
     "note": "Live sample renders: neutral, bronze and grey reflective glass. Coating is an artistic metalness/transmission approximation, not measured reflectance."
+  },
+  "raywallApproval": {
+    "date": "2026-10-20",
+    "slug": "raywall90",
+    "status": "accepted-current-preview",
+    "baselineCommit": "c348db6",
+    "scope": "Structure and blur of Raywall 90T in the local facade configurator; do not retune without owner request. Not approval of other ribbed materials.",
+    "pitchMm": 7.142857142857143,
+    "thicknessMm": 4,
+    "normalSlope": 0.46,
+    "normalShape": 3,
+    "microRelief": 0.008,
+    "roughness": 0.08,
+    "transmission": 1,
+    "specularIntensity": 0,
+    "envMapIntensity": 0,
+    "screenRefractionDistanceMm": 75,
+    "screenDeviationClamp": 0.35,
+    "contactTransitionMm": 3,
+    "note": "Illustrative inspection mode, not measured optical properties. Preserve contact-zone visibility and glare-free appearance."
   }
 }
