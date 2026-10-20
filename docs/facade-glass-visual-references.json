@@ -215,6 +215,7 @@
     "date": "2026-10-20",
     "reference": "Saved ALFAGLASS silver, Crystalvision and tinted mirror catalogue profiles.",
     "method": "Uniform approximate catalogue hue; neutral planar reflection modulates brightness by at most 12%. Spatial rainbow gradient removed at owner request.",
-    "status": "Local preview awaiting owner review."
+    "status": "Local preview awaiting owner review.",
+    "back": "Owner specification 2026-10-20: opaque matte RAL 7024 backing, approximate screen RGB #474a51; separate back face, no mirror reflection."
   }
 }

@@ -6,10 +6,10 @@ import {sections,svgSection,sectionNotes} from './sections.js';
 import {railGeometry,sampleGeometry} from './profile-mesh.js';
 import {profileMetal} from './metal.js';
 import {FacadeProject} from './project.js?v=20261015-groups';
-import {transparentSlugs,transparentItems,matteSlugs,matteItems,stopsolSlugs,stopsolItems,reedSlugs,reedItems,patternedSlugs,patternedItems,lacobelSlugs,lacobelItems,matelacSlugs,matelacItems,mirrorSlugs,mirrorItems} from './glass-groups.js?v=mirrors-uniform-20261020';
+import {transparentSlugs,transparentItems,matteSlugs,matteItems,stopsolSlugs,stopsolItems,reedSlugs,reedItems,patternedSlugs,patternedItems,lacobelSlugs,lacobelItems,matelacSlugs,matelacItems,mirrorSlugs,mirrorItems} from './glass-groups.js?v=mirror-back-20261020';
 import {ProjectConfirmation} from './confirmation.js';
-import {studioEnvironment,studioBackdrop,refractionSurround,moruOptics,estriadoOptics,glassMaterial,glassEdgeMaterial,stopsolGlassOptics,sampleCabinet,satinContactMap} from './glass-render.js?v=mirrors-uniform-20261020';
-const catalogue=await fetch('./glass-catalog.json?v=mirrors-uniform-20261020').then(r=>{if(!r.ok)throw new Error('Не удалось загрузить каталог стекла');return r.json();});
+import {studioEnvironment,studioBackdrop,refractionSurround,moruOptics,estriadoOptics,glassMaterial,glassEdgeMaterial,stopsolGlassOptics,sampleCabinet,satinContactMap} from './glass-render.js?v=mirror-back-20261020';
+const catalogue=await fetch('./glass-catalog.json?v=mirror-back-20261020').then(r=>{if(!r.ok)throw new Error('Не удалось загрузить каталог стекла');return r.json();});
 const glassItems=Object.fromEntries(catalogue.items.map(m=>[m.id,m]));
 Object.keys(glasses).forEach(k=>delete glasses[k]);
 glassItems.none={id:'none',title:'Без наполнения',color:'none',mirror:false};
@@ -69,7 +69,10 @@ function buildFacade(s){
 
  const edge=glassEdgeMaterial(glassItems[s.glass],gm);
  if(glassItems[s.glass].matte&&!glassItems[s.glass].opaque&&b>20&&b>p.delta/2)gm.roughnessMap=satinContactMap(w-p.delta,h-p.delta,b-p.delta/2);
- box(w-p.delta,h-p.delta,4,0,0,q.glassY+2-d,edge?[edge,edge,edge,edge,gm,gm]:gm);
+ // Box face order: +X, -X, +Y, -Y, front +Z, back -Z.
+ const mirrorBack=glassItems[s.glass].mirror?new T.MeshStandardMaterial({color:'#474a51',metalness:0,roughness:.85}):null;
+ const glassFaces=mirrorBack?[edge||gm,edge||gm,edge||gm,edge||gm,gm,mirrorBack]:edge?[edge,edge,edge,edge,gm,gm]:gm;
+ box(w-p.delta,h-p.delta,4,0,0,q.glassY+2-d,glassFaces);
  const moruCoating=moruOptics[glassItems[s.glass].slug]?.coating;
  const glossyPaint=glassItems[s.glass].slug.startsWith('lacobel-');
  if(stopsolGlassOptics[glassItems[s.glass].slug]||moruCoating||glossyPaint){
