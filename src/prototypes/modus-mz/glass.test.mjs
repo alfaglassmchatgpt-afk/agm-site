@@ -16,6 +16,17 @@ test('physical texture pitch does not stretch with facade size or orientation',(
   assert.deepEqual(textureRepeat(600,200,2,'vertical'),[300,100]);
   assert.deepEqual(textureRepeat(300,200,2,'horizontal'),[100,150]);
 });
+test('MORU owner pitch is retained without assigning ribs to flat legacy names',async()=>{
+ const refs=await read('../../../docs/facade-glass-visual-references.json');
+ for(const slug of refs.moruFlutesPitch.slugs){
+  const item=catalog.items.find(i=>i.slug===slug);assert.ok(item);assert.equal(item.pitch,12);
+ }
+ assert.equal(catalog.items.find(i=>i.slug==='moru-bronze').pitch,null);
+ const {moruNormalTexture}=await import('./glass-render.js');
+ for(const direction of ['vertical','horizontal']){
+  const t=moruNormalTexture(360,600,direction);assert.deepEqual(t.repeat.toArray(),[30,50]);t.dispose();
+ }
+});
 test('Raywall preserves rib pitch and rotates normal direction without stretching',async()=>{
  const {raywallNormalTexture,glassEdgeMaterial}=await import('./glass-render.js');
  const pitch=100/14,vertical=raywallNormalTexture(320,570,pitch,'vertical'),horizontal=raywallNormalTexture(320,570,pitch,'horizontal');

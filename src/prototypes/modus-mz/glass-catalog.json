@@ -138,7 +138,7 @@
       "mirror": false,
       "color": "#d7eeea",
       "matte": false,
-      "pitch": null,
+      "pitch": 12,
       "pattern": null,
       "texturePending": true,
       "note": "Закалка, триплексование, тонирование плёнкой и окрашивание доступны. Алюминиевый фасад — только 4 мм; профильная система для дверей и перегородок — 8 мм. Сочетания обработок и конструкцию согласуем по проекту.",
@@ -148,7 +148,9 @@
         "thicknesses": [
           4
         ]
-      }
+      },
+      "pitchConfirmedBy": "owner",
+      "pitchConfirmedAt": "2026-10-20"
     },
     {
       "id": "sostarennye-zerkala-k1__standard",
@@ -243,10 +245,12 @@
       "mirror": false,
       "color": "#b69c73",
       "matte": false,
-      "pitch": null,
+      "pitch": 12,
       "pattern": null,
       "texturePending": true,
-      "note": "Закалка, триплексование, тонирование плёнкой и окрашивание доступны. Алюминиевый фасад — только 4 мм; профильная система для дверей и перегородок — 8 мм. Сочетания обработок и конструкцию согласуем по проекту."
+      "note": "Закалка, триплексование, тонирование плёнкой и окрашивание доступны. Алюминиевый фасад — только 4 мм; профильная система для дверей и перегородок — 8 мм. Сочетания обработок и конструкцию согласуем по проекту.",
+      "pitchConfirmedBy": "owner",
+      "pitchConfirmedAt": "2026-10-20"
     },
     {
       "id": "flutes-moru-ultra__standard",
@@ -257,10 +261,12 @@
       "mirror": false,
       "color": "#d7eeea",
       "matte": false,
-      "pitch": null,
+      "pitch": 12,
       "pattern": null,
       "texturePending": true,
-      "note": "Закалка, триплексование, тонирование плёнкой и окрашивание доступны. Алюминиевый фасад — только 4 мм; профильная система для дверей и перегородок — 8 мм. Сочетания обработок и конструкцию согласуем по проекту."
+      "note": "Закалка, триплексование, тонирование плёнкой и окрашивание доступны. Алюминиевый фасад — только 4 мм; профильная система для дверей и перегородок — 8 мм. Сочетания обработок и конструкцию согласуем по проекту.",
+      "pitchConfirmedBy": "owner",
+      "pitchConfirmedAt": "2026-10-20"
     },
     {
       "id": "flutes-moru-grey__standard",
@@ -271,10 +277,12 @@
       "mirror": false,
       "color": "#87949c",
       "matte": false,
-      "pitch": null,
+      "pitch": 12,
       "pattern": null,
       "texturePending": true,
-      "note": "Закалка, триплексование, тонирование плёнкой и окрашивание доступны. Алюминиевый фасад — только 4 мм; профильная система для дверей и перегородок — 8 мм. Сочетания обработок и конструкцию согласуем по проекту."
+      "note": "Закалка, триплексование, тонирование плёнкой и окрашивание доступны. Алюминиевый фасад — только 4 мм; профильная система для дверей и перегородок — 8 мм. Сочетания обработок и конструкцию согласуем по проекту.",
+      "pitchConfirmedBy": "owner",
+      "pitchConfirmedAt": "2026-10-20"
     },
     {
       "id": "flutes-moru-ultra-mat__standard",
@@ -295,7 +303,9 @@
         "thicknesses": [
           4
         ]
-      }
+      },
+      "pitchConfirmedBy": "owner",
+      "pitchConfirmedAt": "2026-10-20"
     },
     {
       "id": "moru-bronze-mat__standard",
@@ -656,7 +666,7 @@
       "mirror": false,
       "color": "#d7eeea",
       "matte": false,
-      "pitch": null,
+      "pitch": 12,
       "pattern": null,
       "texturePending": true,
       "note": "Закалка, триплексование, тонирование плёнкой и окрашивание доступны. Алюминиевый фасад — только 4 мм; профильная система для дверей и перегородок — 8 мм. Сочетания обработок и конструкцию согласуем по проекту.",
@@ -666,7 +676,9 @@
         "thicknesses": [
           4
         ]
-      }
+      },
+      "pitchConfirmedBy": "owner",
+      "pitchConfirmedAt": "2026-10-20"
     },
     {
       "id": "moru-ultra__standard",
@@ -677,9 +689,9 @@
       "mirror": false,
       "color": "#d7eeea",
       "matte": false,
-      "pitch": null,
-      "pattern": null,
-      "texturePending": true,
+      "pitch": 12,
+      "pattern": "reed",
+      "texturePending": false,
       "note": "Закалка, триплексование, тонирование плёнкой и окрашивание доступны. Алюминиевый фасад — только 4 мм; профильная система для дверей и перегородок — 8 мм. Сочетания обработок и конструкцию согласуем по проекту.",
       "verifiedSource": {
         "url": "https://alfaglass.ru/materialy/moru-ultra/",
@@ -687,7 +699,9 @@
         "thicknesses": [
           4
         ]
-      }
+      },
+      "pitchConfirmedBy": "owner",
+      "pitchConfirmedAt": "2026-10-20"
     },
     {
       "id": "moru-bronze-toned__standard",
@@ -698,7 +712,7 @@
       "mirror": false,
       "color": "#b69c73",
       "matte": false,
-      "pitch": null,
+      "pitch": 12,
       "pattern": null,
       "texturePending": false,
       "note": "Закалка, триплексование, тонирование плёнкой и окрашивание доступны. Алюминиевый фасад — только 4 мм; профильная система для дверей и перегородок — 8 мм. Сочетания обработок и конструкцию согласуем по проекту.",
@@ -708,7 +722,9 @@
         "thicknesses": [
           4
         ]
-      }
+      },
+      "pitchConfirmedBy": "owner",
+      "pitchConfirmedAt": "2026-10-20"
     },
     {
       "id": "estriado__standard",
@@ -803,7 +819,7 @@
       "mirror": false,
       "color": "#b69c73",
       "matte": false,
-      "pitch": null,
+      "pitch": 12,
       "pattern": null,
       "texturePending": true,
       "note": "Магнетронное покрытие на рифлёной стороне. Закалка недоступна. Алюминиевый фасад — только 4 мм; профильная система — 8 мм. Сочетания обработок согласуются по проекту.",
@@ -813,7 +829,9 @@
         "thicknesses": [
           4
         ]
-      }
+      },
+      "pitchConfirmedBy": "owner",
+      "pitchConfirmedAt": "2026-10-20"
     },
     {
       "id": "moru-magnetron-grey__standard",
@@ -824,7 +842,7 @@
       "mirror": false,
       "color": "#87949c",
       "matte": false,
-      "pitch": null,
+      "pitch": 12,
       "pattern": null,
       "texturePending": true,
       "note": "Магнетронное покрытие на рифлёной стороне. Закалка недоступна. Алюминиевый фасад — только 4 мм; профильная система — 8 мм. Сочетания обработок согласуются по проекту.",
@@ -834,7 +852,9 @@
         "thicknesses": [
           4
         ]
-      }
+      },
+      "pitchConfirmedBy": "owner",
+      "pitchConfirmedAt": "2026-10-20"
     },
     {
       "id": "sostarennye-zerkala-k1-gold__standard",
@@ -1041,13 +1061,15 @@
       "opaque": false,
       "color": "#d7eeea",
       "matte": false,
-      "pitch": null,
+      "pitch": 12,
       "pattern": null,
       "texturePending": true,
       "note": "Закалка, триплексование, тонирование плёнкой и окрашивание доступны. Алюминиевый фасад — только 4 мм; профильная система для дверей и перегородок — 8 мм. Сочетания обработок и конструкцию согласуем по проекту.",
       "confirmedBy": "owner",
       "confirmedAt": "2026-10-15",
-      "visualizationNote": "Цвет и оптика ориентировочные; конкретный образец согласуется отдельно."
+      "visualizationNote": "Цвет и оптика ориентировочные; конкретный образец согласуется отдельно.",
+      "pitchConfirmedBy": "owner",
+      "pitchConfirmedAt": "2026-10-20"
     },
     {
       "id": "zerkalo-gezella__standard",
@@ -1223,7 +1245,7 @@
       "opaque": false,
       "color": "#87949c",
       "matte": false,
-      "pitch": null,
+      "pitch": 12,
       "pattern": null,
       "texturePending": true,
       "note": "Точная фактура пока не воспроизведена; цвет и прозрачность ориентировочные.",
@@ -1234,7 +1256,9 @@
         "thicknesses": [
           4
         ]
-      }
+      },
+      "pitchConfirmedBy": "owner",
+      "pitchConfirmedAt": "2026-10-20"
     }
   ],
   "confirmationSource": "../../../docs/material-confirmations.json",

@@ -104,6 +104,20 @@ function raywallRefraction(mat,width,height,overlap){
   };
   mat.customProgramCacheKey=()=> 'raywall-screen-refraction-v3';
 }
+// MORU has rounded ribs rather than Raywall's broad flat facets.
+export function moruNormalTexture(width,height,direction){
+ const n=256,bytes=new Uint8Array(n*n*4),horizontal=direction==='horizontal';
+ for(let y=0;y<n;y++)for(let x=0;x<n;x++){
+  const phase=(horizontal?y:x)/n*2*Math.PI,slope=.55*Math.sin(phase);
+  const length=Math.hypot(slope,1),i=(y*n+x)*4;
+  bytes[i]=Math.round(127.5*(1+(horizontal?0:slope/length)));
+  bytes[i+1]=Math.round(127.5*(1+(horizontal?slope/length:0)));
+  bytes[i+2]=Math.round(127.5*(1+1/length));bytes[i+3]=255;
+ }
+ const map=new T.DataTexture(bytes,n,n);map.wrapS=map.wrapT=T.RepeatWrapping;
+ map.repeat.set(width/12,height/12);map.magFilter=T.LinearFilter;
+ map.minFilter=T.LinearMipmapLinearFilter;map.generateMipmaps=true;map.needsUpdate=true;return map;
+}
 // Visual presets, not measured spectral data. Millimetres match the facade geometry.
 export const clearGlassOptics={
   'float-steklo-clear-m1':{attenuation:'#a9d3b4',distance:20,edge:'#739c80'},
@@ -162,6 +176,13 @@ export function glassMaterial(item,width,height,direction,renderer,contactOverla
     mat.normalMap=raywallNormalTexture(width,height,item.pitch,direction);
     mat.normalMap.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());
     mat.normalScale.set(1,1);raywallRefraction(mat,width,height,contactOverlap);
+  }else if(item.slug==='moru-ultra'){
+    mat.color.set('#ffffff');mat.attenuationColor.set('#eef5f2');mat.attenuationDistance=500;
+    mat.roughness=.12;mat.clearcoat=0;mat.ior=1.52;
+    mat.envMapIntensity=0;mat.specularIntensity=0;mat.transmission=1;
+    mat.normalMap=moruNormalTexture(width,height,direction);
+    mat.normalMap.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());
+    mat.normalScale.set(1,1);raywallRefraction(mat,width,height,contactOverlap);
   }else if(item.pitch&&item.pattern){
     const texture=reliefTexture(item.pattern),[rx,ry]=textureRepeat(width,height,item.pitch,direction);
     texture.repeat.set(rx,ry);if(direction==='horizontal')texture.rotation=Math.PI/2;
@@ -170,6 +191,7 @@ export function glassMaterial(item,width,height,direction,renderer,contactOverla
   return mat;
 }
 export function glassEdgeMaterial(item,face){
+  if(item.slug==='moru-ultra')return new T.MeshPhysicalMaterial({color:'#e2eeea',roughness:.08,transmission:1,thickness:4,ior:1.52,specularIntensity:0,envMapIntensity:0});
   if(item.slug==='raywall90')return new T.MeshPhysicalMaterial({color:'#d3e4da',roughness:.08,transmission:1,thickness:4,ior:1.52,specularIntensity:0,envMapIntensity:0});
   const preset=clearGlassOptics[item.slug]||tintedGlassOptics[item.slug]||matteGlassOptics[item.slug]||stopsolGlassOptics[item.slug];if(!preset)return null;
   const edge=face.clone();edge.color.set(preset.edge);edge.roughness=.08;edge.transmission=.85;edge.metalness=0;return edge;

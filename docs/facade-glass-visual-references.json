@@ -77,5 +77,27 @@
     "screenDeviationClamp": 0.35,
     "contactTransitionMm": 3,
     "note": "Illustrative inspection mode, not measured optical properties. Preserve contact-zone visibility and glare-free appearance."
+  },
+  "moruFlutesPitch": {
+    "confirmedAt": "2026-10-20",
+    "confirmedBy": "owner",
+    "pitchMm": 12,
+    "scope": "All ribbed MORU and Flutes; excludes flat tinted and flat matte materials with legacy MORU slugs",
+    "slugs": [
+      "flutes-moru-bronze",
+      "flutes-moru-ultra",
+      "flutes-moru-grey",
+      "flutes-moru-ultra-mat",
+      "moru-crystal",
+      "moru-ultra",
+      "moru-bronze-toned",
+      "moru-grey",
+      "moru-magnetron-bronze",
+      "moru-magnetron-grey",
+      "tonirovannoe-v-masse-steklo-moru",
+      "riflenoe-steklo-flutes"
+    ],
+    "firstOpticalPreview": "moru-ultra",
+    "opticsApproved": false
   }
 }
