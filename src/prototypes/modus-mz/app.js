@@ -6,10 +6,10 @@ import {sections,svgSection,sectionNotes} from './sections.js';
 import {railGeometry,sampleGeometry} from './profile-mesh.js';
 import {profileMetal} from './metal.js';
 import {FacadeProject} from './project.js?v=20261015-groups';
-import {transparentSlugs,transparentItems,matteSlugs,matteItems,stopsolSlugs,stopsolItems,reedSlugs,reedItems,patternedSlugs,patternedItems,lacobelSlugs,lacobelItems,matelacSlugs,matelacItems} from './glass-groups.js?v=painted-20261020';
+import {transparentSlugs,transparentItems,matteSlugs,matteItems,stopsolSlugs,stopsolItems,reedSlugs,reedItems,patternedSlugs,patternedItems,lacobelSlugs,lacobelItems,matelacSlugs,matelacItems} from './glass-groups.js?v=painted-gloss-20261020';
 import {ProjectConfirmation} from './confirmation.js';
-import {studioEnvironment,studioBackdrop,refractionSurround,moruOptics,estriadoOptics,glassMaterial,glassEdgeMaterial,stopsolGlassOptics,sampleCabinet,satinContactMap} from './glass-render.js?v=painted-20261020';
-const catalogue=await fetch('./glass-catalog.json?v=painted-20261020').then(r=>{if(!r.ok)throw new Error('Не удалось загрузить каталог стекла');return r.json();});
+import {studioEnvironment,studioBackdrop,refractionSurround,moruOptics,estriadoOptics,glassMaterial,glassEdgeMaterial,stopsolGlassOptics,sampleCabinet,satinContactMap} from './glass-render.js?v=painted-gloss-20261020';
+const catalogue=await fetch('./glass-catalog.json?v=painted-gloss-20261020').then(r=>{if(!r.ok)throw new Error('Не удалось загрузить каталог стекла');return r.json();});
 const glassItems=Object.fromEntries(catalogue.items.map(m=>[m.id,m]));
 Object.keys(glasses).forEach(k=>delete glasses[k]);
 glassItems.none={id:'none',title:'Без наполнения',color:'none',mirror:false};
@@ -71,9 +71,11 @@ function buildFacade(s){
  if(glassItems[s.glass].matte&&!glassItems[s.glass].opaque&&b>20&&b>p.delta/2)gm.roughnessMap=satinContactMap(w-p.delta,h-p.delta,b-p.delta/2);
  box(w-p.delta,h-p.delta,4,0,0,q.glassY+2-d,edge?[edge,edge,edge,edge,gm,gm]:gm);
  const moruCoating=moruOptics[glassItems[s.glass].slug]?.coating;
- if(stopsolGlassOptics[glassItems[s.glass].slug]||moruCoating){
-   const coating=new Reflector(new T.PlaneGeometry(w-p.delta,h-p.delta),{textureWidth:1024,textureHeight:1024,color:moruCoating||stopsolGlassOptics[glassItems[s.glass].slug].coating,clipBias:.003});
+ const glossyPaint=glassItems[s.glass].slug.startsWith('lacobel-');
+ if(stopsolGlassOptics[glassItems[s.glass].slug]||moruCoating||glossyPaint){
+   const coating=new Reflector(new T.PlaneGeometry(w-p.delta,h-p.delta),{textureWidth:1024,textureHeight:1024,color:glossyPaint?'#ffffff':moruCoating||stopsolGlassOptics[glassItems[s.glass].slug].coating,clipBias:.003});
    coating.material.fragmentShader=coating.material.fragmentShader.replace('blendOverlay( base.rgb, color ), 1.0','blendOverlay( base.rgb, color ), 0.32');
+   if(glossyPaint)coating.material.fragmentShader=coating.material.fragmentShader.replace('blendOverlay( base.rgb, color ), 0.32','base.rgb, 0.18');
    if(moruCoating){
     coating.material.vertexShader=coating.material.vertexShader.replace('varying vec4 vUv;', 'varying vec4 vUv; varying vec2 ribUV;').replace('void main() {','void main() { ribUV = uv;');
     coating.material.fragmentShader=coating.material.fragmentShader.replace('varying vec4 vUv;', 'varying vec4 vUv; varying vec2 ribUV;')
