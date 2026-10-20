@@ -122,10 +122,14 @@ function raywallRefraction(mat,width,height,overlap,pitch,direction){
        deviation = clamp(deviation,vec3(-0.35),vec3(0.35));
        float viewFade = smoothstep(0.15,0.65,abs(dot(flatNormal,v)));
        vec2 edgeDistance = min(ribUv,1.0-ribUv)*ribPanelSize;
-       float contactFade = smoothstep(ribContact,ribContact+3.0,min(edgeDistance.x,edgeDistance.y));
-       vec3 refractedRayExit = position + transmissionRay + deviation * 75.0 * viewFade * contactFade;`
+       float contactFade = smoothstep(ribContact+2.0,ribContact+12.0,min(edgeDistance.x,edgeDistance.y));
+       vec3 offset = (transmissionRay + deviation * 75.0 * viewFade) * contactFade;
+       // Do not sample the bright metal rail from the clear opening or smear its edge.
+       vec2 safeTravel = max(edgeDistance-vec2(ribContact+1.5),vec2(0.0));
+       offset.xy = clamp(offset.xy,-safeTravel,safeTravel);
+       vec3 refractedRayExit = position + offset;`
     );
-    shader.fragmentShader=shader.fragmentShader.replace('#include <transmission_pars_fragment>',chunk);
+    shader.fragmentShader=shader.fragmentShader.replace('#include <transmission_pars_fragment>',chunk.replaceAll('getTransmissionSample( refractionCoords, roughness,', 'getTransmissionSample( refractionCoords, roughness * contactFade,'));
     // Restrained illustrative relief also over a contacting rail, without specular glare.
     // Screen derivative fades subpixel ribs to avoid moire when zooming out.
     shader.fragmentShader=shader.fragmentShader.replace('#include <opaque_fragment>',`
@@ -136,7 +140,7 @@ function raywallRefraction(mat,width,height,overlap,pitch,direction){
       #include <opaque_fragment>
     `);
   };
-  mat.customProgramCacheKey=()=> 'rib-inspection-contrast-v4';
+  mat.customProgramCacheKey=()=> 'rib-clear-contact-v5';
 }
 // MORU has rounded ribs rather than Raywall's broad flat facets.
 export function moruNormalTexture(width,height,direction){
