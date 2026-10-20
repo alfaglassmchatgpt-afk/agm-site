@@ -6,10 +6,10 @@ import {sections,svgSection,sectionNotes} from './sections.js';
 import {railGeometry,sampleGeometry} from './profile-mesh.js';
 import {profileMetal} from './metal.js';
 import {FacadeProject} from './project.js?v=20261015-groups';
-import {transparentSlugs,transparentItems,matteSlugs,matteItems,stopsolSlugs,stopsolItems,reedSlugs,reedItems,patternedSlugs,patternedItems,lacobelSlugs,lacobelItems,matelacSlugs,matelacItems,mirrorSlugs,mirrorItems} from './glass-groups.js?v=surrounds-20261020';
+import {transparentSlugs,transparentItems,matteSlugs,matteItems,stopsolSlugs,stopsolItems,reedSlugs,reedItems,patternedSlugs,patternedItems,lacobelSlugs,lacobelItems,matelacSlugs,matelacItems,mirrorSlugs,mirrorItems} from './glass-groups.js?v=photobox-20261020';
 import {ProjectConfirmation} from './confirmation.js';
-import {studioEnvironment,studioBackdrop,refractionSurround,moruOptics,estriadoOptics,glassMaterial,glassEdgeMaterial,stopsolGlassOptics,sampleCabinet,satinContactMap} from './glass-render.js?v=surrounds-20261020';
-const catalogue=await fetch('./glass-catalog.json?v=surrounds-20261020').then(r=>{if(!r.ok)throw new Error('Не удалось загрузить каталог стекла');return r.json();});
+import {studioEnvironment,studioBackdrop,refractionSurround,moruOptics,estriadoOptics,glassMaterial,glassEdgeMaterial,stopsolGlassOptics,sampleCabinet,satinContactMap} from './glass-render.js?v=photobox-20261020';
+const catalogue=await fetch('./glass-catalog.json?v=photobox-20261020').then(r=>{if(!r.ok)throw new Error('Не удалось загрузить каталог стекла');return r.json();});
 const glassItems=Object.fromEntries(catalogue.items.map(m=>[m.id,m]));
 Object.keys(glasses).forEach(k=>delete glasses[k]);
 glassItems.none={id:'none',title:'Без наполнения',color:'none',mirror:false};
@@ -33,7 +33,7 @@ for(const [x,w,color] of [[-1100,180,'#f4f2ec'],[-850,60,'#454b50'],[-600,160,'#
 scene.add(coatingLights);
 let showSampleCabinet=false;
 let surroundKind=0;
-const surroundNames=["Круг","Прямоугольник","Квадрат","Трапеция"];
+const surroundNames=["Круг","Прямоугольник","Квадрат","Трапеция","Фотобокс"];
 let model=new T.Group();scene.add(model);
 function fit(){const inspect=s.view==='profile',distance=inspect?Math.max(s.handle?155:125,150/camera.aspect)*1.1:Math.max(s.h,(pair()?s.w*2+40:s.w)/camera.aspect)*2;camera.position.set(inspect?distance*.5:s.view==='3d'?distance*.4:0,inspect?distance*.35:s.view==='3d'?distance*.15:0,s.view==='back'?-distance:distance);orbit.target.set(0,0,0);orbit.update();}
 function disposeModel(root){const materials=new Set(),textures=new Set();root.traverse(o=>{o.getRenderTarget?.().dispose();o.geometry?.dispose();for(const m of (Array.isArray(o.material)?o.material:[o.material]))if(m)materials.add(m);});for(const m of materials){for(const key of ['map','normalMap','roughnessMap','bumpMap'])if(m[key])textures.add(m[key]);m.dispose();}for(const texture of textures)texture.dispose();}
@@ -153,7 +153,7 @@ for(const id of ['hinge','side','reed','origin'])$('#'+id).onchange=e=>{s[id]=e.
 $('#count').onchange=e=>{s.hinges=Array(+e.target.value).fill(0);if(!s.hinges.length)s.hinge='none';else if(s.hinge==='none')s.hinge=profiles.find(p=>p.id===s.profile).b<20?'narrow':'cup';even();controls();};function even(){const n=s.hinges.length;s.hinges=s.hinges.map((_,i)=>Math.round(100+i*(s.h-200)/Math.max(1,n-1)));hingeFields();update();}$('#even').onclick=even;
 $('#handle').onchange=e=>{s.handle=e.target.checked;if(s.handle&&!['00','21','25'].includes(s.color))s.color='00';controls();update();if(s.view==='profile')fit();};$('#mask').onchange=e=>{s.mask=e.target.checked;update();};
 document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>{s.view=b.dataset.view;document.querySelectorAll('[data-view]').forEach(t=>t.classList.toggle('active',t===b));$('#drawing').toggleAttribute('hidden',s.view!=='drawing');$('#scene').style.visibility=s.view==='drawing'?'hidden':'visible';$('#gesture').textContent=s.view==='drawing'?'Перемещайте синие точки · координаты в миллиметрах':s.view==='profile'?'Отрезок 90 мм · вращайте, чтобы рассмотреть открытый торец':'Вращайте мышью или пальцем · колесо — масштаб';update();fit();});$('#reset').onclick=fit;
-for(const [id,step] of [['surround-prev',-1],['surround-next',1]])$('#'+id).onclick=()=>{surroundKind=(surroundKind+step+4)%4;$('#surround-name').textContent=surroundNames[surroundKind];build();};
+for(const [id,step] of [['surround-prev',-1],['surround-next',1]])$('#'+id).onclick=()=>{surroundKind=(surroundKind+step+surroundNames.length)%surroundNames.length;$('#surround-name').textContent=surroundNames[surroundKind];build();};
 for(const [id,kind] of [['sample-cabinet','books'],['kitchen-cabinet','kitchen']])$('#'+id).onclick=()=>{showSampleCabinet=showSampleCabinet===kind?false:kind;$('#sample-cabinet').setAttribute('aria-pressed',String(showSampleCabinet==='books'));$('#kitchen-cabinet').setAttribute('aria-pressed',String(showSampleCabinet==='kitchen'));build();};
 function confirmationControls(){
  const valid=!project.items.some(item=>validate(item.config).errors.length),confirmed=confirmation.check(project.items,valid);
@@ -233,3 +233,5 @@ if(new URLSearchParams(location.search).get('preview')==='dichroic-studio'){s.gl
 if(new URLSearchParams(location.search).get('preview')==='painted-studio'){s.glass='lacobel-1014__standard';showSampleCabinet=false;project.update(s);controls();update();fit();}
 
 if(new URLSearchParams(location.search).get('preview')==='mirrors-studio'){s.glass='zerkalo-serebro__standard';showSampleCabinet=false;project.update(s);controls();update();fit();}
+
+if(new URLSearchParams(location.search).get('preview')==='photobox-studio'){s.glass='zerkalo-serebro__standard';surroundKind=4;$('#surround-name').textContent=surroundNames[surroundKind];showSampleCabinet=false;project.update(s);controls();update();fit();}

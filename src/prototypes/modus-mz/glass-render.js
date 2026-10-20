@@ -37,7 +37,7 @@ export function refractionSurround(width,height,kind=0){
  const canvas=document.createElement('canvas');canvas.width=512;canvas.height=512;
  const ctx=canvas.getContext('2d');
  const palettes=[['#dce3e4','#a5b8be','#c6ced1'],['#e6dfd2','#b5aa98','#d1c6b5'],['#d9e1df','#8ca8a0','#bdcfca'],['#dddce6','#a5a1b8','#c7c4d3']];
- const colors=palettes[kind].map(c=>[parseInt(c.slice(1,3),16),parseInt(c.slice(3,5),16),parseInt(c.slice(5,7),16)]),data=ctx.createImageData(512,512);
+ const colors=(palettes[kind]||['#dcdedc','#dcdedc','#dcdedc']).map(c=>[parseInt(c.slice(1,3),16),parseInt(c.slice(3,5),16),parseInt(c.slice(5,7),16)]),data=ctx.createImageData(512,512);
  for(let y=0;y<512;y++)for(let x=0;x<512;x++){
   const wave=.5+.5*Math.cos((x+y)*Math.PI*2/512),mix=kind===0?wave:Math.pow(wave,3),i=(y*512+x)*4;
   for(let c=0;c<3;c++)data.data[i+c]=colors[0][c]*(1-mix)+colors[1][c]*mix;data.data[i+3]=255;
@@ -56,6 +56,13 @@ export function refractionSurround(width,height,kind=0){
  }
  const surface=(y,color,ceiling)=>{const m=new T.Mesh(new T.PlaneGeometry(radius*4,radius*4),new T.MeshStandardMaterial({color,roughness:.9}));m.rotation.x=ceiling?Math.PI/2:-Math.PI/2;m.position.y=y;g.add(m);};
  surface(-wallHeight/2,'#b2b2ad',false);surface(wallHeight/2,'#e9e5df',true);
+ if(kind===4){
+  // Broad softboxes, with a narrow dark separator for reading glossy surfaces.
+  for(const zSign of [-1,1])for(const [x,w,color] of [[-.65,.42,'#faf8f2'],[.4,.55,'#edf4fa'],[.05,.045,'#697176']]){
+   const softbox=new T.Mesh(new T.PlaneGeometry(radius*w,wallHeight*.72),new T.MeshBasicMaterial({color,side:T.DoubleSide}));
+   softbox.position.set(radius*x,0,zSign*(radius-12));g.add(softbox);
+  }
+ }
  const panel=new T.Mesh(new T.PlaneGeometry(radius*.8,radius*.45),new T.MeshBasicMaterial({color:kind%2?'#ffe4bd':'#e1f1ff'}));panel.rotation.x=Math.PI/2;panel.position.set(0,wallHeight/2-2,0);g.add(panel);
  const lamp=new T.PointLight(kind%2?0xffe4bd:0xe1f1ff,wallHeight*wallHeight*.035,wallHeight*4,2);lamp.position.set(0,wallHeight/2-40,0);g.add(lamp);
  return g;
