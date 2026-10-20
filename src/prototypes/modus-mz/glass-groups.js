@@ -32,3 +32,6 @@ export function lacobelItems(items){return lacobelSlugs.map(slug=>items.find(i=>
 
 export const matelacSlugs=["matelac-1013-agc", "matelac-8815-agc", "matelac-9005-agc", "matelac-9006-agc", "matelac-9010-agc", "matelac-1236-agc", "matelac-7000-agc", "matelac-7013-agc", "matelac-1013-poland", "matelac-9003"];
 export function matelacItems(items){return matelacSlugs.map(slug=>items.find(i=>i.slug===slug)).filter(Boolean);}
+
+export const mirrorSlugs=['zerkalo-serebro','zerkalo-osvetlyonnoe','tonirovannye-zerkala'];
+export function mirrorItems(items){return items.filter(i=>mirrorSlugs.includes(i.slug)&&i.id!=='zerkalo-serebro__clear');}

@@ -210,5 +210,11 @@
     "reference": "Saved ALFAGLASS catalogue material profiles: 13 lacobel and 10 matelac cards. Owner explicitly selected ALFAGLASS rather than manufacturer catalogue.",
     "method": "Approximate RGB colours, opaque glossy Lacobel and rough matte Matelac. Not measured colour samples.",
     "status": "Local palette awaiting owner review; light-colour finish contrast needs further tuning."
+  },
+  "mirrors": {
+    "date": "2026-10-20",
+    "reference": "Saved ALFAGLASS silver, Crystalvision and tinted mirror catalogue profiles.",
+    "method": "Planar studio reflection; approximate silver/clear and seven tinted colours. Rainbow uses illustrative gradient, not a measured coating.",
+    "status": "Local preview awaiting owner review."
   }
 }
