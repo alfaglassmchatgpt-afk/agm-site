@@ -225,6 +225,13 @@ export function glassMaterial(item,width,height,direction,renderer,contactOverla
     mat.normalMap=raywallNormalTexture(width,height,item.pitch,direction);
     mat.normalMap.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());
     mat.normalScale.set(1,1);
+  }else if(item.slug==='vison-sun'){
+    mat.color.set('#ffffff');mat.attenuationColor.set('#eef3ef');mat.attenuationDistance=450;
+    // Approved visual reference: soft silhouettes, sharp rib structure and contacting rail.
+    mat.roughness=.62;mat.ior=1.52;mat.metalness=0;mat.transmission=1;
+    mat.normalMap=moruNormalTexture(width,height,direction);
+    mat.normalMap.repeat.set(width/item.pitch,height/item.pitch);
+    mat.normalMap.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());mat.normalScale.set(1,1);
   }else if(estriadoOptics[item.slug]){
     const preset=estriadoOptics[item.slug];
     mat.color.set('#ffffff');mat.attenuationColor.set(preset.attenuation);mat.attenuationDistance=preset.distance;
@@ -258,6 +265,7 @@ export function glassMaterial(item,width,height,direction,renderer,contactOverla
   return mat;
 }
 export function glassEdgeMaterial(item,face){
+  if(item.slug==='vison-sun')return new T.MeshPhysicalMaterial({color:'#e2eae5',roughness:.08,transmission:1,thickness:4,ior:1.52,specularIntensity:0,envMapIntensity:0});
   if(estriadoOptics[item.slug])return new T.MeshPhysicalMaterial({color:estriadoOptics[item.slug].edge,roughness:.08,transmission:1,thickness:4,ior:1.52,specularIntensity:0,envMapIntensity:0});
   if(moruOptics[item.slug])return new T.MeshPhysicalMaterial({color:moruOptics[item.slug].edge,roughness:.08,transmission:1,thickness:4,ior:1.52,specularIntensity:0,envMapIntensity:0});
   if(item.slug==='raywall90')return new T.MeshPhysicalMaterial({color:'#d3e4da',roughness:.08,transmission:1,thickness:4,ior:1.52,specularIntensity:0,envMapIntensity:0});

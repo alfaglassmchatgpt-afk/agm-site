@@ -224,9 +224,9 @@
       "mirror": false,
       "color": "#d7eeea",
       "matte": false,
-      "pitch": null,
-      "pattern": null,
-      "texturePending": true,
+      "pitch": 5.75,
+      "pattern": "reed",
+      "texturePending": false,
       "note": "Закалка, триплексование, тонирование плёнкой и окрашивание доступны. Алюминиевый фасад — только 4 мм; профильная система для дверей и перегородок — 8 мм. Сочетания обработок и конструкцию согласуем по проекту.",
       "verifiedSource": {
         "url": "https://alfaglass.ru/materialy/vison-sun/",
@@ -234,7 +234,8 @@
         "thicknesses": [
           4
         ]
-      }
+      },
+      "pitchEstimated": true
     },
     {
       "id": "flutes-moru-bronze__standard",

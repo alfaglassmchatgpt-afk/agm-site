@@ -124,5 +124,12 @@
     ],
     "reference": "Owner confirmed 37–38 ribs / 100 mm and supplied front and edge photos of ordinary Estriado. Fine nearly triangular relief, flat reverse. Same approved pattern for all three variants.",
     "limits": "Pitch is representative of confirmed range, not exact factory measurement. Relief slope and optical tints are visual approximations; Crystal and Ultra use earlier approved sample renders."
+  },
+  "visionSun": {
+    "date": "2026-10-20",
+    "pitchMm": 5.75,
+    "estimated": true,
+    "method": "Dominant horizontal spatial period at four heights in owner photo of 593 mm wide sheet: 5.73–5.78 mm. Perspective/local edge measurements approximate. Owner authorized photo estimate.",
+    "appearance": "Approved blurred wardrobe reference v2: soft silhouettes, vertical ribs, sharp contacting profile. Rounded rib cross section and optical roughness approximated, not measured."
   }
 }
