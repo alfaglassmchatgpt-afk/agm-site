@@ -150,5 +150,11 @@
     "modelPitchMm": 2,
     "estimated": true,
     "limits": "Existing prototype/older facade scale 2 mm retained provisionally; old spec also lists 2.3 mm. Not owner-confirmed measurement. Relief slopes and optical blur approximate."
+  },
+  "diamant": {
+    "date": "2026-10-20",
+    "reference": "Approved transparent variant 2 product render (100 x 150 mm).",
+    "method": "Procedural irregular planar facets; transmission rather than metallic opacity. Approximate 4 mm average facet spacing in a 64 mm seamless tile; not a confirmed measured pattern.",
+    "status": "First local approximation awaiting owner review."
   }
 }

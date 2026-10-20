@@ -116,6 +116,23 @@ export function krezetNormalTexture(width,height,pitch){
  map.repeat.set(width/pitch,height/pitch);map.minFilter=T.LinearMipmapLinearFilter;
  map.magFilter=T.LinearFilter;map.generateMipmaps=true;map.needsUpdate=true;return map;
 }
+// Deterministic irregular facets, estimated from the approved 100 x 150 mm sample.
+function diamantNormalTexture(width,height){
+ const n=512,tiles=16,bytes=new Uint8Array(n*n*4);
+ const hash=(x,y,k)=>{const z=Math.sin(x*127.1+y*311.7+k*91.3)*43758.5453;return z-Math.floor(z);};
+ for(let y=0;y<n;y++)for(let x=0;x<n;x++){
+  const u=x/n*tiles,v=y/n*tiles,ix=Math.floor(u),iy=Math.floor(v);let best=1e9,sx=0,sy=0;
+  for(let j=-1;j<=1;j++)for(let i=-1;i<=1;i++){
+   const gx=ix+i,gy=iy+j,wx=(gx+tiles)%tiles,wy=(gy+tiles)%tiles;
+   const d=(u-gx-hash(wx,wy,1))**2+(v-gy-hash(wx,wy,2))**2;
+   if(d<best){best=d;sx=wx;sy=wy;}
+  }
+  const nx=(hash(sx,sy,3)-.5)*1.0,ny=(hash(sx,sy,4)-.5)*1.0,len=Math.hypot(nx,ny,1),k=(y*n+x)*4;
+  bytes[k]=Math.round(127.5*(1+nx/len));bytes[k+1]=Math.round(127.5*(1+ny/len));bytes[k+2]=Math.round(127.5*(1+1/len));bytes[k+3]=255;
+ }
+ const map=new T.DataTexture(bytes,n,n);map.wrapS=map.wrapT=T.RepeatWrapping;
+ map.repeat.set(width/64,height/64);map.minFilter=T.LinearMipmapLinearFilter;map.magFilter=T.LinearFilter;map.generateMipmaps=true;map.needsUpdate=true;return map;
+}
 function raywallRefraction(mat,width,height,overlap,pitch,direction,grid=false){
   // Screen-space approximation of the air gap to objects behind the glass.
   // Does not change the 4 mm slab or its absorption distance. Not ray tracing.
@@ -248,6 +265,11 @@ export function glassMaterial(item,width,height,direction,renderer,contactOverla
     mat.normalMap=raywallNormalTexture(width,height,item.pitch,direction);
     mat.normalMap.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());
     mat.normalScale.set(1,1);
+  }else if(item.slug==='diamant'){
+    mat.color.set('#ffffff');mat.attenuationColor.set('#deebe1');mat.attenuationDistance=180;
+    mat.roughness=.12;mat.ior=1.52;mat.metalness=0;mat.transmission=1;
+    mat.normalMap=diamantNormalTexture(width,height);mat.normalScale.set(1,1);
+    mat.normalMap.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());
   }else if(item.slug==='krezet'){
     mat.color.set('#ffffff');mat.attenuationColor.set('#d5e5d9');mat.attenuationDistance=110;
     mat.roughness=.23;mat.ior=1.52;mat.metalness=0;mat.transmission=1;
@@ -291,7 +313,7 @@ export function glassMaterial(item,width,height,direction,renderer,contactOverla
     texture.repeat.set(rx,ry);if(direction==='horizontal')texture.rotation=Math.PI/2;
     texture.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());mat.normalMap=texture;mat.normalScale.set(.35,.35);
   }
-  if(reedSlugs.includes(item.slug)||item.slug==='krezet'){
+  if(reedSlugs.includes(item.slug)||['krezet','diamant'].includes(item.slug)){
     // One contact treatment for the entire category. Unknown relief remains unmodelled.
     if(!moruOptics[item.slug]?.coating){mat.envMapIntensity=0;mat.specularIntensity=0;mat.clearcoat=0;}
     raywallRefraction(mat,width,height,contactOverlap,item.pitch,direction,item.slug==='krezet');

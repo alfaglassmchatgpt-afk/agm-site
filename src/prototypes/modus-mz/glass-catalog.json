@@ -444,7 +444,7 @@
       "matte": false,
       "pitch": null,
       "pattern": null,
-      "texturePending": true,
+      "texturePending": false,
       "note": "Специальные обработки включаются после подтверждения для этого материала.",
       "verifiedSource": {
         "url": "https://alfaglass.ru/materialy/diamant/",
