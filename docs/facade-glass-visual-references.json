@@ -174,5 +174,11 @@
     "reference": "Approved variant 1 of second series, archived product sample.",
     "method": "Broad flowing waves with fine ripples, approximate procedural optics; dimensions not measured.",
     "status": "Local preview awaiting owner review."
+  },
+  "krepi": {
+    "date": "2026-10-20",
+    "reference": "Archived catalogue sample krepi-v1.",
+    "method": "Fine shallow uneven relief and soft blur; approximate procedural optics, no measured pitch.",
+    "status": "Local preview awaiting owner review."
   }
 }
