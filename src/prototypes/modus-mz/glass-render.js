@@ -77,10 +77,16 @@ export function raywallNormalTexture(width,height,pitch,direction){
   texture.magFilter=T.LinearFilter;texture.minFilter=T.LinearMipmapLinearFilter;
   texture.generateMipmaps=true;texture.needsUpdate=true;return texture;
 }
-function raywallRefraction(mat){
+function raywallRefraction(mat,width,height,overlap){
   // Screen-space approximation of the air gap to objects behind the glass.
   // Does not change the 4 mm slab or its absorption distance. Not ray tracing.
   mat.onBeforeCompile=shader=>{
+    shader.uniforms.ribPanelSize={value:new T.Vector2(width,height)};
+    shader.uniforms.ribContact={value:Math.max(0,overlap)};
+    shader.vertexShader=shader.vertexShader.replace('#include <common>','#include <common>\nvarying vec2 ribUv;')
+      .replace('#include <begin_vertex>','#include <begin_vertex>\nribUv = uv;');
+    shader.fragmentShader=shader.fragmentShader.replace('#include <common>',
+      '#include <common>\nvarying vec2 ribUv;\nuniform vec2 ribPanelSize;\nuniform float ribContact;');
     const chunk=T.ShaderChunk.transmission_pars_fragment.replaceAll(
       'vec3 refractedRayExit = position + transmissionRay;',
       `vec3 flatNormal = normalize(mat3(modelMatrix) * vec3(0.0,0.0,1.0));
@@ -90,11 +96,13 @@ function raywallRefraction(mat){
        vec3 deviation = length(outsideRay) > 0.01 ? outsideRay + v : vec3(0.0);
        deviation = clamp(deviation,vec3(-0.35),vec3(0.35));
        float viewFade = smoothstep(0.15,0.65,abs(dot(flatNormal,v)));
-       vec3 refractedRayExit = position + transmissionRay + deviation * 75.0 * viewFade;`
+       vec2 edgeDistance = min(ribUv,1.0-ribUv)*ribPanelSize;
+       float contactFade = smoothstep(ribContact,ribContact+3.0,min(edgeDistance.x,edgeDistance.y));
+       vec3 refractedRayExit = position + transmissionRay + deviation * 75.0 * viewFade * contactFade;`
     );
     shader.fragmentShader=shader.fragmentShader.replace('#include <transmission_pars_fragment>',chunk);
   };
-  mat.customProgramCacheKey=()=> 'raywall-screen-refraction-v2';
+  mat.customProgramCacheKey=()=> 'raywall-screen-refraction-v3';
 }
 // Visual presets, not measured spectral data. Millimetres match the facade geometry.
 export const clearGlassOptics={
@@ -123,7 +131,7 @@ export const stopsolGlassOptics={
  'stopsol-phoenix-bronze':{attenuation:'#b3916d',distance:10,edge:'#63503a',coating:'#c7ad91'},
  'stopsol-phoenix-gray':{attenuation:'#949b9f',distance:8,edge:'#53585a',coating:'#aeb6bb'}
 };
-export function glassMaterial(item,width,height,direction,renderer){
+export function glassMaterial(item,width,height,direction,renderer,contactOverlap=0){
   const mat=new T.MeshPhysicalMaterial({
     color:item.color,metalness:item.mirror?1:0,roughness:item.mirror?.055:item.matte?.38:.055,
     transmission:item.mirror||item.opaque?0:1,thickness:4,ior:1.5,envMapIntensity:item.mirror?1.25:1,
@@ -148,11 +156,12 @@ export function glassMaterial(item,width,height,direction,renderer){
   }
   if(item.slug==='raywall90'){
     mat.color.set('#ffffff');mat.attenuationColor.set('#c8ddd1');mat.attenuationDistance=80;
-    mat.roughness=.23;mat.clearcoat=0;mat.ior=1.52;
-    mat.envMapIntensity=.4;mat.specularIntensity=.55;mat.transmission=.96;
+    mat.roughness=.08;mat.clearcoat=0;mat.ior=1.52;
+    // Inspection mode: remove highlights so the rail behind the glass is legible.
+    mat.envMapIntensity=0;mat.specularIntensity=0;mat.transmission=1;
     mat.normalMap=raywallNormalTexture(width,height,item.pitch,direction);
     mat.normalMap.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());
-    mat.normalScale.set(1,1);raywallRefraction(mat);
+    mat.normalScale.set(1,1);raywallRefraction(mat,width,height,contactOverlap);
   }else if(item.pitch&&item.pattern){
     const texture=reliefTexture(item.pattern),[rx,ry]=textureRepeat(width,height,item.pitch,direction);
     texture.repeat.set(rx,ry);if(direction==='horizontal')texture.rotation=Math.PI/2;
@@ -161,7 +170,7 @@ export function glassMaterial(item,width,height,direction,renderer){
   return mat;
 }
 export function glassEdgeMaterial(item,face){
-  if(item.slug==='raywall90')return new T.MeshPhysicalMaterial({color:'#d3e4da',roughness:.12,transmission:1,thickness:4,ior:1.52});
+  if(item.slug==='raywall90')return new T.MeshPhysicalMaterial({color:'#d3e4da',roughness:.08,transmission:1,thickness:4,ior:1.52,specularIntensity:0,envMapIntensity:0});
   const preset=clearGlassOptics[item.slug]||tintedGlassOptics[item.slug]||matteGlassOptics[item.slug]||stopsolGlassOptics[item.slug];if(!preset)return null;
   const edge=face.clone();edge.color.set(preset.edge);edge.roughness=.08;edge.transmission=.85;edge.metalness=0;return edge;
 }
