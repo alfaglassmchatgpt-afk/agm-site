@@ -77,6 +77,29 @@ export function raywallNormalTexture(width,height,pitch,direction){
   texture.magFilter=T.LinearFilter;texture.minFilter=T.LinearMipmapLinearFilter;
   texture.generateMipmaps=true;texture.needsUpdate=true;return texture;
 }
+// Fine nearly triangular ribs from owner photos; slope is a visual approximation.
+export function estriadoNormalTexture(width,height,pitch,direction){
+  const n=256,bytes=new Uint8Array(n*n*4),horizontal=direction==='horizontal';
+  for(let y=0;y<n;y++)for(let x=0;x<n;x++){
+    const u=(horizontal?y:x)/n;
+    const slope=.38*Math.tanh(6*Math.sin(2*Math.PI*u));
+    const grain=.003*Math.sin(x*1.73+y*2.91)*Math.sin(x*.73-y*1.31);
+    const nx=(horizontal?grain:slope+grain),ny=(horizontal?slope+grain:grain);
+    const length=Math.hypot(nx,ny,1),i=(y*n+x)*4;
+    bytes[i]=Math.round(127.5*(nx/length+1));bytes[i+1]=Math.round(127.5*(ny/length+1));
+    bytes[i+2]=Math.round(127.5*(1/length+1));bytes[i+3]=255;
+  }
+  const texture=new T.DataTexture(bytes,n,n);
+  texture.wrapS=texture.wrapT=T.RepeatWrapping;
+  texture.repeat.set(width/pitch,height/pitch);
+  texture.magFilter=T.LinearFilter;texture.minFilter=T.LinearMipmapLinearFilter;
+  texture.generateMipmaps=true;texture.needsUpdate=true;return texture;
+}
+export const estriadoOptics={
+ 'estriado':{attenuation:'#c1dbc9',distance:65,edge:'#91baa5'},
+ 'estriado-crystal':{attenuation:'#dce9e1',distance:160,edge:'#c5dacf'},
+ 'estriado-ultra':{attenuation:'#f4f5f4',distance:600,edge:'#e9eceb'}
+};
 function raywallRefraction(mat,width,height,overlap){
   // Screen-space approximation of the air gap to objects behind the glass.
   // Does not change the 4 mm slab or its absorption distance. Not ray tracing.
@@ -186,6 +209,14 @@ export function glassMaterial(item,width,height,direction,renderer,contactOverla
     mat.normalMap=raywallNormalTexture(width,height,item.pitch,direction);
     mat.normalMap.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());
     mat.normalScale.set(1,1);raywallRefraction(mat,width,height,contactOverlap);
+  }else if(estriadoOptics[item.slug]){
+    const preset=estriadoOptics[item.slug];
+    mat.color.set('#ffffff');mat.attenuationColor.set(preset.attenuation);mat.attenuationDistance=preset.distance;
+    mat.roughness=.035;mat.clearcoat=0;mat.ior=1.52;mat.metalness=0;
+    mat.envMapIntensity=0;mat.specularIntensity=0;mat.transmission=1;
+    mat.normalMap=estriadoNormalTexture(width,height,item.pitch,direction);
+    mat.normalMap.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());
+    mat.normalScale.set(1,1);raywallRefraction(mat,width,height,contactOverlap);
   }else if(moruOptics[item.slug]){
     const preset=moruOptics[item.slug];
     mat.color.set(preset.coating||preset.face||'#ffffff');mat.attenuationColor.set(preset.attenuation);mat.attenuationDistance=preset.distance;
@@ -203,6 +234,7 @@ export function glassMaterial(item,width,height,direction,renderer,contactOverla
   return mat;
 }
 export function glassEdgeMaterial(item,face){
+  if(estriadoOptics[item.slug])return new T.MeshPhysicalMaterial({color:estriadoOptics[item.slug].edge,roughness:.08,transmission:1,thickness:4,ior:1.52,specularIntensity:0,envMapIntensity:0});
   if(moruOptics[item.slug])return new T.MeshPhysicalMaterial({color:moruOptics[item.slug].edge,roughness:.08,transmission:1,thickness:4,ior:1.52,specularIntensity:0,envMapIntensity:0});
   if(item.slug==='raywall90')return new T.MeshPhysicalMaterial({color:'#d3e4da',roughness:.08,transmission:1,thickness:4,ior:1.52,specularIntensity:0,envMapIntensity:0});
   const preset=clearGlassOptics[item.slug]||tintedGlassOptics[item.slug]||matteGlassOptics[item.slug]||stopsolGlassOptics[item.slug];if(!preset)return null;
