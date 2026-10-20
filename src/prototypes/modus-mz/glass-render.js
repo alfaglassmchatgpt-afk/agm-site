@@ -34,6 +34,7 @@ export function studioBackdrop(){
 export function refractionSurround(width,height,renderer){
  const g=new T.Group();g.name='photobox-surround';
  const radius=Math.max(width,height)*2.8+300,wallHeight=Math.max(height*3,2200);
+ g.userData.roomRadius=radius;g.userData.roomHalfHeight=wallHeight/2;
  const points=[[-radius,-radius],[radius,-radius],[radius,radius],[-radius,radius]];
   for(let i=0;i<4;i++){
    const a=points[i],b=points[(i+1)%4],len=Math.hypot(b[0]-a[0],b[1]-a[1]);
@@ -60,8 +61,23 @@ export function refractionSurround(width,height,renderer){
  const floor=new T.Mesh(new T.PlaneGeometry(radius*2,radius*2),new T.MeshStandardMaterial({map:floorMap,roughness:.78,metalness:0}));
  floor.name='oak-laminate-floor';floor.rotation.x=-Math.PI/2;floor.position.y=-wallHeight/2;g.add(floor);
  const panel=new T.Mesh(new T.PlaneGeometry(radius*.8,radius*.45),new T.MeshBasicMaterial({color:'#e1f1ff'}));panel.rotation.x=Math.PI/2;panel.position.set(0,wallHeight/2-2,0);g.add(panel);
- const lamp=new T.PointLight(0xe1f1ff,wallHeight*wallHeight*.035,wallHeight*4,2);lamp.position.set(0,wallHeight/2-40,0);g.add(lamp);
+ const lamp=new T.PointLight(0xe1f1ff,wallHeight*wallHeight*.035,wallHeight*4,2);lamp.name='photobox-ceiling-light';lamp.userData.baseIntensity=lamp.intensity;lamp.userData.baseDistance=lamp.distance;lamp.position.set(0,wallHeight/2-40,0);g.add(lamp);
  return g;
+}
+// Keep the camera inside the room with headroom for rotation and zoom.
+// Only the environment scales; facade geometry remains in millimetres.
+export function fitPhotoboxToCamera(room,camera){
+ const {roomRadius:r,roomHalfHeight:h}=room.userData;
+ const margin=Math.max(100,camera.near*4);
+ const scale=Math.max(1,(Math.abs(camera.position.x)+margin)/(r*.75),(Math.abs(camera.position.z)+margin)/(r*.75),(Math.abs(camera.position.y)+margin)/(h*.75));
+ room.scale.setScalar(scale);
+ const floor=room.getObjectByName('oak-laminate-floor');
+ floor.material.map.repeat.set(r*2*scale/2400,r*2*scale/2400);
+ const lamp=room.getObjectByName('photobox-ceiling-light');
+ lamp.intensity=lamp.userData.baseIntensity*scale*scale;lamp.distance=lamp.userData.baseDistance*scale;
+ const far=Math.max(50000,camera.position.length()+Math.hypot(r,r,h)*scale*2);
+ const near=Math.max(5,camera.position.length()*.01);
+ if(Math.abs(camera.far-far)>1||Math.abs(camera.near-near)>.01){camera.far=far;camera.near=near;camera.updateProjectionMatrix();}
 }
 function reliefTexture(pattern){
   const n=128,bytes=new Uint8Array(n*n*4);

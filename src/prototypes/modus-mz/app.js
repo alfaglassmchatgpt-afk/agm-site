@@ -6,10 +6,10 @@ import {sections,svgSection,sectionNotes} from './sections.js';
 import {railGeometry,sampleGeometry} from './profile-mesh.js';
 import {profileMetal} from './metal.js';
 import {FacadeProject} from './project.js?v=20261015-groups';
-import {transparentSlugs,transparentItems,matteSlugs,matteItems,stopsolSlugs,stopsolItems,reedSlugs,reedItems,patternedSlugs,patternedItems,lacobelSlugs,lacobelItems,matelacSlugs,matelacItems,mirrorSlugs,mirrorItems} from './glass-groups.js?v=oak-floor-20261020';
+import {transparentSlugs,transparentItems,matteSlugs,matteItems,stopsolSlugs,stopsolItems,reedSlugs,reedItems,patternedSlugs,patternedItems,lacobelSlugs,lacobelItems,matelacSlugs,matelacItems,mirrorSlugs,mirrorItems} from './glass-groups.js?v=photobox-camera-20261020';
 import {ProjectConfirmation} from './confirmation.js';
-import {studioEnvironment,studioBackdrop,refractionSurround,moruOptics,estriadoOptics,glassMaterial,glassEdgeMaterial,stopsolGlassOptics,sampleCabinet,satinContactMap} from './glass-render.js?v=oak-floor-20261020';
-const catalogue=await fetch('./glass-catalog.json?v=oak-floor-20261020').then(r=>{if(!r.ok)throw new Error('Не удалось загрузить каталог стекла');return r.json();});
+import {studioEnvironment,studioBackdrop,refractionSurround,fitPhotoboxToCamera,moruOptics,estriadoOptics,glassMaterial,glassEdgeMaterial,stopsolGlassOptics,sampleCabinet,satinContactMap} from './glass-render.js?v=photobox-camera-20261020';
+const catalogue=await fetch('./glass-catalog.json?v=photobox-camera-20261020').then(r=>{if(!r.ok)throw new Error('Не удалось загрузить каталог стекла');return r.json();});
 const glassItems=Object.fromEntries(catalogue.items.map(m=>[m.id,m]));
 Object.keys(glasses).forEach(k=>delete glasses[k]);
 glassItems.none={id:'none',title:'Без наполнения',color:'none',mirror:false};
@@ -71,7 +71,7 @@ function buildFacade(s){
  // Box face order: +X, -X, +Y, -Y, front +Z, back -Z.
  const mirrorBack=glassItems[s.glass].mirror?new T.MeshStandardMaterial({color:'#474a51',metalness:0,roughness:.85}):null;
  const glassFaces=mirrorBack?[edge||gm,edge||gm,edge||gm,edge||gm,gm,mirrorBack]:edge?[edge,edge,edge,edge,gm,gm]:gm;
- box(w-p.delta,h-p.delta,4,0,0,q.glassY+2-d,glassFaces);
+ const glassBody=box(w-p.delta,h-p.delta,4,0,0,q.glassY+2-d,glassFaces);
  const moruCoating=moruOptics[glassItems[s.glass].slug]?.coating;
  const glossyPaint=glassItems[s.glass].slug.startsWith('lacobel-');
  if(stopsolGlassOptics[glassItems[s.glass].slug]||moruCoating||glossyPaint){
@@ -91,9 +91,10 @@ function buildFacade(s){
  }
  if(glassItems[s.glass].mirror){
    const mirror=new Reflector(new T.PlaneGeometry(w-p.delta,h-p.delta),{textureWidth:1024,textureHeight:1024,color:glassItems[s.glass].color==='#d7eeea'?'#858585':glassItems[s.glass].color,clipBias:.003});
+   mirror.material.polygonOffset=true;mirror.material.polygonOffsetFactor=-1;mirror.material.polygonOffsetUnits=-4;
    // Neutral reflected studio panels make the mirror readable even without a cabinet.
    const mirrorRender=mirror.onBeforeRender;
-   mirror.onBeforeRender=function(...args){coatingLights.visible=!showPhotobox;try{mirrorRender.apply(this,args);}finally{coatingLights.visible=false;}};
+   mirror.onBeforeRender=function(...args){coatingLights.visible=!showPhotobox;glassBody.visible=false;try{mirrorRender.apply(this,args);}finally{glassBody.visible=true;coatingLights.visible=false;}};
    // Multiply the reflected scene by a uniform coating tint; retain actual image contrast.
    if(mirrorSlugs.includes(glassItems[s.glass].slug)){
     mirror.material.fragmentShader=mirror.material.fragmentShader.replace('blendOverlay( base.rgb, color )',glassItems[s.glass].slug==='tonirovannye-zerkala'?'color * mix(vec3(dot(base.rgb, vec3(.2126,.7152,.0722))),base.rgb,0.25)':'color * base.rgb');
@@ -106,7 +107,7 @@ function buildFacade(s){
  return model;
 }
 new ResizeObserver(()=>{const r=$('#view').getBoundingClientRect();renderer.setSize(r.width,r.height);camera.aspect=r.width/r.height;camera.updateProjectionMatrix();fit();}).observe($('#view'));
-renderer.setAnimationLoop(()=>{orbit.update();renderer.render(scene,camera);});
+renderer.setAnimationLoop(()=>{orbit.update();const room=model.getObjectByName('photobox-surround');if(room)fitPhotoboxToCamera(room,camera);else if(camera.near!==5||camera.far!==50000){camera.near=5;camera.far=50000;camera.updateProjectionMatrix();}renderer.render(scene,camera);});
 function controls(){glassChoices();const p=profiles.find(p=>p.id===s.profile);$('#profiles').innerHTML=profiles.map(p=>`<button data-profile="${p.id}" class="${s.profile===p.id?'active':''}">MZ ${p.id}<small>${p.b} мм</small></button>`).join('');$('#profiles').querySelectorAll('button').forEach(b=>b.onclick=()=>{s.profile=b.dataset.profile;s.handle=false;s.mask=false;s.hinge=s.hinges.length?(profiles.find(p=>p.id===s.profile).b<20?'narrow':'cup'):'none';if(!profiles.find(p=>p.id===s.profile).colors.includes(s.color))s.color='00';controls();update();if(s.view==='profile')fit();});
  const cs=s.handle?['00','21','25']:p.colors;$('#colors').innerHTML=cs.map(k=>`<button title="${colors[k][0]}" aria-label="${colors[k][0]}" data-color="${k}" class="${s.color===k?'active':''}" style="background:${colors[k][1]}"></button>`).join('');$('#colors').querySelectorAll('button').forEach(b=>b.onclick=()=>{s.color=b.dataset.color;controls();update();if(s.view==='profile')fit();});
  $('#color-name').textContent=`${colors[s.color][0]} · ${s.color}. Наличие уточняется.`;$('#profile-name').textContent=`MZ ${p.id}`;$('#profile-dims').textContent=`${p.b} × ${p.d} мм · схема сечения`;
