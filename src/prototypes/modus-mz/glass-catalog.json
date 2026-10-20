@@ -667,8 +667,8 @@
       "color": "#d7eeea",
       "matte": false,
       "pitch": 12,
-      "pattern": null,
-      "texturePending": true,
+      "pattern": "reed",
+      "texturePending": false,
       "note": "Закалка, триплексование, тонирование плёнкой и окрашивание доступны. Алюминиевый фасад — только 4 мм; профильная система для дверей и перегородок — 8 мм. Сочетания обработок и конструкцию согласуем по проекту.",
       "verifiedSource": {
         "url": "https://alfaglass.ru/materialy/moru-crystal/",
@@ -713,7 +713,7 @@
       "color": "#b69c73",
       "matte": false,
       "pitch": 12,
-      "pattern": null,
+      "pattern": "reed",
       "texturePending": false,
       "note": "Закалка, триплексование, тонирование плёнкой и окрашивание доступны. Алюминиевый фасад — только 4 мм; профильная система для дверей и перегородок — 8 мм. Сочетания обработок и конструкцию согласуем по проекту.",
       "verifiedSource": {
@@ -820,8 +820,8 @@
       "color": "#b69c73",
       "matte": false,
       "pitch": 12,
-      "pattern": null,
-      "texturePending": true,
+      "pattern": "reed",
+      "texturePending": false,
       "note": "Магнетронное покрытие на рифлёной стороне. Закалка недоступна. Алюминиевый фасад — только 4 мм; профильная система — 8 мм. Сочетания обработок согласуются по проекту.",
       "verifiedSource": {
         "url": "https://alfaglass.ru/materialy/moru-magnetron-bronze/",
@@ -843,8 +843,8 @@
       "color": "#87949c",
       "matte": false,
       "pitch": 12,
-      "pattern": null,
-      "texturePending": true,
+      "pattern": "reed",
+      "texturePending": false,
       "note": "Магнетронное покрытие на рифлёной стороне. Закалка недоступна. Алюминиевый фасад — только 4 мм; профильная система — 8 мм. Сочетания обработок согласуются по проекту.",
       "verifiedSource": {
         "url": "https://alfaglass.ru/materialy/moru-magnetron-grey/",
@@ -1246,8 +1246,8 @@
       "color": "#87949c",
       "matte": false,
       "pitch": 12,
-      "pattern": null,
-      "texturePending": true,
+      "pattern": "reed",
+      "texturePending": false,
       "note": "Точная фактура пока не воспроизведена; цвет и прозрачность ориентировочные.",
       "title": "MORU тонированное в массе Grey",
       "verifiedSource": {
