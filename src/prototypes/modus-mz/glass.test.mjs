@@ -16,6 +16,24 @@ test('physical texture pitch does not stretch with facade size or orientation',(
   assert.deepEqual(textureRepeat(600,200,2,'vertical'),[300,100]);
   assert.deepEqual(textureRepeat(300,200,2,'horizontal'),[100,150]);
 });
+test('Raywall preserves rib pitch and rotates normal direction without stretching',async()=>{
+ const {raywallNormalTexture,glassEdgeMaterial}=await import('./glass-render.js');
+ const pitch=100/14,vertical=raywallNormalTexture(320,570,pitch,'vertical'),horizontal=raywallNormalTexture(320,570,pitch,'horizontal');
+ assert.deepEqual(vertical.repeat.toArray(),[320/pitch,570/pitch]);
+ assert.deepEqual(horizontal.repeat.toArray(),vertical.repeat.toArray());
+ const index=(64*256+64)*4;
+ assert.ok(Math.abs(vertical.image.data[index]-128)>40);
+ assert.ok(Math.abs(vertical.image.data[index+1]-128)<10);
+ assert.ok(Math.abs(horizontal.image.data[index+1]-128)>40);
+ assert.ok(Math.abs(horizontal.image.data[index]-128)<10);
+ const item=catalog.items.find(i=>i.slug==='raywall90');
+ const face=glassMaterial(item,320,570,'vertical',{capabilities:{getMaxAnisotropy:()=>8}});
+ const edge=glassEdgeMaterial(item,face);
+ assert.equal(face.thickness,4);assert.equal(edge.normalMap,null);assert.equal(edge.thickness,4);
+ const enlarged=raywallNormalTexture(640,1140,pitch,'vertical');
+ assert.equal(enlarged.repeat.x,vertical.repeat.x*2);
+ for(const t of [vertical,horizontal,enlarged,face.normalMap])t.dispose();face.dispose();edge.dispose();
+});
 test('optical materials are transmissive or reflective and unknown patterns are not invented',()=>{
   const renderer={capabilities:{getMaxAnisotropy:()=>8}};
   for(const m of catalog.items){const mat=glassMaterial(m,450,900,'vertical',renderer);if(m.mirror||m.opaque)assert.equal(mat.transmission,0);else assert.ok(mat.transmission>=.9);if(m.texturePending)assert.equal(mat.normalMap,null);mat.normalMap?.dispose();mat.dispose();}

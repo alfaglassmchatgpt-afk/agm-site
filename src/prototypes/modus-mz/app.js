@@ -6,10 +6,10 @@ import {sections,svgSection,sectionNotes} from './sections.js';
 import {railGeometry,sampleGeometry} from './profile-mesh.js';
 import {profileMetal} from './metal.js';
 import {FacadeProject} from './project.js?v=20261015-groups';
-import {transparentSlugs,transparentItems,matteSlugs,matteItems,stopsolSlugs,stopsolItems,reedSlugs,reedItems,patternedSlugs,patternedItems} from './glass-groups.js?v=matte-contact-20261015';
+import {transparentSlugs,transparentItems,matteSlugs,matteItems,stopsolSlugs,stopsolItems,reedSlugs,reedItems,patternedSlugs,patternedItems} from './glass-groups.js?v=raywall-optics-20261020';
 import {ProjectConfirmation} from './confirmation.js';
-import {studioEnvironment,glassMaterial,glassEdgeMaterial,stopsolGlassOptics,sampleCabinet,satinContactMap} from './glass-render.js?v=matte-contact-20261015';
-const catalogue=await fetch('./glass-catalog.json?v=matte-contact-20261015').then(r=>{if(!r.ok)throw new Error('Не удалось загрузить каталог стекла');return r.json();});
+import {studioEnvironment,glassMaterial,glassEdgeMaterial,stopsolGlassOptics,sampleCabinet,satinContactMap} from './glass-render.js?v=raywall-optics-20261020';
+const catalogue=await fetch('./glass-catalog.json?v=raywall-optics-20261020').then(r=>{if(!r.ok)throw new Error('Не удалось загрузить каталог стекла');return r.json();});
 const glassItems=Object.fromEntries(catalogue.items.map(m=>[m.id,m]));
 Object.keys(glasses).forEach(k=>delete glasses[k]);
 glassItems.none={id:'none',title:'Без наполнения',color:'none',mirror:false};
@@ -166,4 +166,10 @@ $('#close-send').onclick=()=>$('#send-dialog').close();
 $('#export').onclick=()=>{project.update(s);if(project.items.some(item=>validate(item.config).errors.length))return;
  const items=project.items.map(item=>{const c=item.config,p=profiles.find(p=>p.id===c.profile),g=glassItems[c.glass];return {...structuredClone(item),quantity:1,material:c.glass==='none'?null:{slug:g.slug,variant:g.variant,title:g.title,thickness:4,catalogueSnapshot:catalogue.snapshot},glassCut:c.glass==='none'?null:{width:c.w-p.delta,height:c.h-p.delta,thickness:4},warnings:validate(c).warnings};});
  const blob=new Blob([JSON.stringify({status:'prototype-not-for-production',source,items},null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='modus-mz-project.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
+// Explicit review link only; the ordinary configurator still starts empty.
+if(new URLSearchParams(location.search).get('preview')==='raywall-optics'){
+ s.glass='raywall90__standard';showSampleCabinet='kitchen';project.update(s);
+ $('#kitchen-cabinet').setAttribute('aria-pressed','true');
+ $('#cabinet-scale').textContent='Глубина 312 мм · бутылки 240 мм · посуда в масштабе';
+}
 controls();update();fit();

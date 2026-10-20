@@ -29,6 +29,42 @@ function reliefTexture(pattern){
   texture.magFilter=T.LinearFilter;texture.minFilter=T.LinearMipmapLinearFilter;texture.generateMipmaps=true;texture.needsUpdate=true;
   return texture;
 }
+// Raywall 90T: 14 ribs / 100 mm confirmed by the owner.
+// Facet angle and micro-relief are visual estimates from the approved sample.
+export function raywallNormalTexture(width,height,pitch,direction){
+  const n=256,bytes=new Uint8Array(n*n*4),horizontal=direction==='horizontal';
+  for(let y=0;y<n;y++)for(let x=0;x<n;x++){
+    const u=(horizontal?y:x)/n;
+    const slope=.62*Math.tanh(12*Math.sin(2*Math.PI*u));
+    const grain=.035*Math.sin(x*1.73+y*2.91)*Math.sin(x*.73-y*1.31);
+    const nx=(horizontal?grain:slope+grain),ny=(horizontal?slope+grain:grain);
+    const length=Math.hypot(nx,ny,1),i=(y*n+x)*4;
+    bytes[i]=Math.round(127.5*(nx/length+1));bytes[i+1]=Math.round(127.5*(ny/length+1));
+    bytes[i+2]=Math.round(127.5*(1/length+1));bytes[i+3]=255;
+  }
+  const texture=new T.DataTexture(bytes,n,n);
+  texture.wrapS=texture.wrapT=T.RepeatWrapping;
+  texture.repeat.set(width/pitch,height/pitch);
+  texture.magFilter=T.LinearFilter;texture.minFilter=T.LinearMipmapLinearFilter;
+  texture.generateMipmaps=true;texture.needsUpdate=true;return texture;
+}
+function raywallRefraction(mat){
+  // Screen-space approximation of the air gap to objects behind the glass.
+  // Does not change the 4 mm slab or its absorption distance. Not ray tracing.
+  mat.onBeforeCompile=shader=>{
+    const chunk=T.ShaderChunk.transmission_pars_fragment.replaceAll(
+      'vec3 refractedRayExit = position + transmissionRay;',
+      `vec3 flatNormal = normalize(mat3(modelMatrix) * vec3(0.0,0.0,1.0));
+       flatNormal *= dot(flatNormal,v) < 0.0 ? -1.0 : 1.0;
+       vec3 insideRay = refract(-v,normalize(n),1.0/ior);
+       vec3 outsideRay = refract(insideRay,flatNormal,ior);
+       vec3 deviation = length(outsideRay) > 0.01 ? outsideRay + v : vec3(0.0);
+       vec3 refractedRayExit = position + transmissionRay + deviation * 120.0;`
+    );
+    shader.fragmentShader=shader.fragmentShader.replace('#include <transmission_pars_fragment>',chunk);
+  };
+  mat.customProgramCacheKey=()=> 'raywall-screen-refraction-v1';
+}
 // Visual presets, not measured spectral data. Millimetres match the facade geometry.
 export const clearGlassOptics={
   'float-steklo-clear-m1':{attenuation:'#a9d3b4',distance:20,edge:'#739c80'},
@@ -79,7 +115,13 @@ export function glassMaterial(item,width,height,direction,renderer){
     mat.color.set(coating.coating);mat.attenuationColor.set(coating.attenuation);mat.attenuationDistance=coating.distance;
     mat.metalness=.38;mat.transmission=1;mat.roughness=.025;mat.clearcoat=0;mat.ior=1.52;mat.envMapIntensity=1.3;
   }
-  if(item.pitch&&item.pattern){
+  if(item.slug==='raywall90'){
+    mat.color.set('#ffffff');mat.attenuationColor.set('#c8ddd1');mat.attenuationDistance=80;
+    mat.roughness=.13;mat.clearcoat=0;mat.ior=1.52;
+    mat.normalMap=raywallNormalTexture(width,height,item.pitch,direction);
+    mat.normalMap.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());
+    mat.normalScale.set(1,1);raywallRefraction(mat);
+  }else if(item.pitch&&item.pattern){
     const texture=reliefTexture(item.pattern),[rx,ry]=textureRepeat(width,height,item.pitch,direction);
     texture.repeat.set(rx,ry);if(direction==='horizontal')texture.rotation=Math.PI/2;
     texture.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());mat.normalMap=texture;mat.normalScale.set(.35,.35);
@@ -87,6 +129,7 @@ export function glassMaterial(item,width,height,direction,renderer){
   return mat;
 }
 export function glassEdgeMaterial(item,face){
+  if(item.slug==='raywall90')return new T.MeshPhysicalMaterial({color:'#d3e4da',roughness:.12,transmission:1,thickness:4,ior:1.52});
   const preset=clearGlassOptics[item.slug]||tintedGlassOptics[item.slug]||matteGlassOptics[item.slug]||stopsolGlassOptics[item.slug];if(!preset)return null;
   const edge=face.clone();edge.color.set(preset.edge);edge.roughness=.08;edge.transmission=.85;edge.metalness=0;return edge;
 }
