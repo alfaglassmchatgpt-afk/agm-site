@@ -180,5 +180,11 @@
     "reference": "Archived catalogue sample krepi-v1.",
     "method": "Fine shallow uneven relief and soft blur; approximate procedural optics, no measured pitch.",
     "status": "Local preview awaiting owner review."
+  },
+  "silvit": {
+    "date": "2026-10-20",
+    "reference": "Archived approved sample silvit-approved-v1.",
+    "method": "Predominantly vertical winding relief with finer unevenness; approximate procedural refraction, not measured surface geometry.",
+    "status": "Local preview awaiting owner review."
   }
 }
