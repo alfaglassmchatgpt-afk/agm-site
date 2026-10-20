@@ -132,5 +132,16 @@
     "method": "Owner confirmed 20 ribs per 100 mm on 2026-10-20. Supersedes photo estimate of 5.75 mm.",
     "appearance": "Physical sample photo provided by owner supersedes wardrobe render: rounded vertical ribs, visible coloured object fragments, low haze rather than uniform frosted blur. Pitch 5 mm retained. Optical strengths approximate; 5 mm sample photo informs appearance only, facade glass remains 4 mm.",
     "ribsPer100mm": 20
+  },
+  "fluteliteS": {
+    "date": "2026-10-20",
+    "ribsPer100mm": [
+      57,
+      58
+    ],
+    "modelPitchMm": 1.7391304347826086,
+    "source": "Owner confirmed count and supplied four physical sample photos viewed against dark background and coloured object.",
+    "appearance": "Fine vertical ribs, green edge, coloured objects visible in narrow displaced strips. No uniform frosted veil. Contacting profile stays sharp.",
+    "limits": "Representative midpoint of confirmed count range. Relief cross section, absorption and roughness visually approximated, not measured."
   }
 }

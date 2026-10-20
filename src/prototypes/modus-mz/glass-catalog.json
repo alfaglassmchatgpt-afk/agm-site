@@ -799,9 +799,9 @@
       "mirror": false,
       "color": "#d7eeea",
       "matte": false,
-      "pitch": null,
-      "pattern": null,
-      "texturePending": true,
+      "pitch": 1.7391304347826086,
+      "pattern": "reed",
+      "texturePending": false,
       "note": "Доступные обработки и сочетания согласуются по проекту. Алюминиевый фасад — для стекла 4 мм.",
       "verifiedSource": {
         "url": "https://alfaglass.ru/materialy/flutelite-s/",

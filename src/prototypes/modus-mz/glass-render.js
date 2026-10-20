@@ -225,6 +225,12 @@ export function glassMaterial(item,width,height,direction,renderer,contactOverla
     mat.normalMap=raywallNormalTexture(width,height,item.pitch,direction);
     mat.normalMap.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());
     mat.normalScale.set(1,1);
+  }else if(item.slug==='flutelite-s'){
+    // Owner photos: very fine relief, visible coloured objects, green edge; no frosted veil.
+    mat.color.set('#ffffff');mat.attenuationColor.set('#c9dfcf');mat.attenuationDistance=90;
+    mat.roughness=.09;mat.ior=1.52;mat.metalness=0;mat.transmission=1;
+    mat.normalMap=estriadoNormalTexture(width,height,item.pitch,direction);
+    mat.normalMap.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());mat.normalScale.set(1.1,1.1);
   }else if(item.slug==='vison-sun'){
     mat.color.set('#ffffff');mat.attenuationColor.set('#eef3ef');mat.attenuationDistance=450;
     // Owner physical sample supersedes wardrobe render: clear coloured fragments, low haze.
@@ -265,6 +271,7 @@ export function glassMaterial(item,width,height,direction,renderer,contactOverla
   return mat;
 }
 export function glassEdgeMaterial(item,face){
+  if(item.slug==='flutelite-s')return new T.MeshPhysicalMaterial({color:'#a6c9af',roughness:.08,transmission:1,thickness:4,ior:1.52,specularIntensity:0,envMapIntensity:0});
   if(item.slug==='vison-sun')return new T.MeshPhysicalMaterial({color:'#e2eae5',roughness:.08,transmission:1,thickness:4,ior:1.52,specularIntensity:0,envMapIntensity:0});
   if(estriadoOptics[item.slug])return new T.MeshPhysicalMaterial({color:estriadoOptics[item.slug].edge,roughness:.08,transmission:1,thickness:4,ior:1.52,specularIntensity:0,envMapIntensity:0});
   if(moruOptics[item.slug])return new T.MeshPhysicalMaterial({color:moruOptics[item.slug].edge,roughness:.08,transmission:1,thickness:4,ior:1.52,specularIntensity:0,envMapIntensity:0});
