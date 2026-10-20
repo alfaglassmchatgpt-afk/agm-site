@@ -51,18 +51,22 @@ export function refractionSurround(width,height,kind=0){
   const points=kind===3?[[-x,-z],[x,-z],[x*.62,z],[-x*.62,z]]:[[-x,-z],[x,-z],[x,z],[-x,z]];
   for(let i=0;i<4;i++){
    const a=points[i],b=points[(i+1)%4],len=Math.hypot(b[0]-a[0],b[1]-a[1]);
-   const wall=new T.Mesh(new T.PlaneGeometry(len,wallHeight),material);wall.position.set((a[0]+b[0])/2,0,(a[1]+b[1])/2);wall.rotation.y=Math.atan2(-(b[1]-a[1]),b[0]-a[0])+Math.PI;g.add(wall);
+   let wallMaterial=material;
+   if(kind===4){
+    const names=['forest','mountains','coast','dunes'];
+    const wallpaper=new T.TextureLoader().load('./assets/photobox/'+names[i]+'.png',texture=>{
+     const imageAspect=texture.image.width/texture.image.height,wallAspect=len/wallHeight;
+     if(imageAspect>wallAspect){texture.repeat.x=wallAspect/imageAspect;texture.offset.x=(1-texture.repeat.x)/2;}
+     else{texture.repeat.y=imageAspect/wallAspect;texture.offset.y=(1-texture.repeat.y)/2;}
+    });
+    wallpaper.colorSpace=T.SRGBColorSpace;
+    wallMaterial=new T.MeshBasicMaterial({map:wallpaper,side:T.BackSide});
+   }
+   const wall=new T.Mesh(new T.PlaneGeometry(len,wallHeight),wallMaterial);wall.position.set((a[0]+b[0])/2,0,(a[1]+b[1])/2);wall.rotation.y=Math.atan2(-(b[1]-a[1]),b[0]-a[0])+Math.PI;g.add(wall);
   }
  }
  const surface=(y,color,ceiling)=>{const m=new T.Mesh(new T.PlaneGeometry(radius*4,radius*4),new T.MeshStandardMaterial({color,roughness:.9}));m.rotation.x=ceiling?Math.PI/2:-Math.PI/2;m.position.y=y;g.add(m);};
  surface(-wallHeight/2,'#b2b2ad',false);surface(wallHeight/2,'#e9e5df',true);
- if(kind===4){
-  // Broad softboxes, with a narrow dark separator for reading glossy surfaces.
-  for(const zSign of [-1,1])for(const [x,w,color] of [[-.65,.42,'#faf8f2'],[.4,.55,'#edf4fa'],[.05,.045,'#697176']]){
-   const softbox=new T.Mesh(new T.PlaneGeometry(radius*w,wallHeight*.72),new T.MeshBasicMaterial({color,side:T.DoubleSide}));
-   softbox.position.set(radius*x,0,zSign*(radius-12));g.add(softbox);
-  }
- }
  const panel=new T.Mesh(new T.PlaneGeometry(radius*.8,radius*.45),new T.MeshBasicMaterial({color:kind%2?'#ffe4bd':'#e1f1ff'}));panel.rotation.x=Math.PI/2;panel.position.set(0,wallHeight/2-2,0);g.add(panel);
  const lamp=new T.PointLight(kind%2?0xffe4bd:0xe1f1ff,wallHeight*wallHeight*.035,wallHeight*4,2);lamp.position.set(0,wallHeight/2-40,0);g.add(lamp);
  return g;
