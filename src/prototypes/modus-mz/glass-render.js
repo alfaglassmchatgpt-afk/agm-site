@@ -101,7 +101,22 @@ export const estriadoOptics={
  'estriado-crystal':{attenuation:'#dce9e1',distance:160,edge:'#c5dacf'},
  'estriado-ultra':{attenuation:'#f4f5f4',distance:600,edge:'#e9eceb'}
 };
-function raywallRefraction(mat,width,height,overlap,pitch,direction){
+// Four planar facets per square cell; shape is a visual approximation of the approved sample.
+export function krezetNormalTexture(width,height,pitch){
+ const n=256,bytes=new Uint8Array(n*n*4);
+ for(let y=0;y<n;y++)for(let x=0;x<n;x++){
+  const u=(x+.5)/n-.5,v=(y+.5)/n-.5;
+  const nx=Math.abs(u)>Math.abs(v)?Math.sign(u)*.4:0;
+  const ny=Math.abs(v)>=Math.abs(u)?Math.sign(v)*.4:0;
+  const len=Math.hypot(nx,ny,1),i=(y*n+x)*4;
+  bytes[i]=Math.round(127.5*(1+nx/len));bytes[i+1]=Math.round(127.5*(1+ny/len));
+  bytes[i+2]=Math.round(127.5*(1+1/len));bytes[i+3]=255;
+ }
+ const map=new T.DataTexture(bytes,n,n);map.wrapS=map.wrapT=T.RepeatWrapping;
+ map.repeat.set(width/pitch,height/pitch);map.minFilter=T.LinearMipmapLinearFilter;
+ map.magFilter=T.LinearFilter;map.generateMipmaps=true;map.needsUpdate=true;return map;
+}
+function raywallRefraction(mat,width,height,overlap,pitch,direction,grid=false){
   // Screen-space approximation of the air gap to objects behind the glass.
   // Does not change the 4 mm slab or its absorption distance. Not ray tracing.
   mat.onBeforeCompile=shader=>{
@@ -109,10 +124,12 @@ function raywallRefraction(mat,width,height,overlap,pitch,direction){
     shader.uniforms.ribContact={value:Math.max(0,overlap)};
     shader.uniforms.ribCycles={value:pitch>0?(direction==='horizontal'?height:width)/pitch:0};
     shader.uniforms.ribHorizontal={value:direction==='horizontal'?1:0};
+    shader.uniforms.cellCycles={value:new T.Vector2(width/(pitch||1),height/(pitch||1))};
+    shader.uniforms.gridRelief={value:grid?1:0};
     shader.vertexShader=shader.vertexShader.replace('#include <common>','#include <common>\nvarying vec2 ribUv;')
       .replace('#include <begin_vertex>','#include <begin_vertex>\nribUv = uv;');
     shader.fragmentShader=shader.fragmentShader.replace('#include <common>',
-      '#include <common>\nvarying vec2 ribUv;\nuniform vec2 ribPanelSize;\nuniform float ribContact;\nuniform float ribCycles;\nuniform float ribHorizontal;');
+      '#include <common>\nvarying vec2 ribUv;\nuniform vec2 ribPanelSize;\nuniform float ribContact;\nuniform float ribCycles;\nuniform float ribHorizontal;\nuniform vec2 cellCycles;\nuniform float gridRelief;');
     const chunk=T.ShaderChunk.transmission_pars_fragment.replaceAll(
       'vec3 refractedRayExit = position + transmissionRay;',
       `vec3 flatNormal = normalize(mat3(modelMatrix) * vec3(0.0,0.0,1.0));
@@ -137,11 +154,17 @@ function raywallRefraction(mat,width,height,overlap,pitch,direction){
       float ribPhase = mix(ribUv.x,ribUv.y,ribHorizontal)*ribCycles;
       float ribVisibility = step(0.5,ribCycles)*(1.0-smoothstep(0.3,0.8,fwidth(ribPhase)));
       float ribValley = pow(0.5+0.5*cos(ribPhase*6.2831853),6.0);
-      outgoingLight *= 1.0-0.22*ribValley*ribVisibility;
+      if(gridRelief>0.5){
+        vec2 cellPhase=ribUv*cellCycles;
+        vec2 cell=fract(cellPhase)-0.5;
+        float visibleCell=1.0-smoothstep(0.3,0.8,max(fwidth(cellPhase.x),fwidth(cellPhase.y)));
+        float facet=abs(cell.x)>abs(cell.y)?sign(cell.x)*0.10:sign(cell.y)*0.06;
+        outgoingLight *= 1.0+facet*visibleCell;
+      }else{outgoingLight *= 1.0-0.22*ribValley*ribVisibility;}
       #include <opaque_fragment>
     `);
   };
-  mat.customProgramCacheKey=()=> 'rib-clear-contact-v5';
+  mat.customProgramCacheKey=()=> 'rib-grid-contact-v6';
 }
 // MORU has rounded ribs rather than Raywall's broad flat facets.
 export function moruNormalTexture(width,height,direction){
@@ -225,6 +248,11 @@ export function glassMaterial(item,width,height,direction,renderer,contactOverla
     mat.normalMap=raywallNormalTexture(width,height,item.pitch,direction);
     mat.normalMap.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());
     mat.normalScale.set(1,1);
+  }else if(item.slug==='krezet'){
+    mat.color.set('#ffffff');mat.attenuationColor.set('#d5e5d9');mat.attenuationDistance=110;
+    mat.roughness=.23;mat.ior=1.52;mat.metalness=0;mat.transmission=1;
+    mat.normalMap=krezetNormalTexture(width,height,item.pitch);
+    mat.normalMap.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());mat.normalScale.set(1,1);
   }else if(item.slug==='flutelite-s'){
     // Owner photos: very fine relief, visible coloured objects, green edge; no frosted veil.
     mat.color.set('#ffffff');mat.attenuationColor.set('#c9dfcf');mat.attenuationDistance=90;
@@ -263,10 +291,10 @@ export function glassMaterial(item,width,height,direction,renderer,contactOverla
     texture.repeat.set(rx,ry);if(direction==='horizontal')texture.rotation=Math.PI/2;
     texture.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());mat.normalMap=texture;mat.normalScale.set(.35,.35);
   }
-  if(reedSlugs.includes(item.slug)){
+  if(reedSlugs.includes(item.slug)||item.slug==='krezet'){
     // One contact treatment for the entire category. Unknown relief remains unmodelled.
     if(!moruOptics[item.slug]?.coating){mat.envMapIntensity=0;mat.specularIntensity=0;mat.clearcoat=0;}
-    raywallRefraction(mat,width,height,contactOverlap,item.pitch,direction);
+    raywallRefraction(mat,width,height,contactOverlap,item.pitch,direction,item.slug==='krezet');
   }
   return mat;
 }

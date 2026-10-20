@@ -904,7 +904,8 @@
         "thicknesses": [
           4
         ]
-      }
+      },
+      "pitchEstimated": true
     },
     {
       "id": "float-steklo-clear-m1__standard",

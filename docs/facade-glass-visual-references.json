@@ -143,5 +143,12 @@
     "source": "Owner confirmed count and supplied four physical sample photos viewed against dark background and coloured object.",
     "appearance": "Fine vertical ribs, green edge, coloured objects visible in narrow displaced strips. No uniform frosted veil. Contacting profile stays sharp.",
     "limits": "Representative midpoint of confirmed count range. Relief cross section, absorption and roughness visually approximated, not measured."
+  },
+  "krezet": {
+    "date": "2026-10-20",
+    "reference": "Previously approved product sample and facade renders, four planar facets per square cell.",
+    "modelPitchMm": 2,
+    "estimated": true,
+    "limits": "Existing prototype/older facade scale 2 mm retained provisionally; old spec also lists 2.3 mm. Not owner-confirmed measurement. Relief slopes and optical blur approximate."
   }
 }

@@ -8,8 +8,8 @@ import {profileMetal} from './metal.js';
 import {FacadeProject} from './project.js?v=20261015-groups';
 import {transparentSlugs,transparentItems,matteSlugs,matteItems,stopsolSlugs,stopsolItems,reedSlugs,reedItems,patternedSlugs,patternedItems} from './glass-groups.js?v=estriado-20261020';
 import {ProjectConfirmation} from './confirmation.js';
-import {studioEnvironment,studioBackdrop,refractionSurround,moruOptics,estriadoOptics,glassMaterial,glassEdgeMaterial,stopsolGlassOptics,sampleCabinet,satinContactMap} from './glass-render.js?v=flutelite-20261020';
-const catalogue=await fetch('./glass-catalog.json?v=flutelite-20261020').then(r=>{if(!r.ok)throw new Error('Не удалось загрузить каталог стекла');return r.json();});
+import {studioEnvironment,studioBackdrop,refractionSurround,moruOptics,estriadoOptics,glassMaterial,glassEdgeMaterial,stopsolGlassOptics,sampleCabinet,satinContactMap} from './glass-render.js?v=krezet-20261020';
+const catalogue=await fetch('./glass-catalog.json?v=krezet-20261020').then(r=>{if(!r.ok)throw new Error('Не удалось загрузить каталог стекла');return r.json();});
 const glassItems=Object.fromEntries(catalogue.items.map(m=>[m.id,m]));
 Object.keys(glasses).forEach(k=>delete glasses[k]);
 glassItems.none={id:'none',title:'Без наполнения',color:'none',mirror:false};
@@ -40,7 +40,7 @@ function build(){
  const extent=Math.max(s.h,s.w*(pair()?2:1))*1.4;Object.assign(light.shadow.camera,{left:-extent,right:extent,top:extent,bottom:-extent});light.shadow.camera.updateProjectionMatrix();
  const other=pair(), states=other&&s.view!=='profile'?[project.current(),other].sort((a,b)=>a.config.side==='left'?-1:1):[project.current()];
  states.forEach((item,i)=>{const part=buildFacade({...item.config,view:s.view,backdrop:s.backdrop});part.traverse(o=>{if(o.isMesh&&!(Array.isArray(o.material)?o.material.some(m=>m.transmission):o.material?.transmission)){o.castShadow=true;o.receiveShadow=true;}});if(states.length===2)part.position.x=(i===0?-1:1)*(s.w+40)/2;model.add(part);if(showSampleCabinet&&['3d','front'].includes(s.view)){const cabinet=sampleCabinet(item.config.w,item.config.h,showSampleCabinet);cabinet.position.x=part.position.x;model.add(cabinet);}});
- if(!showSampleCabinet&&states.some(item=>reedSlugs.includes(glassItems[item.config.glass].slug))&&['3d','front','back'].includes(s.view)){
+ if(!showSampleCabinet&&states.some(item=>(reedSlugs.includes(glassItems[item.config.glass].slug)||glassItems[item.config.glass].slug==='krezet'))&&['3d','front','back'].includes(s.view)){
   model.add(refractionSurround(s.w*states.length,s.h));
  }
 }
@@ -101,7 +101,7 @@ function controls(){glassChoices();const p=profiles.find(p=>p.id===s.profile);$(
  $('#color-name').textContent=`${colors[s.color][0]} · ${s.color}. Наличие уточняется.`;$('#profile-name').textContent=`MZ ${p.id}`;$('#profile-dims').textContent=`${p.b} × ${p.d} мм · схема сечения`;
  $('#section-svg').innerHTML=svgSection(p.id,colors[s.color][1]);
  $('#handle-wrap').hidden=!p.handle;$('#handle').checked=s.handle;$('#mask-wrap').hidden=s.glass==='none'||!['07','17'].includes(p.id);$('#mask').checked=s.mask;$('#reed-wrap').hidden=!glassItems[s.glass].pitch||glassItems[s.glass].pattern==='grid';
- const item=glassItems[s.glass];$('#glass-card-access').hidden=s.glass==='none';$('#glass-link').setAttribute('aria-label','Посмотреть '+item.title+' в каталоге — новая вкладка');$('#glass-link').href='https://alfaglass.ru/materialy/'+item.slug+'/';$('#glass-note').textContent=s.glass==='none'?'Только алюминиевая рамка по указанным размерам, без стекла.':item.texturePending?'Точная фактура пока не воспроизведена — показаны только базовые цвет и прозрачность.':item.pitch?`${item.pitchEstimated?"Приблизительный шаг по фото":"Рельеф с шагом"} ${item.pitch.toFixed(2)} мм; масштаб сохраняется при изменении размера. Оптика приблизительная.`:'Студийная визуализация. Оттенок и отражение ориентировочные.';$('#glass-count').textContent=`${transparentItems(catalogue.items).length+matteItems(catalogue.items).length+stopsolItems(catalogue.items).length+reedItems(catalogue.items).length+patternedItems(catalogue.items).length+1} материалов · 4 мм`;
+ const item=glassItems[s.glass];$('#glass-card-access').hidden=s.glass==='none';$('#glass-link').setAttribute('aria-label','Посмотреть '+item.title+' в каталоге — новая вкладка');$('#glass-link').href='https://alfaglass.ru/materialy/'+item.slug+'/';$('#glass-note').textContent=s.glass==='none'?'Только алюминиевая рамка по указанным размерам, без стекла.':item.texturePending?'Точная фактура пока не воспроизведена — показаны только базовые цвет и прозрачность.':item.pitch?`${item.pitchEstimated?"Приблизительный шаг":"Рельеф с шагом"} ${item.pitch.toFixed(2)} мм; масштаб сохраняется при изменении размера. Оптика приблизительная.`:'Студийная визуализация. Оттенок и отражение ориентировочные.';$('#glass-count').textContent=`${transparentItems(catalogue.items).length+matteItems(catalogue.items).length+stopsolItems(catalogue.items).length+reedItems(catalogue.items).length+patternedItems(catalogue.items).length+1} материалов · 4 мм`;
  $('#hinge').innerHTML=[['none','Без петель и присадок'],...(p.b<20?[['narrow','Специальная для узкого профиля'],['mzf','MZF 63 · подбор присадки'],...(p.id==='07'?[['blum','BLUM 71B950A']]:[])]:[['cup','Чашка 35 мм · модель уточнить']])].map(([v,l])=>`<option value="${v}">${l}</option>`).join('');$('#hinge').value=s.hinge;$('#count').value=s.hinges.length;for(const id of ['side','origin','even'])$('#'+id).disabled=!s.hinges.length;hingeFields();}
 function hingeFields(){ $('#hinges').innerHTML=s.hinges.map((v,i)=>`<div class="hinge-row"><b>${i+1}</b><input aria-label="Положение петли ${i+1}" type="range" min="1" max="${s.h-1}" value="${s.origin==='top'?v:s.h-v}" data-i="${i}"><input aria-label="Петля ${i+1}, мм" type="number" step="1" value="${s.origin==='top'?v:s.h-v}" data-i="${i}"></div>`).join('');$('#hinges').querySelectorAll('input').forEach(el=>el.oninput=()=>{s.hinges[+el.dataset.i]=s.origin==='top'?+el.value:s.h-+el.value;el.parentElement.querySelectorAll('input').forEach(other=>{if(other!==el)other.value=el.value;});update();});}
 let geometry;
@@ -196,3 +196,5 @@ if(new URLSearchParams(location.search).get('preview')==='estriado-studio'){s.gl
 if(new URLSearchParams(location.search).get('preview')==='vision-sun-studio'){s.glass='vison-sun__standard';showSampleCabinet=false;project.update(s);controls();update();fit();}
 
 if(new URLSearchParams(location.search).get('preview')==='flutelite-studio'){s.glass='flutelite-s__standard';showSampleCabinet=false;project.update(s);controls();update();fit();}
+
+if(new URLSearchParams(location.search).get('preview')==='krezet-studio'){s.glass='krezet__standard';showSampleCabinet=false;project.update(s);controls();update();fit();}
