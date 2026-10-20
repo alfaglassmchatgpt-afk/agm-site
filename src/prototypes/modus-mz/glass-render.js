@@ -315,6 +315,24 @@ export function glassMaterial(item,width,height,direction,renderer,contactOverla
     mat.color.set(coating.coating);mat.attenuationColor.set(coating.attenuation);mat.attenuationDistance=coating.distance;
     mat.metalness=.38;mat.transmission=1;mat.roughness=.025;mat.clearcoat=0;mat.ior=1.52;mat.envMapIntensity=1.3;
   }
+  if(item.slug==='dihroichnoe-steklo'){
+    mat.color.set('#ffffff');mat.attenuationColor.set('#ffffff');mat.attenuationDistance=1000;
+    mat.transmission=1;mat.roughness=.035;mat.clearcoat=0;mat.envMapIntensity=.35;
+    mat.iridescence=1;mat.iridescenceIOR=1.3;mat.iridescenceThicknessRange=[280,420];
+    // Illustrative transmitted colour supplements the thin-film reflection in a neutral studio.
+    // View direction drives the tint; this is not a measured spectral coating model.
+    mat.onBeforeCompile=shader=>{
+      shader.vertexShader=shader.vertexShader.replace('#include <common>','#include <common>\nvarying vec2 dichroicUv;').replace('#include <begin_vertex>','#include <begin_vertex>\ndichroicUv=uv;');
+      shader.fragmentShader=shader.fragmentShader.replace('#include <common>','#include <common>\nvarying vec2 dichroicUv;');
+      shader.fragmentShader=shader.fragmentShader.replace('#include <opaque_fragment>',`
+        float angleShift=1.-abs(dot(normalize(normal),normalize(vViewPosition)));
+        float phase=dichroicUv.x*.40+dichroicUv.y*.08+angleShift*1.8;
+        vec3 filmTint=.78+.22*cos(6.2831853*(phase+vec3(0.,.33,.67)));
+        outgoingLight*=filmTint;
+        #include <opaque_fragment>`);
+    };
+    mat.customProgramCacheKey=()=> 'dichroic-view-tint-v1';
+  }
   if(item.slug==='raywall90'){
     mat.color.set('#ffffff');mat.attenuationColor.set('#c8ddd1');mat.attenuationDistance=80;
     mat.roughness=.08;mat.clearcoat=0;mat.ior=1.52;

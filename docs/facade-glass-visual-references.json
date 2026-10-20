@@ -198,5 +198,11 @@
     "reference": "Archived approved sample variant 3, 100 x 150 mm.",
     "method": "Rounded square cells with crossed refraction. Approximate 15 mm cell pitch estimated visually, explicitly marked provisional in UI. Processing restrictions unchanged.",
     "status": "Local preview awaiting owner review."
+  },
+  "dichroic": {
+    "date": "2026-10-20",
+    "reference": "Archived product sample dihroichnoe-steklo-v1.",
+    "method": "Thin-film reflection plus illustrative view-dependent transmission tint, transparent smooth surface. Not measured spectral optics.",
+    "status": "Local preview awaiting owner review."
   }
 }

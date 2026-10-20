@@ -8,8 +8,8 @@ import {profileMetal} from './metal.js';
 import {FacadeProject} from './project.js?v=20261015-groups';
 import {transparentSlugs,transparentItems,matteSlugs,matteItems,stopsolSlugs,stopsolItems,reedSlugs,reedItems,patternedSlugs,patternedItems} from './glass-groups.js?v=estriado-20261020';
 import {ProjectConfirmation} from './confirmation.js';
-import {studioEnvironment,studioBackdrop,refractionSurround,moruOptics,estriadoOptics,glassMaterial,glassEdgeMaterial,stopsolGlassOptics,sampleCabinet,satinContactMap} from './glass-render.js?v=hithicross-20261020';
-const catalogue=await fetch('./glass-catalog.json?v=hithicross-20261020').then(r=>{if(!r.ok)throw new Error('Не удалось загрузить каталог стекла');return r.json();});
+import {studioEnvironment,studioBackdrop,refractionSurround,moruOptics,estriadoOptics,glassMaterial,glassEdgeMaterial,stopsolGlassOptics,sampleCabinet,satinContactMap} from './glass-render.js?v=dichroic-20261020';
+const catalogue=await fetch('./glass-catalog.json?v=dichroic-20261020').then(r=>{if(!r.ok)throw new Error('Не удалось загрузить каталог стекла');return r.json();});
 const glassItems=Object.fromEntries(catalogue.items.map(m=>[m.id,m]));
 Object.keys(glasses).forEach(k=>delete glasses[k]);
 glassItems.none={id:'none',title:'Без наполнения',color:'none',mirror:false};
@@ -214,3 +214,5 @@ if(new URLSearchParams(location.search).get('preview')==='silvit-studio'){s.glas
 if(new URLSearchParams(location.search).get('preview')==='atlantic-studio'){s.glass='monumental-atlantic__standard';showSampleCabinet=false;project.update(s);controls();update();fit();}
 
 if(new URLSearchParams(location.search).get('preview')==='hithicross-studio'){s.glass='hithicross__standard';showSampleCabinet=false;project.update(s);controls();update();fit();}
+
+if(new URLSearchParams(location.search).get('preview')==='dichroic-studio'){s.glass='dihroichnoe-steklo__standard';showSampleCabinet=false;project.update(s);controls();update();fit();}

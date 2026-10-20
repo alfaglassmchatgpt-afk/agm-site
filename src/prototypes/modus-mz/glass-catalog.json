@@ -1012,7 +1012,7 @@
       "matte": false,
       "pitch": null,
       "pattern": null,
-      "texturePending": true,
+      "texturePending": false,
       "note": "Специальные обработки включаются после подтверждения для этого материала.",
       "confirmedBy": "owner",
       "confirmedAt": "2026-10-15",
