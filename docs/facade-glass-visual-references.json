@@ -162,5 +162,11 @@
     "reference": "Approved variant 1 product render, sample 100 x 150 mm.",
     "method": "Approximate procedural flowing surface with narrow wandering veins and fine unevenness; soft transmission distortion. Pattern dimensions are visual estimates, not measurements.",
     "status": "Local preview awaiting owner review."
+  },
+  "kathedralKlein": {
+    "date": "2026-10-20",
+    "reference": "Approved sample v3 product render.",
+    "method": "Fine flowing uneven relief, soft transparent distortion, procedural approximation; scale and optical strengths not measured.",
+    "status": "Local preview awaiting owner review."
   }
 }
