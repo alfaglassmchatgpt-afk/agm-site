@@ -224,7 +224,7 @@
       "mirror": false,
       "color": "#d7eeea",
       "matte": false,
-      "pitch": 5.75,
+      "pitch": 5,
       "pattern": "reed",
       "texturePending": false,
       "note": "Закалка, триплексование, тонирование плёнкой и окрашивание доступны. Алюминиевый фасад — только 4 мм; профильная система для дверей и перегородок — 8 мм. Сочетания обработок и конструкцию согласуем по проекту.",
@@ -235,7 +235,7 @@
           4
         ]
       },
-      "pitchEstimated": true
+      "pitchEstimated": false
     },
     {
       "id": "flutes-moru-bronze__standard",

@@ -127,9 +127,10 @@
   },
   "visionSun": {
     "date": "2026-10-20",
-    "pitchMm": 5.75,
-    "estimated": true,
-    "method": "Dominant horizontal spatial period at four heights in owner photo of 593 mm wide sheet: 5.73–5.78 mm. Perspective/local edge measurements approximate. Owner authorized photo estimate.",
-    "appearance": "Approved blurred wardrobe reference v2: soft silhouettes, vertical ribs, sharp contacting profile. Rounded rib cross section and optical roughness approximated, not measured."
+    "pitchMm": 5,
+    "estimated": false,
+    "method": "Owner confirmed 20 ribs per 100 mm on 2026-10-20. Supersedes photo estimate of 5.75 mm.",
+    "appearance": "Approved blurred wardrobe reference v2: soft silhouettes, vertical ribs, sharp contacting profile. Rounded rib cross section and optical roughness approximated, not measured.",
+    "ribsPer100mm": 20
   }
 }
