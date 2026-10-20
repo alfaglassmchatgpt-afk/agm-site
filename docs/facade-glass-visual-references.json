@@ -186,5 +186,11 @@
     "reference": "Owner physical sample photo supplied 2026-10-20 replaces render as primary reference.",
     "method": "Uneven isolated winding veins with variable width, local interruptions and neighbouring fragments. Clear spaces between veins; restrained illustrative contrast without specular glare. Scale approximate, not measured.",
     "status": "Revised local preview awaiting owner review."
+  },
+  "atlantic": {
+    "date": "2026-10-20",
+    "reference": "Archived approved Monumental Atlantic sample v1.",
+    "method": "Irregular larger polygonal regions with differently oriented fine ridges; approximate procedural optics, estimated scale.",
+    "status": "Local preview awaiting owner review."
   }
 }

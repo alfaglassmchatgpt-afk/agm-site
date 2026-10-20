@@ -117,8 +117,8 @@ export function krezetNormalTexture(width,height,pitch){
  map.magFilter=T.LinearFilter;map.generateMipmaps=true;map.needsUpdate=true;return map;
 }
 // Deterministic irregular facets, estimated from the approved 100 x 150 mm sample.
-function diamantNormalTexture(width,height){
- const n=512,tiles=16,bytes=new Uint8Array(n*n*4);
+function diamantNormalTexture(width,height,atlantic=false){
+ const n=512,tiles=atlantic?8:16,bytes=new Uint8Array(n*n*4);
  const hash=(x,y,k)=>{const z=Math.sin(x*127.1+y*311.7+k*91.3)*43758.5453;return z-Math.floor(z);};
  for(let y=0;y<n;y++)for(let x=0;x<n;x++){
   const u=x/n*tiles,v=y/n*tiles,ix=Math.floor(u),iy=Math.floor(v);let best=1e9,sx=0,sy=0;
@@ -127,11 +127,13 @@ function diamantNormalTexture(width,height){
    const d=(u-gx-hash(wx,wy,1))**2+(v-gy-hash(wx,wy,2))**2;
    if(d<best){best=d;sx=wx;sy=wy;}
   }
-  const nx=(hash(sx,sy,3)-.5)*1.0,ny=(hash(sx,sy,4)-.5)*1.0,len=Math.hypot(nx,ny,1),k=(y*n+x)*4;
+  const angle=hash(sx,sy,5)*Math.PI*2;
+  const ridge=atlantic?.18*Math.sin((u*Math.cos(angle)+v*Math.sin(angle))*48):0;
+  const nx=(hash(sx,sy,3)-.5)*(atlantic?.7:1)+ridge*Math.cos(angle),ny=(hash(sx,sy,4)-.5)*(atlantic?.7:1)+ridge*Math.sin(angle),len=Math.hypot(nx,ny,1),k=(y*n+x)*4;
   bytes[k]=Math.round(127.5*(1+nx/len));bytes[k+1]=Math.round(127.5*(1+ny/len));bytes[k+2]=Math.round(127.5*(1+1/len));bytes[k+3]=255;
  }
  const map=new T.DataTexture(bytes,n,n);map.wrapS=map.wrapT=T.RepeatWrapping;
- map.repeat.set(width/64,height/64);map.minFilter=T.LinearMipmapLinearFilter;map.magFilter=T.LinearFilter;map.generateMipmaps=true;map.needsUpdate=true;return map;
+ map.repeat.set(width/(atlantic?100:64),height/(atlantic?100:64));map.minFilter=T.LinearMipmapLinearFilter;map.magFilter=T.LinearFilter;map.generateMipmaps=true;map.needsUpdate=true;return map;
 }
 // Gothic: broad flowing distortion with narrow wandering veins; approximate approved sample.
 function gothicNormalTexture(width,height,silvit=false){
@@ -321,6 +323,11 @@ export function glassMaterial(item,width,height,direction,renderer,contactOverla
     mat.normalMap=raywallNormalTexture(width,height,item.pitch,direction);
     mat.normalMap.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());
     mat.normalScale.set(1,1);
+  }else if(item.slug==='monumental-atlantic'){
+    mat.color.set('#ffffff');mat.attenuationColor.set('#dce8df');mat.attenuationDistance=160;
+    mat.roughness=.23;mat.ior=1.52;mat.metalness=0;mat.transmission=1;
+    mat.normalMap=diamantNormalTexture(width,height,true);mat.normalScale.set(1,1);
+    mat.normalMap.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());
   }else if(item.slug==='silvit'){
     mat.color.set('#ffffff');mat.attenuationColor.set('#d6e6db');mat.attenuationDistance=140;
     mat.roughness=.19;mat.ior=1.52;mat.metalness=0;mat.transmission=1;
@@ -394,7 +401,7 @@ export function glassMaterial(item,width,height,direction,renderer,contactOverla
     texture.repeat.set(rx,ry);if(direction==='horizontal')texture.rotation=Math.PI/2;
     texture.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());mat.normalMap=texture;mat.normalScale.set(.35,.35);
   }
-  if(reedSlugs.includes(item.slug)||['krezet','diamant','gothic','kathedral-klein','kathedralaqualite','krepi','silvit'].includes(item.slug)){
+  if(reedSlugs.includes(item.slug)||['krezet','diamant','gothic','kathedral-klein','kathedralaqualite','krepi','silvit','monumental-atlantic'].includes(item.slug)){
     // One contact treatment for the entire category. Unknown relief remains unmodelled.
     if(!moruOptics[item.slug]?.coating){mat.envMapIntensity=0;mat.specularIntensity=0;mat.clearcoat=0;}
     raywallRefraction(mat,width,height,contactOverlap,item.pitch,direction,item.slug==='krezet');

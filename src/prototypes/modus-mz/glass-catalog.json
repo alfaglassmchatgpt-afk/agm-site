@@ -549,7 +549,7 @@
       "matte": false,
       "pitch": null,
       "pattern": null,
-      "texturePending": true,
+      "texturePending": false,
       "note": "Доступные обработки и сочетания согласуются по проекту. Алюминиевый фасад — для стекла 4 мм.",
       "verifiedSource": {
         "url": "https://alfaglass.ru/materialy/monumental-atlantic/",
