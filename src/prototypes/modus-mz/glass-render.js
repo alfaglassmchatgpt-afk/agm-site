@@ -189,9 +189,9 @@ export function glassMaterial(item,width,height,direction,renderer,contactOverla
   }else if(moruOptics[item.slug]){
     const preset=moruOptics[item.slug];
     mat.color.set(preset.coating||preset.face||'#ffffff');mat.attenuationColor.set(preset.attenuation);mat.attenuationDistance=preset.distance;
-    mat.roughness=preset.matte?.45:preset.coating?.08:.12;mat.clearcoat=0;mat.ior=1.52;
-    mat.envMapIntensity=preset.coating?1.5:0;mat.specularIntensity=preset.coating?1:0;
-    mat.metalness=preset.coating?.98:0;mat.transmission=preset.coating?.02:preset.matte?.96:1;
+    mat.roughness=preset.matte?.45:preset.coating?.025:.12;mat.clearcoat=0;mat.ior=1.52;
+    mat.envMapIntensity=preset.coating?.65:0;mat.specularIntensity=preset.coating?1:0;
+    mat.metalness=preset.coating?.25:0;mat.transmission=preset.coating?.7:preset.matte?.96:1;
     mat.normalMap=moruNormalTexture(width,height,direction);
     mat.normalMap.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());
     mat.normalScale.set(1,1);raywallRefraction(mat,width,height,contactOverlap);
