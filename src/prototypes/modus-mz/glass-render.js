@@ -100,16 +100,18 @@ export const estriadoOptics={
  'estriado-crystal':{attenuation:'#dce9e1',distance:160,edge:'#c5dacf'},
  'estriado-ultra':{attenuation:'#f4f5f4',distance:600,edge:'#e9eceb'}
 };
-function raywallRefraction(mat,width,height,overlap){
+function raywallRefraction(mat,width,height,overlap,pitch,direction){
   // Screen-space approximation of the air gap to objects behind the glass.
   // Does not change the 4 mm slab or its absorption distance. Not ray tracing.
   mat.onBeforeCompile=shader=>{
     shader.uniforms.ribPanelSize={value:new T.Vector2(width,height)};
     shader.uniforms.ribContact={value:Math.max(0,overlap)};
+    shader.uniforms.ribCycles={value:(direction==='horizontal'?height:width)/pitch};
+    shader.uniforms.ribHorizontal={value:direction==='horizontal'?1:0};
     shader.vertexShader=shader.vertexShader.replace('#include <common>','#include <common>\nvarying vec2 ribUv;')
       .replace('#include <begin_vertex>','#include <begin_vertex>\nribUv = uv;');
     shader.fragmentShader=shader.fragmentShader.replace('#include <common>',
-      '#include <common>\nvarying vec2 ribUv;\nuniform vec2 ribPanelSize;\nuniform float ribContact;');
+      '#include <common>\nvarying vec2 ribUv;\nuniform vec2 ribPanelSize;\nuniform float ribContact;\nuniform float ribCycles;\nuniform float ribHorizontal;');
     const chunk=T.ShaderChunk.transmission_pars_fragment.replaceAll(
       'vec3 refractedRayExit = position + transmissionRay;',
       `vec3 flatNormal = normalize(mat3(modelMatrix) * vec3(0.0,0.0,1.0));
@@ -124,8 +126,17 @@ function raywallRefraction(mat,width,height,overlap){
        vec3 refractedRayExit = position + transmissionRay + deviation * 75.0 * viewFade * contactFade;`
     );
     shader.fragmentShader=shader.fragmentShader.replace('#include <transmission_pars_fragment>',chunk);
+    // Restrained illustrative relief also over a contacting rail, without specular glare.
+    // Screen derivative fades subpixel ribs to avoid moire when zooming out.
+    shader.fragmentShader=shader.fragmentShader.replace('#include <opaque_fragment>',`
+      float ribPhase = mix(ribUv.x,ribUv.y,ribHorizontal)*ribCycles;
+      float ribVisibility = 1.0-smoothstep(0.3,0.8,fwidth(ribPhase));
+      float ribValley = pow(0.5+0.5*cos(ribPhase*6.2831853),6.0);
+      outgoingLight *= 1.0-0.22*ribValley*ribVisibility;
+      #include <opaque_fragment>
+    `);
   };
-  mat.customProgramCacheKey=()=> 'raywall-screen-refraction-v3';
+  mat.customProgramCacheKey=()=> 'rib-inspection-contrast-v4';
 }
 // MORU has rounded ribs rather than Raywall's broad flat facets.
 export function moruNormalTexture(width,height,direction){
@@ -208,7 +219,7 @@ export function glassMaterial(item,width,height,direction,renderer,contactOverla
     mat.envMapIntensity=0;mat.specularIntensity=0;mat.transmission=1;
     mat.normalMap=raywallNormalTexture(width,height,item.pitch,direction);
     mat.normalMap.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());
-    mat.normalScale.set(1,1);raywallRefraction(mat,width,height,contactOverlap);
+    mat.normalScale.set(1,1);raywallRefraction(mat,width,height,contactOverlap,item.pitch,direction);
   }else if(estriadoOptics[item.slug]){
     const preset=estriadoOptics[item.slug];
     mat.color.set('#ffffff');mat.attenuationColor.set(preset.attenuation);mat.attenuationDistance=preset.distance;
@@ -216,7 +227,7 @@ export function glassMaterial(item,width,height,direction,renderer,contactOverla
     mat.envMapIntensity=0;mat.specularIntensity=0;mat.transmission=1;
     mat.normalMap=estriadoNormalTexture(width,height,item.pitch,direction);
     mat.normalMap.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());
-    mat.normalScale.set(1,1);raywallRefraction(mat,width,height,contactOverlap);
+    mat.normalScale.set(1,1);raywallRefraction(mat,width,height,contactOverlap,item.pitch,direction);
   }else if(moruOptics[item.slug]){
     const preset=moruOptics[item.slug];
     mat.color.set(preset.coating||preset.face||'#ffffff');mat.attenuationColor.set(preset.attenuation);mat.attenuationDistance=preset.distance;
@@ -225,7 +236,7 @@ export function glassMaterial(item,width,height,direction,renderer,contactOverla
     mat.metalness=preset.coating?.25:0;mat.transmission=preset.coating?.7:preset.matte?.96:1;
     mat.normalMap=moruNormalTexture(width,height,direction);
     mat.normalMap.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());
-    mat.normalScale.set(1,1);raywallRefraction(mat,width,height,contactOverlap);
+    mat.normalScale.set(1,1);raywallRefraction(mat,width,height,contactOverlap,item.pitch,direction);
   }else if(item.pitch&&item.pattern){
     const texture=reliefTexture(item.pattern),[rx,ry]=textureRepeat(width,height,item.pitch,direction);
     texture.repeat.set(rx,ry);if(direction==='horizontal')texture.rotation=Math.PI/2;
