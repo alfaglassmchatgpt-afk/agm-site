@@ -18,6 +18,16 @@ export function studioEnvironment(renderer){
 export function textureRepeat(width,height,pitch,direction){
   return direction==='horizontal'?[height/pitch,width/pitch]:[width/pitch,height/pitch];
 }
+// A quiet studio sweep gives transparent surfaces a background to refract.
+export function studioBackdrop(){
+ const canvas=document.createElement('canvas');canvas.width=1024;canvas.height=1024;
+ const ctx=canvas.getContext('2d'),gradient=ctx.createLinearGradient(0,0,1024,300);
+ for(const [at,color] of [[0,'#929eaa'],[.28,'#c2c9cc'],[.55,'#ece9e0'],[.8,'#bec6c9'],[1,'#8998a4']])gradient.addColorStop(at,color);
+ ctx.fillStyle=gradient;ctx.fillRect(0,0,1024,1024);
+ const shade=ctx.createLinearGradient(0,0,0,1024);shade.addColorStop(0,'rgba(255,255,255,.12)');shade.addColorStop(1,'rgba(42,52,64,.17)');
+ ctx.fillStyle=shade;ctx.fillRect(0,0,1024,1024);
+ const texture=new T.CanvasTexture(canvas);texture.colorSpace=T.SRGBColorSpace;return texture;
+}
 function reliefTexture(pattern){
   const n=128,bytes=new Uint8Array(n*n*4);
   for(let y=0;y<n;y++)for(let x=0;x<n;x++){
@@ -35,8 +45,8 @@ export function raywallNormalTexture(width,height,pitch,direction){
   const n=256,bytes=new Uint8Array(n*n*4),horizontal=direction==='horizontal';
   for(let y=0;y<n;y++)for(let x=0;x<n;x++){
     const u=(horizontal?y:x)/n;
-    const slope=.62*Math.tanh(12*Math.sin(2*Math.PI*u));
-    const grain=.035*Math.sin(x*1.73+y*2.91)*Math.sin(x*.73-y*1.31);
+    const slope=.46*Math.tanh(3*Math.sin(2*Math.PI*u));
+    const grain=.008*Math.sin(x*1.73+y*2.91)*Math.sin(x*.73-y*1.31);
     const nx=(horizontal?grain:slope+grain),ny=(horizontal?slope+grain:grain);
     const length=Math.hypot(nx,ny,1),i=(y*n+x)*4;
     bytes[i]=Math.round(127.5*(nx/length+1));bytes[i+1]=Math.round(127.5*(ny/length+1));
@@ -59,11 +69,13 @@ function raywallRefraction(mat){
        vec3 insideRay = refract(-v,normalize(n),1.0/ior);
        vec3 outsideRay = refract(insideRay,flatNormal,ior);
        vec3 deviation = length(outsideRay) > 0.01 ? outsideRay + v : vec3(0.0);
-       vec3 refractedRayExit = position + transmissionRay + deviation * 120.0;`
+       deviation = clamp(deviation,vec3(-0.35),vec3(0.35));
+       float viewFade = smoothstep(0.15,0.65,abs(dot(flatNormal,v)));
+       vec3 refractedRayExit = position + transmissionRay + deviation * 75.0 * viewFade;`
     );
     shader.fragmentShader=shader.fragmentShader.replace('#include <transmission_pars_fragment>',chunk);
   };
-  mat.customProgramCacheKey=()=> 'raywall-screen-refraction-v1';
+  mat.customProgramCacheKey=()=> 'raywall-screen-refraction-v2';
 }
 // Visual presets, not measured spectral data. Millimetres match the facade geometry.
 export const clearGlassOptics={
@@ -117,7 +129,8 @@ export function glassMaterial(item,width,height,direction,renderer){
   }
   if(item.slug==='raywall90'){
     mat.color.set('#ffffff');mat.attenuationColor.set('#c8ddd1');mat.attenuationDistance=80;
-    mat.roughness=.13;mat.clearcoat=0;mat.ior=1.52;
+    mat.roughness=.23;mat.clearcoat=0;mat.ior=1.52;
+    mat.envMapIntensity=.4;mat.specularIntensity=.55;mat.transmission=.96;
     mat.normalMap=raywallNormalTexture(width,height,item.pitch,direction);
     mat.normalMap.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());
     mat.normalScale.set(1,1);raywallRefraction(mat);
