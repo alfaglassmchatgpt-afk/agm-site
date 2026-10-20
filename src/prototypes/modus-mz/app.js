@@ -6,10 +6,10 @@ import {sections,svgSection,sectionNotes} from './sections.js';
 import {railGeometry,sampleGeometry} from './profile-mesh.js';
 import {profileMetal} from './metal.js';
 import {FacadeProject} from './project.js?v=20261015-groups';
-import {transparentSlugs,transparentItems,matteSlugs,matteItems,stopsolSlugs,stopsolItems,reedSlugs,reedItems,patternedSlugs,patternedItems,lacobelSlugs,lacobelItems,matelacSlugs,matelacItems,mirrorSlugs,mirrorItems} from './glass-groups.js?v=mirrors-20261020';
+import {transparentSlugs,transparentItems,matteSlugs,matteItems,stopsolSlugs,stopsolItems,reedSlugs,reedItems,patternedSlugs,patternedItems,lacobelSlugs,lacobelItems,matelacSlugs,matelacItems,mirrorSlugs,mirrorItems} from './glass-groups.js?v=mirrors-uniform-20261020';
 import {ProjectConfirmation} from './confirmation.js';
-import {studioEnvironment,studioBackdrop,refractionSurround,moruOptics,estriadoOptics,glassMaterial,glassEdgeMaterial,stopsolGlassOptics,sampleCabinet,satinContactMap} from './glass-render.js?v=mirrors-20261020';
-const catalogue=await fetch('./glass-catalog.json?v=mirrors-20261020').then(r=>{if(!r.ok)throw new Error('Не удалось загрузить каталог стекла');return r.json();});
+import {studioEnvironment,studioBackdrop,refractionSurround,moruOptics,estriadoOptics,glassMaterial,glassEdgeMaterial,stopsolGlassOptics,sampleCabinet,satinContactMap} from './glass-render.js?v=mirrors-uniform-20261020';
+const catalogue=await fetch('./glass-catalog.json?v=mirrors-uniform-20261020').then(r=>{if(!r.ok)throw new Error('Не удалось загрузить каталог стекла');return r.json();});
 const glassItems=Object.fromEntries(catalogue.items.map(m=>[m.id,m]));
 Object.keys(glasses).forEach(k=>delete glasses[k]);
 glassItems.none={id:'none',title:'Без наполнения',color:'none',mirror:false};
@@ -92,9 +92,9 @@ function buildFacade(s){
    // Neutral reflected studio panels make the mirror readable even without a cabinet.
    const mirrorRender=mirror.onBeforeRender;
    mirror.onBeforeRender=function(...args){coatingLights.visible=true;try{mirrorRender.apply(this,args);}finally{coatingLights.visible=false;}};
-   if(glassItems[s.glass].variant==='tint_rainbow'){
-    mirror.material.vertexShader=mirror.material.vertexShader.replace('varying vec4 vUv;','varying vec4 vUv; varying vec2 rainbowUv;').replace('void main() {','void main() { rainbowUv=uv;');
-    mirror.material.fragmentShader=mirror.material.fragmentShader.replace('varying vec4 vUv;','varying vec4 vUv; varying vec2 rainbowUv;').replace('blendOverlay( base.rgb, color )','blendOverlay( base.rgb, color ) * (.78+.22*cos(6.2831853*(rainbowUv.x*.6+rainbowUv.y*.12+vec3(0.,.33,.67))))');
+   // Keep the catalogue hue uniform: reflection changes brightness slightly, never washes it white.
+   if(mirrorSlugs.includes(glassItems[s.glass].slug)){
+    mirror.material.fragmentShader=mirror.material.fragmentShader.replace('blendOverlay( base.rgb, color )','color * (0.88 + 0.12 * clamp(dot(base.rgb, vec3(.2126,.7152,.0722)),0.0,1.0))');
    }
    mirror.position.z=q.glassY+4-d+.1;model.add(mirror);
  }

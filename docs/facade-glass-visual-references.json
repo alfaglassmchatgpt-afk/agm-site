@@ -214,7 +214,7 @@
   "mirrors": {
     "date": "2026-10-20",
     "reference": "Saved ALFAGLASS silver, Crystalvision and tinted mirror catalogue profiles.",
-    "method": "Planar studio reflection; approximate silver/clear and seven tinted colours. Rainbow uses illustrative gradient, not a measured coating.",
+    "method": "Uniform approximate catalogue hue; neutral planar reflection modulates brightness by at most 12%. Spatial rainbow gradient removed at owner request.",
     "status": "Local preview awaiting owner review."
   }
 }
