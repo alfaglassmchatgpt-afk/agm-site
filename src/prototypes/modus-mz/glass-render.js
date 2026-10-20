@@ -227,11 +227,11 @@ export function glassMaterial(item,width,height,direction,renderer,contactOverla
     mat.normalScale.set(1,1);
   }else if(item.slug==='vison-sun'){
     mat.color.set('#ffffff');mat.attenuationColor.set('#eef3ef');mat.attenuationDistance=450;
-    // Approved visual reference: soft silhouettes, sharp rib structure and contacting rail.
-    mat.roughness=.62;mat.ior=1.52;mat.metalness=0;mat.transmission=1;
+    // Owner physical sample supersedes wardrobe render: clear coloured fragments, low haze.
+    mat.roughness=.13;mat.ior=1.52;mat.metalness=0;mat.transmission=1;
     mat.normalMap=moruNormalTexture(width,height,direction);
     mat.normalMap.repeat.set(width/item.pitch,height/item.pitch);
-    mat.normalMap.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());mat.normalScale.set(1,1);
+    mat.normalMap.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());mat.normalScale.set(1.2,1.2);
   }else if(estriadoOptics[item.slug]){
     const preset=estriadoOptics[item.slug];
     mat.color.set('#ffffff');mat.attenuationColor.set(preset.attenuation);mat.attenuationDistance=preset.distance;

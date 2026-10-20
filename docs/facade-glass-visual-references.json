@@ -130,7 +130,7 @@
     "pitchMm": 5,
     "estimated": false,
     "method": "Owner confirmed 20 ribs per 100 mm on 2026-10-20. Supersedes photo estimate of 5.75 mm.",
-    "appearance": "Approved blurred wardrobe reference v2: soft silhouettes, vertical ribs, sharp contacting profile. Rounded rib cross section and optical roughness approximated, not measured.",
+    "appearance": "Physical sample photo provided by owner supersedes wardrobe render: rounded vertical ribs, visible coloured object fragments, low haze rather than uniform frosted blur. Pitch 5 mm retained. Optical strengths approximate; 5 mm sample photo informs appearance only, facade glass remains 4 mm.",
     "ribsPer100mm": 20
   }
 }

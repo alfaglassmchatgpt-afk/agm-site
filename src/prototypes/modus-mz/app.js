@@ -8,7 +8,7 @@ import {profileMetal} from './metal.js';
 import {FacadeProject} from './project.js?v=20261015-groups';
 import {transparentSlugs,transparentItems,matteSlugs,matteItems,stopsolSlugs,stopsolItems,reedSlugs,reedItems,patternedSlugs,patternedItems} from './glass-groups.js?v=estriado-20261020';
 import {ProjectConfirmation} from './confirmation.js';
-import {studioEnvironment,studioBackdrop,refractionSurround,moruOptics,estriadoOptics,glassMaterial,glassEdgeMaterial,stopsolGlassOptics,sampleCabinet,satinContactMap} from './glass-render.js?v=vision-sun-20261020';
+import {studioEnvironment,studioBackdrop,refractionSurround,moruOptics,estriadoOptics,glassMaterial,glassEdgeMaterial,stopsolGlassOptics,sampleCabinet,satinContactMap} from './glass-render.js?v=vision-photo-20261020';
 const catalogue=await fetch('./glass-catalog.json?v=vision-sun-5mm-20261020').then(r=>{if(!r.ok)throw new Error('Не удалось загрузить каталог стекла');return r.json();});
 const glassItems=Object.fromEntries(catalogue.items.map(m=>[m.id,m]));
 Object.keys(glasses).forEach(k=>delete glasses[k]);
