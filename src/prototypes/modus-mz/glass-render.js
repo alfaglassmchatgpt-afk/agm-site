@@ -138,8 +138,21 @@ function gothicNormalTexture(width,height,silvit=false){
  const n=512,bytes=new Uint8Array(n*n*4),tau=2*Math.PI;
  const heightAt=(u,v)=>{
   if(silvit){
-   const x=u+.025*Math.sin(tau*(2*u+3*v))+.012*Math.sin(tau*(5*u-7*v));
-   return .08*Math.sin(tau*12*x)+.035*Math.sin(tau*(23*x+v))+.012*Math.sin(tau*(37*x-9*v));
+   // Uneven isolated veins, based on the owner's physical sample, not periodic fluting.
+   let relief=.001*Math.sin(tau*(37*u+23*v))*Math.sin(tau*(19*u-31*v));
+   for(let i=0;i<13;i++){
+    const seed=Math.sin((i+1)*127.1)*43758.5453,random=seed-Math.floor(seed);
+    const phase=random*tau;
+    const centre=(i+.15+.7*random)/13+.014*Math.sin(tau*v*(2+i%3)+phase)+.006*Math.sin(tau*v*(9+i%5)+phase*2);
+    let distance=u-centre;distance-=Math.round(distance);
+    const width=.0017+.0035*(.5+.5*Math.sin(tau*v*(3+i%4)+phase));
+    const interruption=Math.max(0,Math.min(1,2.5*(.35+Math.sin(tau*v*(1+i%3)+phase))));
+    relief+=(.012+.024*random)*interruption*Math.exp(-distance*distance/(width*width));
+    // Short neighbouring fragments create local splits rather than parallel sinusoidal waves.
+    const branch=distance-.012*Math.sin(tau*v*3+phase);
+    relief+=.009*Math.max(0,Math.sin(tau*v*7+phase))**4*Math.exp(-branch*branch/(width*width*.5));
+   }
+   return relief;
   }
   const vein=Math.sin(tau*(u*4+.11*Math.sin(tau*v)+.04*Math.sin(tau*(3*v+u))));
   const fine=Math.sin(tau*(u*37+v*29))*Math.sin(tau*(u*23-v*41));
@@ -311,7 +324,7 @@ export function glassMaterial(item,width,height,direction,renderer,contactOverla
   }else if(item.slug==='silvit'){
     mat.color.set('#ffffff');mat.attenuationColor.set('#d6e6db');mat.attenuationDistance=140;
     mat.roughness=.19;mat.ior=1.52;mat.metalness=0;mat.transmission=1;
-    mat.normalMap=gothicNormalTexture(width,height,true);mat.normalScale.set(1,1);
+    mat.roughness=.11;mat.normalMap=gothicNormalTexture(width,height,true);mat.normalScale.set(.85,.85);
     mat.normalMap.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());
   }else if(item.slug==='krepi'){
     mat.color.set('#ffffff');mat.attenuationColor.set('#dce9df');mat.attenuationDistance=160;
@@ -385,6 +398,19 @@ export function glassMaterial(item,width,height,direction,renderer,contactOverla
     // One contact treatment for the entire category. Unknown relief remains unmodelled.
     if(!moruOptics[item.slug]?.coating){mat.envMapIntensity=0;mat.specularIntensity=0;mat.clearcoat=0;}
     raywallRefraction(mat,width,height,contactOverlap,item.pitch,direction,item.slug==='krezet');
+    if(item.slug==='silvit'){
+      const compile=mat.onBeforeCompile;
+      mat.onBeforeCompile=shader=>{
+        compile(shader);
+        shader.fragmentShader=shader.fragmentShader.replace('#include <opaque_fragment>',`
+          vec2 veinSlope=texture2D(normalMap,vNormalMapUv).xy*2.0-1.0;
+          float veinShade=clamp(length(veinSlope)*1.8,0.0,0.45);
+          outgoingLight*=1.0-veinShade;
+          #include <opaque_fragment>
+        `);
+      };
+      mat.customProgramCacheKey=()=> 'silvit-photo-veins-v2';
+    }
   }
   return mat;
 }
