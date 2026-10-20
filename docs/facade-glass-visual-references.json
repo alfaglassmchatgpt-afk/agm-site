@@ -192,5 +192,11 @@
     "reference": "Archived approved Monumental Atlantic sample v1.",
     "method": "Irregular larger polygonal regions with differently oriented fine ridges; approximate procedural optics, estimated scale.",
     "status": "Local preview awaiting owner review."
+  },
+  "hithicross": {
+    "date": "2026-10-20",
+    "reference": "Archived approved sample variant 3, 100 x 150 mm.",
+    "method": "Rounded square cells with crossed refraction. Approximate 15 mm cell pitch estimated visually, explicitly marked provisional in UI. Processing restrictions unchanged.",
+    "status": "Local preview awaiting owner review."
   }
 }

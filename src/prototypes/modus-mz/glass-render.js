@@ -102,12 +102,12 @@ export const estriadoOptics={
  'estriado-ultra':{attenuation:'#f4f5f4',distance:600,edge:'#e9eceb'}
 };
 // Four planar facets per square cell; shape is a visual approximation of the approved sample.
-export function krezetNormalTexture(width,height,pitch){
+export function krezetNormalTexture(width,height,pitch,rounded=false){
  const n=256,bytes=new Uint8Array(n*n*4);
  for(let y=0;y<n;y++)for(let x=0;x<n;x++){
   const u=(x+.5)/n-.5,v=(y+.5)/n-.5;
-  const nx=Math.abs(u)>Math.abs(v)?Math.sign(u)*.4:0;
-  const ny=Math.abs(v)>=Math.abs(u)?Math.sign(v)*.4:0;
+  const nx=rounded?.27*Math.sin(u*2*Math.PI):(Math.abs(u)>Math.abs(v)?Math.sign(u)*.4:0);
+  const ny=rounded?.27*Math.sin(v*2*Math.PI):(Math.abs(v)>=Math.abs(u)?Math.sign(v)*.4:0);
   const len=Math.hypot(nx,ny,1),i=(y*n+x)*4;
   bytes[i]=Math.round(127.5*(1+nx/len));bytes[i+1]=Math.round(127.5*(1+ny/len));
   bytes[i+2]=Math.round(127.5*(1+1/len));bytes[i+3]=255;
@@ -200,7 +200,7 @@ function raywallRefraction(mat,width,height,overlap,pitch,direction,grid=false){
     shader.uniforms.ribCycles={value:pitch>0?(direction==='horizontal'?height:width)/pitch:0};
     shader.uniforms.ribHorizontal={value:direction==='horizontal'?1:0};
     shader.uniforms.cellCycles={value:new T.Vector2(width/(pitch||1),height/(pitch||1))};
-    shader.uniforms.gridRelief={value:grid?1:0};
+    shader.uniforms.gridRelief={value:Number(grid)};
     shader.vertexShader=shader.vertexShader.replace('#include <common>','#include <common>\nvarying vec2 ribUv;')
       .replace('#include <begin_vertex>','#include <begin_vertex>\nribUv = uv;');
     shader.fragmentShader=shader.fragmentShader.replace('#include <common>',
@@ -233,7 +233,7 @@ function raywallRefraction(mat,width,height,overlap,pitch,direction,grid=false){
         vec2 cellPhase=ribUv*cellCycles;
         vec2 cell=fract(cellPhase)-0.5;
         float visibleCell=1.0-smoothstep(0.3,0.8,max(fwidth(cellPhase.x),fwidth(cellPhase.y)));
-        float facet=abs(cell.x)>abs(cell.y)?sign(cell.x)*0.10:sign(cell.y)*0.06;
+        float facet=gridRelief>1.5?0.045*(cos(cell.x*6.2831853)+cos(cell.y*6.2831853)):(abs(cell.x)>abs(cell.y)?sign(cell.x)*0.10:sign(cell.y)*0.06);
         outgoingLight *= 1.0+facet*visibleCell;
       }else{outgoingLight *= 1.0-0.22*ribValley*ribVisibility;}
       #include <opaque_fragment>
@@ -323,6 +323,11 @@ export function glassMaterial(item,width,height,direction,renderer,contactOverla
     mat.normalMap=raywallNormalTexture(width,height,item.pitch,direction);
     mat.normalMap.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());
     mat.normalScale.set(1,1);
+  }else if(item.slug==='hithicross'){
+    mat.color.set('#ffffff');mat.attenuationColor.set('#deebe2');mat.attenuationDistance=180;
+    mat.roughness=.12;mat.ior=1.52;mat.metalness=0;mat.transmission=1;
+    mat.normalMap=krezetNormalTexture(width,height,item.pitch,true);mat.normalScale.set(1,1);
+    mat.normalMap.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());
   }else if(item.slug==='monumental-atlantic'){
     mat.color.set('#ffffff');mat.attenuationColor.set('#dce8df');mat.attenuationDistance=160;
     mat.roughness=.23;mat.ior=1.52;mat.metalness=0;mat.transmission=1;
@@ -401,10 +406,10 @@ export function glassMaterial(item,width,height,direction,renderer,contactOverla
     texture.repeat.set(rx,ry);if(direction==='horizontal')texture.rotation=Math.PI/2;
     texture.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());mat.normalMap=texture;mat.normalScale.set(.35,.35);
   }
-  if(reedSlugs.includes(item.slug)||['krezet','diamant','gothic','kathedral-klein','kathedralaqualite','krepi','silvit','monumental-atlantic'].includes(item.slug)){
+  if(reedSlugs.includes(item.slug)||['krezet','diamant','gothic','kathedral-klein','kathedralaqualite','krepi','silvit','monumental-atlantic','hithicross'].includes(item.slug)){
     // One contact treatment for the entire category. Unknown relief remains unmodelled.
     if(!moruOptics[item.slug]?.coating){mat.envMapIntensity=0;mat.specularIntensity=0;mat.clearcoat=0;}
-    raywallRefraction(mat,width,height,contactOverlap,item.pitch,direction,item.slug==='krezet');
+    raywallRefraction(mat,width,height,contactOverlap,item.pitch,direction,item.slug==='hithicross'?2:item.slug==='krezet');
     if(item.slug==='silvit'){
       const compile=mat.onBeforeCompile;
       mat.onBeforeCompile=shader=>{

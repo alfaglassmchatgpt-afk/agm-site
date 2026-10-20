@@ -463,9 +463,9 @@
       "mirror": false,
       "color": "#d7eeea",
       "matte": false,
-      "pitch": null,
-      "pattern": null,
-      "texturePending": true,
+      "pitch": 15,
+      "pattern": "grid",
+      "texturePending": false,
       "note": "Триплексование недоступно для этого материала. Остальные обработки — по профилю материала и согласованию проекта.",
       "verifiedSource": {
         "url": "https://alfaglass.ru/materialy/hithicross/",
@@ -473,7 +473,8 @@
         "thicknesses": [
           4
         ]
-      }
+      },
+      "pitchEstimated": true
     },
     {
       "id": "gothic__standard",
