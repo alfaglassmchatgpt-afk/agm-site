@@ -103,6 +103,11 @@
       "date": "2026-10-20",
       "baselineCommit": "8128c4a",
       "scope": "Rounded structure and blur accepted for MORU ULTRA; other family optical presets awaiting review"
+    },
+    "colourRevision": {
+      "date": "2026-10-20",
+      "ownerInstruction": "Swap Bronze/Grey mass tint with corresponding magnetron variant tones; make both magnetron variants maximally reflective.",
+      "mode": "Strong studio environment reflection on coated variants only; mass-tinted variants remain transmissive. Approximate optical preview."
     }
   }
 }

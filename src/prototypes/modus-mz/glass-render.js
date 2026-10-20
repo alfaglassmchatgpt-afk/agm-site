@@ -122,11 +122,11 @@ export function moruNormalTexture(width,height,direction){
 export const moruOptics={
  'moru-ultra':{attenuation:'#eef5f2',distance:500,edge:'#e2eeea'},
  'moru-crystal':{attenuation:'#d8e4df',distance:110,edge:'#b4cfc3'},
- 'moru-bronze-toned':{attenuation:'#b3916d',distance:8,edge:'#63503a'},
- 'moru-grey':{attenuation:'#a0a3a4',distance:5,edge:'#53585a'},
+ 'moru-bronze-toned':{attenuation:'#ad8c62',distance:7,edge:'#68533b',face:'#c4ad8b'},
+ 'moru-grey':{attenuation:'#8c969e',distance:7,edge:'#52616a',face:'#aab5bd'},
  'flutes-moru-ultra-mat':{attenuation:'#eef5f2',distance:500,edge:'#e2eeea',matte:true},
- 'moru-magnetron-bronze':{attenuation:'#ad8c62',distance:7,edge:'#68533b',coating:'#c4ad8b'},
- 'moru-magnetron-grey':{attenuation:'#8c969e',distance:7,edge:'#52616a',coating:'#aab5bd'}
+ 'moru-magnetron-bronze':{attenuation:'#b3916d',distance:8,edge:'#63503a',coating:'#b3916d'},
+ 'moru-magnetron-grey':{attenuation:'#a0a3a4',distance:5,edge:'#53585a',coating:'#a0a3a4'}
 };
 // Visual presets, not measured spectral data. Millimetres match the facade geometry.
 export const clearGlassOptics={
@@ -188,9 +188,10 @@ export function glassMaterial(item,width,height,direction,renderer,contactOverla
     mat.normalScale.set(1,1);raywallRefraction(mat,width,height,contactOverlap);
   }else if(moruOptics[item.slug]){
     const preset=moruOptics[item.slug];
-    mat.color.set(preset.coating||'#ffffff');mat.attenuationColor.set(preset.attenuation);mat.attenuationDistance=preset.distance;
-    mat.roughness=preset.matte?.45:preset.coating?.18:.12;mat.clearcoat=0;mat.ior=1.52;
-    mat.envMapIntensity=0;mat.specularIntensity=0;mat.transmission=preset.coating?.92:preset.matte?.96:1;
+    mat.color.set(preset.coating||preset.face||'#ffffff');mat.attenuationColor.set(preset.attenuation);mat.attenuationDistance=preset.distance;
+    mat.roughness=preset.matte?.45:preset.coating?.08:.12;mat.clearcoat=0;mat.ior=1.52;
+    mat.envMapIntensity=preset.coating?1.5:0;mat.specularIntensity=preset.coating?1:0;
+    mat.metalness=preset.coating?.98:0;mat.transmission=preset.coating?.02:preset.matte?.96:1;
     mat.normalMap=moruNormalTexture(width,height,direction);
     mat.normalMap.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());
     mat.normalScale.set(1,1);raywallRefraction(mat,width,height,contactOverlap);

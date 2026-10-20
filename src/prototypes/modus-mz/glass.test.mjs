@@ -1,7 +1,7 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
-import {textureRepeat,glassMaterial} from './glass-render.js';
+import {textureRepeat,glassMaterial,moruOptics} from './glass-render.js';
 import {validate} from './data.js';
 const read=async path=>JSON.parse(await readFile(new URL(path,import.meta.url),'utf8'));
 const catalog=await read('./glass-catalog.json');
@@ -47,7 +47,7 @@ test('Raywall preserves rib pitch and rotates normal direction without stretchin
 });
 test('optical materials are transmissive or reflective and unknown patterns are not invented',()=>{
   const renderer={capabilities:{getMaxAnisotropy:()=>8}};
-  for(const m of catalog.items){const mat=glassMaterial(m,450,900,'vertical',renderer);if(m.mirror||m.opaque)assert.equal(mat.transmission,0);else assert.ok(mat.transmission>=.9);if(m.texturePending)assert.equal(mat.normalMap,null);mat.normalMap?.dispose();mat.dispose();}
+  for(const m of catalog.items){const mat=glassMaterial(m,450,900,'vertical',renderer);if(m.mirror||m.opaque)assert.equal(mat.transmission,0);else if(moruOptics[m.slug]?.coating){assert.ok(mat.metalness>=.95);assert.ok(mat.transmission<=.05);assert.ok(mat.envMapIntensity>=1);}else assert.ok(mat.transmission>=.9);if(m.texturePending)assert.equal(mat.normalMap,null);mat.normalMap?.dispose();mat.dispose();}
 });
 test('catalogue material opacity participates in MZ07 compatibility',()=>{
   const s={profile:'07',w:450,h:900,glass:'arbitrary-catalogue-slug',hinge:'narrow',hinges:[100,800],mask:false};
