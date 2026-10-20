@@ -31,7 +31,7 @@ export function studioBackdrop(){
 }
 // Physical studio surround: included in the transmission pass, unlike a flat
 // background colour. The diagonal soft bands reveal both rib orientations.
-export function refractionSurround(width,height){
+export function refractionSurround(width,height,renderer){
  const g=new T.Group();g.name='photobox-surround';
  const radius=Math.max(width,height)*2.8+300,wallHeight=Math.max(height*3,2200);
  const points=[[-radius,-radius],[radius,-radius],[radius,radius],[-radius,radius]];
@@ -51,7 +51,14 @@ export function refractionSurround(width,height){
    const wall=new T.Mesh(new T.PlaneGeometry(len,wallHeight),wallMaterial);wall.position.set((a[0]+b[0])/2,0,(a[1]+b[1])/2);wall.rotation.y=Math.atan2(-(b[1]-a[1]),b[0]-a[0])+Math.PI;g.add(wall);
   }
  const surface=(y,color,ceiling)=>{const m=new T.Mesh(new T.PlaneGeometry(radius*4,radius*4),new T.MeshStandardMaterial({color,roughness:.9}));m.rotation.x=ceiling?Math.PI/2:-Math.PI/2;m.position.y=y;g.add(m);};
- surface(-wallHeight/2,'#b2b2ad',false);surface(wallHeight/2,'#e9e5df',true);
+ surface(wallHeight/2,'#e9e5df',true);
+ const floorMap=new T.TextureLoader().load('./assets/photobox/oak-laminate.png');
+ floorMap.colorSpace=T.SRGBColorSpace;floorMap.wrapS=floorMap.wrapT=T.RepeatWrapping;
+ // One texture tile represents approximately 2400 x 2400 mm, regardless of facade size.
+ floorMap.repeat.set(radius*2/2400,radius*2/2400);
+ floorMap.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());
+ const floor=new T.Mesh(new T.PlaneGeometry(radius*2,radius*2),new T.MeshStandardMaterial({map:floorMap,roughness:.78,metalness:0}));
+ floor.name='oak-laminate-floor';floor.rotation.x=-Math.PI/2;floor.position.y=-wallHeight/2;g.add(floor);
  const panel=new T.Mesh(new T.PlaneGeometry(radius*.8,radius*.45),new T.MeshBasicMaterial({color:'#e1f1ff'}));panel.rotation.x=Math.PI/2;panel.position.set(0,wallHeight/2-2,0);g.add(panel);
  const lamp=new T.PointLight(0xe1f1ff,wallHeight*wallHeight*.035,wallHeight*4,2);lamp.position.set(0,wallHeight/2-40,0);g.add(lamp);
  return g;
