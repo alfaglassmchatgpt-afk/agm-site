@@ -8,7 +8,7 @@ import {profileMetal} from './metal.js';
 import {FacadeProject} from './project.js?v=20261015-groups';
 import {transparentSlugs,transparentItems,matteSlugs,matteItems,stopsolSlugs,stopsolItems,reedSlugs,reedItems,patternedSlugs,patternedItems} from './glass-groups.js?v=raywall-soft-20261020';
 import {ProjectConfirmation} from './confirmation.js';
-import {studioEnvironment,studioBackdrop,glassMaterial,glassEdgeMaterial,stopsolGlassOptics,sampleCabinet,satinContactMap} from './glass-render.js?v=raywall-soft-20261020';
+import {studioEnvironment,studioBackdrop,refractionSurround,glassMaterial,glassEdgeMaterial,stopsolGlassOptics,sampleCabinet,satinContactMap} from './glass-render.js?v=raywall-wall-20261020';
 const catalogue=await fetch('./glass-catalog.json?v=raywall-soft-20261020').then(r=>{if(!r.ok)throw new Error('Не удалось загрузить каталог стекла');return r.json();});
 const glassItems=Object.fromEntries(catalogue.items.map(m=>[m.id,m]));
 Object.keys(glasses).forEach(k=>delete glasses[k]);
@@ -40,6 +40,9 @@ function build(){
  const extent=Math.max(s.h,s.w*(pair()?2:1))*1.4;Object.assign(light.shadow.camera,{left:-extent,right:extent,top:extent,bottom:-extent});light.shadow.camera.updateProjectionMatrix();
  const other=pair(), states=other&&s.view!=='profile'?[project.current(),other].sort((a,b)=>a.config.side==='left'?-1:1):[project.current()];
  states.forEach((item,i)=>{const part=buildFacade({...item.config,view:s.view,backdrop:s.backdrop});part.traverse(o=>{if(o.isMesh&&!(Array.isArray(o.material)?o.material.some(m=>m.transmission):o.material?.transmission)){o.castShadow=true;o.receiveShadow=true;}});if(states.length===2)part.position.x=(i===0?-1:1)*(s.w+40)/2;model.add(part);if(showSampleCabinet&&['3d','front'].includes(s.view)){const cabinet=sampleCabinet(item.config.w,item.config.h,showSampleCabinet);cabinet.position.x=part.position.x;model.add(cabinet);}});
+ if(!showSampleCabinet&&states.some(item=>glassItems[item.config.glass].slug==='raywall90')&&['3d','front','back'].includes(s.view)){
+  model.add(refractionSurround(s.w*states.length,s.h));
+ }
 }
 function buildFacade(s){
  const model=new T.Group();
@@ -167,9 +170,10 @@ $('#export').onclick=()=>{project.update(s);if(project.items.some(item=>validate
  const items=project.items.map(item=>{const c=item.config,p=profiles.find(p=>p.id===c.profile),g=glassItems[c.glass];return {...structuredClone(item),quantity:1,material:c.glass==='none'?null:{slug:g.slug,variant:g.variant,title:g.title,thickness:4,catalogueSnapshot:catalogue.snapshot},glassCut:c.glass==='none'?null:{width:c.w-p.delta,height:c.h-p.delta,thickness:4},warnings:validate(c).warnings};});
  const blob=new Blob([JSON.stringify({status:'prototype-not-for-production',source,items},null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='modus-mz-project.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
 // Explicit review link only; the ordinary configurator still starts empty.
-if(new URLSearchParams(location.search).get('preview')==='raywall-optics'){
+if(['raywall-optics','raywall-studio'].includes(new URLSearchParams(location.search).get('preview'))){
  s.glass='raywall90__standard';showSampleCabinet='kitchen';project.update(s);
- $('#kitchen-cabinet').setAttribute('aria-pressed','true');
+ if(new URLSearchParams(location.search).get('preview')==='raywall-studio')showSampleCabinet=false;
+ $('#kitchen-cabinet').setAttribute('aria-pressed',String(!!showSampleCabinet));
  $('#cabinet-scale').textContent='Глубина 312 мм · бутылки 240 мм · посуда в масштабе';
 }
 controls();update();fit();

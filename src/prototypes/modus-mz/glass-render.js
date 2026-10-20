@@ -28,6 +28,25 @@ export function studioBackdrop(){
  ctx.fillStyle=shade;ctx.fillRect(0,0,1024,1024);
  const texture=new T.CanvasTexture(canvas);texture.colorSpace=T.SRGBColorSpace;return texture;
 }
+// Physical studio surround: included in the transmission pass, unlike a flat
+// background colour. The diagonal soft bands reveal both rib orientations.
+export function refractionSurround(width,height){
+ const radius=Math.max(width,height)*.8+400,wallHeight=Math.max(height*5,3000);
+ const canvas=document.createElement('canvas');canvas.width=512;canvas.height=512;
+ const ctx=canvas.getContext('2d'),data=ctx.createImageData(512,512);
+ for(let y=0;y<512;y++)for(let x=0;x<512;x++){
+  const wave=.5+.5*Math.sin(2*Math.PI*(x+y)/512);
+  const i=(y*512+x)*4;
+  data.data[i]=155+wave*66;data.data[i+1]=169+wave*55;
+  data.data[i+2]=179+wave*43;data.data[i+3]=255;
+ }
+ ctx.putImageData(data,0,0);
+ const map=new T.CanvasTexture(canvas);map.colorSpace=T.SRGBColorSpace;
+ map.wrapS=map.wrapT=T.RepeatWrapping;map.repeat.set(2*Math.PI*radius/350,wallHeight/350);
+ const mesh=new T.Mesh(new T.CylinderGeometry(radius,radius,wallHeight,96,1,true),
+  new T.MeshBasicMaterial({map,side:T.BackSide,toneMapped:false}));
+ mesh.name='refraction-studio-surround';return mesh;
+}
 function reliefTexture(pattern){
   const n=128,bytes=new Uint8Array(n*n*4);
   for(let y=0;y<n;y++)for(let x=0;x<n;x++){
