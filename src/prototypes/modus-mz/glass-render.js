@@ -1,4 +1,5 @@
 import * as T from './vendor/three.module.js';
+import {reedSlugs} from './glass-groups.js';
 
 // Studio illumination, not a photograph or a claim about a client's interior.
 export function studioEnvironment(renderer){
@@ -106,7 +107,7 @@ function raywallRefraction(mat,width,height,overlap,pitch,direction){
   mat.onBeforeCompile=shader=>{
     shader.uniforms.ribPanelSize={value:new T.Vector2(width,height)};
     shader.uniforms.ribContact={value:Math.max(0,overlap)};
-    shader.uniforms.ribCycles={value:(direction==='horizontal'?height:width)/pitch};
+    shader.uniforms.ribCycles={value:pitch>0?(direction==='horizontal'?height:width)/pitch:0};
     shader.uniforms.ribHorizontal={value:direction==='horizontal'?1:0};
     shader.vertexShader=shader.vertexShader.replace('#include <common>','#include <common>\nvarying vec2 ribUv;')
       .replace('#include <begin_vertex>','#include <begin_vertex>\nribUv = uv;');
@@ -134,7 +135,7 @@ function raywallRefraction(mat,width,height,overlap,pitch,direction){
     // Screen derivative fades subpixel ribs to avoid moire when zooming out.
     shader.fragmentShader=shader.fragmentShader.replace('#include <opaque_fragment>',`
       float ribPhase = mix(ribUv.x,ribUv.y,ribHorizontal)*ribCycles;
-      float ribVisibility = 1.0-smoothstep(0.3,0.8,fwidth(ribPhase));
+      float ribVisibility = step(0.5,ribCycles)*(1.0-smoothstep(0.3,0.8,fwidth(ribPhase)));
       float ribValley = pow(0.5+0.5*cos(ribPhase*6.2831853),6.0);
       outgoingLight *= 1.0-0.22*ribValley*ribVisibility;
       #include <opaque_fragment>
@@ -223,7 +224,7 @@ export function glassMaterial(item,width,height,direction,renderer,contactOverla
     mat.envMapIntensity=0;mat.specularIntensity=0;mat.transmission=1;
     mat.normalMap=raywallNormalTexture(width,height,item.pitch,direction);
     mat.normalMap.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());
-    mat.normalScale.set(1,1);raywallRefraction(mat,width,height,contactOverlap,item.pitch,direction);
+    mat.normalScale.set(1,1);
   }else if(estriadoOptics[item.slug]){
     const preset=estriadoOptics[item.slug];
     mat.color.set('#ffffff');mat.attenuationColor.set(preset.attenuation);mat.attenuationDistance=preset.distance;
@@ -231,7 +232,7 @@ export function glassMaterial(item,width,height,direction,renderer,contactOverla
     mat.envMapIntensity=0;mat.specularIntensity=0;mat.transmission=1;
     mat.normalMap=estriadoNormalTexture(width,height,item.pitch,direction);
     mat.normalMap.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());
-    mat.normalScale.set(1,1);raywallRefraction(mat,width,height,contactOverlap,item.pitch,direction);
+    mat.normalScale.set(1,1);
   }else if(moruOptics[item.slug]){
     const preset=moruOptics[item.slug];
     mat.color.set(preset.coating||preset.face||'#ffffff');mat.attenuationColor.set(preset.attenuation);mat.attenuationDistance=preset.distance;
@@ -240,11 +241,19 @@ export function glassMaterial(item,width,height,direction,renderer,contactOverla
     mat.metalness=preset.coating?.25:0;mat.transmission=preset.coating?.7:preset.matte?.96:1;
     mat.normalMap=moruNormalTexture(width,height,direction);
     mat.normalMap.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());
-    mat.normalScale.set(1,1);raywallRefraction(mat,width,height,contactOverlap,item.pitch,direction);
+    mat.normalScale.set(1,1);
+  }else if(item.slug==='riflenoe-steklo-flutes'){
+    mat.normalMap=moruNormalTexture(width,height,direction);
+    mat.normalMap.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());mat.normalScale.set(1,1);
   }else if(item.pitch&&item.pattern){
     const texture=reliefTexture(item.pattern),[rx,ry]=textureRepeat(width,height,item.pitch,direction);
     texture.repeat.set(rx,ry);if(direction==='horizontal')texture.rotation=Math.PI/2;
     texture.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());mat.normalMap=texture;mat.normalScale.set(.35,.35);
+  }
+  if(reedSlugs.includes(item.slug)){
+    // One contact treatment for the entire category. Unknown relief remains unmodelled.
+    if(!moruOptics[item.slug]?.coating){mat.envMapIntensity=0;mat.specularIntensity=0;mat.clearcoat=0;}
+    raywallRefraction(mat,width,height,contactOverlap,item.pitch,direction);
   }
   return mat;
 }

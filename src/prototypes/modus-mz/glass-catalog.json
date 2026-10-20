@@ -139,8 +139,8 @@
       "color": "#d7eeea",
       "matte": false,
       "pitch": 12,
-      "pattern": null,
-      "texturePending": true,
+      "pattern": "reed",
+      "texturePending": false,
       "note": "Закалка, триплексование, тонирование плёнкой и окрашивание доступны. Алюминиевый фасад — только 4 мм; профильная система для дверей и перегородок — 8 мм. Сочетания обработок и конструкцию согласуем по проекту.",
       "verifiedSource": {
         "url": "https://alfaglass.ru/materialy/riflenoe-steklo-flutes/",
