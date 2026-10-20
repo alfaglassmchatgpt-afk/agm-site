@@ -149,9 +149,14 @@ function gothicNormalTexture(width,height){
  const map=new T.DataTexture(bytes,n,n);map.wrapS=map.wrapT=T.RepeatWrapping;
  map.repeat.set(width/100,height/150);map.minFilter=T.LinearMipmapLinearFilter;map.magFilter=T.LinearFilter;map.generateMipmaps=true;map.needsUpdate=true;return map;
 }
-function kathedralNormalTexture(width,height){
+function kathedralNormalTexture(width,height,aqualite=false){
  const n=512,bytes=new Uint8Array(n*n*4),tau=2*Math.PI;
  const heightAt=(u,v)=>{
+  if(aqualite){
+   const swell=.26*Math.sin(tau*(u+v))+.18*Math.sin(tau*(2*u-v));
+   const x=u+.035*Math.sin(tau*(u+2*v)),y=v+.03*Math.sin(tau*(2*u-v));
+   return swell+.012*Math.sin(tau*(27*x+19*y))+.009*Math.sin(tau*(19*x-31*y));
+  }
   const x=u+.012*Math.sin(tau*(3*u+5*v)),y=v+.014*Math.sin(tau*(4*u-3*v));
   return .012*Math.sin(tau*(17*x+11*y))+.009*Math.sin(tau*(13*x-19*y))+.006*Math.sin(tau*(29*x+7*y))+.018*Math.sin(tau*(3*u+2*v));
  };
@@ -295,6 +300,11 @@ export function glassMaterial(item,width,height,direction,renderer,contactOverla
     mat.normalMap=raywallNormalTexture(width,height,item.pitch,direction);
     mat.normalMap.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());
     mat.normalScale.set(1,1);
+  }else if(item.slug==='kathedralaqualite'){
+    mat.color.set('#ffffff');mat.attenuationColor.set('#d9e8dd');mat.attenuationDistance=160;
+    mat.roughness=.27;mat.ior=1.52;mat.metalness=0;mat.transmission=1;
+    mat.normalMap=kathedralNormalTexture(width,height,true);mat.normalScale.set(1,1);
+    mat.normalMap.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());
   }else if(item.slug==='kathedral-klein'){
     mat.color.set('#ffffff');mat.attenuationColor.set('#e0ebe3');mat.attenuationDistance=180;
     mat.roughness=.19;mat.ior=1.52;mat.metalness=0;mat.transmission=1;
@@ -353,7 +363,7 @@ export function glassMaterial(item,width,height,direction,renderer,contactOverla
     texture.repeat.set(rx,ry);if(direction==='horizontal')texture.rotation=Math.PI/2;
     texture.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());mat.normalMap=texture;mat.normalScale.set(.35,.35);
   }
-  if(reedSlugs.includes(item.slug)||['krezet','diamant','gothic','kathedral-klein'].includes(item.slug)){
+  if(reedSlugs.includes(item.slug)||['krezet','diamant','gothic','kathedral-klein','kathedralaqualite'].includes(item.slug)){
     // One contact treatment for the entire category. Unknown relief remains unmodelled.
     if(!moruOptics[item.slug]?.coating){mat.envMapIntensity=0;mat.specularIntensity=0;mat.clearcoat=0;}
     raywallRefraction(mat,width,height,contactOverlap,item.pitch,direction,item.slug==='krezet');
