@@ -24,6 +24,13 @@ const camera=new T.PerspectiveCamera(34,1,5,50000), renderer=new T.WebGLRenderer
 renderer.toneMapping=T.ACESFilmicToneMapping;renderer.toneMappingExposure=.9;
 renderer.setPixelRatio((innerWidth>900?2:Math.min(devicePixelRatio,1.5)));renderer.setClearColor('#e4e1da');$('#scene').append(renderer.domElement);
 const orbit=new OrbitControls(camera,renderer.domElement);orbit.enableDamping=true;
+// OrbitControls reverses ROTATE/PAN with modifiers. Choose PAN beforehand
+// so Shift/Ctrl + left drag still rotates instead of shifting the facade.
+renderer.domElement.addEventListener('pointerdown',e=>{
+ if(e.pointerType==='touch'||e.button!==0)return;
+ orbit.mouseButtons.LEFT=(e.shiftKey||e.ctrlKey||e.metaKey)?T.MOUSE.PAN:T.MOUSE.ROTATE;
+},true);
+
 scene.add(new T.HemisphereLight(0xfffaf2,0x8c8880,.8));const light=new T.DirectionalLight(0xfff5e7,3.4);light.position.set(-900,1200,1400);light.castShadow=true;light.shadow.mapSize.set(2048,2048);Object.assign(light.shadow.camera,{left:-3000,right:3000,top:3000,bottom:-3000,near:1,far:10000});light.shadow.bias=-.0002;light.shadow.normalBias=2;light.shadow.radius=18;light.shadow.blurSamples=8;scene.add(light);renderer.shadowMap.enabled=true;renderer.shadowMap.type=T.VSMShadowMap;const fill=new T.DirectionalLight(0xf5f7ff,.7);fill.position.set(1200,400,500);scene.add(fill);
 const env=studioEnvironment(renderer);scene.environment=env.texture;
 const coatingLights=new T.Group();coatingLights.visible=false;
@@ -152,7 +159,7 @@ glassChoices();
 for(const id of ['hinge','side','reed','origin'])$('#'+id).onchange=e=>{s[id]=e.target.value;if(id==='hinge'){if(s.hinge==='none')s.hinges=[];else if(!s.hinges.length)s.hinges=[100,s.h-100];}s.glassOpaque=!!(glassItems[s.glass].mirror||glassItems[s.glass].opaque);controls();update();};
 $('#count').onchange=e=>{s.hinges=Array(+e.target.value).fill(0);if(!s.hinges.length)s.hinge='none';else if(s.hinge==='none')s.hinge=profiles.find(p=>p.id===s.profile).b<20?'narrow':'cup';even();controls();};function even(){const n=s.hinges.length;s.hinges=s.hinges.map((_,i)=>Math.round(100+i*(s.h-200)/Math.max(1,n-1)));hingeFields();update();}$('#even').onclick=even;
 $('#handle').onchange=e=>{s.handle=e.target.checked;if(s.handle&&!['00','21','25'].includes(s.color))s.color='00';controls();update();if(s.view==='profile')fit();};$('#mask').onchange=e=>{s.mask=e.target.checked;update();};
-document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>{s.view=b.dataset.view;document.querySelectorAll('[data-view]').forEach(t=>t.classList.toggle('active',t===b));$('#drawing').toggleAttribute('hidden',s.view!=='drawing');$('#scene').style.visibility=s.view==='drawing'?'hidden':'visible';$('#gesture').textContent=s.view==='drawing'?'Перемещайте синие точки · координаты в миллиметрах':s.view==='profile'?'Отрезок 90 мм · вращайте, чтобы рассмотреть открытый торец':'Вращайте мышью или пальцем · колесо — масштаб';update();fit();});$('#reset').onclick=fit;
+document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>{s.view=b.dataset.view;document.querySelectorAll('[data-view]').forEach(t=>t.classList.toggle('active',t===b));$('#drawing').toggleAttribute('hidden',s.view!=='drawing');$('#scene').style.visibility=s.view==='drawing'?'hidden':'visible';$('#gesture').textContent=s.view==='drawing'?'Перемещайте синие точки · координаты в миллиметрах':s.view==='profile'?'Отрезок 90 мм · вращайте, чтобы рассмотреть открытый торец':'Вращение: мышь, Shift/Ctrl + мышь или палец · ПКМ — сдвиг · колесо — масштаб';update();fit();});$('#reset').onclick=fit;
 $('#photobox-toggle').onclick=()=>{showPhotobox=!showPhotobox;$('#photobox-toggle').setAttribute('aria-pressed',String(showPhotobox));build();};
 for(const [id,kind] of [['sample-cabinet','books'],['kitchen-cabinet','kitchen']])$('#'+id).onclick=()=>{showSampleCabinet=showSampleCabinet===kind?false:kind;$('#sample-cabinet').setAttribute('aria-pressed',String(showSampleCabinet==='books'));$('#kitchen-cabinet').setAttribute('aria-pressed',String(showSampleCabinet==='kitchen'));build();};
 function confirmationControls(){
