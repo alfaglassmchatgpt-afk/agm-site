@@ -24,12 +24,26 @@ const camera=new T.PerspectiveCamera(34,1,5,50000), renderer=new T.WebGLRenderer
 renderer.toneMapping=T.ACESFilmicToneMapping;renderer.toneMappingExposure=.9;
 renderer.setPixelRatio((innerWidth>900?2:Math.min(devicePixelRatio,1.5)));renderer.setClearColor('#e4e1da');$('#scene').append(renderer.domElement);
 const orbit=new OrbitControls(camera,renderer.domElement);orbit.enableDamping=true;
-// OrbitControls reverses ROTATE/PAN with modifiers. Choose PAN beforehand
-// so Shift/Ctrl + left drag still rotates instead of shifting the facade.
-renderer.domElement.addEventListener('pointerdown',e=>{
- if(e.pointerType==='touch'||e.button!==0)return;
- orbit.mouseButtons.LEFT=(e.shiftKey||e.ctrlKey||e.metaKey)?T.MOUSE.PAN:T.MOUSE.ROTATE;
+// Modified drag rotates the product, independently of camera and photobox.
+const productRotation=new T.Quaternion();let productGroup=null,productDrag=null;
+const surface=renderer.domElement;
+surface.addEventListener('pointerdown',e=>{
+ if(productDrag||e.pointerType==='touch'||e.button!==0||!(e.shiftKey||e.ctrlKey||e.metaKey))return;
+ e.preventDefault();e.stopImmediatePropagation();
+ const damping=orbit.enableDamping;orbit.enableDamping=false;orbit.update();orbit.enableDamping=damping;
+ orbit.enabled=false;productDrag={id:e.pointerId,x:e.clientX,y:e.clientY};surface.setPointerCapture(e.pointerId);
 },true);
+surface.addEventListener('pointermove',e=>{
+ if(!productDrag||e.pointerId!==productDrag.id)return;
+ e.preventDefault();e.stopImmediatePropagation();
+ const dx=e.clientX-productDrag.x,dy=e.clientY-productDrag.y;
+ const axis=new T.Vector3(dy,dx,0),angle=axis.length()*.006;
+ if(angle){axis.normalize().applyQuaternion(camera.quaternion);productRotation.premultiply(new T.Quaternion().setFromAxisAngle(axis,angle)).normalize();productGroup?.quaternion.copy(productRotation);}
+ productDrag.x=e.clientX;productDrag.y=e.clientY;
+},true);
+function endProductDrag(e){if(!productDrag||(e.pointerId!==undefined&&e.pointerId!==productDrag.id))return;e.stopImmediatePropagation?.();const id=productDrag.id;productDrag=null;orbit.enabled=true;if(surface.hasPointerCapture(id))surface.releasePointerCapture(id);}
+for(const event of ['pointerup','pointercancel','lostpointercapture'])surface.addEventListener(event,endProductDrag,true);
+window.addEventListener('blur',endProductDrag);
 
 scene.add(new T.HemisphereLight(0xfffaf2,0x8c8880,.8));const light=new T.DirectionalLight(0xfff5e7,3.4);light.position.set(-900,1200,1400);light.castShadow=true;light.shadow.mapSize.set(2048,2048);Object.assign(light.shadow.camera,{left:-3000,right:3000,top:3000,bottom:-3000,near:1,far:10000});light.shadow.bias=-.0002;light.shadow.normalBias=2;light.shadow.radius=18;light.shadow.blurSamples=8;scene.add(light);renderer.shadowMap.enabled=true;renderer.shadowMap.type=T.VSMShadowMap;const fill=new T.DirectionalLight(0xf5f7ff,.7);fill.position.set(1200,400,500);scene.add(fill);
 const env=studioEnvironment(renderer);scene.environment=env.texture;
@@ -44,10 +58,10 @@ let model=new T.Group();scene.add(model);
 function fit(){const inspect=s.view==='profile',distance=inspect?Math.max(s.handle?155:125,150/camera.aspect)*1.1:Math.max(s.h,(pair()?s.w*2+40:s.w)/camera.aspect)*2;camera.position.set(inspect?distance*.5:s.view==='3d'?distance*.4:0,inspect?distance*.35:s.view==='3d'?distance*.15:0,s.view==='back'?-distance:distance);orbit.target.set(0,0,0);orbit.update();}
 function disposeModel(root){const materials=new Set(),textures=new Set();root.traverse(o=>{o.getRenderTarget?.().dispose();o.geometry?.dispose();for(const m of (Array.isArray(o.material)?o.material:[o.material]))if(m)materials.add(m);});for(const m of materials){for(const key of ['map','normalMap','roughnessMap','bumpMap'])if(m[key])textures.add(m[key]);m.dispose();}for(const texture of textures)texture.dispose();}
 function build(){
- light.intensity=s.view==='profile'?1:3.4;scene.remove(model);disposeModel(model);model=new T.Group();scene.add(model);
+ light.intensity=s.view==='profile'?1:3.4;scene.remove(model);disposeModel(model);model=new T.Group();scene.add(model);productGroup=new T.Group();productGroup.name="product-assembly";productGroup.quaternion.copy(productRotation);model.add(productGroup);
  const extent=Math.max(s.h,s.w*(pair()?2:1))*1.4;Object.assign(light.shadow.camera,{left:-extent,right:extent,top:extent,bottom:-extent});light.shadow.camera.updateProjectionMatrix();
  const other=pair(), states=other&&s.view!=='profile'?[project.current(),other].sort((a,b)=>a.config.side==='left'?-1:1):[project.current()];
- states.forEach((item,i)=>{const part=buildFacade({...item.config,view:s.view,backdrop:s.backdrop});part.traverse(o=>{if(o.isMesh&&!(Array.isArray(o.material)?o.material.some(m=>m.transmission):o.material?.transmission)){o.castShadow=true;o.receiveShadow=true;}});if(states.length===2)part.position.x=(i===0?-1:1)*(s.w+40)/2;model.add(part);if(showSampleCabinet&&['3d','front'].includes(s.view)){const cabinet=sampleCabinet(item.config.w,item.config.h,showSampleCabinet);cabinet.position.x=part.position.x;model.add(cabinet);}});
+ states.forEach((item,i)=>{const part=buildFacade({...item.config,view:s.view,backdrop:s.backdrop});part.traverse(o=>{if(o.isMesh&&!(Array.isArray(o.material)?o.material.some(m=>m.transmission):o.material?.transmission)){o.castShadow=true;o.receiveShadow=true;}});if(states.length===2)part.position.x=(i===0?-1:1)*(s.w+40)/2;productGroup.add(part);if(showSampleCabinet&&['3d','front'].includes(s.view)){const cabinet=sampleCabinet(item.config.w,item.config.h,showSampleCabinet);cabinet.position.x=part.position.x;productGroup.add(cabinet);}});
  if(showPhotobox&&['3d','front','back'].includes(s.view))model.add(refractionSurround(s.w*states.length,s.h,renderer));
 }
 function buildFacade(s){
@@ -177,7 +191,7 @@ glassChoices();
 for(const id of ['hinge','side','reed','origin'])$('#'+id).onchange=e=>{s[id]=e.target.value;if(id==='hinge'){if(s.hinge==='none')s.hinges=[];else if(!s.hinges.length)s.hinges=[100,s.h-100];}s.glassOpaque=!!(glassItems[s.glass].mirror||glassItems[s.glass].opaque);controls();update();};
 $('#count').onchange=e=>{s.hinges=Array(+e.target.value).fill(0);if(!s.hinges.length)s.hinge='none';else if(s.hinge==='none')s.hinge=defaultHinge(profiles.find(p=>p.id===s.profile));even();controls();};function even(){const n=s.hinges.length;s.hinges=s.hinges.map((_,i)=>Math.round(100+i*(s.h-200)/Math.max(1,n-1)));hingeFields();update();}$('#even').onclick=even;
 $('#handle').onchange=e=>{s.handle=e.target.checked;if(s.handle&&!['00','21','25'].includes(s.color))s.color='00';controls();update();if(s.view==='profile')fit();};$('#mask').onchange=e=>{s.mask=e.target.checked;update();};
-document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>{s.view=b.dataset.view;document.querySelectorAll('[data-view]').forEach(t=>t.classList.toggle('active',t===b));$('#drawing').toggleAttribute('hidden',s.view!=='drawing');$('#scene').style.visibility=s.view==='drawing'?'hidden':'visible';$('#gesture').textContent=s.view==='drawing'?'Перемещайте синие точки · координаты в миллиметрах':s.view==='profile'?'Отрезок 90 мм · вращайте, чтобы рассмотреть открытый торец':'Вращение: мышь, Shift/Ctrl + мышь или палец · ПКМ — сдвиг · колесо — масштаб';update();fit();});$('#reset').onclick=fit;
+document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>{s.view=b.dataset.view;productRotation.identity();document.querySelectorAll('[data-view]').forEach(t=>t.classList.toggle('active',t===b));$('#drawing').toggleAttribute('hidden',s.view!=='drawing');$('#scene').style.visibility=s.view==='drawing'?'hidden':'visible';$('#gesture').textContent=s.view==='drawing'?'Перемещайте синие точки · координаты в миллиметрах':s.view==='profile'?'Отрезок 90 мм · вращайте, чтобы рассмотреть открытый торец':'Shift/Ctrl + мышь — вращать изделие · мышь — камера · ПКМ — сдвиг · колесо — масштаб';update();fit();});$('#reset').onclick=()=>{productRotation.identity();productGroup?.quaternion.identity();fit();};
 $('#photobox-toggle').onclick=()=>{showPhotobox=!showPhotobox;$('#photobox-toggle').setAttribute('aria-pressed',String(showPhotobox));build();};
 for(const [id,kind] of [['sample-cabinet','books'],['kitchen-cabinet','kitchen']])$('#'+id).onclick=()=>{showSampleCabinet=showSampleCabinet===kind?false:kind;$('#sample-cabinet').setAttribute('aria-pressed',String(showSampleCabinet==='books'));$('#kitchen-cabinet').setAttribute('aria-pressed',String(showSampleCabinet==='kitchen'));build();};
 function confirmationControls(){
