@@ -1,4 +1,11 @@
 {
+  "inventoryContext": {
+    "snapshotDate": "2026-09-21",
+    "environmentStatus": "retired-from-workflow",
+    "retiredOn": "2026-10-21",
+    "shutdownConfirmed": false,
+    "note": "Historical dev VM inventory; do not connect or require availability. Local facade prototype remains the active development environment."
+  },
   "theme": [
     {
       "name": "alfa-glass-home-2026",
