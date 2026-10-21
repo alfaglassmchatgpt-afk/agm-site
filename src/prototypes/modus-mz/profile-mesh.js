@@ -1,5 +1,5 @@
 import * as T from './vendor/three.module.js';
-import {sections} from './sections.js?v=mf-corners-20261021';
+import {sections} from './sections.js?v=mf-frame45-20261021';
 
 // Small catalogue-unlabelled edge radii are visual estimates, not machining data.
 export function softenedContour(points,radius=.18){
@@ -14,21 +14,21 @@ export function softenedContour(points,radius=.18){
   return out;
 }
 export function sectionShape(id){
-  const q=sections[id],points=p=>['13','13-01'].includes(id)?softenedContour(p):p.map(v=>new T.Vector2(...v)), shape=new T.Shape(points(q.outline));
+  const q=typeof id==='string'?sections[id]:id,points=p=>['13','13-01'].includes(id)?softenedContour(p):p.map(v=>new T.Vector2(...v)), shape=new T.Shape(points(q.outline));
   for(const contour of q.holes)shape.holes.push(new T.Path(points(contour)));
   return shape;
 }
 
 // A common section builds both the inspection sample and all four frame rails.
-// Equal-width rails use 45 degrees; unequal-width MF rails share an approximate visual joint plane.
-export function railGeometry(id,w,h,side,{start=0,end=1,miter=true,cornerStart,cornerEnd}={}){
-  const q=sections[id],vertical=side==='left'||side==='right',length=vertical?h:w;
-  const geo=new T.ExtrudeGeometry(sectionShape(id),{depth:1,steps:1,bevelEnabled:false});
+// Frame bodies meet at 45 degrees. A projecting grip is extruded separately to square ends.
+export function railGeometry(id,w,h,side,{start=0,end=1,miter=true,section,miterWidth}={}){
+  const q=section||sections[id],vertical=side==='left'||side==='right',length=vertical?h:w;
+  const geo=new T.ExtrudeGeometry(sectionShape(section||id),{depth:1,steps:1,bevelEnabled:false});
   const p=geo.attributes.position,uv=geo.attributes.uv;
   for(let i=0;i<p.count;i++){
     const u=q.b-p.getX(i),z=p.getY(i),t=p.getZ(i);
-    const lo=miter&&start===0?u*(cornerStart??q.b)/q.b:length*start;
-    const hi=miter&&end===1?length-u*(cornerEnd??q.b)/q.b:length*end;
+    const lo=miter&&start===0?Math.max(0,(miterWidth??q.b)-p.getX(i)):length*start;
+    const hi=miter&&end===1?length-Math.max(0,(miterWidth??q.b)-p.getX(i)):length*end;
     const along=lo+(hi-lo)*t;
     uv.setXY(i,(p.getX(i)+z)/20,along/60);
     let x,y;
@@ -48,13 +48,25 @@ export function sampleGeometry(id){
   g.translate(-q.b/2,-q.d/2,-45);return g;
 }
 
-// Shared by the facade and full-height inspection sample, preventing divergent grips.
+// Clip the section at the frame/grip boundary without filling its existing hollow chambers.
+function clipSection(q,x,keepLeft){
+ const clip=poly=>{const out=[];for(let i=0;i<poly.length;i++){const a=poly[i],b=poly[(i+1)%poly.length],inside=v=>keepLeft?v[0]<=x:v[0]>=x,ia=inside(a),ib=inside(b);if(ia)out.push(a);if(ia!==ib){const t=(x-a[0])/(b[0]-a[0]);out.push([x,a[1]+t*(b[1]-a[1])]);}}return out;};
+ return {...q,outline:clip(q.outline),holes:q.holes.map(clip).filter(h=>h.length>=3)};
+}
 export function handleRailGeometries(p,w,h,side,{miter=true}={}){
- const corners=miter?{cornerStart:p.baseWidth,cornerEnd:p.baseWidth}:{};
- if(!p.gripLength)return [railGeometry(p.id,w,h,side,{miter,...corners})];
+ const parts=[];
+ const add=(id,height,options)=>{
+  const q=sections[id];
+  if(p.b>p.baseWidth){
+   parts.push(railGeometry(id,w,height,side,{...options,miter:options.miter??miter,section:clipSection(q,p.baseWidth,true),miterWidth:p.baseWidth}));
+   parts.push(railGeometry(id,w,height,side,{...options,miter:false,section:clipSection(q,p.baseWidth,false)}));
+  }else parts.push(railGeometry(id,w,height,side,{...options,miter:options.miter??miter}));
+ };
+ if(!p.gripLength){add(p.id,h,{});return parts;}
  const span=Math.min(p.gripLength,Math.max(1,h-2*p.baseWidth)),a=(h-span)/2;
  const plain=sections[p.id+'-cut']?p.id+'-cut':p.baseId;
- return [railGeometry(plain,w,h,side,{start:0,end:a/h,miter,...corners}),
-   railGeometry(p.id,w,span,side,{miter:false}),
-   railGeometry(plain,w,h,side,{start:(a+span)/h,end:1,miter,...corners})];
+ add(plain,h,{start:0,end:a/h});
+ add(p.id,span,{miter:false});
+ add(plain,h,{start:(a+span)/h,end:1});
+ return parts;
 }

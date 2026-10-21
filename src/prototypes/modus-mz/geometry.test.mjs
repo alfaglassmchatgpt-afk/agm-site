@@ -52,11 +52,11 @@ test('MZ13-01 grip stays at the outer edge on either side of the facade',()=>{
 test('MF short handles have a full 250 mm grip and 100 mm inspection extensions',()=>{
  for(const id of ['MF21','MF25','MF31','MF33','MF35'])for(const side of ['left','right']){
   const p=profiles.find(p=>p.id===id),parts=handleRailGeometries(p,p.b,450,side,{miter:false});
-  assert.equal(parts.length,3);
-  assert.deepEqual(parts.map(g=>Math.round(g.boundingBox.max.y-g.boundingBox.min.y)),[100,250,100]);
+  assert.equal(parts.length,id==='MF33'?6:3);
+  assert.deepEqual(parts.map(g=>Math.round(g.boundingBox.max.y-g.boundingBox.min.y)),id==='MF33'?[100,100,250,250,100,100]:[100,250,100]);
   for(const g of parts){assert.ok([...g.attributes.position.array].every(Number.isFinite));g.dispose();}
  }
- for(const id of ['MF22','MF32','MF34']){const p=profiles.find(p=>p.id===id),parts=handleRailGeometries(p,350,900,'right',{miter:false});assert.equal(parts.length,1);assert.equal(parts[0].boundingBox.max.y-parts[0].boundingBox.min.y,900);parts[0].dispose();}
+ for(const id of ['MF22','MF32','MF34']){const p=profiles.find(p=>p.id===id),parts=handleRailGeometries(p,350,900,'right',{miter:false});assert.equal(parts.length,2);for(const g of parts){assert.equal(g.boundingBox.max.y-g.boundingBox.min.y,900);g.dispose();}}
 });
 test('MF35 curved nose stays in the 11.2 mm grip envelope above its hollow base',()=>{
  const q=sections.MF35,top=q.outline.filter(([x,y])=>y>39);
@@ -65,13 +65,19 @@ test('MF35 curved nose stays in the 11.2 mm grip envelope above its hollow base'
  assert.ok(q.outline.some(([x,y])=>x===14&&y===20.9));
 });
 
-test('MF handle rails and horizontal rails share the same corner plane',()=>{
- for(const id of ['MF21','MF22','MF25','MF31','MF32','MF33','MF34','MF35'])for(const side of ['left','right']){
-  const p=profiles.find(p=>p.id===id),w=350,h=600;
-  const vertical=handleRailGeometries(p,w,h,side);
-  const top=railGeometry(p.baseId,w,h,'top',side==='left'?{cornerStart:p.b}:{cornerEnd:p.b});
-  const plane=x=>h/2-(side==='left'?x+w/2:w/2-x)*p.baseWidth/p.b;
-  for(const g of vertical){const v=g.attributes.position;for(let i=0;i<v.count;i++)assert.ok(v.getY(i)<=plane(v.getX(i))+.001,id+' protrudes into top rail');g.dispose();}
-  const v=top.attributes.position;for(let i=0;i<v.count;i++)assert.ok(v.getY(i)>=plane(v.getX(i))-.001,id+' top overlaps handle');top.dispose();
+test('wide MF frame bodies use 45 degree miters while grips retain square full-height ends',()=>{
+ for(const id of ['MF22','MF32','MF34'])for(const side of ['left','right']){
+  const p=profiles.find(p=>p.id===id),w=350,h=600,extra=p.b-p.baseWidth;
+  const [body,grip]=handleRailGeometries(p,w,h,side),v=body.attributes.position;
+  let top=0;
+  for(let i=0;i<v.count;i++){
+   const u=(side==='left'?v.getX(i)+w/2:w/2-v.getX(i))-extra;
+   assert.ok(v.getY(i)<=h/2-u+.001);assert.ok(v.getY(i)>=-h/2+u-.001);
+   if(Math.abs(v.getY(i)-(h/2-u))<.001)top++;
+  }
+  assert.ok(top>0);assert.equal(grip.boundingBox.min.y,-300);assert.equal(grip.boundingBox.max.y,300);
+  const offset=(side==='left'?1:-1)*extra/2,rail=railGeometry(p.baseId,w-extra,h,'top'),a=rail.attributes.position;
+  for(let i=0;i<a.count;i++){const x=a.getX(i)+offset,u=(side==='left'?x+w/2:w/2-x)-extra;assert.ok(a.getY(i)>=h/2-u-.001);}
+  for(const g of [body,grip,rail])g.dispose();
  }
 });
