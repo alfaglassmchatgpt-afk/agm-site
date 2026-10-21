@@ -1,5 +1,5 @@
 import * as T from './vendor/three.module.js';
-import {sections} from './sections.js?v=mf-series-20261021';
+import {sections} from './sections.js?v=mf-handles-20261021';
 
 // Small catalogue-unlabelled edge radii are visual estimates, not machining data.
 export function softenedContour(points,radius=.18){
@@ -46,4 +46,14 @@ export function sampleGeometry(id){
   const p=g.attributes.position,uv=g.attributes.uv;
   for(let i=0;i<p.count;i++)uv.setXY(i,(p.getX(i)+p.getY(i))/20,p.getZ(i)/60);
   g.translate(-q.b/2,-q.d/2,-45);return g;
+}
+
+// Shared by the facade and full-height inspection sample, preventing divergent grips.
+export function handleRailGeometries(p,w,h,side,{miter=true}={}){
+ if(!p.gripLength)return [railGeometry(p.id,w,h,side,{miter})];
+ const span=Math.min(p.gripLength,Math.max(1,h-2*p.baseWidth)),a=(h-span)/2;
+ const plain=sections[p.id+'-cut']?p.id+'-cut':p.baseId;
+ return [railGeometry(plain,w,h,side,{start:0,end:a/h,miter}),
+   railGeometry(p.id,w,span,side,{miter:false}),
+   railGeometry(plain,w,h,side,{start:(a+span)/h,end:1,miter})];
 }

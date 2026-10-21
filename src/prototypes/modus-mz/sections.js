@@ -43,9 +43,20 @@ export const sections={
 // MF dimensions follow catalogue pp.67/71/72; wall thickness and curves are visual estimates.
 function mfBasic(b,d,body,grip=7.5){return {...capped(b,d,grip,body),glassY:body+.6,frameDepth:b===25?26.6:22.5};}
 sections.MF20=mfBasic(25,26.6,19.7);sections.MF21=mfBasic(25,42.5,19.7,10);
-sections.MF30=mfBasic(21.2,22.5,15.7);sections.MF31=mfBasic(21.2,38.9,15.7,10);
+sections.MF30=mfBasic(21.2,22.5,15.7);
 function mfCurvedGrip(b){const q=mfBasic(b,47.2,b===25?19.7:15.7,11.2);q.outline=[[0,0],[b,0],[b,34],[b-1,38],[b-4,41],[b-8,44],[b-9,47.2],[b-11.2,47.2],[b-11.2,44],[b-9,40],[b-5,37],[b-2,34],[b-1.2,q.glassY-.6],[0,q.glassY-.6]];return q;}
-sections.MF25=mfCurvedGrip(25);sections.MF35=mfCurvedGrip(21.2);
+sections.MF25=mfCurvedGrip(25);
+// MF31/35: shared hollow body, glass retaining lip, and an inward-facing grip.
+// The 5.2 mm catalogue gap starts above the 15.7 mm hollow body.
+const mf30BodyHole=[[1.2,1.2],[20,1.2],[20,14.5],[1.2,14.5]];
+const mfSeat=[[20,22.1],[14,21.4],[14,20.9],[20,20.9],[20,15.7],[0,15.7]];
+sections.MF31={b:21.2,d:38.9,frameDepth:22.5,glassY:16.3,
+ outline:[[0,0],[21.2,0],[21.2,38.9],[11.2,38.9],[11.2,37.7],[20,37.7],...mfSeat],holes:[mf30BodyHole]};
+// Rounded inward nose traced from the MF35 section; unlabelled radii remain approximate.
+sections.MF35={b:21.2,d:47.2,frameDepth:22.5,glassY:16.3,
+ outline:[[0,0],[21.2,0],[21.2,39],[19.5,40.6],[17.3,42.6],[14.7,44.9],[12.3,46.8],[11.2,47.2],[10.4,46.9],[10,46.1],[10.1,44.6],[10.6,42.5],[11.6,40.6],[13,39],[15.3,37.5],[17.4,36],[18.7,34.3],[19.6,32],[20,29.5],...mfSeat],holes:[mf30BodyHole]};
+for(const id of ['MF31','MF35'])sections[id+'-cut']={b:21.2,d:22.5,frameDepth:22.5,glassY:16.3,
+ outline:[[0,0],[21.2,0],[21.2,22.5],[20,22.5],...mfSeat],holes:[mf30BodyHole]};
 function mfWide(b,base,d,body){
  const q=mfBasic(b,d,body);q.frameDepth=d;q.holes=[rectHole(base,body)];
  q.outline=[[0,0],[b,0],[b,d],[b-7.5,d],[b-7.5,d-1.2],[b-1.2,d-1.2],[b-1.2,3],[b-8,4],[base+8,8],[base,body],[base,d],[base-7.5,d],[base-7.5,d-1.2],[base-1.2,d-1.2],[base-1.2,body],[0,body]];

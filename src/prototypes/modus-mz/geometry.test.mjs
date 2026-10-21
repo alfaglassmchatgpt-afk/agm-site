@@ -2,7 +2,7 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {sections} from './sections.js';
 import {profiles} from './data.js';
-import {railGeometry,sampleGeometry} from './profile-mesh.js';
+import {railGeometry,sampleGeometry,handleRailGeometries} from './profile-mesh.js';
 test('catalogue section envelopes and nonzero hollow extrusions',()=>{
   for(const p of profiles){
     const q=sections[p.id];assert.equal(q.b,p.b);assert.equal(q.d,p.d);
@@ -47,4 +47,20 @@ test('MZ13-01 grip stays at the outer edge on either side of the facade',()=>{
     }
     assert.ok(gripVertices>0);g.dispose();
   }
+});
+
+test('MF short handles have a full 250 mm grip and 100 mm inspection extensions',()=>{
+ for(const id of ['MF31','MF33','MF35'])for(const side of ['left','right']){
+  const p=profiles.find(p=>p.id===id),parts=handleRailGeometries(p,p.b,450,side,{miter:false});
+  assert.equal(parts.length,3);
+  assert.deepEqual(parts.map(g=>Math.round(g.boundingBox.max.y-g.boundingBox.min.y)),[100,250,100]);
+  for(const g of parts){assert.ok([...g.attributes.position.array].every(Number.isFinite));g.dispose();}
+ }
+ for(const id of ['MF32','MF34']){const p=profiles.find(p=>p.id===id),parts=handleRailGeometries(p,350,900,'right',{miter:false});assert.equal(parts.length,1);assert.equal(parts[0].boundingBox.max.y-parts[0].boundingBox.min.y,900);parts[0].dispose();}
+});
+test('MF35 curved nose stays in the 11.2 mm grip envelope above its hollow base',()=>{
+ const q=sections.MF35,top=q.outline.filter(([x,y])=>y>39);
+ assert.ok(top.length>6);assert.ok(top.every(([x])=>x>=10&&x<=21.2));
+ assert.equal(Math.max(...q.outline.map(v=>v[1])),47.2);
+ assert.ok(q.outline.some(([x,y])=>x===14&&y===20.9));
 });

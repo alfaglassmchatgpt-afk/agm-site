@@ -2,8 +2,8 @@ import * as T from 'three';
 import {OrbitControls} from './vendor/OrbitControls.js';
 import {Reflector} from './vendor/Reflector.js';
 import {profiles,colors,glasses,validate,source,profileSeries,profileLabel,assemblyLabel,glassCut,defaultHinge} from './data.js?v=mf-series-20261021';
-import {sections,svgSection,sectionNotes} from './sections.js?v=mf-series-20261021';
-import {railGeometry,sampleGeometry} from './profile-mesh.js?v=mf-series-20261021';
+import {sections,svgSection,sectionNotes} from './sections.js?v=mf-handles-20261021';
+import {railGeometry,sampleGeometry,handleRailGeometries} from './profile-mesh.js?v=mf-handles-20261021';
 import {profileMetal} from './metal.js';
 import {FacadeProject} from './project.js?v=20261015-groups';
 import {transparentSlugs,transparentItems,matteSlugs,matteItems,stopsolSlugs,stopsolItems,reedSlugs,reedItems,patternedSlugs,patternedItems,lacobelSlugs,lacobelItems,matelacSlugs,matelacItems,mirrorSlugs,mirrorItems} from './glass-groups.js?v=photobox-camera-20261020';
@@ -55,7 +55,7 @@ scene.add(coatingLights);
 let showSampleCabinet=false;
 let showPhotobox=false;
 let model=new T.Group();scene.add(model);
-function fit(){const inspect=s.view==='profile',distance=inspect?Math.max(s.handle?155:125,150/camera.aspect)*1.1:Math.max(s.h,(pair()?s.w*2+40:s.w)/camera.aspect)*2;camera.position.set(inspect?distance*.5:s.view==='3d'?distance*.4:0,inspect?distance*.35:s.view==='3d'?distance*.15:0,s.view==='back'?-distance:distance);orbit.target.set(0,0,0);orbit.update();}
+function fit(){const inspect=s.view==='profile',distance=inspect?(profiles.find(p=>p.id===s.profile).series==='MF-30'?Math.max(450,150/camera.aspect)*1.45:Math.max(s.handle?155:125,150/camera.aspect)*1.1):Math.max(s.h,(pair()?s.w*2+40:s.w)/camera.aspect)*2;camera.position.set(inspect?(profiles.find(p=>p.id===s.profile).series==='MF-30'?-distance*.85:distance*.5):s.view==='3d'?distance*.4:0,inspect?distance*(profiles.find(p=>p.id===s.profile).series==='MF-30'?.55:.35):s.view==='3d'?distance*.15:0,s.view==='back'?-distance:distance);orbit.target.set(0,0,0);orbit.update();}
 function disposeModel(root){const materials=new Set(),textures=new Set();root.traverse(o=>{o.getRenderTarget?.().dispose();o.geometry?.dispose();for(const m of (Array.isArray(o.material)?o.material:[o.material]))if(m)materials.add(m);});for(const m of materials){for(const key of ['map','normalMap','roughnessMap','bumpMap'])if(m[key])textures.add(m[key]);m.dispose();}for(const texture of textures)texture.dispose();}
 function build(){
  light.intensity=s.view==='profile'?1:3.4;scene.remove(model);disposeModel(model);model=new T.Group();scene.add(model);productGroup=new T.Group();productGroup.name="product-assembly";productGroup.quaternion.copy(productRotation);model.add(productGroup);
@@ -71,6 +71,11 @@ function buildFacade(s){
  const base=profiles.find(v=>v.id===(p.baseId||p.id)),w=s.w,h=s.h,b=base.b,d=base.d,q=sections[base.id],cut=glassCut(s);mat.side=T.DoubleSide;
  if(s.view==='profile'){
    const id=s.handle&&p.id==='13'?'13-01':p.id;
+   if(p.series==='MF-30'){
+     const geometries=p.baseId?handleRailGeometries(p,p.b,450,'right',{miter:false}):[railGeometry(p.id,p.b,450,'right',{miter:false})];
+     for(const g of geometries)model.add(new T.Mesh(g,mat));
+     return model;
+   }
    const mesh=new T.Mesh(sampleGeometry(id),mat);model.add(mesh);
    const edges=new T.LineSegments(new T.EdgesGeometry(mesh.geometry,28),new T.LineBasicMaterial({color:'#5e7784',transparent:true,opacity:.35}));if(!['13','13-01'].includes(id))model.add(edges);else{edges.geometry.dispose();edges.material.dispose();}
    return model;
@@ -79,11 +84,7 @@ function buildFacade(s){
    if(p.series!=='MZ'){
      const opening=side===(s.side==='left'?'right':'left');
      if(p.baseId&&opening){
-       if(p.gripLength){
-         const span=Math.min(p.gripLength,h-80),a=(h-span)/2,plain=p.id==='MF33'?'MF33-cut':base.id;
-         for(const [start,end] of [[0,a/h],[(a+span)/h,1]])model.add(new T.Mesh(railGeometry(plain,w,h,side,{start,end}),mat));
-         model.add(new T.Mesh(railGeometry(p.id,w,span,side,{miter:false}),mat));
-       }else model.add(new T.Mesh(railGeometry(p.id,w,h,side),mat));
+       for(const g of handleRailGeometries(p,w,h,side))model.add(new T.Mesh(g,mat));
      }else model.add(new T.Mesh(railGeometry(base.id,w,h,side),mat));
      continue;
    }
@@ -144,7 +145,11 @@ function selectProfile(id){s.profile=id;s.handle=false;s.mask=false;const p=prof
 function controls(){glassChoices();const p=profiles.find(p=>p.id===s.profile);
  $('#profile-series').innerHTML=profileSeries.map(series=>`<button type="button" data-series="${series}" aria-pressed="${p.series===series}" class="${p.series===series?'active':''}">${series}</button>`).join('');
  $('#profile-series').querySelectorAll('button').forEach(b=>b.onclick=()=>{if(b.dataset.series!==p.series)selectProfile(profiles.find(v=>v.series===b.dataset.series).id);});
- $('#profiles').innerHTML=profiles.filter(v=>v.series===p.series).map(v=>`<button data-profile="${v.id}" class="${s.profile===v.id?'active':''}">${profileLabel(v)}<small>${v.baseId?'Профиль-ручка':'Основной профиль'} · ${v.b} мм</small></button>`).join('');$('#profiles').querySelectorAll('button').forEach(b=>b.onclick=()=>selectProfile(b.dataset.profile));
+ const mf30=p.series==='MF-30';
+ $('#profiles').innerHTML=profiles.filter(v=>v.series===p.series&&(!mf30||!v.baseId)).map(v=>`<button data-profile="${v.id}" class="${(mf30?(p.baseId||p.id)===v.id:s.profile===v.id)?'active':''}">${profileLabel(v)}<small>${v.baseId?'Профиль-ручка':'Основной профиль'} · ${v.b} мм</small></button>`).join('');$('#profiles').querySelectorAll('button').forEach(b=>b.onclick=()=>{if(!mf30)selectProfile(b.dataset.profile);});
+ $('#mf-handles-wrap').hidden=!mf30;
+ $('#mf-handles').innerHTML=mf30?`<button data-integrated-handle="MF30" class="${p.id==='MF30'?'active':''}" aria-pressed="${p.id==='MF30'}">Без ручки</button>`+profiles.filter(v=>v.series==='MF-30'&&v.baseId).map(v=>`<button data-integrated-handle="${v.id}" class="${p.id===v.id?'active':''}" aria-pressed="${p.id===v.id}">${profileLabel(v)}<small>${v.gripLength?'Хват 250 мм':'Во всю высоту'}</small></button>`).join(''):'';
+ $('#mf-handles').querySelectorAll('button').forEach(b=>b.onclick=()=>selectProfile(b.dataset.integratedHandle));
  $('#series-note').textContent=p.series==='MZ'?'':`${assemblyLabel(p)}. ${p.note}${p.gripLength?' Хват 250 мм, по центру высоты.':p.baseId?' Ручка по всей высоте.':''}`;
  const cs=s.handle?['00','21','25']:p.colors;$('#colors').innerHTML=cs.map(k=>`<button title="${colors[k][0]}" aria-label="${colors[k][0]}" data-color="${k}" class="${s.color===k?'active':''}" style="background:${colors[k][1]}"></button>`).join('');$('#colors').querySelectorAll('button').forEach(b=>b.onclick=()=>{s.color=b.dataset.color;controls();update();if(s.view==='profile')fit();});
  $('#color-name').textContent=`${colors[s.color][0]} · ${s.color}. Наличие уточняется.`;$('#profile-name').textContent=assemblyLabel(p);$('#profile-dims').textContent=`${p.b} × ${p.d} мм · схема сечения`;
@@ -163,7 +168,7 @@ function drawing(){const scale=Math.min(480/s.h,470/s.w),w=s.w*scale,h=s.h*scale
  const stripes=ribbed?`<defs><pattern id="drawing-ribs" patternUnits="userSpaceOnUse" width="${step}" height="${step}"><path d="${horizontal?'M0 .5H'+step:'M.5 0V'+step}" stroke="#426473" stroke-opacity=".38" stroke-width=".7"/></pattern></defs><rect data-rib-direction="${horizontal?'horizontal':'vertical'}" x="${x+inset}" y="${y+inset}" width="${Math.max(0,w-2*inset)}" height="${Math.max(0,h-2*inset)}" fill="url(#drawing-ribs)" pointer-events="none"><title>Направление рифления; частота полос на схеме условная</title></rect>`:'';
  $('#drawing').innerHTML=`${mfFrame||`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${glasses[s.glass][1]}" stroke="${colors[s.color][1]}" stroke-width="${Math.max(3,p.b*scale)}"/>`}${stripes}<path d="M${x} ${y-18}H${x+w} M${x-22} ${y}V${y+h}" class="dimension"/><text x="380" y="${y-26}" text-anchor="middle" class="dimtext">${s.w} мм</text><text x="${x-30}" y="310" transform="rotate(-90 ${x-30} 310)" text-anchor="middle" class="dimtext">${s.h} мм</text>${p.series==='MF-20'?s.hinges.map((v,i)=>`<circle cx="${hx}" cy="${i?y+h-6:y+6}" r="7" fill="#087ca7"/>`).join(''):s.hinges.map((v,i)=>`<g><circle class="hinge-dot" data-i="${i}" cx="${hx}" cy="${y+v*scale}" r="10" fill="#087ca7" stroke="white" stroke-width="3"/><text x="${previewSide()==='left'?hx+18:hx-18}" y="${y+v*scale+4}" text-anchor="${previewSide()==='left'?'start':'end'}" class="dimtext">${i+1} · ${s.origin==='top'?v:s.h-v} мм</text></g>`).join('')}`;}
 let drag=null;$('#drawing').onpointerdown=e=>{if(e.target.dataset.i!==undefined){drag=+e.target.dataset.i;$('#drawing').setPointerCapture(e.pointerId);}};$('#drawing').onpointermove=e=>{if(drag===null)return;const pt=new DOMPoint(e.clientX,e.clientY).matrixTransform($('#drawing').getScreenCTM().inverse());s.hinges[drag]=Math.max(1,Math.min(s.h-1,Math.round((pt.y-geometry.y)/geometry.scale)));hingeFields();update();};$('#drawing').onpointerup=$('#drawing').onpointercancel=()=>drag=null;
-function update(){if(profiles.find(p=>p.id===s.profile).series==='MF-20'&&s.hinges.length)s.hinges=[1,s.h-1];project.update(s);const p=profiles.find(p=>p.id===s.profile),v=validate(s);$('#export').disabled=project.items.some(item=>validate(item.config).errors.length>0);$('#messages').innerHTML=[...v.errors.map(t=>`<div class="message error">${t}</div>`),...v.warnings.map(t=>`<div class="message">${t}</div>`)].join('');$('#model-title').textContent='MODUS '+(s.view==='profile'&&s.handle?'MZ 13-01':assemblyLabel(p));$('#model-size').textContent=s.view==='profile'?`Сечение ${sections[s.handle?'13-01':p.id].b} × ${sections[s.handle?'13-01':p.id].d} мм · отрезок 90 мм`:`${s.w} × ${s.h} мм`;$('#fact-profile').textContent=`${p.b} × ${p.d} мм`;$('#fact-glass').textContent=s.glass==='none'?'Без наполнения':`${glassCut(s).width} × ${glassCut(s).height} × 4`;$('#fact-limit').textContent=`${p.h} × ${p.w} мм`;$('#summary-title').textContent=`${assemblyLabel(p)} / ${s.w} × ${s.h} мм`;$('#summary-line').textContent=`${colors[s.color][0]} · ${glasses[s.glass][0]} · ${s.hinges.length?s.hinges.length+' петли':'Без петель и присадок'}`;renderProject();for(const item of project.items){if(item.id===project.activeId)continue;const errors=validate(item.config).errors;if(errors.length){const note=document.createElement('div');note.className='message error';note.textContent=item.name+': '+errors.join(' ');$('#messages').append(note);}}if(Number.isInteger(s.w)&&Number.isInteger(s.h)&&s.w>=200&&s.h>=200&&s.w<=6000&&s.h<=6000){build();drawing();}}
+function update(){if(profiles.find(p=>p.id===s.profile).series==='MF-20'&&s.hinges.length)s.hinges=[1,s.h-1];project.update(s);const p=profiles.find(p=>p.id===s.profile),v=validate(s);$('#export').disabled=project.items.some(item=>validate(item.config).errors.length>0);$('#messages').innerHTML=[...v.errors.map(t=>`<div class="message error">${t}</div>`),...v.warnings.map(t=>`<div class="message">${t}</div>`)].join('');$('#model-title').textContent='MODUS '+(s.view==='profile'&&s.handle?'MZ 13-01':assemblyLabel(p));$('#model-size').textContent=s.view==='profile'?(p.series==='MF-30'?(p.gripLength?'Хват 250 мм · профиль по 100 мм сверху и снизу':'Образец профиля 450 мм'):`Сечение ${sections[s.handle?'13-01':p.id].b} × ${sections[s.handle?'13-01':p.id].d} мм · отрезок 90 мм`):`${s.w} × ${s.h} мм`;$('#fact-profile').textContent=`${p.b} × ${p.d} мм`;$('#fact-glass').textContent=s.glass==='none'?'Без наполнения':`${glassCut(s).width} × ${glassCut(s).height} × 4`;$('#fact-limit').textContent=`${p.h} × ${p.w} мм`;$('#summary-title').textContent=`${assemblyLabel(p)} / ${s.w} × ${s.h} мм`;$('#summary-line').textContent=`${colors[s.color][0]} · ${glasses[s.glass][0]} · ${s.hinges.length?s.hinges.length+' петли':'Без петель и присадок'}`;renderProject();for(const item of project.items){if(item.id===project.activeId)continue;const errors=validate(item.config).errors;if(errors.length){const note=document.createElement('div');note.className='message error';note.textContent=item.name+': '+errors.join(' ');$('#messages').append(note);}}if(Number.isInteger(s.w)&&Number.isInteger(s.h)&&s.w>=200&&s.h>=200&&s.w<=6000&&s.h<=6000){build();drawing();}}
 function glassChoices(){
  $('#glass-selected').textContent='Выбрано: '+glassItems[s.glass].title;
  $('#glass-categories').querySelectorAll('[data-glass]').forEach(b=>{const active=b.dataset.glass===s.glass;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});
@@ -191,7 +196,7 @@ glassChoices();
 for(const id of ['hinge','side','reed','origin'])$('#'+id).onchange=e=>{s[id]=e.target.value;if(id==='hinge'){if(s.hinge==='none')s.hinges=[];else if(!s.hinges.length)s.hinges=[100,s.h-100];}s.glassOpaque=!!(glassItems[s.glass].mirror||glassItems[s.glass].opaque);controls();update();};
 $('#count').onchange=e=>{s.hinges=Array(+e.target.value).fill(0);if(!s.hinges.length)s.hinge='none';else if(s.hinge==='none')s.hinge=defaultHinge(profiles.find(p=>p.id===s.profile));even();controls();};function even(){const n=s.hinges.length;s.hinges=s.hinges.map((_,i)=>Math.round(100+i*(s.h-200)/Math.max(1,n-1)));hingeFields();update();}$('#even').onclick=even;
 $('#handle').onchange=e=>{s.handle=e.target.checked;if(s.handle&&!['00','21','25'].includes(s.color))s.color='00';controls();update();if(s.view==='profile')fit();};$('#mask').onchange=e=>{s.mask=e.target.checked;update();};
-document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>{s.view=b.dataset.view;productRotation.identity();document.querySelectorAll('[data-view]').forEach(t=>t.classList.toggle('active',t===b));$('#drawing').toggleAttribute('hidden',s.view!=='drawing');$('#scene').style.visibility=s.view==='drawing'?'hidden':'visible';$('#gesture').textContent=s.view==='drawing'?'Перемещайте синие точки · координаты в миллиметрах':s.view==='profile'?'Отрезок 90 мм · вращайте, чтобы рассмотреть открытый торец':'Shift/Ctrl + мышь — вращать изделие · мышь — камера · ПКМ — сдвиг · колесо — масштаб';update();fit();});$('#reset').onclick=()=>{productRotation.identity();productGroup?.quaternion.identity();fit();};
+document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>{s.view=b.dataset.view;productRotation.identity();document.querySelectorAll('[data-view]').forEach(t=>t.classList.toggle('active',t===b));$('#drawing').toggleAttribute('hidden',s.view!=='drawing');$('#scene').style.visibility=s.view==='drawing'?'hidden':'visible';$('#gesture').textContent=s.view==='drawing'?'Перемещайте синие точки · координаты в миллиметрах':s.view==='profile'?'Вращайте образец · Shift/Ctrl + мышь — поворот изделия':'Shift/Ctrl + мышь — вращать изделие · мышь — камера · ПКМ — сдвиг · колесо — масштаб';update();fit();});$('#reset').onclick=()=>{productRotation.identity();productGroup?.quaternion.identity();fit();};
 $('#photobox-toggle').onclick=()=>{showPhotobox=!showPhotobox;$('#photobox-toggle').setAttribute('aria-pressed',String(showPhotobox));build();};
 for(const [id,kind] of [['sample-cabinet','books'],['kitchen-cabinet','kitchen']])$('#'+id).onclick=()=>{showSampleCabinet=showSampleCabinet===kind?false:kind;$('#sample-cabinet').setAttribute('aria-pressed',String(showSampleCabinet==='books'));$('#kitchen-cabinet').setAttribute('aria-pressed',String(showSampleCabinet==='kitchen'));build();};
 function confirmationControls(){
@@ -230,7 +235,7 @@ $('#send-project').onclick=()=>{project.update(s);if(!confirmationControls())ret
  $('#send-dialog').showModal();};
 $('#close-send').onclick=()=>$('#send-dialog').close();
 $('#export').onclick=()=>{project.update(s);if(project.items.some(item=>validate(item.config).errors.length))return;
- const items=project.items.map(item=>{const c=item.config,p=profiles.find(p=>p.id===c.profile),g=glassItems[c.glass];return {...structuredClone(item),quantity:1,series:p.series,profileAssembly:assemblyLabel(p),material:c.glass==='none'?null:{slug:g.slug,variant:g.variant,title:g.title,thickness:4,catalogueSnapshot:catalogue.snapshot},glassCut:c.glass==='none'?null:glassCut(c),hingePlacement:p.series==='MF-20'&&c.hinges.length?{type:'top-bottom',count:2,coordinatesAreSchematic:true}:null,warnings:validate(c).warnings};});
+ const items=project.items.map(item=>{const c=item.config,p=profiles.find(p=>p.id===c.profile),g=glassItems[c.glass];return {...structuredClone(item),quantity:1,series:p.series,baseProfile:p.baseId||p.id,integratedHandle:p.baseId?{id:p.id,length:p.gripLength||c.h}:null,profileAssembly:assemblyLabel(p),material:c.glass==='none'?null:{slug:g.slug,variant:g.variant,title:g.title,thickness:4,catalogueSnapshot:catalogue.snapshot},glassCut:c.glass==='none'?null:glassCut(c),hingePlacement:p.series==='MF-20'&&c.hinges.length?{type:'top-bottom',count:2,coordinatesAreSchematic:true}:null,warnings:validate(c).warnings};});
  const blob=new Blob([JSON.stringify({status:'prototype-not-for-production',source,items},null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='modus-facades-project.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
 // Explicit review link only; the ordinary configurator still starts empty.
 if(['raywall-optics','raywall-studio'].includes(new URLSearchParams(location.search).get('preview'))){
@@ -276,3 +281,5 @@ if(new URLSearchParams(location.search).get('preview')==='mirrors-studio'){s.gla
 if(new URLSearchParams(location.search).get('preview')==='photobox-studio'){s.glass='zerkalo-serebro__standard';showPhotobox=true;$('#photobox-toggle').setAttribute('aria-pressed','true');showSampleCabinet=false;project.update(s);controls();update();fit();}
 
 if(new URLSearchParams(location.search).get("preview")==="mf-series"){selectProfile("MF20");}
+
+if(new URLSearchParams(location.search).get("preview")==="mf-handles"){selectProfile("MF31");document.querySelector('[data-view="profile"]').click();}
