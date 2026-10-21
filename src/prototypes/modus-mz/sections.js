@@ -62,7 +62,15 @@ function mfWide(b,base,d,body){
  q.outline=[[0,0],[b,0],[b,d],[b-7.5,d],[b-7.5,d-1.2],[b-1.2,d-1.2],[b-1.2,3],[b-8,4],[base+8,8],[base,body],[base,d],[base-7.5,d],[base-7.5,d-1.2],[base-1.2,d-1.2],[base-1.2,body],[0,body]];
  return q;
 }
-sections.MF22=mfWide(50,25,26.6,19.7);sections.MF32=mfWide(42.4,21.2,22.5,15.7);
+sections.MF22=mfWide(50,25,26.6,19.7);
+// MF32 has a second hollow chamber underneath the curved grip web.
+// 1.2 mm walls are a visual approximation requested for the model.
+const mf32ArcY=x=>3.2+13.8*((41.2-x)/20)**2;
+const mf32Arc=Array.from({length:25},(_,i)=>{const x=41.2-20*i/24;return [x,mf32ArcY(x)];});
+const mf32Cavity=Array.from({length:25},(_,i)=>{const x=40.8-18.4*i/24;return [x,mf32ArcY(x)-1.2];});
+sections.MF32={b:42.4,d:22.5,frameDepth:22.5,glassY:16.3,
+ outline:[[0,0],[42.4,0],[42.4,22.5],[34.9,22.5],[34.9,21.3],[41.2,21.3],...mf32Arc,[21.2,22.5],[13.7,22.5],[13.7,21.3],[20,21.3],[20,15.7],[0,15.7]],
+ holes:[rectHole(21.2,15.7),[[22.4,1.2],[40.8,1.2],...mf32Cavity]]};
 function mfFlatGrip(top){return {b:45.2,d:22.5,frameDepth:22.5,glassY:16.3,outline:[[0,0],[45.2,0],[45.2,1.2],[22.4,1.2],[22.4,18],[25,20.5],[top,21.3],[top,22.5],[13.7,22.5],[13.7,21.3],[20,21.3],[20,15.7],[0,15.7]],holes:[rectHole(21.2,15.7)]};}
 sections.MF33=mfFlatGrip(45.2);sections.MF34=mfFlatGrip(30.2);
 sections['MF33-cut']={...sections.MF33,d:22.5,outline:[[0,0],[45.2,0],[45.2,1.2],[22.4,1.2],[22.4,22.5],[20,22.5],[20,15.7],[0,15.7]]};

@@ -1,5 +1,5 @@
 import * as T from './vendor/three.module.js';
-import {sections} from './sections.js?v=mf-handles-20261021';
+import {sections} from './sections.js?v=mf32-hollow-20261021';
 
 // Small catalogue-unlabelled edge radii are visual estimates, not machining data.
 export function softenedContour(points,radius=.18){
