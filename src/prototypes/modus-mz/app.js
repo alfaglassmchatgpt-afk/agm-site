@@ -2,8 +2,8 @@ import * as T from 'three';
 import {OrbitControls} from './vendor/OrbitControls.js';
 import {Reflector} from './vendor/Reflector.js';
 import {profiles,colors,glasses,validate,source,profileSeries,profileLabel,assemblyLabel,glassCut,defaultHinge} from './data.js?v=mf-series-20261021';
-import {sections,svgSection,sectionNotes} from './sections.js?v=mf20-handles-20261021';
-import {railGeometry,sampleGeometry,handleRailGeometries} from './profile-mesh.js?v=mf20-handles-20261021';
+import {sections,svgSection,sectionNotes} from './sections.js?v=mf-corners-20261021';
+import {railGeometry,sampleGeometry,handleRailGeometries} from './profile-mesh.js?v=mf-corners-20261021';
 import {profileMetal} from './metal.js';
 import {FacadeProject} from './project.js?v=20261015-groups';
 import {transparentSlugs,transparentItems,matteSlugs,matteItems,stopsolSlugs,stopsolItems,reedSlugs,reedItems,patternedSlugs,patternedItems,lacobelSlugs,lacobelItems,matelacSlugs,matelacItems,mirrorSlugs,mirrorItems} from './glass-groups.js?v=photobox-camera-20261020';
@@ -85,7 +85,11 @@ function buildFacade(s){
      const opening=side===(s.side==='left'?'right':'left');
      if(p.baseId&&opening){
        for(const g of handleRailGeometries(p,w,h,side))model.add(new T.Mesh(g,mat));
-     }else model.add(new T.Mesh(railGeometry(base.id,w,h,side),mat));
+     }else{
+       const left=s.side==='right'?p.b:base.b,right=s.side==='left'?p.b:base.b;
+       const corners=side==='top'?{cornerStart:left,cornerEnd:right}:side==='bottom'?{cornerStart:right,cornerEnd:left}:{};
+       model.add(new T.Mesh(railGeometry(base.id,w,h,side,corners),mat));
+     }
      continue;
    }
    // Handle extrusion replaces only a central part of the opposite vertical rail.

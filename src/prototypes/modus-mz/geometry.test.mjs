@@ -64,3 +64,14 @@ test('MF35 curved nose stays in the 11.2 mm grip envelope above its hollow base'
  assert.equal(Math.max(...q.outline.map(v=>v[1])),47.2);
  assert.ok(q.outline.some(([x,y])=>x===14&&y===20.9));
 });
+
+test('MF handle rails and horizontal rails share the same corner plane',()=>{
+ for(const id of ['MF21','MF22','MF25','MF31','MF32','MF33','MF34','MF35'])for(const side of ['left','right']){
+  const p=profiles.find(p=>p.id===id),w=350,h=600;
+  const vertical=handleRailGeometries(p,w,h,side);
+  const top=railGeometry(p.baseId,w,h,'top',side==='left'?{cornerStart:p.b}:{cornerEnd:p.b});
+  const plane=x=>h/2-(side==='left'?x+w/2:w/2-x)*p.baseWidth/p.b;
+  for(const g of vertical){const v=g.attributes.position;for(let i=0;i<v.count;i++)assert.ok(v.getY(i)<=plane(v.getX(i))+.001,id+' protrudes into top rail');g.dispose();}
+  const v=top.attributes.position;for(let i=0;i<v.count;i++)assert.ok(v.getY(i)>=plane(v.getX(i))-.001,id+' top overlaps handle');top.dispose();
+ }
+});

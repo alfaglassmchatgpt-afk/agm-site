@@ -1,5 +1,5 @@
 import * as T from './vendor/three.module.js';
-import {sections} from './sections.js?v=mf20-handles-20261021';
+import {sections} from './sections.js?v=mf-corners-20261021';
 
 // Small catalogue-unlabelled edge radii are visual estimates, not machining data.
 export function softenedContour(points,radius=.18){
@@ -20,15 +20,15 @@ export function sectionShape(id){
 }
 
 // A common section builds both the inspection sample and all four frame rails.
-// End planes meet at 45 degrees in the face plane, including hollow interiors.
-export function railGeometry(id,w,h,side,{start=0,end=1,miter=true}={}){
+// Equal-width rails use 45 degrees; unequal-width MF rails share an approximate visual joint plane.
+export function railGeometry(id,w,h,side,{start=0,end=1,miter=true,cornerStart,cornerEnd}={}){
   const q=sections[id],vertical=side==='left'||side==='right',length=vertical?h:w;
   const geo=new T.ExtrudeGeometry(sectionShape(id),{depth:1,steps:1,bevelEnabled:false});
   const p=geo.attributes.position,uv=geo.attributes.uv;
   for(let i=0;i<p.count;i++){
     const u=q.b-p.getX(i),z=p.getY(i),t=p.getZ(i);
-    const lo=miter&&start===0?u:length*start;
-    const hi=miter&&end===1?length-u:length*end;
+    const lo=miter&&start===0?u*(cornerStart??q.b)/q.b:length*start;
+    const hi=miter&&end===1?length-u*(cornerEnd??q.b)/q.b:length*end;
     const along=lo+(hi-lo)*t;
     uv.setXY(i,(p.getX(i)+z)/20,along/60);
     let x,y;
@@ -50,10 +50,11 @@ export function sampleGeometry(id){
 
 // Shared by the facade and full-height inspection sample, preventing divergent grips.
 export function handleRailGeometries(p,w,h,side,{miter=true}={}){
- if(!p.gripLength)return [railGeometry(p.id,w,h,side,{miter})];
+ const corners=miter?{cornerStart:p.baseWidth,cornerEnd:p.baseWidth}:{};
+ if(!p.gripLength)return [railGeometry(p.id,w,h,side,{miter,...corners})];
  const span=Math.min(p.gripLength,Math.max(1,h-2*p.baseWidth)),a=(h-span)/2;
  const plain=sections[p.id+'-cut']?p.id+'-cut':p.baseId;
- return [railGeometry(plain,w,h,side,{start:0,end:a/h,miter}),
+ return [railGeometry(plain,w,h,side,{start:0,end:a/h,miter,...corners}),
    railGeometry(p.id,w,span,side,{miter:false}),
-   railGeometry(plain,w,h,side,{start:(a+span)/h,end:1,miter})];
+   railGeometry(plain,w,h,side,{start:(a+span)/h,end:1,miter,...corners})];
 }
