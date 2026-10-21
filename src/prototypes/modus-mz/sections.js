@@ -42,10 +42,8 @@ export const sections={
 };
 // MF dimensions follow catalogue pp.67/71/72; wall thickness and curves are visual estimates.
 function mfBasic(b,d,body,grip=7.5){return {...capped(b,d,grip,body),glassY:body+.6,frameDepth:b===25?26.6:22.5};}
-sections.MF20=mfBasic(25,26.6,19.7);sections.MF21=mfBasic(25,42.5,19.7,10);
+sections.MF20=mfBasic(25,26.6,19.7);
 sections.MF30=mfBasic(21.2,22.5,15.7);
-function mfCurvedGrip(b){const q=mfBasic(b,47.2,b===25?19.7:15.7,11.2);q.outline=[[0,0],[b,0],[b,34],[b-1,38],[b-4,41],[b-8,44],[b-9,47.2],[b-11.2,47.2],[b-11.2,44],[b-9,40],[b-5,37],[b-2,34],[b-1.2,q.glassY-.6],[0,q.glassY-.6]];return q;}
-sections.MF25=mfCurvedGrip(25);
 // MF31/35: shared hollow body, glass retaining lip, and an inward-facing grip.
 // The 5.2 mm catalogue gap starts above the 15.7 mm hollow body.
 const mf30BodyHole=[[1.2,1.2],[20,1.2],[20,14.5],[1.2,14.5]];
@@ -57,12 +55,6 @@ sections.MF35={b:21.2,d:47.2,frameDepth:22.5,glassY:16.3,
  outline:[[0,0],[21.2,0],[21.2,39],[19.5,40.6],[17.3,42.6],[14.7,44.9],[12.3,46.8],[11.2,47.2],[10.4,46.9],[10,46.1],[10.1,44.6],[10.6,42.5],[11.6,40.6],[13,39],[15.3,37.5],[17.4,36],[18.7,34.3],[19.6,32],[20,29.5],...mfSeat],holes:[mf30BodyHole]};
 for(const id of ['MF31','MF35'])sections[id+'-cut']={b:21.2,d:22.5,frameDepth:22.5,glassY:16.3,
  outline:[[0,0],[21.2,0],[21.2,22.5],[20,22.5],...mfSeat],holes:[mf30BodyHole]};
-function mfWide(b,base,d,body){
- const q=mfBasic(b,d,body);q.frameDepth=d;q.holes=[rectHole(base,body)];
- q.outline=[[0,0],[b,0],[b,d],[b-7.5,d],[b-7.5,d-1.2],[b-1.2,d-1.2],[b-1.2,3],[b-8,4],[base+8,8],[base,body],[base,d],[base-7.5,d],[base-7.5,d-1.2],[base-1.2,d-1.2],[base-1.2,body],[0,body]];
- return q;
-}
-sections.MF22=mfWide(50,25,26.6,19.7);
 // MF32 has a second hollow chamber underneath the curved grip web.
 // 1.2 mm walls are a visual approximation requested for the model.
 const mf32ArcY=x=>3.2+13.8*((41.2-x)/20)**2;
@@ -71,6 +63,21 @@ const mf32Cavity=Array.from({length:25},(_,i)=>{const x=40.8-18.4*i/24;return [x
 sections.MF32={b:42.4,d:22.5,frameDepth:22.5,glassY:16.3,
  outline:[[0,0],[42.4,0],[42.4,22.5],[34.9,22.5],[34.9,21.3],[41.2,21.3],...mf32Arc,[21.2,22.5],[13.7,22.5],[13.7,21.3],[20,21.3],[20,15.7],[0,15.7]],
  holes:[rectHole(21.2,15.7),[[22.4,1.2],[40.8,1.2],...mf32Cavity]]};
+// MF20 family follows the same construction with its own 25 mm body.
+const mf20Seat=[[23.8,26.1],[17.8,25.4],[17.8,24.9],[23.8,24.9],[23.8,19.7],[0,19.7]];
+sections.MF21={b:25,d:42.5,frameDepth:26.6,glassY:20.3,
+ outline:[[0,0],[25,0],[25,42.5],[15,42.5],[15,41.3],[23.8,41.3],...mf20Seat],holes:[rectHole(25,19.7)]};
+const mf25Nose=sections.MF35.outline.slice(2,19).map(([x,y])=>[x+3.8,y]);
+sections.MF25={b:25,d:47.2,frameDepth:26.6,glassY:20.3,
+ outline:[[0,0],[25,0],...mf25Nose,...mf20Seat],holes:[rectHole(25,19.7)]};
+for(const id of ['MF21','MF25'])sections[id+'-cut']={b:25,d:26.6,frameDepth:26.6,glassY:20.3,
+ outline:[[0,0],[25,0],[25,26.6],[23.8,26.6],...mf20Seat],holes:[rectHole(25,19.7)]};
+const mf22ArcY=x=>3.2+17.8*((48.8-x)/23.8)**2;
+const mf22Arc=Array.from({length:25},(_,i)=>{const x=48.8-23.8*i/24;return [x,mf22ArcY(x)];});
+const mf22Cavity=Array.from({length:25},(_,i)=>{const x=48.4-22*i/24;return [x,mf22ArcY(x)-1.2];});
+sections.MF22={b:50,d:26.6,frameDepth:26.6,glassY:20.3,
+ outline:[[0,0],[50,0],[50,26.6],[42.5,26.6],[42.5,25.4],[48.8,25.4],...mf22Arc,[25,26.6],[17.5,26.6],[17.5,25.4],[23.8,25.4],[23.8,19.7],[0,19.7]],
+ holes:[rectHole(25,19.7),[[26.4,1.2],[48.4,1.2],...mf22Cavity]]};
 function mfFlatGrip(top){return {b:45.2,d:22.5,frameDepth:22.5,glassY:16.3,outline:[[0,0],[45.2,0],[45.2,1.2],[22.4,1.2],[22.4,18],[25,20.5],[top,21.3],[top,22.5],[13.7,22.5],[13.7,21.3],[20,21.3],[20,15.7],[0,15.7]],holes:[rectHole(21.2,15.7)]};}
 sections.MF33=mfFlatGrip(45.2);sections.MF34=mfFlatGrip(30.2);
 sections['MF33-cut']={...sections.MF33,d:22.5,outline:[[0,0],[45.2,0],[45.2,1.2],[22.4,1.2],[22.4,22.5],[20,22.5],[20,15.7],[0,15.7]]};

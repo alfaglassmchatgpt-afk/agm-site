@@ -30,3 +30,7 @@ MF30 — основной профиль; MF31–35 — отдельный вы�
 Сверено с официальными карточками и печатной страницей 71:
 - https://modusline.ru/catalog/fasadnye-profili-modus/seriya-mf-profili-s-integrirovannoj-ruchkoj/seriya-mf-3031/profil-ruchka-mf-35.html
 - https://modusline.ru/catalog/fasadnye-profili-modus/seriya-mf-profili-s-integrirovannoj-ruchkoj/seriya-mf-3031/profil-ruchka-6.html
+
+## Уточнение MF20 от 2026-10-21
+
+MF20 и ручки MF21/MF22/MF25 разделены в интерфейсе аналогично MF30. Короткие хваты показаны целиком с участками по 100 мм; MF22 непрерывен. По печатной странице 67 уточнены MF21/25, полость под дугой MF22, условная стенка 1,2 мм. Данные петель и вычеты сохранены.
