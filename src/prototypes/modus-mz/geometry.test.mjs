@@ -18,7 +18,7 @@ test('mitered frame rails stay inside the facade envelope',()=>{
     const g=railGeometry(p.id,450,900,side),b=g.boundingBox;
     assert.ok(b.min.x>=-225.001&&b.max.x<=225.001);
     assert.ok(b.min.y>=-450.001&&b.max.y<=450.001);
-    assert.ok(b.max.z<=.001&&b.min.z>=-p.d-.001);g.dispose();
+    const depth=sections[p.id].frameDepth??p.d;assert.ok(b.max.z<=p.d-depth+.001&&b.min.z>=-depth-.001);g.dispose();
   }
 });
 test('handle sample uses its own 37 mm section; glass is within front depth',()=>{

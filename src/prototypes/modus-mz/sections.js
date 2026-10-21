@@ -40,9 +40,24 @@ export const sections={
   // Normalize both contours to the same inner-to-outer x axis: grip at x=45.
   '13-01': {b:45,d:37,outline:[[0,0],[45,0],[45,14],[1.2,14],[1.2,19.4],[8,19.4],[8,20.6],[1.2,20.6],[1.2,35.8],[10,35.8],[10,37],[0,37]].map(([x,y])=>[45-x,y]),holes:[rectHole(45,14).map(([x,y])=>[45-x,y])],glassY:14.6}
 };
-export const sectionNotes='Форма восстановлена по странице 64. Габариты — по каталогу; непроставленные стенки, рёбра и радиусы приблизительные. Не производственный чертёж.';
+// MF dimensions follow catalogue pp.67/71/72; wall thickness and curves are visual estimates.
+function mfBasic(b,d,body,grip=7.5){return {...capped(b,d,grip,body),glassY:body+.6,frameDepth:b===25?26.6:22.5};}
+sections.MF20=mfBasic(25,26.6,19.7);sections.MF21=mfBasic(25,42.5,19.7,10);
+sections.MF30=mfBasic(21.2,22.5,15.7);sections.MF31=mfBasic(21.2,38.9,15.7,10);
+function mfCurvedGrip(b){const q=mfBasic(b,47.2,b===25?19.7:15.7,11.2);q.outline=[[0,0],[b,0],[b,34],[b-1,38],[b-4,41],[b-8,44],[b-9,47.2],[b-11.2,47.2],[b-11.2,44],[b-9,40],[b-5,37],[b-2,34],[b-1.2,q.glassY-.6],[0,q.glassY-.6]];return q;}
+sections.MF25=mfCurvedGrip(25);sections.MF35=mfCurvedGrip(21.2);
+function mfWide(b,base,d,body){
+ const q=mfBasic(b,d,body);q.frameDepth=d;q.holes=[rectHole(base,body)];
+ q.outline=[[0,0],[b,0],[b,d],[b-7.5,d],[b-7.5,d-1.2],[b-1.2,d-1.2],[b-1.2,3],[b-8,4],[base+8,8],[base,body],[base,d],[base-7.5,d],[base-7.5,d-1.2],[base-1.2,d-1.2],[base-1.2,body],[0,body]];
+ return q;
+}
+sections.MF22=mfWide(50,25,26.6,19.7);sections.MF32=mfWide(42.4,21.2,22.5,15.7);
+function mfFlatGrip(top){return {b:45.2,d:22.5,frameDepth:22.5,glassY:16.3,outline:[[0,0],[45.2,0],[45.2,1.2],[22.4,1.2],[22.4,18],[25,20.5],[top,21.3],[top,22.5],[13.7,22.5],[13.7,21.3],[20,21.3],[20,15.7],[0,15.7]],holes:[rectHole(21.2,15.7)]};}
+sections.MF33=mfFlatGrip(45.2);sections.MF34=mfFlatGrip(30.2);
+sections['MF33-cut']={...sections.MF33,d:22.5,outline:[[0,0],[45.2,0],[45.2,1.2],[22.4,1.2],[22.4,22.5],[20,22.5],[20,15.7],[0,15.7]]};
+export const sectionNotes='Форма восстановлена по страницам 64, 67, 71–72. Габариты — по каталогу; непроставленные стенки, рёбра и радиусы приблизительные. Не производственный чертёж.';
 export function svgSection(id,color='#8e9da5',large=false){
   const q=sections[id],padding=large?14:7, vb=[-padding,-padding,q.b+padding*2,q.d+padding*2];
   const path=points=>points.map(([x,y],i)=>`${i?'L':'M'}${x},${q.d-y}`).join(' ')+'Z';
-  return `<svg class="section-diagram" viewBox="${vb.join(' ')}" role="img" aria-label="Сечение MZ ${id}, ${q.b} на ${q.d} мм"><path d="${[q.outline,...q.holes].map(path).join(' ')}" fill="${color}" fill-rule="evenodd" stroke="currentColor" stroke-width=".18"/>${large?`<path d="M0 ${q.d+5}H${q.b} M${q.b+5} 0V${q.d}" fill="none" stroke="currentColor" stroke-width=".25"/><text x="${q.b/2}" y="${q.d+10}" text-anchor="middle" font-size="3.5" fill="currentColor">${q.b} мм</text><text transform="translate(${q.b+10},${q.d/2}) rotate(-90)" text-anchor="middle" font-size="3.5" fill="currentColor">${q.d} мм</text>`:''}</svg>`;
+  return `<svg class="section-diagram" viewBox="${vb.join(' ')}" role="img" aria-label="Сечение ${id.startsWith('MF')?id:'MZ '+id}, ${q.b} на ${q.d} мм"><path d="${[q.outline,...q.holes].map(path).join(' ')}" fill="${color}" fill-rule="evenodd" stroke="currentColor" stroke-width=".18"/>${large?`<path d="M0 ${q.d+5}H${q.b} M${q.b+5} 0V${q.d}" fill="none" stroke="currentColor" stroke-width=".25"/><text x="${q.b/2}" y="${q.d+10}" text-anchor="middle" font-size="3.5" fill="currentColor">${q.b} мм</text><text transform="translate(${q.b+10},${q.d/2}) rotate(-90)" text-anchor="middle" font-size="3.5" fill="currentColor">${q.d} мм</text>`:''}</svg>`;
 }

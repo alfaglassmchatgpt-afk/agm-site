@@ -22,3 +22,5 @@
 .environment-buttons button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 
 .glass-card-link{display:block;padding:12px 14px;border:1px solid var(--blue);border-radius:9px;background:var(--soft);color:var(--blue);font-weight:600;text-decoration:none;line-height:1.4}.glass-card-link:hover{box-shadow:0 0 0 1px var(--blue)}.glass-card-link:focus-visible{outline:2px solid var(--blue);outline-offset:3px}#glass-card-access[hidden]{display:none}#glass-return-hint{margin:8px 0 14px}
+
+.profile-series{display:flex;gap:8px;margin-bottom:14px}.profile-series button{flex:1;padding:10px 6px;font-weight:700}.profile-series button.active{background:#087ca7;color:white;border-color:#087ca7}

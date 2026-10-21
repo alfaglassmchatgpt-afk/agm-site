@@ -1,5 +1,5 @@
 import * as T from './vendor/three.module.js';
-import {sections} from './sections.js';
+import {sections} from './sections.js?v=mf-series-20261021';
 
 // Small catalogue-unlabelled edge radii are visual estimates, not machining data.
 export function softenedContour(points,radius=.18){
@@ -36,7 +36,7 @@ export function railGeometry(id,w,h,side,{start=0,end=1,miter=true}={}){
     if(side==='right'){x=w/2-u;y=h/2-along;}
     if(side==='top'){x=-w/2+along;y=h/2-u;}
     if(side==='bottom'){x=w/2-along;y=-h/2+u;}
-    p.setXYZ(i,x,y,z-sections[id==='13-01'?'13':id].d);
+    p.setXYZ(i,x,y,z-(q.frameDepth??sections[id==='13-01'?'13':id].d));
   }
   // Side mapping may reflect axes; use DoubleSide material and recompute normals.
   p.needsUpdate=true;geo.computeVertexNormals();geo.computeBoundingBox();return geo;
