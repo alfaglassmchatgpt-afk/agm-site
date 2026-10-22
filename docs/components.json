@@ -261,5 +261,21 @@
       "partitions.html"
     ],
     "media": "Existing approved images retained locally; not included in public repository."
+  },
+  "aluminiumProduction": {
+    "publishedOn": "2026-10-22",
+    "routes": [
+      "/aluminium/",
+      "/aluminium/fasady/",
+      "/aluminium/peregorodki/"
+    ],
+    "template": "page-agm-aluminium.php",
+    "resources": [
+      "agm-aluminium-catalog",
+      "agm-aluminium-configurator"
+    ],
+    "development": "local-only",
+    "automaticDeployment": false,
+    "projectSubmissionEnabled": false
   }
 }

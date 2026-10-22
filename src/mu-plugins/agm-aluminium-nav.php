@@ -15,19 +15,19 @@ add_action('template_redirect',function(){
  exit;
 },0);
 add_action('template_redirect',function(){
- if(!is_front_page())return;
+ if(is_admin() || is_feed())return;
  $page=get_page_by_path('aluminium');
 
  ob_start(function($html){
-  $label='<span class="agm-aluminium-link" aria-disabled="true"><span>ALUM</span><span>INIUM</span></span>';
-  $html=preg_replace('~(<a\b[^>]*href="[^"]*/kompleksnye-postavki/[^"]*"[^>]*>Комплексные поставки</a>)~u',$label.'$1',$html);
+  $label='<a class="agm-aluminium-link" href="'.esc_url(home_url('/aluminium/')).'"><span>ALUM</span><span>INIUM</span></a>';
+  $html=preg_replace_callback('~<header\b[^>]*>.*?</header>~s',function($m)use($label){if(strpos($m[0],'agm-aluminium-link')!==false || strpos($m[0],'class="al-link"')!==false)return $m[0];return preg_replace('~(<a\b[^>]*href="[^"]*/kompleksnye-postavki/[^"]*"[^>]*>Комплексные поставки</a>)~u',$label.'$1',$m[0]);},$html);
   $footer='<a href="'.esc_url(home_url('/aluminium/')).'" data-agm-aluminium-footer="1">ALUMINIUM</a>';
   return preg_replace('~(<nav\b[^>]*aria-label="Навигация в подвале"[^>]*>)(.*?)(</nav>)~s','$1$2'.$footer.'$3',$html,1);
  });
 });
-add_action('wp_head',function(){if(!is_front_page())return;?>
-<style>.desktop-nav>.agm-aluminium-link{display:flex;align-items:center;justify-content:center;min-height:51px;margin-bottom:-1px;border-bottom:2px solid transparent}.mobile-nav>.agm-aluminium-link{display:flex;align-items:center;min-height:48px;border-bottom:1px solid var(--line)}.agm-aluminium-link{cursor:default;font-family:'Trebuchet MS',Arial,sans-serif!important;font-size:17px!important;font-weight:700!important;letter-spacing:.06em;white-space:nowrap}.agm-aluminium-link span:first-child{color:#20282c}.agm-aluminium-link span:last-child{color:#08799d}[data-theme=dark] .agm-aluminium-link span:first-child{color:#eef4f7}[data-theme=dark] .agm-aluminium-link span:last-child{color:#64c9e9}
-/* Approved option 3: animated blue/turquoise outline, no navigation action. */
+add_action('wp_head',function(){if(is_admin() || is_feed())return;?>
+<style>.desktop-nav>.agm-aluminium-link{display:flex;align-items:center;justify-content:center;min-height:51px;margin-bottom:-1px;border-bottom:2px solid transparent}.mobile-nav>.agm-aluminium-link{display:flex;align-items:center;min-height:48px;border-bottom:1px solid var(--line)}.agm-aluminium-link{cursor:pointer;font-family:'Trebuchet MS',Arial,sans-serif!important;font-size:17px!important;font-weight:700!important;letter-spacing:.06em;white-space:nowrap}.agm-aluminium-link span:first-child{color:#20282c}.agm-aluminium-link span:last-child{color:#08799d}[data-theme=dark] .agm-aluminium-link span:first-child{color:#eef4f7}[data-theme=dark] .agm-aluminium-link span:last-child{color:#64c9e9}
+/* Approved option 3: animated blue/turquoise outline, public catalogue link. */
 .agm-aluminium-link{position:relative;isolation:isolate;padding-inline:14px}
 .agm-aluminium-link::before{content:"";position:absolute;inset:7px 0;border-radius:12px;padding:1.5px;background:linear-gradient(110deg,#2263c5,#2cc9bc,#63b9e9,#2263c5,#2cc9bc);background-size:300% 100%;animation:agm-aluminium-flow 5s ease-in-out infinite;-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
 .mobile-nav>.agm-aluminium-link{width:max-content;max-width:100%;border-bottom:0}

@@ -1,0 +1,1731 @@
+{
+  "source": "../../themes/alfa-glass-home-2026/agm-configurator/materials.json",
+  "snapshot": "2026-10-15",
+  "excludedUnknownThickness": [],
+  "items": [
+    {
+      "id": "zerkalo-serebro__standard",
+      "slug": "zerkalo-serebro",
+      "variant": "standard",
+      "title": "Зеркало серебро · обычное стекло",
+      "thickness": 4,
+      "mirror": true,
+      "color": "#c6d6cf",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Закалка классического зеркала недоступна. Специальные конструкции согласуются отдельно."
+    },
+    {
+      "id": "zerkalo-serebro__clear",
+      "slug": "zerkalo-serebro",
+      "variant": "clear",
+      "title": "Зеркало серебро · осветлённое стекло",
+      "thickness": 4,
+      "mirror": true,
+      "color": "#d7eeea",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Закалка классического зеркала недоступна. Специальные конструкции согласуются отдельно."
+    },
+    {
+      "id": "tonirovannye-zerkala__tint_bronze",
+      "slug": "tonirovannye-zerkala",
+      "variant": "tint_bronze",
+      "title": "Тонированные зеркала · Бронза",
+      "thickness": 4,
+      "mirror": true,
+      "color": "#b69c73",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Закалка классического зеркала недоступна. Специальные конструкции согласуются отдельно."
+    },
+    {
+      "id": "tonirovannye-zerkala__tint_grey",
+      "slug": "tonirovannye-zerkala",
+      "variant": "tint_grey",
+      "title": "Тонированные зеркала · Серое",
+      "thickness": 4,
+      "mirror": true,
+      "color": "#90969a",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Закалка классического зеркала недоступна. Специальные конструкции согласуются отдельно."
+    },
+    {
+      "id": "tonirovannye-zerkala__tint_gold",
+      "slug": "tonirovannye-zerkala",
+      "variant": "tint_gold",
+      "title": "Тонированные зеркала · Золотое",
+      "thickness": 4,
+      "mirror": true,
+      "color": "#dac185",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Закалка классического зеркала недоступна. Специальные конструкции согласуются отдельно."
+    },
+    {
+      "id": "tonirovannye-zerkala__tint_pink",
+      "slug": "tonirovannye-zerkala",
+      "variant": "tint_pink",
+      "title": "Тонированные зеркала · Розовое",
+      "thickness": 4,
+      "mirror": true,
+      "color": "#ddb0aa",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Закалка классического зеркала недоступна. Специальные конструкции согласуются отдельно."
+    },
+    {
+      "id": "tonirovannye-zerkala__tint_rainbow",
+      "slug": "tonirovannye-zerkala",
+      "variant": "tint_rainbow",
+      "title": "Тонированные зеркала · Радужное",
+      "thickness": 4,
+      "mirror": true,
+      "color": "#dfd4e3",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Закалка классического зеркала недоступна. Специальные конструкции согласуются отдельно."
+    },
+    {
+      "id": "tonirovannye-zerkala__tint_blue",
+      "slug": "tonirovannye-zerkala",
+      "variant": "tint_blue",
+      "title": "Тонированные зеркала · Синее",
+      "thickness": 4,
+      "mirror": true,
+      "color": "#91b5d5",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Закалка классического зеркала недоступна. Специальные конструкции согласуются отдельно."
+    },
+    {
+      "id": "tonirovannye-zerkala__tint_black",
+      "slug": "tonirovannye-zerkala",
+      "variant": "tint_black",
+      "title": "Тонированные зеркала · Чёрное",
+      "thickness": 4,
+      "mirror": true,
+      "color": "#434c54",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Закалка классического зеркала недоступна. Специальные конструкции согласуются отдельно."
+    },
+    {
+      "id": "riflenoe-steklo-flutes__standard",
+      "slug": "riflenoe-steklo-flutes",
+      "variant": "standard",
+      "title": "Рифлёное стекло Flutes AGC",
+      "thickness": 4,
+      "mirror": false,
+      "color": "#d7eeea",
+      "matte": false,
+      "pitch": 12,
+      "pattern": "reed",
+      "texturePending": false,
+      "note": "Закалка, триплексование, тонирование плёнкой и окрашивание доступны. Алюминиевый фасад — только 4 мм; профильная система для дверей и перегородок — 8 мм. Сочетания обработок и конструкцию согласуем по проекту.",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/riflenoe-steklo-flutes/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4
+        ]
+      },
+      "pitchConfirmedBy": "owner",
+      "pitchConfirmedAt": "2026-10-20"
+    },
+    {
+      "id": "sostarennye-zerkala-k1__standard",
+      "slug": "sostarennye-zerkala-k1",
+      "variant": "standard",
+      "title": "Состаренное зеркало K1 · K1 — светлое",
+      "thickness": 4,
+      "mirror": true,
+      "color": "#d7eeea",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": true,
+      "note": "Закалка готового зеркала недоступна."
+    },
+    {
+      "id": "sostarennye-zerkala-k1__gold",
+      "slug": "sostarennye-zerkala-k1",
+      "variant": "gold",
+      "title": "Состаренное зеркало K1 · K1 Gold — золотое",
+      "thickness": 4,
+      "mirror": true,
+      "color": "#b69c73",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": true,
+      "note": "Закалка готового зеркала недоступна."
+    },
+    {
+      "id": "raywall90__standard",
+      "slug": "raywall90",
+      "variant": "standard",
+      "title": "Рифлёное стекло Raywall 90T",
+      "thickness": 4,
+      "mirror": false,
+      "color": "#d7eeea",
+      "matte": false,
+      "pitch": 7.142857142857143,
+      "pattern": "reed",
+      "texturePending": false,
+      "note": "Доступные обработки и сочетания согласуются по проекту. Алюминиевый фасад — для стекла 4 мм.",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/raywall90/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4
+        ]
+      }
+    },
+    {
+      "id": "raywall__standard",
+      "slug": "raywall",
+      "variant": "standard",
+      "title": "Рифлёное стекло RAYWALL45",
+      "thickness": 4,
+      "mirror": false,
+      "color": "#d7eeea",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": true,
+      "note": "Закалка, триплексование, тонирование плёнкой и окрашивание доступны. Алюминиевый фасад — только 4 мм; профильная система для дверей и перегородок — 8 мм. Сочетания обработок и конструкцию согласуем по проекту."
+    },
+    {
+      "id": "vison-sun__standard",
+      "slug": "vison-sun",
+      "variant": "standard",
+      "title": "Vision Sun Ultra",
+      "thickness": 4,
+      "mirror": false,
+      "color": "#d7eeea",
+      "matte": false,
+      "pitch": 5,
+      "pattern": "reed",
+      "texturePending": false,
+      "note": "Закалка, триплексование, тонирование плёнкой и окрашивание доступны. Алюминиевый фасад — только 4 мм; профильная система для дверей и перегородок — 8 мм. Сочетания обработок и конструкцию согласуем по проекту.",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/vison-sun/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4
+        ]
+      },
+      "pitchEstimated": false
+    },
+    {
+      "id": "flutes-moru-bronze__standard",
+      "slug": "flutes-moru-bronze",
+      "variant": "standard",
+      "title": "Рифлёное стекло Flutes Moru Bronze",
+      "thickness": 4,
+      "mirror": false,
+      "color": "#b69c73",
+      "matte": false,
+      "pitch": 12,
+      "pattern": null,
+      "texturePending": true,
+      "note": "Закалка, триплексование, тонирование плёнкой и окрашивание доступны. Алюминиевый фасад — только 4 мм; профильная система для дверей и перегородок — 8 мм. Сочетания обработок и конструкцию согласуем по проекту.",
+      "pitchConfirmedBy": "owner",
+      "pitchConfirmedAt": "2026-10-20"
+    },
+    {
+      "id": "flutes-moru-ultra__standard",
+      "slug": "flutes-moru-ultra",
+      "variant": "standard",
+      "title": "Узорчатое стекло Flutes Moru Ultra",
+      "thickness": 4,
+      "mirror": false,
+      "color": "#d7eeea",
+      "matte": false,
+      "pitch": 12,
+      "pattern": null,
+      "texturePending": true,
+      "note": "Закалка, триплексование, тонирование плёнкой и окрашивание доступны. Алюминиевый фасад — только 4 мм; профильная система для дверей и перегородок — 8 мм. Сочетания обработок и конструкцию согласуем по проекту.",
+      "pitchConfirmedBy": "owner",
+      "pitchConfirmedAt": "2026-10-20"
+    },
+    {
+      "id": "flutes-moru-grey__standard",
+      "slug": "flutes-moru-grey",
+      "variant": "standard",
+      "title": "Узорчатое стекло Flutes Moru Grey",
+      "thickness": 4,
+      "mirror": false,
+      "color": "#87949c",
+      "matte": false,
+      "pitch": 12,
+      "pattern": null,
+      "texturePending": true,
+      "note": "Закалка, триплексование, тонирование плёнкой и окрашивание доступны. Алюминиевый фасад — только 4 мм; профильная система для дверей и перегородок — 8 мм. Сочетания обработок и конструкцию согласуем по проекту.",
+      "pitchConfirmedBy": "owner",
+      "pitchConfirmedAt": "2026-10-20"
+    },
+    {
+      "id": "flutes-moru-ultra-mat__standard",
+      "slug": "flutes-moru-ultra-mat",
+      "variant": "standard",
+      "title": "MORU Ultra матовое (на осветлённом стекле)",
+      "thickness": 4,
+      "mirror": false,
+      "color": "#d7eeea",
+      "matte": true,
+      "pitch": 12,
+      "pattern": "reed",
+      "texturePending": false,
+      "note": "Закалка, триплексование, тонирование плёнкой и окрашивание доступны. Алюминиевый фасад — только 4 мм; профильная система для дверей и перегородок — 8 мм. Сочетания обработок и конструкцию согласуем по проекту.",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/flutes-moru-ultra-mat/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4
+        ]
+      },
+      "pitchConfirmedBy": "owner",
+      "pitchConfirmedAt": "2026-10-20"
+    },
+    {
+      "id": "moru-bronze-mat__standard",
+      "slug": "moru-bronze-mat",
+      "variant": "standard",
+      "title": "Матовое бронзовое стекло",
+      "thickness": 4,
+      "mirror": false,
+      "color": "#b69c73",
+      "matte": true,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Специальные обработки включаются после подтверждения для этого материала.",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/moru-bronze-mat/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4,
+          6,
+          8,
+          10
+        ]
+      }
+    },
+    {
+      "id": "moru-grey-mat__standard",
+      "slug": "moru-grey-mat",
+      "variant": "standard",
+      "title": "Матовое серое стекло",
+      "thickness": 4,
+      "mirror": false,
+      "color": "#87949c",
+      "matte": true,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Специальные обработки включаются после подтверждения для этого материала.",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/moru-grey-mat/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4,
+          6,
+          8,
+          10
+        ]
+      }
+    },
+    {
+      "id": "moru-dark-grey-mat__standard",
+      "slug": "moru-dark-grey-mat",
+      "variant": "standard",
+      "title": "Матовое стекло Дарк грей",
+      "thickness": 4,
+      "mirror": false,
+      "color": "#434c54",
+      "matte": true,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Специальные обработки включаются после подтверждения для этого материала.",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/moru-dark-grey-mat/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4,
+          6,
+          8,
+          10
+        ]
+      }
+    },
+    {
+      "id": "moru-grey__standard",
+      "slug": "tonirovannoe-steklo-grey",
+      "variant": "standard",
+      "title": "Тонированное Серое",
+      "thickness": 4,
+      "mirror": false,
+      "color": "#87949c",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Закалка, триплексование, тонирование плёнкой и окрашивание доступны. Алюминиевый фасад — только 4 мм; профильная система для дверей и перегородок — 8 мм. Сочетания обработок и конструкцию согласуем по проекту.",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/tonirovannoe-steklo-grey/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4,
+          5,
+          6,
+          8,
+          10
+        ]
+      }
+    },
+    {
+      "id": "moru-dark-grey__standard",
+      "slug": "moru-dark-grey",
+      "variant": "standard",
+      "title": "Тонированное стекло Dark Grey",
+      "thickness": 4,
+      "mirror": false,
+      "color": "#434c54",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Специальные обработки включаются после подтверждения для этого материала."
+    },
+    {
+      "id": "moru-bronze__standard",
+      "slug": "moru-bronze",
+      "variant": "standard",
+      "title": "Тонированное Бронза",
+      "thickness": 4,
+      "mirror": false,
+      "color": "#b69c73",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Специальные обработки включаются после подтверждения для этого материала."
+    },
+    {
+      "id": "diamant__standard",
+      "slug": "diamant",
+      "variant": "standard",
+      "title": "Узорчатое стекло Diamant",
+      "thickness": 4,
+      "mirror": false,
+      "color": "#d7eeea",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Специальные обработки включаются после подтверждения для этого материала.",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/diamant/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4
+        ]
+      }
+    },
+    {
+      "id": "hithicross__standard",
+      "slug": "hithicross",
+      "variant": "standard",
+      "title": "Узорчатое стекло HitHiCross",
+      "thickness": 4,
+      "mirror": false,
+      "color": "#d7eeea",
+      "matte": false,
+      "pitch": 15,
+      "pattern": "grid",
+      "texturePending": false,
+      "note": "Триплексование недоступно для этого материала. Остальные обработки — по профилю материала и согласованию проекта.",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/hithicross/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4
+        ]
+      },
+      "pitchEstimated": true
+    },
+    {
+      "id": "gothic__standard",
+      "slug": "gothic",
+      "variant": "standard",
+      "title": "Узорчатое стекло Gothic",
+      "thickness": 4,
+      "mirror": false,
+      "color": "#d7eeea",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Доступные обработки и сочетания согласуются по проекту. Алюминиевый фасад — для стекла 4 мм.",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/gothic/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4
+        ]
+      }
+    },
+    {
+      "id": "silvit__standard",
+      "slug": "silvit",
+      "variant": "standard",
+      "title": "Узорчатое стекло Silvit",
+      "thickness": 4,
+      "mirror": false,
+      "color": "#d7eeea",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Доступные обработки и сочетания согласуются по проекту. Алюминиевый фасад — для стекла 4 мм.",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/silvit/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4
+        ]
+      }
+    },
+    {
+      "id": "kathedral-klein__standard",
+      "slug": "kathedral-klein",
+      "variant": "standard",
+      "title": "Kathedral Klein",
+      "thickness": 4,
+      "mirror": false,
+      "color": "#d7eeea",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Доступные обработки и сочетания согласуются по проекту. Алюминиевый фасад — для стекла 4 мм.",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/kathedral-klein/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4
+        ]
+      }
+    },
+    {
+      "id": "monumental-atlantic__standard",
+      "slug": "monumental-atlantic",
+      "variant": "standard",
+      "title": "Узорчатое стекло Monumental Atlantic",
+      "thickness": 4,
+      "mirror": false,
+      "color": "#d7eeea",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Доступные обработки и сочетания согласуются по проекту. Алюминиевый фасад — для стекла 4 мм.",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/monumental-atlantic/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4
+        ]
+      }
+    },
+    {
+      "id": "krepi__standard",
+      "slug": "krepi",
+      "variant": "standard",
+      "title": "Узорчатое стекло Crepi",
+      "thickness": 4,
+      "mirror": false,
+      "color": "#d7eeea",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Доступные обработки и сочетания согласуются по проекту. Алюминиевый фасад — для стекла 4 мм.",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/krepi/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4
+        ]
+      }
+    },
+    {
+      "id": "krepi__grey",
+      "slug": "krepi",
+      "variant": "grey",
+      "title": "Узорчатое стекло Crepi · Серое",
+      "thickness": 4,
+      "mirror": false,
+      "color": "#87949c",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Доступные обработки и сочетания согласуются по проекту. Алюминиевый фасад — для стекла 4 мм."
+    },
+    {
+      "id": "krepi__bronze",
+      "slug": "krepi",
+      "variant": "bronze",
+      "title": "Узорчатое стекло Crepi · Бронза",
+      "thickness": 4,
+      "mirror": false,
+      "color": "#b69c73",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Доступные обработки и сочетания согласуются по проекту. Алюминиевый фасад — для стекла 4 мм."
+    },
+    {
+      "id": "kathedralaqualite__standard",
+      "slug": "kathedralaqualite",
+      "variant": "standard",
+      "title": "Узорчатое стекло Kathedral Aqualite",
+      "thickness": 4,
+      "mirror": false,
+      "color": "#d7eeea",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Доступные обработки и сочетания согласуются по проекту. Алюминиевый фасад — для стекла 4 мм.",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/kathedralaqualite/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4,
+          6
+        ]
+      }
+    },
+    {
+      "id": "zerkalo-osvetlyonnoe__standard",
+      "slug": "zerkalo-osvetlyonnoe",
+      "variant": "standard",
+      "title": "Осветлённое зеркало «Crystalvision» (Crystal)",
+      "thickness": 4,
+      "mirror": true,
+      "color": "#eeeeee",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Закалка готового зеркала недоступна."
+    },
+    {
+      "id": "sostarennye-zerkala__standard",
+      "slug": "sostarennye-zerkala",
+      "variant": "standard",
+      "title": "Состаренные зеркала Morena (морена)",
+      "thickness": 4,
+      "mirror": true,
+      "color": "#d7eeea",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": true,
+      "note": "Закалка готового зеркала недоступна."
+    },
+    {
+      "id": "moru-crystal__standard",
+      "slug": "moru-crystal",
+      "variant": "standard",
+      "title": "Рифлёное стекло MORU CRYSTAL",
+      "thickness": 4,
+      "mirror": false,
+      "color": "#d7eeea",
+      "matte": false,
+      "pitch": 12,
+      "pattern": "reed",
+      "texturePending": false,
+      "note": "Закалка, триплексование, тонирование плёнкой и окрашивание доступны. Алюминиевый фасад — только 4 мм; профильная система для дверей и перегородок — 8 мм. Сочетания обработок и конструкцию согласуем по проекту.",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/moru-crystal/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4
+        ]
+      },
+      "pitchConfirmedBy": "owner",
+      "pitchConfirmedAt": "2026-10-20"
+    },
+    {
+      "id": "moru-ultra__standard",
+      "slug": "moru-ultra",
+      "variant": "standard",
+      "title": "Рифлёное стекло MORU ULTRA",
+      "thickness": 4,
+      "mirror": false,
+      "color": "#d7eeea",
+      "matte": false,
+      "pitch": 12,
+      "pattern": "reed",
+      "texturePending": false,
+      "note": "Закалка, триплексование, тонирование плёнкой и окрашивание доступны. Алюминиевый фасад — только 4 мм; профильная система для дверей и перегородок — 8 мм. Сочетания обработок и конструкцию согласуем по проекту.",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/moru-ultra/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4
+        ]
+      },
+      "pitchConfirmedBy": "owner",
+      "pitchConfirmedAt": "2026-10-20"
+    },
+    {
+      "id": "moru-bronze-toned__standard",
+      "slug": "moru-bronze-toned",
+      "variant": "standard",
+      "title": "MORU тонированное в массе Bronze",
+      "thickness": 4,
+      "mirror": false,
+      "color": "#b69c73",
+      "matte": false,
+      "pitch": 12,
+      "pattern": "reed",
+      "texturePending": false,
+      "note": "Закалка, триплексование, тонирование плёнкой и окрашивание доступны. Алюминиевый фасад — только 4 мм; профильная система для дверей и перегородок — 8 мм. Сочетания обработок и конструкцию согласуем по проекту.",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/moru-bronze-toned/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4
+        ]
+      },
+      "pitchConfirmedBy": "owner",
+      "pitchConfirmedAt": "2026-10-20"
+    },
+    {
+      "id": "estriado__standard",
+      "slug": "estriado",
+      "variant": "standard",
+      "title": "Estriado",
+      "thickness": 4,
+      "mirror": false,
+      "color": "#d7eeea",
+      "matte": false,
+      "pitch": 2.6666666666666665,
+      "pattern": "vertical",
+      "texturePending": false,
+      "note": "Закалка, триплексование, тонирование плёнкой и окрашивание доступны. Алюминиевый фасад — только 4 мм; профильная система для дверей и перегородок — 8 мм. Сочетания обработок и конструкцию согласуем по проекту.",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/estriado/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4
+        ]
+      }
+    },
+    {
+      "id": "estriado-crystal__standard",
+      "slug": "estriado-crystal",
+      "variant": "standard",
+      "title": "Estriado Crystal",
+      "thickness": 4,
+      "mirror": false,
+      "color": "#d7eeea",
+      "matte": false,
+      "pitch": 2.6666666666666665,
+      "pattern": "vertical",
+      "texturePending": false,
+      "note": "Закалка, триплексование, тонирование плёнкой и окрашивание доступны. Алюминиевый фасад — только 4 мм; профильная система для дверей и перегородок — 8 мм. Сочетания обработок и конструкцию согласуем по проекту.",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/estriado-crystal/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4
+        ]
+      }
+    },
+    {
+      "id": "estriado-ultra__standard",
+      "slug": "estriado-ultra",
+      "variant": "standard",
+      "title": "Estriado Ultra",
+      "thickness": 4,
+      "mirror": false,
+      "color": "#d7eeea",
+      "matte": false,
+      "pitch": 2.6666666666666665,
+      "pattern": "vertical",
+      "texturePending": false,
+      "note": "Закалка, триплексование, тонирование плёнкой и окрашивание доступны. Алюминиевый фасад — только 4 мм; профильная система для дверей и перегородок — 8 мм. Сочетания обработок и конструкцию согласуем по проекту.",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/estriado-ultra/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4
+        ]
+      }
+    },
+    {
+      "id": "flutelite-s__standard",
+      "slug": "flutelite-s",
+      "variant": "standard",
+      "title": "Flutelit-C",
+      "thickness": 4,
+      "mirror": false,
+      "color": "#d7eeea",
+      "matte": false,
+      "pitch": 1.7391304347826086,
+      "pattern": "reed",
+      "texturePending": false,
+      "note": "Доступные обработки и сочетания согласуются по проекту. Алюминиевый фасад — для стекла 4 мм.",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/flutelite-s/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4
+        ]
+      }
+    },
+    {
+      "id": "moru-magnetron-bronze__standard",
+      "slug": "moru-magnetron-bronze",
+      "variant": "standard",
+      "title": "MORU Бронза — магнетронное напыление",
+      "thickness": 4,
+      "mirror": false,
+      "color": "#b69c73",
+      "matte": false,
+      "pitch": 12,
+      "pattern": "reed",
+      "texturePending": false,
+      "note": "Магнетронное покрытие на рифлёной стороне. Закалка недоступна. Алюминиевый фасад — только 4 мм; профильная система — 8 мм. Сочетания обработок согласуются по проекту.",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/moru-magnetron-bronze/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4
+        ]
+      },
+      "pitchConfirmedBy": "owner",
+      "pitchConfirmedAt": "2026-10-20"
+    },
+    {
+      "id": "moru-magnetron-grey__standard",
+      "slug": "moru-magnetron-grey",
+      "variant": "standard",
+      "title": "MORU Серое — магнетронное напыление",
+      "thickness": 4,
+      "mirror": false,
+      "color": "#87949c",
+      "matte": false,
+      "pitch": 12,
+      "pattern": "reed",
+      "texturePending": false,
+      "note": "Магнетронное покрытие на рифлёной стороне. Закалка недоступна. Алюминиевый фасад — только 4 мм; профильная система — 8 мм. Сочетания обработок согласуются по проекту.",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/moru-magnetron-grey/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4
+        ]
+      },
+      "pitchConfirmedBy": "owner",
+      "pitchConfirmedAt": "2026-10-20"
+    },
+    {
+      "id": "sostarennye-zerkala-k1-gold__standard",
+      "slug": "sostarennye-zerkala-k1-gold",
+      "variant": "standard",
+      "title": "Состаренное зеркало K-1 Gold",
+      "thickness": 4,
+      "mirror": true,
+      "color": "#b69c73",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": true,
+      "note": "Лист 2400 × 1830 мм. Закалка и триплексование готового зеркала недоступны."
+    },
+    {
+      "id": "sostarennye-zerkala-a1__standard",
+      "slug": "sostarennye-zerkala-a1",
+      "variant": "standard",
+      "title": "Состаренное зеркало А-1",
+      "thickness": 4,
+      "mirror": true,
+      "color": "#d7eeea",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": true,
+      "note": "Листы 2400 × 1830 мм; 3210 × 2500 мм. Закалка готового зеркала недоступна."
+    },
+    {
+      "id": "krezet__standard",
+      "slug": "krezet",
+      "variant": "standard",
+      "title": "Krezet (Крезет)",
+      "thickness": 4,
+      "mirror": false,
+      "color": "#d7eeea",
+      "matte": false,
+      "pitch": 2,
+      "pattern": "grid",
+      "texturePending": false,
+      "note": "Доступные обработки и сочетания согласуются по проекту. Алюминиевый фасад — для стекла 4 мм.",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/krezet/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4
+        ]
+      },
+      "pitchEstimated": true
+    },
+    {
+      "id": "float-steklo-clear-m1__standard",
+      "slug": "float-steklo-clear-m1",
+      "variant": "standard",
+      "title": "Стекло обычное М1",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": false,
+      "color": "#d7eeea",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Специальные обработки включаются после подтверждения для этого материала.",
+      "confirmedBy": "owner",
+      "confirmedAt": "2026-10-15",
+      "visualizationNote": "Цвет и оптика ориентировочные; конкретный образец согласуется отдельно."
+    },
+    {
+      "id": "steklo-kristalvizhn-crystalvision__standard",
+      "slug": "steklo-kristalvizhn-crystalvision",
+      "variant": "standard",
+      "title": "Стекло осветлённое Crystalvision",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": false,
+      "color": "#d7eeea",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Специальные обработки включаются после подтверждения для этого материала.",
+      "confirmedBy": "owner",
+      "confirmedAt": "2026-10-15",
+      "visualizationNote": "Цвет и оптика ориентировочные; конкретный образец согласуется отдельно."
+    },
+    {
+      "id": "steklo-matovoe-matelux__standard",
+      "slug": "steklo-matovoe-matelux",
+      "variant": "standard",
+      "title": "Матовое стекло Matelux",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": false,
+      "color": "#d7eeea",
+      "matte": true,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Специальные обработки включаются после подтверждения для этого материала.",
+      "confirmedBy": "owner",
+      "confirmedAt": "2026-10-15",
+      "visualizationNote": "Цвет и оптика ориентировочные; конкретный образец согласуется отдельно.",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/steklo-matovoe-matelux/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4,
+          6,
+          8,
+          10
+        ]
+      }
+    },
+    {
+      "id": "steklo-solnczezashhitnoe-stopsol__standard",
+      "slug": "steklo-solnczezashhitnoe-stopsol",
+      "variant": "standard",
+      "title": "Стопсол Феникс Клеар (Phoenix Clear)",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": false,
+      "color": "#d7eeea",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Стекло с отражающим покрытием: зеркальные блики и частичное просвечивание. Оптика визуализации ориентировочная.",
+      "confirmedBy": "owner",
+      "confirmedAt": "2026-10-15",
+      "visualizationNote": "Цвет и оптика ориентировочные; конкретный образец согласуется отдельно.",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/steklo-solnczezashhitnoe-stopsol/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4,
+          6,
+          8,
+          10
+        ]
+      }
+    },
+    {
+      "id": "dihroichnoe-steklo__standard",
+      "slug": "dihroichnoe-steklo",
+      "variant": "standard",
+      "title": "Дихроичное стекло",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": false,
+      "color": "#d7eeea",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Специальные обработки включаются после подтверждения для этого материала.",
+      "confirmedBy": "owner",
+      "confirmedAt": "2026-10-15",
+      "visualizationNote": "Цвет и оптика ориентировочные; конкретный образец согласуется отдельно."
+    },
+    {
+      "id": "steklo-lacobel__standard",
+      "slug": "steklo-lacobel",
+      "variant": "standard",
+      "title": "Стекло Lacobel",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#c8c4b9",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "confirmedBy": "owner",
+      "confirmedAt": "2026-10-15",
+      "visualizationNote": "Цвет и оптика ориентировочные; конкретный образец согласуется отдельно."
+    },
+    {
+      "id": "steklo-matelak__standard",
+      "slug": "steklo-matelak",
+      "variant": "standard",
+      "title": "Стекло Matelac",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#c8c4b9",
+      "matte": true,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "confirmedBy": "owner",
+      "confirmedAt": "2026-10-15",
+      "visualizationNote": "Цвет и оптика ориентировочные; конкретный образец согласуется отдельно."
+    },
+    {
+      "id": "tonirovannoe-v-masse-steklo-moru__standard",
+      "slug": "tonirovannoe-v-masse-steklo-moru",
+      "variant": "standard",
+      "title": "Рифлёное стекло MORU ( Мору) тонированное в массе.  Цвет бронза и серое. Flutes",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": false,
+      "color": "#d7eeea",
+      "matte": false,
+      "pitch": 12,
+      "pattern": null,
+      "texturePending": true,
+      "note": "Закалка, триплексование, тонирование плёнкой и окрашивание доступны. Алюминиевый фасад — только 4 мм; профильная система для дверей и перегородок — 8 мм. Сочетания обработок и конструкцию согласуем по проекту.",
+      "confirmedBy": "owner",
+      "confirmedAt": "2026-10-15",
+      "visualizationNote": "Цвет и оптика ориентировочные; конкретный образец согласуется отдельно.",
+      "pitchConfirmedBy": "owner",
+      "pitchConfirmedAt": "2026-10-20"
+    },
+    {
+      "id": "zerkalo-gezella__standard",
+      "slug": "zerkalo-gezella",
+      "variant": "standard",
+      "title": "Двухстороннее зеркало",
+      "thickness": 4,
+      "mirror": true,
+      "opaque": false,
+      "color": "#d7eeea",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Закалка готового зеркала недоступна.",
+      "confirmedBy": "owner",
+      "confirmedAt": "2026-10-15",
+      "visualizationNote": "Цвет и оптика ориентировочные; конкретный образец согласуется отдельно."
+    },
+    {
+      "id": "tonirovannoe-steklo-black__standard",
+      "slug": "tonirovannoe-steklo-black",
+      "variant": "standard",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": false,
+      "color": "#454b50",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Оттенок и прозрачность визуализации ориентировочные. Подбор по образцу.",
+      "title": "Тонированное Черное",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/tonirovannoe-steklo-black/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4,
+          6,
+          8,
+          10
+        ]
+      }
+    },
+    {
+      "id": "tonirovannoe-steklo-green__standard",
+      "slug": "tonirovannoe-steklo-green",
+      "variant": "standard",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": false,
+      "color": "#80a798",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Оттенок и прозрачность визуализации ориентировочные. Подбор по образцу.",
+      "title": "Тонированное Green",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/tonirovannoe-steklo-green/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4,
+          8
+        ]
+      }
+    },
+    {
+      "id": "tonirovannoe-steklo-blue__standard",
+      "slug": "tonirovannoe-steklo-blue",
+      "variant": "standard",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": false,
+      "color": "#7196b3",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Оттенок и прозрачность визуализации ориентировочные. Подбор по образцу.",
+      "title": "Тонированное Синее",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/tonirovannoe-steklo-blue/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4,
+          6,
+          8
+        ]
+      }
+    },
+    {
+      "id": "steklo-matovoe-osvetlyonnoe__standard",
+      "slug": "steklo-matovoe-osvetlyonnoe",
+      "variant": "standard",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": false,
+      "color": "#eef3f2",
+      "matte": true,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Матовое осветлённое стекло. Оптика визуализации ориентировочная.",
+      "title": "Матовое осветлённое стекло",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/steklo-matovoe-osvetlyonnoe/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4,
+          6,
+          8,
+          10
+        ]
+      }
+    },
+    {
+      "id": "stopsol-phoenix-bronze__standard",
+      "slug": "stopsol-phoenix-bronze",
+      "variant": "standard",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": false,
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "title": "Стопсол Феникс Бронза (Phoenix Bronze)",
+      "color": "#b69c73",
+      "texturePending": false,
+      "note": "Стекло с отражающим покрытием: зеркальные блики и частичное просвечивание. Оптика визуализации ориентировочная.",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/stopsol-phoenix-bronze/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4,
+          6,
+          8,
+          10
+        ]
+      }
+    },
+    {
+      "id": "stopsol-phoenix-gray__standard",
+      "slug": "stopsol-phoenix-gray",
+      "variant": "standard",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": false,
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "title": "Стопсол Феникс Серый (Phoenix Gray)",
+      "color": "#87949c",
+      "texturePending": false,
+      "note": "Стекло с отражающим покрытием: зеркальные блики и частичное просвечивание. Оптика визуализации ориентировочная.",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/stopsol-phoenix-gray/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4,
+          6,
+          8,
+          10
+        ]
+      }
+    },
+    {
+      "id": "moru-grey__reed",
+      "slug": "moru-grey",
+      "variant": "standard",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": false,
+      "color": "#87949c",
+      "matte": false,
+      "pitch": 12,
+      "pattern": "reed",
+      "texturePending": false,
+      "note": "Точная фактура пока не воспроизведена; цвет и прозрачность ориентировочные.",
+      "title": "MORU тонированное в массе Grey",
+      "verifiedSource": {
+        "url": "https://alfaglass.ru/materialy/moru-grey/",
+        "date": "2026-10-15",
+        "thicknesses": [
+          4
+        ]
+      },
+      "pitchConfirmedBy": "owner",
+      "pitchConfirmedAt": "2026-10-20"
+    },
+    {
+      "id": "lacobel-1013__standard",
+      "slug": "lacobel-1013",
+      "variant": "standard",
+      "title": "Лакобель 1013 RAL — Жемчужно-бежевый светлый",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#e7dfcb",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Окрашенное глянцевое стекло 4 мм. Формат листа 3210 × 2250 мм. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "source": {
+        "url": "https://alfaglass.ru/materialy/lacobel-1013/",
+        "evidence": "Saved ALFAGLASS material catalogue, 4 mm."
+      },
+      "visualizationNote": "Цвет на экране приблизительный. Точный оттенок согласуется по образцу."
+    },
+    {
+      "id": "lacobel-1014__standard",
+      "slug": "lacobel-1014",
+      "variant": "standard",
+      "title": "Лакобель 1014 RAL — Бежевый классический",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#d9c8a2",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Окрашенное глянцевое стекло 4 мм. Формат листа 3210 × 2250 мм. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "source": {
+        "url": "https://alfaglass.ru/materialy/lacobel-1014/",
+        "evidence": "Saved ALFAGLASS material catalogue, 4 mm."
+      },
+      "visualizationNote": "Цвет на экране приблизительный. Точный оттенок согласуется по образцу."
+    },
+    {
+      "id": "lacobel-1015__standard",
+      "slug": "lacobel-1015",
+      "variant": "standard",
+      "title": "Лакобель 1015 RAL — Светлый бежевый",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#e8d9b8",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Окрашенное глянцевое стекло 4 мм. Формат листа 3210 × 2250 мм. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "source": {
+        "url": "https://alfaglass.ru/materialy/lacobel-1015/",
+        "evidence": "Saved ALFAGLASS material catalogue, 4 mm."
+      },
+      "visualizationNote": "Цвет на экране приблизительный. Точный оттенок согласуется по образцу."
+    },
+    {
+      "id": "lacobel-1236__standard",
+      "slug": "lacobel-1236",
+      "variant": "standard",
+      "title": "Лакобель 1236 REF — Коричневый светлый",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#b4a18c",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Окрашенное глянцевое стекло 4 мм. Формат листа 3210 × 2250 мм. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "source": {
+        "url": "https://alfaglass.ru/materialy/lacobel-1236/",
+        "evidence": "Saved ALFAGLASS material catalogue, 4 mm."
+      },
+      "visualizationNote": "Цвет на экране приблизительный. Точный оттенок согласуется по образцу."
+    },
+    {
+      "id": "lacobel-5001__standard",
+      "slug": "lacobel-5001",
+      "variant": "standard",
+      "title": "Лакобель 5001 REF — Радужный голубой",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#91adb5",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Окрашенное глянцевое стекло 4 мм. Формат листа 3210 × 2250 мм. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "source": {
+        "url": "https://alfaglass.ru/materialy/lacobel-5001/",
+        "evidence": "Saved ALFAGLASS material catalogue, 4 mm."
+      },
+      "visualizationNote": "Цвет на экране приблизительный. Точный оттенок согласуется по образцу."
+    },
+    {
+      "id": "lacobel-7000__standard",
+      "slug": "lacobel-7000",
+      "variant": "standard",
+      "title": "Лакобель 7000 REF — Синяя тень",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#788d98",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Окрашенное глянцевое стекло 4 мм. Формат листа 3210 × 2250 мм. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "source": {
+        "url": "https://alfaglass.ru/materialy/lacobel-7000/",
+        "evidence": "Saved ALFAGLASS material catalogue, 4 mm."
+      },
+      "visualizationNote": "Цвет на экране приблизительный. Точный оттенок согласуется по образцу."
+    },
+    {
+      "id": "lacobel-7013__standard",
+      "slug": "lacobel-7013",
+      "variant": "standard",
+      "title": "Лакобель 7013 REF — Натуральный коричневый",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#60594d",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Окрашенное глянцевое стекло 4 мм. Формат листа 3210 × 2250 мм. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "source": {
+        "url": "https://alfaglass.ru/materialy/lacobel-7013/",
+        "evidence": "Saved ALFAGLASS material catalogue, 4 mm."
+      },
+      "visualizationNote": "Цвет на экране приблизительный. Точный оттенок согласуется по образцу."
+    },
+    {
+      "id": "lacobel-7016__standard",
+      "slug": "lacobel-7016",
+      "variant": "standard",
+      "title": "Лакобель 7016 REF — Природный чёрный",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#383e42",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Окрашенное глянцевое стекло 4 мм. Формат листа 3210 × 2250 мм. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "source": {
+        "url": "https://alfaglass.ru/materialy/lacobel-7016/",
+        "evidence": "Saved ALFAGLASS material catalogue, 4 mm."
+      },
+      "visualizationNote": "Цвет на экране приблизительный. Точный оттенок согласуется по образцу."
+    },
+    {
+      "id": "lacobel-7035__standard",
+      "slug": "lacobel-7035",
+      "variant": "standard",
+      "title": "Лакобель 7035 RAL — Серый классический",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#c5c7c4",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Окрашенное глянцевое стекло 4 мм. Формат листа 3210 × 2250 мм. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "source": {
+        "url": "https://alfaglass.ru/materialy/lacobel-7035/",
+        "evidence": "Saved ALFAGLASS material catalogue, 4 mm."
+      },
+      "visualizationNote": "Цвет на экране приблизительный. Точный оттенок согласуется по образцу."
+    },
+    {
+      "id": "lacobel-8815__standard",
+      "slug": "lacobel-8815",
+      "variant": "standard",
+      "title": "Лакобель 8815 RAL — Терракотовый",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#a4513d",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Окрашенное глянцевое стекло 4 мм. Формат листа 3210 × 2250 мм. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "source": {
+        "url": "https://alfaglass.ru/materialy/lacobel-8815/",
+        "evidence": "Saved ALFAGLASS material catalogue, 4 mm."
+      },
+      "visualizationNote": "Цвет на экране приблизительный. Точный оттенок согласуется по образцу."
+    },
+    {
+      "id": "lacobel-9003__standard",
+      "slug": "lacobel-9003",
+      "variant": "standard",
+      "title": "Лакобель 9003 RAL — Насыщенный белый",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#f7f8f4",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Окрашенное глянцевое стекло 4 мм. Формат листа 3210 × 2250 мм. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "source": {
+        "url": "https://alfaglass.ru/materialy/lacobel-9003/",
+        "evidence": "Saved ALFAGLASS material catalogue, 4 mm."
+      },
+      "visualizationNote": "Цвет на экране приблизительный. Точный оттенок согласуется по образцу."
+    },
+    {
+      "id": "lacobel-9005__standard",
+      "slug": "lacobel-9005",
+      "variant": "standard",
+      "title": "Лакобель 9005 RAL — Чёрный классический",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#141619",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Окрашенное глянцевое стекло 4 мм. Формат листа 3210 × 2250 мм. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "source": {
+        "url": "https://alfaglass.ru/materialy/lacobel-9005/",
+        "evidence": "Saved ALFAGLASS material catalogue, 4 mm."
+      },
+      "visualizationNote": "Цвет на экране приблизительный. Точный оттенок согласуется по образцу."
+    },
+    {
+      "id": "lacobel-9010__standard",
+      "slug": "lacobel-9010",
+      "variant": "standard",
+      "title": "Лакобель 9010 RAL — Белый неяркий",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#e9e8da",
+      "matte": false,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Окрашенное глянцевое стекло 4 мм. Формат листа 3210 × 2250 мм. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "source": {
+        "url": "https://alfaglass.ru/materialy/lacobel-9010/",
+        "evidence": "Saved ALFAGLASS material catalogue, 4 mm."
+      },
+      "visualizationNote": "Цвет на экране приблизительный. Точный оттенок согласуется по образцу."
+    },
+    {
+      "id": "matelac-1013-agc__standard",
+      "slug": "matelac-1013-agc",
+      "variant": "standard",
+      "title": "Мателак 1013 RAL (AGC) — Жемчужный бежевый",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#e7dfcb",
+      "matte": true,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Матовое по лицу окрашенное стекло 4 мм. Формат листа 3210 × 2250 мм. Наличие уточняйте у менеджера. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "source": {
+        "url": "https://alfaglass.ru/materialy/matelac-1013-agc/",
+        "evidence": "Saved ALFAGLASS material catalogue, 4 mm."
+      },
+      "visualizationNote": "Цвет на экране приблизительный. Точный оттенок согласуется по образцу."
+    },
+    {
+      "id": "matelac-8815-agc__standard",
+      "slug": "matelac-8815-agc",
+      "variant": "standard",
+      "title": "Мателак 8815 RAL (AGC) — Терракотовый",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#a4513d",
+      "matte": true,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Матовое по лицу окрашенное стекло 4 мм. Формат листа 3210 × 2250 мм. Наличие уточняйте у менеджера. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "source": {
+        "url": "https://alfaglass.ru/materialy/matelac-8815-agc/",
+        "evidence": "Saved ALFAGLASS material catalogue, 4 mm."
+      },
+      "visualizationNote": "Цвет на экране приблизительный. Точный оттенок согласуется по образцу."
+    },
+    {
+      "id": "matelac-9005-agc__standard",
+      "slug": "matelac-9005-agc",
+      "variant": "standard",
+      "title": "Мателак 9005 RAL (AGC) — Чёрный классический",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#141619",
+      "matte": true,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Матовое по лицу окрашенное стекло 4 мм. Формат листа 3210 × 2250 мм. Наличие уточняйте у менеджера. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "source": {
+        "url": "https://alfaglass.ru/materialy/matelac-9005-agc/",
+        "evidence": "Saved ALFAGLASS material catalogue, 4 mm."
+      },
+      "visualizationNote": "Цвет на экране приблизительный. Точный оттенок согласуется по образцу."
+    },
+    {
+      "id": "matelac-9006-agc__standard",
+      "slug": "matelac-9006-agc",
+      "variant": "standard",
+      "title": "Мателак 9006 RAL (AGC) — Серый металлик",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#a6aaa9",
+      "matte": true,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Матовое по лицу окрашенное стекло 4 мм. Формат листа 3210 × 2250 мм. Наличие уточняйте у менеджера. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "source": {
+        "url": "https://alfaglass.ru/materialy/matelac-9006-agc/",
+        "evidence": "Saved ALFAGLASS material catalogue, 4 mm."
+      },
+      "visualizationNote": "Цвет на экране приблизительный. Точный оттенок согласуется по образцу."
+    },
+    {
+      "id": "matelac-9010-agc__standard",
+      "slug": "matelac-9010-agc",
+      "variant": "standard",
+      "title": "Мателак 9010 RAL (AGC) — Белый неяркий",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#e9e8da",
+      "matte": true,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Матовое по лицу окрашенное стекло 4 мм. Формат листа 3210 × 2250 мм.  Акция. Условия уточняйте у менеджера. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "source": {
+        "url": "https://alfaglass.ru/materialy/matelac-9010-agc/",
+        "evidence": "Saved ALFAGLASS material catalogue, 4 mm."
+      },
+      "visualizationNote": "Цвет на экране приблизительный. Точный оттенок согласуется по образцу."
+    },
+    {
+      "id": "matelac-1236-agc__standard",
+      "slug": "matelac-1236-agc",
+      "variant": "standard",
+      "title": "Мателак 1236 REF (AGC) — Коричневый светлый",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#b4a18c",
+      "matte": true,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Матовое по лицу окрашенное стекло 4 мм. Формат листа 3210 × 2250 мм. Наличие уточняйте у менеджера. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "source": {
+        "url": "https://alfaglass.ru/materialy/matelac-1236-agc/",
+        "evidence": "Saved ALFAGLASS material catalogue, 4 mm."
+      },
+      "visualizationNote": "Цвет на экране приблизительный. Точный оттенок согласуется по образцу."
+    },
+    {
+      "id": "matelac-7000-agc__standard",
+      "slug": "matelac-7000-agc",
+      "variant": "standard",
+      "title": "Мателак 7000 REF (AGC) — Серо-голубой",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#788d98",
+      "matte": true,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Матовое по лицу окрашенное стекло 4 мм. Формат листа 3210 × 2250 мм. Наличие уточняйте у менеджера. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "source": {
+        "url": "https://alfaglass.ru/materialy/matelac-7000-agc/",
+        "evidence": "Saved ALFAGLASS material catalogue, 4 mm."
+      },
+      "visualizationNote": "Цвет на экране приблизительный. Точный оттенок согласуется по образцу."
+    },
+    {
+      "id": "matelac-7013-agc__standard",
+      "slug": "matelac-7013-agc",
+      "variant": "standard",
+      "title": "Мателак 7013 REF (AGC) — Натуральный коричневый",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#60594d",
+      "matte": true,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Матовое по лицу окрашенное стекло 4 мм. Формат листа 3210 × 2250 мм.  Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "source": {
+        "url": "https://alfaglass.ru/materialy/matelac-7013-agc/",
+        "evidence": "Saved ALFAGLASS material catalogue, 4 mm."
+      },
+      "visualizationNote": "Цвет на экране приблизительный. Точный оттенок согласуется по образцу."
+    },
+    {
+      "id": "matelac-1013-poland__standard",
+      "slug": "matelac-1013-poland",
+      "variant": "standard",
+      "title": "Мателак 1013 RAL (Польша) — Жемчужный бежевый",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#e7dfcb",
+      "matte": true,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Матовое по лицу окрашенное стекло 4 мм. Формат листа 3210 × 2250 мм. Наличие уточняйте у менеджера. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "source": {
+        "url": "https://alfaglass.ru/materialy/matelac-1013-poland/",
+        "evidence": "Saved ALFAGLASS material catalogue, 4 mm."
+      },
+      "visualizationNote": "Цвет на экране приблизительный. Точный оттенок согласуется по образцу."
+    },
+    {
+      "id": "matelac-9003__standard",
+      "slug": "matelac-9003",
+      "variant": "standard",
+      "title": "Мателак 9003 RAL — Ярко-белый",
+      "thickness": 4,
+      "mirror": false,
+      "opaque": true,
+      "color": "#f7f8f4",
+      "matte": true,
+      "pitch": null,
+      "pattern": null,
+      "texturePending": false,
+      "note": "Матовое по лицу окрашенное стекло 4 мм. Формат листа 3210 × 2250 мм.  Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+      "source": {
+        "url": "https://alfaglass.ru/materialy/matelac-9003/",
+        "evidence": "Saved ALFAGLASS material catalogue, 4 mm."
+      },
+      "visualizationNote": "Цвет на экране приблизительный. Точный оттенок согласуется по образцу."
+    }
+  ],
+  "confirmationSource": "../../../docs/material-confirmations.json",
+  "excludedByOwner": [
+    "steklo-osvetlyonnoe-clearvision"
+  ]
+}

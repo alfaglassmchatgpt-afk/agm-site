@@ -1,5 +1,10 @@
 # Инвентаризация 2026-09-21
 
+## Production Aluminium — 2026-10-22
+
+Опубликованы `/aluminium/`, `/aluminium/fasady/`, `/aluminium/peregorodki/`; общий шаблон `page-agm-aluminium.php`, контент/ресурсы `agm-aluminium-catalog`, фасадный 3D-подбор `agm-aluminium-configurator`. Библиотека Three.js и изображения развёрнуты выборочно из проверенного локального макета, бинарные файлы вне Git. Разработка остаётся локальной, автоматического развёртывания нет. Копия перед публикацией: `aluminium-20261022-delta`, зависимая от `backsplash-20261019`.
+
+
 ## Локальный каталог Aluminium — 2026-10-22
 
 Исходники: `src/prototypes/aluminium-catalog`; просмотр: `http://127.0.0.1:8785/`, рабочие файлы и ранее согласованные изображения в `.local/aluminium-catalog`. Статический сервер привязан только к loopback. Конфигуратор фасадов — порт 8775. Production не менялся.
