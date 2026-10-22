@@ -250,5 +250,16 @@
     "storage": "/var/backups/agm-site",
     "first_verified": "backup-20260921T111239Z",
     "restore_test_tables": 38
+  },
+  "localAluminiumCatalog": {
+    "source": "src/prototypes/aluminium-catalog",
+    "preview": "http://127.0.0.1:8785/",
+    "status": "local-draft",
+    "pages": [
+      "index.html",
+      "facades.html",
+      "partitions.html"
+    ],
+    "media": "Existing approved images retained locally; not included in public repository."
   }
 }
