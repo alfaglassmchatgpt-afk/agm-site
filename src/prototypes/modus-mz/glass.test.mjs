@@ -172,3 +172,5 @@ test('satin contact mask retains centre blur and follows physical rail overlap',
   assert.ok(pixel(Math.floor(30/w*n))<60);assert.equal(pixel(Math.ceil(45/w*n)),255);map.dispose();
  }
 });
+
+test('metre scene converts optical distances while facade defaults remain millimetres',()=>{const item=catalog.items.find(x=>x.slug==='float-steklo-clear-m1');const renderer={capabilities:{getMaxAnisotropy:()=>8}};const mm=glassMaterial(item,800,2200,'vertical',renderer);const metre=glassMaterial(item,800,2200,'vertical',renderer,0,.001);assert.equal(mm.thickness,4);assert.equal(metre.thickness,.004);assert.equal(metre.attenuationDistance,mm.attenuationDistance*.001);mm.dispose();metre.dispose();});

@@ -222,10 +222,11 @@ function kathedralNormalTexture(width,height,aqualite=false,krepi=false){
  const map=new T.DataTexture(bytes,n,n);map.wrapS=map.wrapT=T.RepeatWrapping;
  map.repeat.set(width/100,height/150);map.minFilter=T.LinearMipmapLinearFilter;map.magFilter=T.LinearFilter;map.generateMipmaps=true;map.needsUpdate=true;return map;
 }
-function raywallRefraction(mat,width,height,overlap,pitch,direction,grid=false){
+function raywallRefraction(mat,width,height,overlap,pitch,direction,grid=false,unitScale=1){
   // Screen-space approximation of the air gap to objects behind the glass.
   // Does not change the 4 mm slab or its absorption distance. Not ray tracing.
   mat.onBeforeCompile=shader=>{
+    shader.uniforms.ribWorldScale={value:unitScale};
     shader.uniforms.ribPanelSize={value:new T.Vector2(width,height)};
     shader.uniforms.ribContact={value:Math.max(0,overlap)};
     shader.uniforms.ribCycles={value:pitch>0?(direction==='horizontal'?height:width)/pitch:0};
@@ -235,7 +236,7 @@ function raywallRefraction(mat,width,height,overlap,pitch,direction,grid=false){
     shader.vertexShader=shader.vertexShader.replace('#include <common>','#include <common>\nvarying vec2 ribUv;')
       .replace('#include <begin_vertex>','#include <begin_vertex>\nribUv = uv;');
     shader.fragmentShader=shader.fragmentShader.replace('#include <common>',
-      '#include <common>\nvarying vec2 ribUv;\nuniform vec2 ribPanelSize;\nuniform float ribContact;\nuniform float ribCycles;\nuniform float ribHorizontal;\nuniform vec2 cellCycles;\nuniform float gridRelief;');
+      '#include <common>\nvarying vec2 ribUv;\nuniform float ribWorldScale;\nuniform vec2 ribPanelSize;\nuniform float ribContact;\nuniform float ribCycles;\nuniform float ribHorizontal;\nuniform vec2 cellCycles;\nuniform float gridRelief;');
     const chunk=T.ShaderChunk.transmission_pars_fragment.replaceAll(
       'vec3 refractedRayExit = position + transmissionRay;',
       `vec3 flatNormal = normalize(mat3(modelMatrix) * vec3(0.0,0.0,1.0));
@@ -247,10 +248,10 @@ function raywallRefraction(mat,width,height,overlap,pitch,direction,grid=false){
        float viewFade = smoothstep(0.15,0.65,abs(dot(flatNormal,v)));
        vec2 edgeDistance = min(ribUv,1.0-ribUv)*ribPanelSize;
        float contactFade = smoothstep(ribContact+2.0,ribContact+12.0,min(edgeDistance.x,edgeDistance.y));
-       vec3 offset = (transmissionRay + deviation * 75.0 * viewFade) * contactFade;
+       vec3 offset = (transmissionRay + deviation * (75.0 * ribWorldScale) * viewFade) * contactFade;
        // Do not sample the bright metal rail from the clear opening or smear its edge.
        vec2 safeTravel = max(edgeDistance-vec2(ribContact+1.5),vec2(0.0));
-       offset.xy = clamp(offset.xy,-safeTravel,safeTravel);
+       offset.xy = clamp(offset.xy,-safeTravel*ribWorldScale,safeTravel*ribWorldScale);
        vec3 refractedRayExit = position + offset;`
     );
     shader.fragmentShader=shader.fragmentShader.replace('#include <transmission_pars_fragment>',chunk.replaceAll('getTransmissionSample( refractionCoords, roughness,', 'getTransmissionSample( refractionCoords, roughness * contactFade,'));
@@ -323,7 +324,7 @@ export const stopsolGlassOptics={
  'stopsol-phoenix-bronze':{attenuation:'#b3916d',distance:10,edge:'#63503a',coating:'#c7ad91'},
  'stopsol-phoenix-gray':{attenuation:'#949b9f',distance:8,edge:'#53585a',coating:'#aeb6bb'}
 };
-export function glassMaterial(item,width,height,direction,renderer,contactOverlap=0){
+export function glassMaterial(item,width,height,direction,renderer,contactOverlap=0,unitScale=1){
   const mat=new T.MeshPhysicalMaterial({
     color:item.color,metalness:item.mirror?1:0,roughness:item.mirror?.055:item.matte?.38:.055,
     transmission:item.mirror||item.opaque?0:1,thickness:4,ior:1.5,envMapIntensity:item.mirror?1.25:1,
@@ -462,7 +463,7 @@ export function glassMaterial(item,width,height,direction,renderer,contactOverla
   if(reedSlugs.includes(item.slug)||['krezet','diamant','gothic','kathedral-klein','kathedralaqualite','krepi','silvit','monumental-atlantic','hithicross'].includes(item.slug)){
     // One contact treatment for the entire category. Unknown relief remains unmodelled.
     if(!moruOptics[item.slug]?.coating){mat.envMapIntensity=0;mat.specularIntensity=0;mat.clearcoat=0;}
-    raywallRefraction(mat,width,height,contactOverlap,item.pitch,direction,item.slug==='hithicross'?2:item.slug==='krezet');
+    raywallRefraction(mat,width,height,contactOverlap,item.pitch,direction,item.slug==='hithicross'?2:item.slug==='krezet',unitScale);
     if(item.slug==='silvit'){
       const compile=mat.onBeforeCompile;
       mat.onBeforeCompile=shader=>{
@@ -477,6 +478,8 @@ export function glassMaterial(item,width,height,direction,renderer,contactOverla
       mat.customProgramCacheKey=()=> 'silvit-photo-veins-v2';
     }
   }
+  // Optical distances are authored in millimetres; consumers may use metres.
+  mat.thickness*=unitScale;mat.attenuationDistance*=unitScale;
   return mat;
 }
 export function glassEdgeMaterial(item,face){
