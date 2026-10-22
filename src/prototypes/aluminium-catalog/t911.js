@@ -7,17 +7,18 @@ function box(w,h,z,color,x,y,depth,opacity=1){const material=new THREE.MeshStand
 function release(){if(!assembly)return;assembly.traverse(o=>{o.geometry?.dispose();o.material?.dispose();});scene.remove(assembly);}
 function rebuild(){
  try{d=dimensions(Number($('opening-width').value),Number($('opening-height').value));}catch(e){$('partition-warning').textContent='Введите целые размеры: ширина 2400–4759 мм, высота 1000–4000 мм. Показана последняя корректная модель.';return;}
+ const select=$('partition-glass');
+ for(const option of select.options){if(!option.value)continue;const m=materials.find(x=>x.id===option.value);const result=checkGlassSize(d.glassWidth,d.glassHeight,limits[m.slug]);option.disabled=result.status==='exceeded';option.textContent=m.title+(option.disabled?' — не подходит по размеру':'');}
+ if(select.selectedOptions[0]?.disabled)select.value='';
  release();assembly=new THREE.Group();scene.add(assembly);movers=[];
  const c=$('partition-color').value,glass=materials.find(m=>m.id===$('partition-glass').value)||{color:'#b9d8df'},w=d.door/1000,h=d.height/1000,B=d.b/1000;
- function panel(x,z,moving){const g=new THREE.Group();g.position.set(x,0,z);g.add(box(w-.041,h-.05,.004,glass.color||'#c5dce0',0,h/2+.01,0,/lacobel|matelac/i.test(glass.id)?1:glass.matte?.65:.32));for(const side of [-1,1])g.add(box(.0205,h,.04,c,side*(w/2-.01025),h/2+.01,0));for(const y of [.0225,h-.0025])g.add(box(w,.025,.04,c,0,y,0));assembly.add(g);if(moving)movers.push(g);return g;}
+ function panel(x,z,moving){const g=new THREE.Group();g.position.set(x,0,z);if(glass.slug)g.add(box(w-.041,h-.05,.004,glass.color||'#c5dce0',0,h/2+.01,0,/lacobel|matelac/i.test(glass.id)?1:glass.matte?.65:.32));for(const side of [-1,1])g.add(box(.0205,h,.04,c,side*(w/2-.01025),h/2+.01,0));for(const y of [.0225,h-.0025])g.add(box(w,.025,.04,c,0,y,0));assembly.add(g);if(moving)movers.push(g);return g;}
  panel(-B/2+w/2,-.05,false);panel(B/2-w/2,-.05,false);panel(-w/2,0,true);panel(w/2,0,true);
  assembly.add(box(B,.055,.11,c,0,d.h/1000-.0275,-.025));
  for(const side of [-1,1])assembly.add(box(.025,.015,.035,'#555555',side*(B/2-w+.03),.0075,0));
  $('partition-warning').textContent=Math.abs(d.ratio-2.5)>.15?'Пропорция двери '+d.ratio.toFixed(2)+':1. Рекомендация каталога — 2,5:1; габариты согласуем отдельно.':'Размеры в диапазоне макета. Массу полного полотна и комплектацию нужно проверить перед изготовлением.';
  $('partition-dimensions').textContent=`Дверь: ${d.door} × ${d.height} мм · Стекло: ${d.glassWidth} × ${d.glassHeight} мм · Максимальный проход: ${d.passage} мм`;
- const sizeCheck=checkGlassSize(d.glassWidth,d.glassHeight,limits[glass.slug]);$('glass-size-status').textContent=sizeCheck.message;$('glass-size-status').dataset.state=sizeCheck.status;
- for(const option of $('partition-glass').options){const m=materials.find(x=>x.id===option.value);const result=checkGlassSize(d.glassWidth,d.glassHeight,limits[m.slug]);option.textContent=m.title+(result.status==='exceeded'?' — не подходит по размеру':result.status==='unknown'?' — размер уточнить':'');}
- if(glass.slug)$('glass-link').href='https://alfaglass.ru/materialy/'+glass.slug+'/';
+ $('glass-link').hidden=!glass.slug;if(glass.slug)$('glass-link').href='https://alfaglass.ru/materialy/'+glass.slug+'/';
  controls.target.set(0,h/2,0);camera.position.set(B*.65,h*.7,B*1.25);controls.update();update();
 }
 function update(){if(!d)return;const w=d.door/1000,travel=d.travel/1000*progress; movers[0].position.x=-w/2-travel;movers[1].position.x=w/2+travel;
@@ -25,13 +26,13 @@ function update(){if(!d)return;const w=d.door/1000,travel=d.travel/1000*progress
  const B=d.b,W=d.door,T=d.travel*progress; $('partition-scheme').innerHTML=`<svg viewBox="0 0 ${B} 260" role="img" aria-label="Вид сверху: крайние полотна неподвижны"><g fill="#c1d9de" stroke="#425a65" stroke-width="8"><rect x="0" y="40" width="${W}" height="40"/><rect x="${B-W}" y="40" width="${W}" height="40"/></g><g fill="#08799d"><rect x="${B/2-W-T}" y="110" width="${W}" height="40"/><rect x="${B/2+T}" y="110" width="${W}" height="40"/></g></svg>`;
 }
 async function init(){try{
- const response=await fetch('./glass-catalog.json');if(!response.ok)throw Error('Каталог недоступен');materials=(await response.json()).items.filter(partitionMaterialAllowed);$('partition-glass').replaceChildren(...materials.map(x=>new Option(x.title,x.id)));
+ const response=await fetch('./glass-catalog.json');if(!response.ok)throw Error('Каталог недоступен');materials=(await response.json()).items.filter(partitionMaterialAllowed);$('partition-glass').replaceChildren(new Option('Выберите подходящее стекло',''),...materials.map(x=>new Option(x.title,x.id)));
  const clear=materials.find(x=>x.title==='Стекло обычное М1');if(clear)$('partition-glass').value=clear.id;
  const limitResponse=await fetch('./glass-limits.json');if(!limitResponse.ok)throw Error('Размеры материалов недоступны');limits=await limitResponse.json();
  scene=new THREE.Scene();scene.background=new THREE.Color('#eef3f5');camera=new THREE.PerspectiveCamera(38,1,.01,100);renderer=new THREE.WebGLRenderer({antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));view.append(renderer.domElement);controls=new OrbitControls(camera,renderer.domElement);controls.minDistance=1;controls.maxDistance=18;
  scene.add(new THREE.HemisphereLight(0xffffff,0x83949a,3));const light=new THREE.DirectionalLight(0xffffff,2);light.position.set(2,5,4);scene.add(light);const floor=box(20,.015,20,'#d0c7b6',0,-.02,0);scene.add(floor);const grid=new THREE.GridHelper(10,20,0xb1a690,0xc3baa9);grid.position.y=-.011;scene.add(grid);
  new ResizeObserver(()=>{const {width,height}=view.getBoundingClientRect();renderer.setSize(width,height);camera.aspect=width/height;camera.updateProjectionMatrix();}).observe(view);
- for(const id of ['opening-width','opening-height','partition-color','partition-glass'])$(id).addEventListener('change',()=>{animating=false;rebuild();});
+ for(const id of ['opening-width','opening-height','partition-color','partition-glass'])$(id).addEventListener(id.startsWith('opening-')?'input':'change',()=>{animating=false;rebuild();});
  $('opening-progress').addEventListener('input',e=>{animating=false;progress=Number(e.target.value)/100;update();});
  $('animate-door').onclick=()=>{target=animating?1-target:progress>.5?0:1;animating=true;};
  $('front-view').onclick=()=>{camera.position.set(0,d.height/2000,d.b/1000*1.6);controls.target.set(0,d.height/2000,0);controls.update();};
