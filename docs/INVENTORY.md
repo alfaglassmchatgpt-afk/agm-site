@@ -1,5 +1,9 @@
 # Инвентаризация 2026-09-21
 
+## Production: форма Aluminium — 2026-10-22
+
+Добавлен MU-плагин `agm-aluminium-request.php`, REST `/wp-json/agm-aluminium/v1/request` и форма `agm-aluminium-catalog/al-request.{html,js}`. Только запросы по фасадам, перегородкам и зеркалам в алюминии. Используется wp_mail; прежняя dev-ВМ не задействована.
+
 ## Production Aluminium — 2026-10-22
 
 Опубликованы `/aluminium/`, `/aluminium/fasady/`, `/aluminium/peregorodki/`; общий шаблон `page-agm-aluminium.php`, контент/ресурсы `agm-aluminium-catalog`, фасадный 3D-подбор `agm-aluminium-configurator`. Библиотека Three.js и изображения развёрнуты выборочно из проверенного локального макета, бинарные файлы вне Git. Разработка остаётся локальной, автоматического развёртывания нет. Копия перед публикацией: `aluminium-20261022-delta`, зависимая от `backsplash-20261019`.

@@ -277,5 +277,13 @@
     "development": "local-only",
     "automaticDeployment": false,
     "projectSubmissionEnabled": false
+  },
+  "productionAluminiumEnquiries": {
+    "updated": "2026-10-22",
+    "muPlugin": "agm-aluminium-request.php",
+    "endpoint": "/wp-json/agm-aluminium/v1/request",
+    "transport": "wp_mail",
+    "stagingDisabled": true,
+    "deliveryTest": "intercepted without sending email"
   }
 }

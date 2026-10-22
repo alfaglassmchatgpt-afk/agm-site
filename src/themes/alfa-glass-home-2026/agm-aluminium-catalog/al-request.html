@@ -1,0 +1,14 @@
+<dialog id="al-request" aria-labelledby="al-request-title">
+<button type="button" class="al-request-close" aria-label="Закрыть форму">×</button>
+<p class="eyebrow">ALFAGLASS · ALUMINIUM</p><h2 id="al-request-title">Рассчитаем ваш проект</h2>
+<p>Фасады, перегородки и зеркала в алюминиевой раме — по вашим размерам.</p>
+<form id="al-request-form">
+<label>Изделие<select name="product" required><option value="">Выберите изделие</option><option value="facades">Фасады в алюминиевом профиле</option><option value="partitions">Перегородки в алюминиевом профиле</option><option value="mirrors">Зеркала в алюминиевой раме</option></select></label>
+<label>Размеры и количество<input name="dimensions" maxlength="300" placeholder="Например: 600 × 900 мм, 4 шт."></label>
+<div class="al-form-grid"><label>Ваше имя<input name="name" required maxlength="100" autocomplete="name"></label><label>Телефон<input name="phone" type="tel" required autocomplete="tel" placeholder="+7 (999) 999-99-99"></label></div>
+<label>Email — по желанию<input name="email" type="email" maxlength="160" autocomplete="email"></label>
+<label>Комментарий<textarea name="comment" rows="3" maxlength="3000" placeholder="Профиль, цвет, заполнение и пожелания к проекту"></textarea></label>
+<div class="al-form-trap" aria-hidden="true"><label>Сайт<input name="website" tabindex="-1" autocomplete="off"></label></div>
+<label class="al-form-consent"><input type="checkbox" name="consent" value="1" required><span>Даю согласие на обработку персональных данных на условиях <a href="/privacy-policy/" target="_blank" rel="noopener">политики конфиденциальности</a>.</span></label>
+<button type="submit" class="button">Отправить запрос</button><p class="al-form-status" role="status" aria-live="polite"></p>
+</form></dialog>

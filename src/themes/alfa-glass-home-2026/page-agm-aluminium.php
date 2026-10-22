@@ -18,7 +18,13 @@ if($slug==='aluminium'){
  preg_match_all('~<symbol[^>]*id="([^"]+)"[^>]*>(.*?)</symbol>~s',$sprite[0]??'',$symbols,PREG_SET_ORDER);
  $icons=[];foreach($symbols as $symbol)$icons[$symbol[1]]=$symbol[2];
  $shell=preg_replace_callback('~<use[^>]*href="[^"]*#([^"]+)"[^>]*(?:/>|></use>)~',function($m)use($icons){return $icons[$m[1]]??$m[0];},$shell);
+ $links='<a class="al-link" href="/aluminium/">ALUM<span>INIUM</span></a><a href="/aluminium/fasady/">Фасады</a><a href="/aluminium/peregorodki/">Перегородки</a><a href="/aluminium/#al-mirrors">Зеркала в раме</a><a href="/aluminium/#al-request" data-al-request>Получить расчёт</a>';
+ $shell=preg_replace_callback('~<nav\b[^>]*>.*?</nav>~s',function($m)use($links){preg_match('~<nav\b[^>]*>~',$m[0],$opening);return $opening[0].$links.'</nav>';},$shell);
+ $shell=preg_replace('~<button[^>]*class="[^"]*asr-trigger[^" ]*"[^>]*>.*?</button>~s','',$shell);
+ $shell=str_replace('href="'.esc_url(home_url('/')).'#request"','href="/aluminium/#al-request" data-al-request',$shell);
  $html=preg_replace_callback('~<header class="site-header">.*?</header>~s',function()use($shell){return $shell;},$html,1);
+ $form=file_get_contents(get_template_directory().'/agm-aluminium-catalog/al-request.html');
+ $html=str_replace('</body>',$form.'</body>',$html);
  $html=str_replace('</body>','<dialog id="al-search-dialog"><form action="/" method="get"><label>Поиск по сайту <input name="s" type="search" required></label><button class="button" type="submit">Найти</button><button id="al-search-close" type="button">Закрыть</button></form></dialog></body>',$html);
 }
 ob_start();wp_head();$head=ob_get_clean();
