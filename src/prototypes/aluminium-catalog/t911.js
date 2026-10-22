@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 import {OrbitControls} from './vendor/OrbitControls.js';
-import {dimensions} from './t911-rules.mjs';
+import {dimensions,partitionMaterialAllowed,checkGlassSize} from './t911-rules.mjs';
 const $=id=>document.getElementById(id),view=$('partition-view');
-let scene,camera,renderer,controls,assembly,movers=[],d,materials=[],progress=0,target=0,animating=false,last=0;
+let scene,camera,renderer,controls,assembly,movers=[],d,materials=[],limits={},progress=0,target=0,animating=false,last=0;
 function box(w,h,z,color,x,y,depth,opacity=1){const material=new THREE.MeshStandardMaterial({color,roughness:.62,metalness:opacity===1?.18:0,transparent:opacity<1,opacity,depthWrite:opacity===1});const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,z),material);m.position.set(x,y,depth);return m;}
 function release(){if(!assembly)return;assembly.traverse(o=>{o.geometry?.dispose();o.material?.dispose();});scene.remove(assembly);}
 function rebuild(){
@@ -15,6 +15,8 @@ function rebuild(){
  for(const side of [-1,1])assembly.add(box(.025,.015,.035,'#555555',side*(B/2-w+.03),.0075,0));
  $('partition-warning').textContent=Math.abs(d.ratio-2.5)>.15?'Пропорция двери '+d.ratio.toFixed(2)+':1. Рекомендация каталога — 2,5:1; габариты согласуем отдельно.':'Размеры в диапазоне макета. Массу полного полотна и комплектацию нужно проверить перед изготовлением.';
  $('partition-dimensions').textContent=`Дверь: ${d.door} × ${d.height} мм · Стекло: ${d.glassWidth} × ${d.glassHeight} мм · Максимальный проход: ${d.passage} мм`;
+ const sizeCheck=checkGlassSize(d.glassWidth,d.glassHeight,limits[glass.slug]);$('glass-size-status').textContent=sizeCheck.message;$('glass-size-status').dataset.state=sizeCheck.status;
+ for(const option of $('partition-glass').options){const m=materials.find(x=>x.id===option.value);const result=checkGlassSize(d.glassWidth,d.glassHeight,limits[m.slug]);option.textContent=m.title+(result.status==='exceeded'?' — не подходит по размеру':result.status==='unknown'?' — размер уточнить':'');}
  if(glass.slug)$('glass-link').href='https://alfaglass.ru/materialy/'+glass.slug+'/';
  controls.target.set(0,h/2,0);camera.position.set(B*.65,h*.7,B*1.25);controls.update();update();
 }
@@ -23,8 +25,9 @@ function update(){if(!d)return;const w=d.door/1000,travel=d.travel/1000*progress
  const B=d.b,W=d.door,T=d.travel*progress; $('partition-scheme').innerHTML=`<svg viewBox="0 0 ${B} 260" role="img" aria-label="Вид сверху: крайние полотна неподвижны"><g fill="#c1d9de" stroke="#425a65" stroke-width="8"><rect x="0" y="40" width="${W}" height="40"/><rect x="${B-W}" y="40" width="${W}" height="40"/></g><g fill="#08799d"><rect x="${B/2-W-T}" y="110" width="${W}" height="40"/><rect x="${B/2+T}" y="110" width="${W}" height="40"/></g></svg>`;
 }
 async function init(){try{
- const response=await fetch('./glass-catalog.json');if(!response.ok)throw Error('Каталог недоступен');materials=(await response.json()).items.filter(x=>!x.mirror&&x.thickness===4);$('partition-glass').replaceChildren(...materials.map(x=>new Option(x.title,x.id)));
+ const response=await fetch('./glass-catalog.json');if(!response.ok)throw Error('Каталог недоступен');materials=(await response.json()).items.filter(partitionMaterialAllowed);$('partition-glass').replaceChildren(...materials.map(x=>new Option(x.title,x.id)));
  const clear=materials.find(x=>x.title==='Стекло обычное М1');if(clear)$('partition-glass').value=clear.id;
+ const limitResponse=await fetch('./glass-limits.json');if(!limitResponse.ok)throw Error('Размеры материалов недоступны');limits=await limitResponse.json();
  scene=new THREE.Scene();scene.background=new THREE.Color('#eef3f5');camera=new THREE.PerspectiveCamera(38,1,.01,100);renderer=new THREE.WebGLRenderer({antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));view.append(renderer.domElement);controls=new OrbitControls(camera,renderer.domElement);controls.minDistance=1;controls.maxDistance=18;
  scene.add(new THREE.HemisphereLight(0xffffff,0x83949a,3));const light=new THREE.DirectionalLight(0xffffff,2);light.position.set(2,5,4);scene.add(light);const floor=box(20,.015,20,'#d0c7b6',0,-.02,0);scene.add(floor);const grid=new THREE.GridHelper(10,20,0xb1a690,0xc3baa9);grid.position.y=-.011;scene.add(grid);
  new ResizeObserver(()=>{const {width,height}=view.getBoundingClientRect();renderer.setSize(width,height);camera.aspect=width/height;camera.updateProjectionMatrix();}).observe(view);

@@ -1,0 +1,592 @@
+{
+  "riflenoe-steklo-flutes": {
+    "formats": [
+      [
+        3350,
+        1610
+      ],
+      [
+        2540,
+        1610
+      ]
+    ],
+    "source": "https://alfaglass.ru/materialy/riflenoe-steklo-flutes/",
+    "checked": "2026-10-22",
+    "orientation": "unspecified",
+    "evidence": "Форматы листа 3350 × 1610 мм; 2540 × 1610 мм "
+  },
+  "raywall90": {
+    "formats": [
+      [
+        3350,
+        1850
+      ]
+    ],
+    "source": "https://alfaglass.ru/materialy/raywall90/",
+    "checked": "2026-10-22",
+    "orientation": "unspecified",
+    "evidence": "Размеры 3350 × 1850 мм "
+  },
+  "raywall": {
+    "formats": [
+      [
+        3350,
+        1850
+      ]
+    ],
+    "source": "https://alfaglass.ru/materialy/raywall/",
+    "checked": "2026-10-22",
+    "orientation": "unspecified",
+    "evidence": "Размеры 3350*1850 мм "
+  },
+  "vison-sun": {
+    "formats": [
+      [
+        3300,
+        2100
+      ]
+    ],
+    "source": "https://alfaglass.ru/materialy/vison-sun/",
+    "checked": "2026-10-22",
+    "orientation": "unspecified",
+    "evidence": "Формат листа 3300 × 2100 мм "
+  },
+  "flutes-moru-bronze": {
+    "formats": [
+      [
+        2440,
+        1830
+      ],
+      [
+        2440,
+        1850
+      ],
+      [
+        3300,
+        2000
+      ]
+    ],
+    "source": "https://alfaglass.ru/materialy/flutes-moru-bronze/",
+    "checked": "2026-10-22",
+    "orientation": "unspecified",
+    "evidence": "Размеры 2440*1830; 2440*1850; 3300*2000 мм "
+  },
+  "flutes-moru-ultra": {
+    "formats": [
+      [
+        2440,
+        2000
+      ],
+      [
+        3300,
+        2000
+      ]
+    ],
+    "source": "https://alfaglass.ru/materialy/flutes-moru-ultra/",
+    "checked": "2026-10-22",
+    "orientation": "unspecified",
+    "evidence": "Размеры 2440*2000; 3300*2000 мм "
+  },
+  "flutes-moru-grey": {
+    "formats": [
+      [
+        2440,
+        1830
+      ],
+      [
+        2440,
+        1850
+      ],
+      [
+        3300,
+        2000
+      ]
+    ],
+    "source": "https://alfaglass.ru/materialy/flutes-moru-grey/",
+    "checked": "2026-10-22",
+    "orientation": "unspecified",
+    "evidence": "Размеры 2440*1830; 2440*1850; 3300*2000 мм "
+  },
+  "flutes-moru-ultra-mat": {
+    "formats": [
+      [
+        3300,
+        2100
+      ]
+    ],
+    "source": "https://alfaglass.ru/materialy/flutes-moru-ultra-mat/",
+    "checked": "2026-10-22",
+    "orientation": "unspecified",
+    "evidence": "Форматы листа 3300 × 2100 мм "
+  },
+  "moru-bronze-mat": {
+    "formats": [
+      [
+        3210,
+        2250
+      ]
+    ],
+    "source": "https://alfaglass.ru/materialy/moru-bronze-mat/",
+    "checked": "2026-10-22",
+    "orientation": "unspecified",
+    "evidence": "Формат листа 3210 × 2250 мм"
+  },
+  "moru-grey-mat": {
+    "formats": [
+      [
+        3210,
+        2250
+      ]
+    ],
+    "source": "https://alfaglass.ru/materialy/moru-grey-mat/",
+    "checked": "2026-10-22",
+    "orientation": "unspecified",
+    "evidence": "Формат листа 3210 × 2250 мм"
+  },
+  "moru-dark-grey-mat": {
+    "formats": [
+      [
+        3210,
+        2250
+      ]
+    ],
+    "source": "https://alfaglass.ru/materialy/moru-dark-grey-mat/",
+    "checked": "2026-10-22",
+    "orientation": "unspecified",
+    "evidence": "Размеры 3210*2250 мм "
+  },
+  "tonirovannoe-steklo-grey": {
+    "formats": [
+      [
+        3210,
+        2250
+      ]
+    ],
+    "source": "https://alfaglass.ru/materialy/tonirovannoe-steklo-grey/",
+    "checked": "2026-10-22",
+    "orientation": "unspecified",
+    "evidence": "Формат листа 3210 × 2250 мм"
+  },
+  "moru-dark-grey": {
+    "formats": [
+      [
+        3210,
+        2250
+      ]
+    ],
+    "source": "https://alfaglass.ru/materialy/moru-dark-grey/",
+    "checked": "2026-10-22",
+    "orientation": "unspecified",
+    "evidence": "Формат листа 3210 × 2250 мм"
+  },
+  "moru-bronze": {
+    "formats": [
+      [
+        3210,
+        2250
+      ]
+    ],
+    "source": "https://alfaglass.ru/materialy/moru-bronze/",
+    "checked": "2026-10-22",
+    "orientation": "unspecified",
+    "evidence": "Формат листа 3210 × 2250 мм"
+  },
+  "diamant": {
+    "formats": [
+      [
+        2000,
+        1600
+      ]
+    ],
+    "source": "https://alfaglass.ru/materialy/diamant/",
+    "checked": "2026-10-22",
+    "orientation": "unspecified",
+    "evidence": "Формат листа 2000 × 1600 мм "
+  },
+  "hithicross": {
+    "formats": [
+      [
+        2440,
+        1830
+      ],
+      [
+        2440,
+        2000
+      ]
+    ],
+    "source": "https://alfaglass.ru/materialy/hithicross/",
+    "checked": "2026-10-22",
+    "orientation": "unspecified",
+    "evidence": "Размеры 2440 × 1830 и 2440 × 2000 мм "
+  },
+  "gothic": {
+    "formats": [
+      [
+        3210,
+        2250
+      ]
+    ],
+    "source": "https://alfaglass.ru/materialy/gothic/",
+    "checked": "2026-10-22",
+    "orientation": "unspecified",
+    "evidence": "Формат листа 3210 × 2250 мм "
+  },
+  "silvit": {
+    "formats": [
+      [
+        3300,
+        2000
+      ],
+      [
+        2160,
+        1420
+      ]
+    ],
+    "source": "https://alfaglass.ru/materialy/silvit/",
+    "checked": "2026-10-22",
+    "orientation": "unspecified",
+    "evidence": "Формат листа 3300 × 2000 и 2160 × 1420 мм "
+  },
+  "kathedral-klein": {
+    "formats": [
+      [
+        3300,
+        2100
+      ],
+      [
+        2440,
+        1830
+      ]
+    ],
+    "source": "https://alfaglass.ru/materialy/kathedral-klein/",
+    "checked": "2026-10-22",
+    "orientation": "unspecified",
+    "evidence": "Форматы листа 3300 × 2100 и 2440 × 1830 мм "
+  },
+  "monumental-atlantic": {
+    "formats": [
+      [
+        2160,
+        1650
+      ]
+    ],
+    "source": "https://alfaglass.ru/materialy/monumental-atlantic/",
+    "checked": "2026-10-22",
+    "orientation": "unspecified",
+    "evidence": "Формат листа 2160 × 1650 мм "
+  },
+  "krepi": {
+    "formats": [
+      [
+        2440,
+        1830
+      ]
+    ],
+    "source": "https://alfaglass.ru/materialy/krepi/",
+    "checked": "2026-10-22",
+    "orientation": "unspecified",
+    "evidence": "Формат листа 2440 × 1830 мм "
+  },
+  "kathedralaqualite": {
+    "formats": [
+      [
+        2400,
+        2000
+      ]
+    ],
+    "source": "https://alfaglass.ru/materialy/kathedralaqualite/",
+    "checked": "2026-10-22",
+    "orientation": "unspecified",
+    "evidence": "Формат листа 2400 × 2000 мм "
+  },
+  "moru-crystal": {
+    "formats": [
+      [
+        2400,
+        2100
+      ],
+      [
+        3300,
+        2100
+      ]
+    ],
+    "source": "https://alfaglass.ru/materialy/moru-crystal/",
+    "checked": "2026-10-22",
+    "orientation": "unspecified",
+    "evidence": "Форматы листа 2400 × 2100 и 3300 × 2100 мм "
+  },
+  "moru-ultra": {
+    "formats": [
+      [
+        2400,
+        2100
+      ],
+      [
+        3300,
+        2100
+      ]
+    ],
+    "source": "https://alfaglass.ru/materialy/moru-ultra/",
+    "checked": "2026-10-22",
+    "orientation": "unspecified",
+    "evidence": "Форматы листа 2400 × 2100 и 3300 × 2100 мм "
+  },
+  "moru-bronze-toned": {
+    "formats": [
+      [
+        2440,
+        2100
+      ],
+      [
+        3300,
+        2100
+      ]
+    ],
+    "source": "https://alfaglass.ru/materialy/moru-bronze-toned/",
+    "checked": "2026-10-22",
+    "orientation": "unspecified",
+    "evidence": "Форматы листа 2440 × 2100 и 3300 × 2100 мм "
+  },
+  "estriado": {
+    "formats": [
+      [
+        3300,
+        2000
+      ]
+    ],
+    "source": "https://alfaglass.ru/materialy/estriado/",
+    "checked": "2026-10-22",
+    "orientation": "unspecified",
+    "evidence": "Формат листа 3300 × 2000 мм "
+  },
+  "estriado-crystal": {
+    "formats": [
+      [
+        3300,
+        2000
+      ]
+    ],
+    "source": "https://alfaglass.ru/materialy/estriado-crystal/",
+    "checked": "2026-10-22",
+    "orientation": "unspecified",
+    "evidence": "Формат листа 3300 × 2000 мм "
+  },
+  "estriado-ultra": {
+    "formats": [
+      [
+        3300,
+        2000
+      ]
+    ],
+    "source": "https://alfaglass.ru/materialy/estriado-ultra/",
+    "checked": "2026-10-22",
+    "orientation": "unspecified",
+    "evidence": "Формат листа 3300 × 2000 мм "
+  },
+  "flutelite-s": {
+    "formats": [
+      [
+        2440,
+        1830
+      ]
+    ],
+    "source": "https://alfaglass.ru/materialy/flutelite-s/",
+    "checked": "2026-10-22",
+    "orientation": "unspecified",
+    "evidence": "Формат листа 2440 × 1830 мм "
+  },
+  "moru-magnetron-bronze": {
+    "formats": [
+      [
+        2800,
+        2000
+      ],
+      [
+        2440,
+        1830
+      ]
+    ],
+    "source": "https://alfaglass.ru/materialy/moru-magnetron-bronze/",
+    "checked": "2026-10-22",
+    "orientation": "unspecified",
+    "evidence": "Формат листа 2800 × 2000 и 2440 × 1830 мм "
+  },
+  "moru-magnetron-grey": {
+    "formats": [
+      [
+        2800,
+        2000
+      ],
+      [
+        2440,
+        1830
+      ]
+    ],
+    "source": "https://alfaglass.ru/materialy/moru-magnetron-grey/",
+    "checked": "2026-10-22",
+    "orientation": "unspecified",
+    "evidence": "Формат листа 2800 × 2000 и 2440 × 1830 мм "
+  },
+  "krezet": {
+    "formats": [
+      [
+        2160,
+        1650
+      ]
+    ],
+    "source": "https://alfaglass.ru/materialy/krezet/",
+    "checked": "2026-10-22",
+    "orientation": "unspecified",
+    "evidence": "Формат листа 2160 × 1650 мм "
+  },
+  "float-steklo-clear-m1": {
+    "formats": [],
+    "source": "https://alfaglass.ru/materialy/float-steklo-clear-m1/",
+    "checked": "2026-10-22",
+    "orientation": "unspecified",
+    "evidence": "Формат листа не указан; согласуется при расчёте."
+  },
+  "steklo-kristalvizhn-crystalvision": {
+    "formats": [],
+    "source": "https://alfaglass.ru/materialy/steklo-kristalvizhn-crystalvision/",
+    "checked": "2026-10-22",
+    "orientation": "unspecified",
+    "evidence": "Формат листа не указан; согласуется при расчёте."
+  },
+  "steklo-matovoe-matelux": {
+    "formats": [
+      [
+        3210,
+        2250
+      ]
+    ],
+    "source": "https://alfaglass.ru/materialy/steklo-matovoe-matelux/",
+    "checked": "2026-10-22",
+    "orientation": "unspecified",
+    "evidence": "Формат листа 3210 × 2250 мм"
+  },
+  "steklo-solnczezashhitnoe-stopsol": {
+    "formats": [
+      [
+        3210,
+        2250
+      ]
+    ],
+    "source": "https://alfaglass.ru/materialy/steklo-solnczezashhitnoe-stopsol/",
+    "checked": "2026-10-22",
+    "orientation": "unspecified",
+    "evidence": "Формат листа 3210 × 2250 мм"
+  },
+  "dihroichnoe-steklo": {
+    "formats": [
+      [
+        3210,
+        2250
+      ]
+    ],
+    "source": "https://alfaglass.ru/materialy/dihroichnoe-steklo/",
+    "checked": "2026-10-22",
+    "orientation": "unspecified",
+    "evidence": "Формат листа: 3210 × 2250 мм"
+  },
+  "tonirovannoe-v-masse-steklo-moru": {
+    "formats": [
+      [
+        2440,
+        1800
+      ]
+    ],
+    "source": "https://alfaglass.ru/materialy/tonirovannoe-v-masse-steklo-moru/",
+    "checked": "2026-10-22",
+    "orientation": "unspecified",
+    "evidence": "Максимальный размеры 2440*1800 мм "
+  },
+  "tonirovannoe-steklo-black": {
+    "formats": [
+      [
+        3300,
+        2000
+      ]
+    ],
+    "source": "https://alfaglass.ru/materialy/tonirovannoe-steklo-black/",
+    "checked": "2026-10-22",
+    "orientation": "unspecified",
+    "evidence": "Формат листа 3300 × 2000 мм"
+  },
+  "tonirovannoe-steklo-green": {
+    "formats": [
+      [
+        3210,
+        2250
+      ]
+    ],
+    "source": "https://alfaglass.ru/materialy/tonirovannoe-steklo-green/",
+    "checked": "2026-10-22",
+    "orientation": "unspecified",
+    "evidence": "Формат листа 3210 × 2250 мм"
+  },
+  "tonirovannoe-steklo-blue": {
+    "formats": [
+      [
+        3210,
+        2250
+      ]
+    ],
+    "source": "https://alfaglass.ru/materialy/tonirovannoe-steklo-blue/",
+    "checked": "2026-10-22",
+    "orientation": "unspecified",
+    "evidence": "Формат листа 3210 × 2250 мм"
+  },
+  "steklo-matovoe-osvetlyonnoe": {
+    "formats": [
+      [
+        3210,
+        2250
+      ]
+    ],
+    "source": "https://alfaglass.ru/materialy/steklo-matovoe-osvetlyonnoe/",
+    "checked": "2026-10-22",
+    "orientation": "unspecified",
+    "evidence": "Формат листа 3210 × 2250 мм"
+  },
+  "stopsol-phoenix-bronze": {
+    "formats": [
+      [
+        3210,
+        2250
+      ]
+    ],
+    "source": "https://alfaglass.ru/materialy/stopsol-phoenix-bronze/",
+    "checked": "2026-10-22",
+    "orientation": "unspecified",
+    "evidence": "Формат листа 3210 × 2250 мм"
+  },
+  "stopsol-phoenix-gray": {
+    "formats": [
+      [
+        3210,
+        2250
+      ]
+    ],
+    "source": "https://alfaglass.ru/materialy/stopsol-phoenix-gray/",
+    "checked": "2026-10-22",
+    "orientation": "unspecified",
+    "evidence": "Формат листа 3210 × 2250 мм"
+  },
+  "moru-grey": {
+    "formats": [
+      [
+        2440,
+        2100
+      ],
+      [
+        3300,
+        2100
+      ]
+    ],
+    "source": "https://alfaglass.ru/materialy/moru-grey/",
+    "checked": "2026-10-22",
+    "orientation": "unspecified",
+    "evidence": "Форматы листа 2440 × 2100 и 3300 × 2100 мм "
+  }
+}
