@@ -440,18 +440,30 @@
     "evidence": "Формат листа 2160 × 1650 мм "
   },
   "float-steklo-clear-m1": {
-    "formats": [],
+    "formats": [
+      [
+        3210,
+        2250
+      ]
+    ],
     "source": "https://alfaglass.ru/materialy/float-steklo-clear-m1/",
     "checked": "2026-10-22",
     "orientation": "unspecified",
-    "evidence": "Формат листа не указан; согласуется при расчёте."
+    "evidence": "Формат листа 3210 × 2250 мм подтверждён владельцем 2026-10-22.",
+    "confirmation": "owner"
   },
   "steklo-kristalvizhn-crystalvision": {
-    "formats": [],
+    "formats": [
+      [
+        3210,
+        2250
+      ]
+    ],
     "source": "https://alfaglass.ru/materialy/steklo-kristalvizhn-crystalvision/",
     "checked": "2026-10-22",
     "orientation": "unspecified",
-    "evidence": "Формат листа не указан; согласуется при расчёте."
+    "evidence": "Формат листа 3210 × 2250 мм подтверждён владельцем 2026-10-22.",
+    "confirmation": "owner"
   },
   "steklo-matovoe-matelux": {
     "formats": [
