@@ -4,3 +4,6 @@ for(const file of ['three.module.js','three.core.js','OrbitControls.js','LICENSE
 await copyFile(new URL('../modus-mz/glass-catalog.json',import.meta.url),new URL('./glass-catalog.json',import.meta.url));
 
 for(const file of ['glass-render.js','glass-groups.js'])await copyFile(new URL('../modus-mz/'+file,import.meta.url),new URL('./'+file,import.meta.url));
+
+await mkdir(new URL('./assets/',import.meta.url),{recursive:true});
+for(const file of ['logo-light.svg','logo-dark.svg'])await copyFile(new URL('../../themes/alfa-glass-home-2026/agm-homepage/assets/'+file,import.meta.url),new URL('./assets/'+file,import.meta.url));
