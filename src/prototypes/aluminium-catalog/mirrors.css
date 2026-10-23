@@ -27,3 +27,4 @@
 #straight-gallery .photo-card:nth-child(2){grid-column:1;grid-row:2}
 #straight-gallery .photo-card:nth-child(3){grid-column:2;grid-row:1/span 2}
 @media(max-width:600px){#straight-gallery{grid-template-columns:minmax(0,1fr)}#straight-gallery .photo-card:nth-child(n){grid-column:auto;grid-row:auto}}
+.section-heading .section-calculate{justify-self:end;margin:0}@media(max-width:600px){.section-heading .section-calculate{justify-self:start}}
