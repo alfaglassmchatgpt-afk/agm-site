@@ -1,0 +1,126 @@
+{
+  "published": "2026-10-23",
+  "path": "agm-aluminium-catalog/assets/mirrors/",
+  "files": [
+    {
+      "name": "curved-1.webp",
+      "bytes": 252372,
+      "sha256": "80e274b2916f3c87109cf8d0f9fdb2ecfd1eda121809a3cb2330534b7fda66bb"
+    },
+    {
+      "name": "curved-2.webp",
+      "bytes": 204468,
+      "sha256": "2f14ebf8e7b0d838e4194971ac1b4f3ae95c66a6198df8f9810338fb08993536"
+    },
+    {
+      "name": "curved-3.webp",
+      "bytes": 140606,
+      "sha256": "ec4428c92c0768339295711ad6f1a4bbb69d959bb42d01e406cfda3719536fea"
+    },
+    {
+      "name": "curved-4.webp",
+      "bytes": 224226,
+      "sha256": "c46770c956d1f875a878f70e12a481ed5bc28a9725037f7faa15ce05bd45dafd"
+    },
+    {
+      "name": "curved-6.webp",
+      "bytes": 206750,
+      "sha256": "7fb2cb64f9e8526e4b28a15a708a2209d48e465eb5e49e5ea99fd34423f266fc"
+    },
+    {
+      "name": "curved-7-lit.webp",
+      "bytes": 150438,
+      "sha256": "492345109610ca872c42e10e88c4cfef9994212b802ef7fd16de6e4ad67bd13a"
+    },
+    {
+      "name": "curved-finishes.webp",
+      "bytes": 283186,
+      "sha256": "87ba657005f4c8d494badd01d42b6db0a6f3526c6006821d18ea5843cc9768aa"
+    },
+    {
+      "name": "hero-landscape.webp",
+      "bytes": 351152,
+      "sha256": "80ec645705f7eb157e1e39c30843dabbfe46dca892f4f74d3be3862ee063a13a"
+    },
+    {
+      "name": "straight-15-1.webp",
+      "bytes": 182674,
+      "sha256": "2e295dfed7aa0ee9dc124180b8542ec25f34e4c81117c302c044261def127a06"
+    },
+    {
+      "name": "straight-15-2.webp",
+      "bytes": 184804,
+      "sha256": "d7c0861a7f90123307c5fdec540bb3632d5b4c2f23ff08fc9a5bf6584b6843a9"
+    },
+    {
+      "name": "straight-15-3.webp",
+      "bytes": 156764,
+      "sha256": "5d599f8b0d344c7f9a34fac4e1ed3afdb9dce04a4fecd61cd57609d71940da46"
+    },
+    {
+      "name": "straight-20-1.webp",
+      "bytes": 217720,
+      "sha256": "27b20b03551b450437acf19756996989910633fffd4ec21439be57a8abaf09ae"
+    },
+    {
+      "name": "straight-20-2.webp",
+      "bytes": 177642,
+      "sha256": "9a504711473481e2922b047109145b8bbd8ef93f02abc799ab63405966118bea"
+    },
+    {
+      "name": "straight-20-3.webp",
+      "bytes": 176128,
+      "sha256": "02c2112b0c03da9ae19f12ed0afe61a11c798746314115cd138cd9c987b5b08d"
+    },
+    {
+      "name": "straight-3-1.webp",
+      "bytes": 192234,
+      "sha256": "98db7c881bb95beda00cf5ac67c2dacd8aec5eb145fbfd15d9b4f2a396871144"
+    },
+    {
+      "name": "straight-3-2.webp",
+      "bytes": 223310,
+      "sha256": "81140935321a49b21bee98c4c7a187909a9e78e9c6f7beb64de3d13e561b557e"
+    },
+    {
+      "name": "straight-3-3.webp",
+      "bytes": 210140,
+      "sha256": "1c3bda1182fba6fc3d8474c55757db38ae56b0800860e430af6381d8520fb7fc"
+    },
+    {
+      "name": "straight-50-1.webp",
+      "bytes": 261780,
+      "sha256": "7f8db4087c36ba4720651743cb4bb7c3403ad14516eb6954e1ee66404ec1ca0c"
+    },
+    {
+      "name": "straight-50-2.webp",
+      "bytes": 198650,
+      "sha256": "d3fad27157d951fad28bd1be0bd856d66cbcfab9d3be1fb8a730ece6583adf50"
+    },
+    {
+      "name": "straight-50-3.webp",
+      "bytes": 164056,
+      "sha256": "901c62cfa14be4b7b4b7edeae383644459fa4a75ebb05b40e92f5ec12947d319"
+    },
+    {
+      "name": "straight-8-1.webp",
+      "bytes": 244506,
+      "sha256": "f570c134bf3317f151f48ca38c63de27521a61ec1e9e562aefcbd1de52b50005"
+    },
+    {
+      "name": "straight-8-2.webp",
+      "bytes": 210140,
+      "sha256": "376a9debf8385c711fe39dad782b468e5370a00a211aad3e1ef2022a7b61c13d"
+    },
+    {
+      "name": "straight-8-3.webp",
+      "bytes": 205458,
+      "sha256": "4ff48259ae4bdf3a432d3a2d8592fccd2eb26a0fadadd2c4365535c090c9272b"
+    },
+    {
+      "name": "straight-finishes.webp",
+      "bytes": 316538,
+      "sha256": "4f488fe135fa803e763f529b6b0f171e30b3e190bc02834fb4c2a86988b15e0d"
+    }
+  ]
+}

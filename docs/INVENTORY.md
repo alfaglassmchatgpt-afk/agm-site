@@ -1,5 +1,10 @@
 # Инвентаризация 2026-09-21
 
+## Production: зеркала Aluminium — 2026-10-23
+
+Страница /aluminium/zerkala/ (5468); ресурсы agm-aluminium-catalog/mirrors.*, mirror-request.js; общий agm-configurator/mirror-panel.js. Заявка использует существующий REST Aluminium и wp_mail. Изображения WebP развёрнуты выборочно, вне Git. Разработка локальная, прежняя dev-ВМ не использовалась.
+
+
 ## Production: форма Aluminium — 2026-10-22
 
 Добавлен MU-плагин `agm-aluminium-request.php`, REST `/wp-json/agm-aluminium/v1/request` и форма `agm-aluminium-catalog/al-request.{html,js}`. Только запросы по фасадам, перегородкам и зеркалам в алюминии. Используется wp_mail; прежняя dev-ВМ не задействована.

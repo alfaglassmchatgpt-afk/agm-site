@@ -6,7 +6,7 @@ $cleanup=function(){foreach(wp_styles()->queue as $h){if(!in_array($h,['admin-ba
 add_action('wp_enqueue_scripts',$cleanup,PHP_INT_MAX);
 add_action('wp_footer',$cleanup,0);
 $slug=get_post_field('post_name',get_queried_object_id());
-$file=['aluminium'=>'index.html','fasady'=>'facades.html','peregorodki'=>'partitions.html'][$slug]??'index.html';
+$file=['aluminium'=>'index.html','fasady'=>'facades.html','peregorodki'=>'partitions.html','zerkala'=>'mirrors.html'][$slug]??'index.html';
 $html=file_get_contents(get_template_directory().'/agm-aluminium-catalog/'.$file);
 if($slug==='aluminium'){
  $home=agm_navigation_render(file_get_contents(get_template_directory().'/agm-homepage/index.html'));
@@ -22,7 +22,7 @@ if($slug==='aluminium'){
   $icons[$symbol[1]]=isset($viewBox[1])?'<svg width="100%" height="100%" viewBox="'.esc_attr($viewBox[1]).'">'.$symbol[2].'</svg>':$symbol[2];
  }
  $shell=preg_replace_callback('~<use[^>]*href="[^"]*#([^"]+)"[^>]*(?:/>|></use>)~',function($m)use($icons){return $icons[$m[1]]??$m[0];},$shell);
- $links='<a class="al-link" href="/aluminium/">ALUM<span>INIUM</span></a><a href="/aluminium/fasady/">Фасады</a><a href="/aluminium/peregorodki/">Перегородки</a><a href="/aluminium/#al-mirrors">Зеркала в раме</a><a href="/aluminium/#al-request" data-al-request>Получить расчёт</a>';
+ $links='<a class="al-link" href="/aluminium/">ALUM<span>INIUM</span></a><a href="/aluminium/fasady/">Фасады</a><a href="/aluminium/peregorodki/">Перегородки</a><a href="/aluminium/zerkala/">Зеркала в раме</a><a href="/aluminium/#al-request" data-al-request>Получить расчёт</a>';
  $shell=preg_replace_callback('~<nav\b[^>]*>.*?</nav>~s',function($m)use($links){preg_match('~<nav\b[^>]*>~',$m[0],$opening);return $opening[0].$links.'</nav>';},$shell);
  $shell=preg_replace('~<button[^>]*class="[^"]*asr-trigger[^" ]*"[^>]*>.*?</button>~s','',$shell);
  $shell=str_replace('href="'.esc_url(home_url('/')).'#request"','href="/aluminium/#al-request" data-al-request',$shell);

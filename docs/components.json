@@ -276,14 +276,27 @@
     ],
     "development": "local-only",
     "automaticDeployment": false,
-    "projectSubmissionEnabled": false
+    "projectSubmissionEnabled": true
   },
   "productionAluminiumEnquiries": {
-    "updated": "2026-10-22",
+    "updated": "2026-10-23",
     "muPlugin": "agm-aluminium-request.php",
     "endpoint": "/wp-json/agm-aluminium/v1/request",
     "transport": "wp_mail",
     "stagingDisabled": true,
-    "deliveryTest": "intercepted without sending email"
+    "deliveryTest": "intercepted without sending email",
+    "mirrorSpecification": "optional text up to 1 MiB"
+  },
+  "productionAluminiumMirrors": {
+    "updated": "2026-10-23",
+    "url": "/aluminium/zerkala/",
+    "pageId": 5468,
+    "template": "page-agm-aluminium.php",
+    "panel": "agm-configurator/mirror-panel.js",
+    "transport": "existing Aluminium enquiries",
+    "prices": false,
+    "mediaFiles": 24,
+    "mediaInPublicGit": false
   }
 }
+
