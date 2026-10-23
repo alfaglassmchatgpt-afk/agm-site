@@ -3,7 +3,7 @@
 (()=>{'use strict';
 const key='agm-mirror-drafts-v1', names=['Круг','Овал','Капсула','Скруглённые углы','Свободный контур','Плавная волна','Прямоугольник'];
 const straight=['Нержавейка светлая','Нержавейка тёмная','Нержавейка графит','Нержавейка чёрная','Нержавейка золото','Чёрный браш','Чёрный матовый','Латунь браш','Золото браш'];
-const curved=['Медь','Чёрный','Серебро','Светлое золото'];
+const curved=['Медь','Чёрный','Серебро','Светлое золото','Розовое золото'];
 let items=[],active=null;try{const data=JSON.parse(localStorage.getItem(key));if(Array.isArray(data))items=data.filter(i=>i&&names.includes(i.shape)&&typeof i.id==='string')}catch{}
 const panel=document.createElement('aside');panel.id='mirror-panel';panel.hidden=true;panel.setAttribute('aria-label','Мой расчёт зеркал');panel.innerHTML='<div class="mp-head"><h2>Мой расчёт <span id="mp-count"></span></h2><button type="button" id="mp-close" aria-label="Свернуть расчёт">−</button></div><p class="mp-help">Наружные размеры вместе с рамой, мм</p><div id="mp-list"></div><form id="mp-form"><div id="mp-fields"></div><p id="mp-error" role="alert"></p><p id="mp-limit" class="mp-help"></p><p id="mp-length" class="mp-help"></p><button type="submit" class="button">Сохранить параметры</button></form><p class="mp-help">Добавляйте другие зеркала кнопками «Купить» на странице. Цена и срок — после согласования.</p><button id="mp-export" type="button" class="button secondary">Скачать заявку</button><p class="mp-help">Локальный прототип: заявка никуда не отправляется.</p>';
 document.body.append(panel);const reopen=document.createElement('button');reopen.id='mp-reopen';reopen.className='button';reopen.textContent='Мой расчёт';reopen.hidden=true;document.body.append(reopen);
