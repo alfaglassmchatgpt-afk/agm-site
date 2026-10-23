@@ -14,3 +14,16 @@
 .hero-actions .button{margin:0}.site-tools{flex-wrap:wrap}.page-nav{justify-content:flex-start}
 @media(min-width:601px) and (max-width:900px){.curved-grid,.scene-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){.mirror-hero,.section-heading{grid-template-columns:minmax(0,1fr)}.mirror-hero img{height:auto;max-height:480px}.photo-card img{height:100%;max-height:none}.scale-panel{grid-template-columns:minmax(0,1fr) 75px}.site-tools{gap:10px}.theme-choice{max-width:100%}}
+/* Straight scenes keep their source proportions: two detail scenes, then a wide bathroom. */
+#straight-gallery{grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;gap:28px}
+#straight-gallery .photo-card:nth-child(2){grid-column:1/-1;grid-row:2}
+#straight-gallery .photo-card:nth-child(3){grid-column:2;grid-row:1}
+#straight-gallery .photo-card button{aspect-ratio:auto;background:transparent}
+#straight-gallery .photo-card img{height:auto;max-height:none;width:100%;object-fit:contain}
+#straight-gallery .photo-card p{margin-bottom:0}
+@media(max-width:600px){#straight-gallery{grid-template-columns:minmax(0,1fr);gap:28px}#straight-gallery .photo-card:nth-child(n){grid-column:auto;grid-row:auto}}
+/* Two landscape scenes stack beside the portrait scene. */
+#straight-gallery{grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:28px;row-gap:24px}
+#straight-gallery .photo-card:nth-child(2){grid-column:1;grid-row:2}
+#straight-gallery .photo-card:nth-child(3){grid-column:2;grid-row:1/span 2}
+@media(max-width:600px){#straight-gallery{grid-template-columns:minmax(0,1fr)}#straight-gallery .photo-card:nth-child(n){grid-column:auto;grid-row:auto}}
