@@ -48,3 +48,5 @@
 .photo-card>button:first-child{border-radius:0}
 .photo-info{padding:14px 18px 12px;background:var(--soft)}
 #curved-gallery,#straight-gallery{row-gap:36px}
+#mp-fields .mp-checkbox{display:flex;align-items:center;gap:10px;min-height:44px;cursor:pointer}
+#mp-fields .mp-checkbox input{order:-1;width:18px;height:18px;margin:0;padding:0;accent-color:var(--blue)}
