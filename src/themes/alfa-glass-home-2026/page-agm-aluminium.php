@@ -16,7 +16,11 @@ if($slug==='aluminium'){
  $shell=preg_replace('~(href=")#([^" ]*)"~','$1'.esc_url(home_url('/')).'#$2"',$shell);
  $shell=str_replace(esc_url(home_url('/')).'#i-',esc_url(home_url('/aluminium/')).'#i-',$shell);
  preg_match_all('~<symbol[^>]*id="([^"]+)"[^>]*>(.*?)</symbol>~s',$sprite[0]??'',$symbols,PREG_SET_ORDER);
- $icons=[];foreach($symbols as $symbol)$icons[$symbol[1]]=$symbol[2];
+ // Preserve each symbol's coordinate system when embedding it in a smaller icon.
+ $icons=[];foreach($symbols as $symbol){
+  preg_match('~\bviewBox="([^"]+)"~',$symbol[0],$viewBox);
+  $icons[$symbol[1]]=isset($viewBox[1])?'<svg width="100%" height="100%" viewBox="'.esc_attr($viewBox[1]).'">'.$symbol[2].'</svg>':$symbol[2];
+ }
  $shell=preg_replace_callback('~<use[^>]*href="[^"]*#([^"]+)"[^>]*(?:/>|></use>)~',function($m)use($icons){return $icons[$m[1]]??$m[0];},$shell);
  $links='<a class="al-link" href="/aluminium/">ALUM<span>INIUM</span></a><a href="/aluminium/fasady/">Фасады</a><a href="/aluminium/peregorodki/">Перегородки</a><a href="/aluminium/#al-mirrors">Зеркала в раме</a><a href="/aluminium/#al-request" data-al-request>Получить расчёт</a>';
  $shell=preg_replace_callback('~<nav\b[^>]*>.*?</nav>~s',function($m)use($links){preg_match('~<nav\b[^>]*>~',$m[0],$opening);return $opening[0].$links.'</nav>';},$shell);
