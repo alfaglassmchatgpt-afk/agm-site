@@ -11,3 +11,6 @@ body{overflow-x:clip}.site-header .header-cta{white-space:nowrap}.site-header .h
 
 /* Brand lockup: independent Alpha, divider, full direction name. */
 .al-word{font-family:Arial,Helvetica,sans-serif;font-size:clamp(32px,5.2vw,72px);letter-spacing:-.035em;gap:0}.al-word>img{width:1.42em;height:1.42em;margin:0;flex:none}.al-word>span{border-left:2px solid var(--ink);padding-left:.30em;margin-left:.25em;min-height:1.45em;align-items:center;white-space:nowrap}.al-word b{font-weight:700}@media(max-width:600px){.al-word{font-size:7.2vw}.al-word>span{border-left-width:1px}}
+
+/* Approved size option 1: 84px lettering at desktop, symbol and divider unchanged. */
+.al-word b{font-size:1.166666667em}@media(max-width:600px){.al-word b{font-size:1.041666667em}}
