@@ -22,3 +22,4 @@ await mkdir(path.join(out,'shared-order'),{recursive:true});
 for(const file of ['model.js','mirror-panel.js'])await copyFile(path.join(shared,file),path.join(out,'shared-order',file));
 await copyFile(path.join(source,'exec-e34d6b97-ca1a-4139-b05e-8edc1fe9acec.png'),path.join(out,'assets/mirrors/hero-landscape.png'));
 console.log('Mirror gallery and floating My Calculation panel prepared locally.');await copyFile(path.join(source,'exec-b9a9bdba-dc88-4ce5-9a0c-f24f19d62cc2.png'),path.join(out,'assets/mirrors/straight-finishes.png'));
+await copyFile(path.join(source,'exec-bf58c3a4-3ed4-4269-89f6-81923e07c55d.png'),path.join(out,'assets/mirrors/curved-finishes.png'));
