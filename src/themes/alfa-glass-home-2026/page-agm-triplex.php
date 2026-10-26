@@ -1,12 +1,11 @@
 <?php
 /** Template Name: Декоративный триплекс — ALFAGLASS */
 defined('ABSPATH') || exit;
-require_once __DIR__ . '/inc/agm-configurator.php';
 $home = agm_navigation_render(file_get_contents(__DIR__ . '/agm-homepage/index.html'));
 preg_match('/<header class="site-header">.*?<\/header>/s', $home, $header);
 preg_match('/<svg[^>]*class="svg-library".*?<\/svg>/s', $home, $sprite);
 $html = file_get_contents(__DIR__ . '/agm-glass/dekorativnyy-triplex.html');
-$html = agm_order_render($html, 'dekorativnyy-triplex', false);
+// Owner requested this landing without the calculation form.
 // The landing supplies its own title; WordPress keeps the page's self canonical.
 remove_action('wp_head', '_wp_render_title_tag', 1);
 ob_start(); wp_head(); $head = ob_get_clean();
