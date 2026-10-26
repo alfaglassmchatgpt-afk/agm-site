@@ -14,3 +14,6 @@ body{overflow-x:clip}.site-header .header-cta{white-space:nowrap}.site-header .h
 
 /* Approved size option 1: 84px lettering at desktop, symbol and divider unchanged. */
 .al-word b{font-size:1.166666667em}@media(max-width:600px){.al-word b{font-size:1.041666667em}}
+
+@media(max-width:1100px){.site-header .header-main{flex-wrap:wrap;gap:14px}.site-header .header-tools{margin-left:auto}.site-header .brand{min-width:0;max-width:100%}}
+@media(max-width:600px){#al-request input:not([type=checkbox]),#al-request select,#al-request textarea{font-size:16px}}

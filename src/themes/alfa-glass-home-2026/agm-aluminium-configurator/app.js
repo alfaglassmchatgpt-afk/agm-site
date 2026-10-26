@@ -233,10 +233,24 @@ for(const kind of ['mirror','copy','new'])$('#add-'+kind).onclick=()=>{project.u
 $('#theme').onclick=()=>document.body.classList.toggle('dark');
 $('#profile-details').onclick=()=>{const p=profiles.find(p=>p.id===s.profile);$('#detail-title').textContent='MODUS '+assemblyLabel(p);$('#detail-body').innerHTML=svgSection(p.id,colors[s.color][1],true)+(s.handle?svgSection('13-01',colors[s.color][1],true):'')+`<p class="section-source">${sectionNotes}</p><p>Габарит сечения ${p.b} × ${p.d} мм. Стекло 4 мм. Минимальный размер в модели — 200 × 200 мм; это не производственный допуск. Рекомендуемые максимальные размеры: высота ${p.h}, ширина ${p.w} мм.</p><p>Для стекла: из ширины вычитается ${p.deltaW??p.delta} мм, из высоты — ${p.deltaH??p.delta} мм. ${p.edge?'Кромки стекла дополнительно обрабатываются; заполнение вклеивается.':''}</p><p>${p.note||'Цвета указаны по каталогу; доступность проверяется при заказе.'}</p><p>Сечения построены по каталогу, неуказанные толщины и радиусы оценочные. Петли условные. Чертежи обработки на странице 65 относятся к сборочным уголкам, а не к присадке петель. Для производства необходима выбранная модель петли и согласованный чертёж.</p>`;$('#details').showModal();};$('#close-details').onclick=()=>$('#details').close();
 $('#confirm-project').onclick=()=>{project.update(s);confirmation.confirm(project.items,!project.items.some(item=>validate(item.config).errors.length));confirmationControls();};
-$('#send-project').onclick=()=>{project.update(s);if(!confirmationControls())return;
- $('#send-items').replaceChildren();for(const item of project.items){const line=document.createElement('li');line.textContent=`${item.name}: ${item.config.w} × ${item.config.h} мм · ${assemblyLabel(profiles.find(p=>p.id===item.config.profile))} · ${glasses[item.config.glass][0]}`;$('#send-items').append(line);}
- $('#send-dialog').showModal();};
-$('#close-send').onclick=()=>$('#send-dialog').close();
+$('#send-project').onclick=event=>{project.update(s);if(!confirmationControls()){event.preventDefault();event.stopImmediatePropagation();return;}
+ const form=$('#al-request-form');
+ form.elements.product.value='facades';
+ form.elements.product.closest('label').style.display='none';
+ $('#al-request-title').textContent='Мой расчёт · Фасады';
+ $('#al-request-title').nextElementSibling.textContent='Оставьте контакты — уточним стоимость и изготовление выбранных фасадов.';
+ form.elements.dimensions.readOnly=true;
+ form.elements.dimensions.value='Количество фасадов: '+project.items.length+'; комплектация ниже.';
+ form.elements.facade_details.value=project.items.map((item,i)=>{
+  const c=item.config,p=profiles.find(p=>p.id===c.profile),cut=c.glass==='none'?null:glassCut(c);
+  return [(i+1)+'. '+item.name,c.w+' × '+c.h+' мм; количество: 1',
+   'Профиль: MODUS '+assemblyLabel(p),'Цвет: '+colors[c.color][0],'Заполнение: '+glasses[c.glass][0],
+   cut?'Стекло: '+cut.width+' × '+cut.height+' × 4 мм':'Без наполнения',
+   'Петли: '+({none:'Без петель',mf20:'Скрытые MF 20',narrow:'Для узкого профиля',mzf:'MZF 63',blum:'BLUM 71B950A',cup:'Чашка 35 мм — модель уточнить'}[c.hinge]||c.hinge)+'; сторона: '+(c.side==='left'?'слева':'справа')+'; отсчёт: '+(c.origin==='top'?'сверху':'снизу')+'; координаты, мм: '+c.hinges.join(', '),
+   'Ручка MZ 13-01: '+(c.handle?'да':'нет')+'; направление рифления: '+(c.reed==='vertical'?'вертикальное':'горизонтальное'),
+   'Маскировка зоны вклейки: '+(c.mask?'да':'нет'),...validate(c).warnings,'Параметры предварительные; производственный чертёж согласовать.'].join('\n');
+ }).join('\n\n');
+};
 $('#export').onclick=()=>{project.update(s);if(project.items.some(item=>validate(item.config).errors.length))return;
  const items=project.items.map(item=>{const c=item.config,p=profiles.find(p=>p.id===c.profile),g=glassItems[c.glass];return {...structuredClone(item),quantity:1,series:p.series,baseProfile:p.baseId||p.id,integratedHandle:p.baseId?{id:p.id,length:p.gripLength||c.h}:null,profileAssembly:assemblyLabel(p),material:c.glass==='none'?null:{slug:g.slug,variant:g.variant,title:g.title,thickness:4,catalogueSnapshot:catalogue.snapshot},glassCut:c.glass==='none'?null:glassCut(c),hingePlacement:p.series==='MF-20'&&c.hinges.length?{type:'top-bottom',count:2,coordinatesAreSchematic:true}:null,warnings:validate(c).warnings};});
  const blob=new Blob([JSON.stringify({status:'prototype-not-for-production',source,items},null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='modus-facades-project.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};

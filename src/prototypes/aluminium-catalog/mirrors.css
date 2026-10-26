@@ -52,3 +52,7 @@
 #mp-fields .mp-checkbox input{order:-1;width:18px;height:18px;margin:0;padding:0;accent-color:var(--blue)}
 
 .mirror-hero{border-bottom:1px solid var(--line)}
+
+/* Fit the panel inside the containing viewport, including desktop scrollbars. */
+#mirror-panel{box-sizing:border-box;max-width:calc(100% - 24px)}
+@media(max-width:900px){#mp-fields input,#mp-fields select,#mp-fields textarea{font-size:16px}}

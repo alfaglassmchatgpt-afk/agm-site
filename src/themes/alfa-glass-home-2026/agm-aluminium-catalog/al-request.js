@@ -3,7 +3,7 @@ function initAlRequest(){
  const form=dialog.querySelector('form'),status=form.querySelector('.al-form-status'),submit=form.querySelector('[type=submit]');
  const endpoint='/wp-json/agm-aluminium/v1/request';let credentials,pending,busy=false,sent=false,opener;
  async function prepare(){if(pending)return pending;pending=(async()=>{const response=await fetch(endpoint,{cache:'no-store',credentials:'same-origin'});const data=await response.json();if(!response.ok||!data.enabled)throw Error('Отправка временно недоступна. Свяжитесь с нами по телефону.');credentials=data;})();try{await pending}finally{pending=null}}
- document.querySelectorAll('[data-al-request]').forEach(button=>button.addEventListener('click',event=>{event.preventDefault();opener=button;dialog.showModal();if(!credentials)prepare().catch(e=>status.textContent=e.message)}));
+ document.addEventListener('click',event=>{const button=event.target.closest('[data-al-request]');if(!button)return;event.preventDefault();opener=button;dialog.showModal();if(!credentials)prepare().catch(e=>status.textContent=e.message)});
  dialog.querySelector('.al-request-close').onclick=()=>dialog.close();dialog.addEventListener('close',()=>opener?.focus());
  form.addEventListener('submit',async event=>{
   event.preventDefault();if(busy||sent||!form.reportValidity())return;

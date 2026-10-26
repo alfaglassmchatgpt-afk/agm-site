@@ -11,7 +11,11 @@ foreach (['/', '/materialy/', '/blog/', '/service/'] as $path) {
  $description = $filters['wpseo_metadesc']('original');
  if (in_array($path, ['/blog/', '/service/'], true) ? $description === 'original' : $description !== 'original') { throw new Exception('Description routing'); }
 }
-foreach (['/aluminium/', '/materialy/krezet/', '/other/'] as $path) {
+foreach (['/aluminium/', '/aluminium/fasady/', '/aluminium/peregorodki/', '/aluminium/zerkala/'] as $path) {
+ $_SERVER['REQUEST_URI'] = $path . '?check=test';
+ foreach ($filters as $filter) { if ($filter('original') === 'original') { throw new Exception('Missing Aluminium metadata'); } }
+}
+foreach (['/materialy/krezet/', '/other/', '/aluminium/unknown/'] as $path) {
  $_SERVER['REQUEST_URI'] = $path;
  foreach ($filters as $filter) { if ($filter('original') !== 'original') { throw new Exception('Unexpected override'); } }
 }

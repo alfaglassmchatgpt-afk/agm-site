@@ -15,6 +15,7 @@ function agm_al_request_send($request) {
     foreach (['id','time','token','product','name','phone','email','dimensions','comment','consent','website'] as $key) {
         if (!isset($p[$key]) || !is_string($p[$key]) || strlen($p[$key])>12000) return new WP_Error('fields', 'Проверьте поля формы.', ['status'=>400]);
     }
+    if (isset($p['facade_details']) && (!is_string($p['facade_details']) || strlen($p['facade_details'])>1048576 || $p['product']!=='facades')) return new WP_Error('fields','Проверьте список фасадов.',['status'=>400]);
     $id=$p['id'];$time=(int)$p['time'];
     // Optional complete mirror specification; keep the existing enquiry transport.
     if (isset($p['mirror_details']) && (!is_string($p['mirror_details']) || strlen($p['mirror_details'])>1048576 || $p['product']!=='mirrors')) return new WP_Error('fields','Проверьте список зеркал.',['status'=>400]);
@@ -36,6 +37,7 @@ function agm_al_request_send($request) {
     foreach (['name'=>'Имя','phone'=>'Телефон','email'=>'Email','dimensions'=>'Размеры и количество','comment'=>'Комментарий'] as $key=>$label) $body.=$label.': '.sanitize_textarea_field($p[$key])."\n";
     $body.="Согласие на обработку персональных данных: получено.\n";
     if (!empty($p['mirror_details'])) $body.="\nЗеркала в заявке:\n".sanitize_textarea_field($p['mirror_details'])."\n";
+    if (!empty($p['facade_details'])) $body.="\nФасады в заявке:\n".sanitize_textarea_field($p['facade_details'])."\n";
     // Reuse the site's public enquiry mailbox rather than a new delivery integration.
     $home=file_get_contents(get_template_directory().'/agm-homepage/index.html');
     preg_match('/href="mailto:([^"?]+)(?:[^"]*)"/',$home,$mail);

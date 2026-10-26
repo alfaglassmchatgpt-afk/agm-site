@@ -1,7 +1,8 @@
 // The mirror panel prepares the specification; the existing Aluminium form sends it.
-(()=>{
+function initMirrorRequest(){
  const panel=document.querySelector('#mirror-panel'),form=document.querySelector('#al-request-form');
- if(!panel||!form)return;
+ if(!panel||!form||panel.dataset.requestReady)return;
+ panel.dataset.requestReady='1';
  document.querySelector('#al-request-title').textContent='Мой расчёт · Зеркала';
  document.querySelector('#al-request-title').nextElementSibling.textContent='Оставьте контакты — уточним стоимость и изготовление выбранных зеркал.';
  const button=document.createElement('button');button.type='button';button.className='button';button.textContent='Отправить на расчёт';button.dataset.alRequest='';
@@ -16,4 +17,5 @@
   if(!result.text){e.preventDefault();e.stopImmediatePropagation();panel.querySelector('#mp-error').textContent||='Добавьте зеркало и укажите размеры.';return;}
   details.value=result.text;form.querySelector('[name=dimensions]').value=result.count+' позиций; параметры каждого зеркала приведены ниже.';
  },true);
-})();
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initMirrorRequest,{once:true});else initMirrorRequest();

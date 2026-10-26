@@ -22,4 +22,4 @@ request.addEventListener('click',event=>{
 },true);
 // Reuse the Aluminium form handler and its existing endpoint; no duplicate submission logic.
 await ready;
-const script=document.createElement('script');script.src=new URL('./al-request.js',import.meta.url).href;document.head.append(script);
+const script=document.createElement('script');script.src=new URL('./al-request.js?v=20261026',import.meta.url).href;document.head.append(script);
