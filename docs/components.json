@@ -305,7 +305,8 @@
     "port": 8794,
     "server": ".local/quote-preview/server.cjs",
     "mailEnabled": false,
-    "productionDeployed": true
+    "productionDeployed": true,
+    "additionalRoute": "/aluminium/"
   },
   "productionUnifiedQuote": {
     "updated": "2026-10-29",
