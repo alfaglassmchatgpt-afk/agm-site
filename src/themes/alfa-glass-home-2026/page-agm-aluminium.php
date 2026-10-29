@@ -31,6 +31,16 @@ if($slug==='aluminium'){
  $html=str_replace('</body>',$form.'</body>',$html);
  $html=str_replace('</body>','<dialog id="al-search-dialog"><form action="/" method="get"><label>Поиск по сайту <input name="s" type="search" required></label><button class="button" type="submit">Найти</button><button id="al-search-close" type="button">Закрыть</button></form></dialog></body>',$html);
 }
+if(in_array($slug,['fasady','peregorodki','zerkala'],true)){
+ require_once get_template_directory().'/inc/agm-aluminium-header.php';
+ $shared=agm_aluminium_header($slug);
+ if($shared){
+  $html=preg_replace_callback('~<header class="site-header">.*?</header>~s',function()use($shared){return $shared;},$html,1);
+  $html=preg_replace('~<nav\b[^>]*class="[^"]*section-nav[^"]*"[^>]*>.*?</nav>~s','',$html);
+  $html=preg_replace('~<script src="site-shell.js[^" ]*" defer></script>~','',$html);
+  $html=str_replace('</head>','<link rel="stylesheet" href="shared-header.css?v=20261029"><script src="shared-header.js?v=20261029" defer></script></head>',$html);
+ }
+}
 ob_start();wp_head();$head=ob_get_clean();
 ob_start();wp_footer();$foot=ob_get_clean();
 $pos=strpos($html,'<link rel="stylesheet"');$html=substr_replace($html,$head,$pos,0);
