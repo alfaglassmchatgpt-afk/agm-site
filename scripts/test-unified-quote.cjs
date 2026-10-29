@@ -9,6 +9,12 @@ const ordinary=Material.normalize({id:'sample-material',material:'zerkalo-serebr
 assert(!ordinary.ops.includes('temper'),'Classic mirrors must never gain tempering');
 const framed={id:'sample-framed',shape:'Круг',diameter:'800',profile:'9',color:'Медь',quantity:'1',lighting:true};
 const f=Model.mirror(framed);assert.equal(f.errors.length,0);
+assert.match(Model.mirror({...framed,diameter:undefined}).summary,/Диаметр: — мм/);
+// Production profiles may impose a directional sheet format absent from older snapshots.
+const bounded={...materials,'zerkalo-serebro':{...materials['zerkalo-serebro'],maxSize:{width:600,height:900}}};
+assert.equal(Model.material(ordinary,bounded,ops).errors.length,0);
+assert(Model.material({...ordinary,width:'601'},bounded,ops).errors.some(x=>x.includes('Допустимый формат')));
+assert(Model.material({...ordinary,unknown:true},bounded,ops).errors.some(x=>x.includes('Допустимый формат')));
 a.migrate('materials',[m]);a.migrate('mirrors',[f]);
 assert.equal(b.all().length,2);assert.equal(b.payload().length,2);
 assert.match(b.payload().find(i=>i.type==='mirror').summary,/Подсветка: Да/);

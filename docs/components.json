@@ -300,11 +300,30 @@
   },
   "localQuotePreview": {
     "date": "2026-10-29",
-    "status": "local-only-awaiting-approval",
+    "status": "approved-and-selectively-deployed",
     "host": "127.0.0.1",
     "port": 8794,
     "server": ".local/quote-preview/server.cjs",
     "mailEnabled": false,
-    "productionDeployed": false
+    "productionDeployed": true
+  },
+  "productionUnifiedQuote": {
+    "updated": "2026-10-29",
+    "types": [
+      "material",
+      "mirror",
+      "facade",
+      "partition"
+    ],
+    "headerPages": [
+      "/aluminium/fasady/",
+      "/aluminium/peregorodki/",
+      "/aluminium/zerkala/"
+    ],
+    "endpoint": "/wp-json/agm-aluminium/v1/request",
+    "files": 21,
+    "backup": "local targeted rollback; no database changes",
+    "mixedDeliveryTest": "not sent; backend tested with wp_mail stub",
+    "liveMaterialProfilesPreserved": 85
   }
 }

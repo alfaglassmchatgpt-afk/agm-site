@@ -1,5 +1,9 @@
 # Инвентаризация 2026-09-21
 
+## Production: единый расчёт и шапка Aluminium — 2026-10-29
+
+Общая шапка inc/agm-aluminium-header.php и shared-header.{css,js}; общая корзина agm-configurator/quote-* и quote.css, подключение inc/agm-quote.php. Обработчик MU agm-aluminium-request.php принимает смешанный заказ через существующий REST endpoint. Выборочно опубликован 21 файл после отдельного согласования. 85 актуальных профилей production сохранены без замены на снимок src. Локальный предпросмотр 8794 остаётся без отправки почты.
+
 ## Локальный предпросмотр общей заявки — 2026-10-29
 
 Loopback 127.0.0.1:8794, Node-сервер .local/quote-preview/server.cjs, PHP-рендер без WordPress/БД. Только GET; POST запрещён. Медиа и снимки вне Git. Ветка codex/unified-calculation, перенос на production не выполнен.

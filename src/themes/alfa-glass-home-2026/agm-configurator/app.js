@@ -62,7 +62,8 @@
       const title=node('h3',op.title),actions=node('div',undefined,'operation-actions'),info=node('button','Что это?','text-btn'),toggle=node('button','+ В расчёт','btn toggle-op');
       info.type=toggle.type='button';info.dataset.info=id;info.setAttribute('aria-label','Подробнее: '+op.title);toggle.dataset.toggleOp=id;toggle.setAttribute('aria-label','В расчёт: '+op.title);actions.append(info,toggle);card.append(icon,title,actions);grid.append(card);
     });
-    $('#operations-title').textContent='Обработка: '+target.title;
+    $('#operations-title').textContent=(target.policy==='craft'?'Параметры изготовления: ':'Обработка: ')+target.title;
+    $('#packaging').closest('label').hidden=target.policy==='craft';
     if($('#operation-material-note'))$('#operation-material-note').textContent=target.note;
 
     $$('[data-op-card]').forEach(card=>{const yes=selected.includes(card.dataset.opCard);card.classList.toggle('selected',yes);const b=card.querySelector('[data-toggle-op]');b.setAttribute('aria-pressed',String(yes));b.textContent=yes?'✓ Добавлено':'+ В расчёт';});
@@ -84,6 +85,9 @@
     measureButton.hidden=!active()?.unknown||materials[active()?.material||current].policy==='craft';
     renderList();renderOps();renderProcessing();$('#cart-error').hidden=true;
     const i=active(), selection=onThisPage(i)?i:nextDraft;
+    const profile=materials[i?.material||current];
+    $('#unknown').closest('label').hidden=profile.policy==='craft';
+    $('#width').max=profile.maxSize?.width||10000;$('#height').max=profile.maxSize?.height||10000;
     if(i){$('#width').value=i.width;$('#height').value=i.height;$('#quantity').value=i.quantity;$('#unknown').checked=i.unknown;$('#width').disabled=i.unknown;$('#height').disabled=i.unknown;$('#item-note').value=i.note;$('#active-item-label').textContent='Параметры изделия '+(state.items.indexOf(i)+1);}
     if(mirrorPage){$$('input[name=base]').forEach(r=>r.checked=r.value===selection.base);$$('input[name=thickness]').forEach(r=>{r.checked=r.value===selection.thickness;r.disabled=!AGMOrderModel.thicknesses(materials[current],selection.base).includes(r.value);});$('#variant-note').textContent=materialName(selection)+': '+baseName(selection)+', '+thicknessName(selection)+'.'+(i&&!onThisPage(i)?' В расчёте выбрано изделие другого материала. Нажмите «Добавить ещё изделие», чтобы добавить этот вариант.':'');$('#add-material').textContent=i?'Добавить ещё изделие →':'Добавить к расчёту →';}
     document.dispatchEvent(new CustomEvent('agm:selectionchange',{detail:{material:current,base:selection.base}}));
@@ -109,7 +113,7 @@
       if(i.bevel.scope==='sides'){const [l,t]=field('Стороны фацета / ссылка на чертёж','bevel-sides',i.bevel.sides,'textarea');t.maxLength=500;t.placeholder='Например: верхняя и две боковые';t.addEventListener('input',()=>{i.bevel.sides=t.value;commit();});box.append(l);}
       box.append(node('p','Допустимость ширины для выбранного материала подтвердим при расчёте.','small muted'));processing.append(box);
     }
-    if(i.ops.includes('drill')){
+    if(i.ops.includes('drill')&&materials[i.material].policy!=='craft'){
       const box=node('fieldset',undefined,'processing-box');box.append(node('legend','Параметры отверстий'),node('p','Количество указывайте на одно изделие. Для разных диаметров добавьте отдельные строки.','small muted'));
       i.drill.rows.forEach((r,n)=>{
         const row=node('div',undefined,'hole-row');row.append(node('strong','Отверстия — группа '+(n+1)));
