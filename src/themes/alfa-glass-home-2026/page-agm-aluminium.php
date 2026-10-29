@@ -41,6 +41,8 @@ if(in_array($slug,['fasady','peregorodki','zerkala'],true)){
   $html=str_replace('</head>','<link rel="stylesheet" href="shared-header.css?v=20261029"><script src="shared-header.js?v=20261029" defer></script></head>',$html);
  }
 }
+require_once get_template_directory().'/inc/agm-quote.php';
+$html=agm_quote_assets($html);
 ob_start();wp_head();$head=ob_get_clean();
 ob_start();wp_footer();$foot=ob_get_clean();
 $pos=strpos($html,'<link rel="stylesheet"');$html=substr_replace($html,$head,$pos,0);

@@ -21,7 +21,7 @@ function agm_aluminium_header($slug) {
     $header = preg_replace_callback('~(<nav\b[^>]*>).*?</nav>~s', function($m) use ($links) { return $m[1] . $links . '</nav>'; }, $header);
     $header = preg_replace('~<button[^>]*class="[^"]*(?:asr-trigger|search-toggle)[^"]*"[^>]*>.*?</button>~s', '', $header);
     $target = $slug === 'fasady' ? '/wp-content/themes/alfa-glass-home-2026/agm-aluminium-configurator/index.html' : '/aluminium/' . $slug . '/#' . ($slug === 'zerkala' ? 'calculation' : 'partition-scene');
-    $attribute = $slug === 'zerkala' ? ' data-open-mirror-order' : '';
+    $attribute = ' data-open-quote';
     $header = str_replace('href="#request"', 'href="' . esc_url(home_url($target)) . '"' . $attribute, $header);
     return str_replace('Получить расчёт', 'Мой расчёт', $header);
 }

@@ -1,22 +1,31 @@
-(() => {
+(async () => {
   'use strict';
+  const quote=await window.AGMQuoteReady;
+  let previousEntries=[];
+  const entries=()=>state.items.map(i=>{
+    const entry=AGMQuoteModel.material(i,materials,ops);
+    entry.editUrl=i.material===current?location.pathname+'?quote-edit='+encodeURIComponent(i.id):(quote.store.all().find(e=>e.type==='material'&&e.id===i.id)?.editUrl||entry.editUrl);
+    return entry;
+  });
   const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
   ['width','height'].forEach(id=>{const input=$('#'+id);input.step='1';input.inputMode='numeric';});
   const config=JSON.parse($('#agm-order-data').textContent), materials=config.materials, current=config.current;
   const ops=config.operations, opById=new Map(ops.map(o=>[o.id,o]));
-  const key='agm-materials-request-v2', mirrorPage=true;
+  const mirrorPage=true;
   const materialName=i=>materials[i.material].title;
   const baseName=i=>materials[i.material].variants[i.base];
   const thicknessName=i=>i.thickness==='unknown'?'толщина уточняется':i.thickness+' мм';
   const onThisPage=i=>i&&i.material===current;
-  let state={items:[],active:null}, nextDraft={material:current,base:Object.keys(materials[current].variants)[0],thickness:materials[current].thicknesses[0]},opDialogId=null,returnFocus=null,files=[];
+  let state={items:[],active:null}, nextDraft={material:current,base:Object.keys(materials[current].variants)[0],thickness:materials[current].thicknesses[0]},opDialogId=null,returnFocus=null;
   const newId = () => Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,9);
   const bevelWidths = ['5','10','15','20','25','30','35'];
   const clean = (v,n=500) => typeof v==='string'?v.slice(0,n):'';
   const hole = h => ({diameter:clean(h?.diameter,12),count:typeof h?.count==='string'?clean(h.count,5):'1',unknown:!!h?.unknown});
   const normalize=i=>AGMOrderModel.normalize(i,materials,newId);
   let omittedStoredItems=0;
-  try { const saved=JSON.parse(localStorage.getItem(key)||localStorage.getItem('agm-materials-request-v1')); if(saved && Array.isArray(saved.items)){state.items=saved.items.slice(0,30).map(normalize).filter(Boolean);omittedStoredItems=Math.min(saved.items.length,30)-state.items.length;state.active=state.items.some(i=>i.id===saved.active)?saved.active:state.items[0]?.id||null;} } catch(e) {}
+  state.items=quote.store.all().filter(e=>e.type==='material').map(e=>normalize(e.data)).filter(Boolean);
+  state.active=new URLSearchParams(location.search).get('quote-edit')||state.items[0]?.id||null;
+  previousEntries=entries();
   // A catalog color opens a fresh draft without changing existing cart items.
   const requestedVariant=new URLSearchParams(location.search).get('variant');
   if(current==='tonirovannye-zerkala' && Object.hasOwn(materials[current].variants,requestedVariant)){
@@ -25,14 +34,19 @@
     state.active=null;
   }
   const active = () => state.items.find(i=>i.id===state.active);
-  function save(){try{localStorage.setItem(key,JSON.stringify(state));}catch(e){toast('Браузер не сохраняет выбор. Скачайте заявку перед закрытием страницы.');}}
+  function save(){try{previousEntries=quote.store.sync(entries(),previousEntries);}catch(e){toast('Не удалось сохранить расчёт: '+e.message);}}
+  document.addEventListener('agm:quote-editors-refresh',()=>{
+    state.items=quote.store.all().filter(e=>e.type==='material').map(e=>normalize(e.data)).filter(Boolean);
+    if(!state.items.some(i=>i.id===state.active))state.active=state.items[0]?.id||null;
+    previousEntries=entries();render();
+  });
   let toastTimer;
   function toast(text){$('#toast').textContent=text;$('#toast').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('#toast').hidden=true,3500);}
   function node(tag,text,className){const el=document.createElement(tag);if(text!==undefined)el.textContent=text;if(className)el.className=className;return el;}
   function itemLabel(i){return materialName(i)+' · '+thicknessName(i);}
   function dimensions(i){return i.unknown?'размеры уточнить':i.width&&i.height?i.width+' × '+i.height+' мм':'размеры не указаны';}
   function renderList(){
-    $$('[data-count]').forEach(el=>el.textContent=state.items.length);
+    $$('[data-count]').forEach(el=>el.textContent=el.closest('#cart-panel')?state.items.length:quote.store.all().length);
     $('#empty-cart').hidden=!!state.items.length;$('#cart-filled').hidden=!state.items.length;
     const list=$('#cart-list');list.replaceChildren();
     state.items.forEach((i,n)=>{const row=node('div',undefined,'cart-item'+(i.id===state.active?' active':''));
@@ -109,19 +123,7 @@
       const [l,t]=field('Расположение отверстий','hole-location',i.drill.location,'textarea');t.placeholder='Опишите расположение или укажите: по чертежу. Чертёж можно выбрать при подготовке заявки.';t.addEventListener('input',()=>{i.drill.location=t.value;commit();});box.append(l,node('p','Диаметры и отступы проверим по проекту.','small muted'));processing.append(box);
     }
   }
-  function processingText(i){
-    const text=[];
-    if(i.ops.includes('bevel'))text.push('Фацет: '+(i.bevel.width?i.bevel.width+' мм':'ширина не указана')+', '+(i.bevel.scope==='all'?'по всему периметру':'отдельные стороны: '+i.bevel.sides));
-    if(i.ops.includes('drill')){i.drill.rows.forEach(r=>text.push('Отверстия: '+(r.unknown?'диаметр уточнить':'Ø '+r.diameter+' мм')+' — '+r.count+' шт. на изделие; всего '+(Number(r.count)*Number(i.quantity))+' шт.'));text.push('Расположение отверстий: '+(i.drill.location||'уточнить / по чертежу'));}
-    return text.length?'\n'+text.join('\n'):'';
-  }
-  function processingError(i){
-    if(i.ops.includes('bevel')){if(!bevelWidths.includes(i.bevel.width))return 'Выберите ширину фацета.';if(i.bevel.scope==='sides'&&!i.bevel.sides.trim())return 'Укажите стороны фацета или напишите «по чертежу».';}
-    if(i.ops.includes('drill'))for(const r of i.drill.rows){if(!r.unknown&&(!window.AGMOrderModel.wholeMillimetres(r.diameter)))return 'Укажите диаметр отверстий целым числом в мм (от 1 мм) или выберите консультацию.';if(!Number.isInteger(Number(r.count))||Number(r.count)<1||Number(r.count)>9999)return 'Количество отверстий на изделие должно быть целым числом от 1 до 9999.';}
-    return null;
-  }
   function addItem(){
-    if(state.items.length>=30){toast('В одной заявке можно собрать до 30 изделий.');return null;}
     const selection={material:current,base:$('input[name=base]:checked').value,thickness:$('input[name=thickness]:checked').value};
     const item=normalize({id:newId(),material:selection.material,base:selection.base,thickness:selection.thickness,quantity:'1',ops:[]});if(!item){toast('Проверьте исполнение и доступную толщину.');return null;}state.items.push(item);state.active=item.id;save();render();return item;
   }
@@ -154,16 +156,15 @@
   const mobile=matchMedia('(max-width:980px)'), panel=$('#cart-panel');
   function openCart(){if(!mobile.matches){panel.scrollIntoView({block:'nearest',behavior:'smooth'});panel.focus({preventScroll:true});return;}returnFocus=document.activeElement;panel.classList.add('is-open');panel.setAttribute('role','dialog');panel.setAttribute('aria-modal','true');$('#cart-shade').hidden=false;document.body.style.overflow='hidden';panel.focus();}
   function closeCart(){panel.classList.remove('is-open');panel.removeAttribute('role');panel.removeAttribute('aria-modal');$('#cart-shade').hidden=true;document.body.style.overflow='';if(returnFocus?.isConnected)returnFocus.focus({preventScroll:true});}
+  document.addEventListener('agm:quote-flush',()=>{save();closeCart();});
   $$('[data-open-cart]').forEach(b=>b.addEventListener('click',openCart));$('.cart-close').addEventListener('click',closeCart);$('#cart-shade').addEventListener('click',closeCart);
   document.addEventListener('keydown',e=>{if(!panel.classList.contains('is-open')||$('dialog[open]'))return;if(e.key==='Escape'){e.preventDefault();closeCart();}if(e.key==='Tab'){const focusables=[...panel.querySelectorAll('button,a,input,textarea,select')].filter(x=>!x.disabled&&x.getClientRects().length);const first=focusables[0],last=focusables.at(-1);if(e.shiftKey&&(document.activeElement===first||document.activeElement===panel)){e.preventDefault();last?.focus();}else if(!e.shiftKey&&(document.activeElement===last||document.activeElement===panel)){e.preventDefault();first?.focus();}}});
   mobile.addEventListener('change',()=>closeCart());
-  function requestText(){return state.items.map((i,n)=>`${n+1}. ${materialName(i)} — ${baseName(i)}, ${thicknessName(i)}\nРазмеры: ${dimensions(i)}\nКоличество: ${i.quantity} шт.\nОбработки: ${i.ops.map(id=>opById.get(id).title).join(', ')||'не выбраны'}${processingText(i)}\nУпаковка в картон: ${i.packaging?'да':'нет'}${i.note?'\nКомментарий: '+i.note:''}`).join('\n\n');}
-  function validation(){if(!state.items.length)return [null,"Добавьте изделие к расчёту."];for(let n=0;n<state.items.length;n++){const i=state.items[n];if(i.ops.some(id=>!AGMOrderModel.operations(materials[i.material],i.thickness).includes(id)))return [i,'Обработка недоступна для выбранного материала.'];const pe=processingError(i);if(pe)return [i,`Изделие ${n+1}: ${pe}`];if(!Number.isInteger(Number(i.quantity))||Number(i.quantity)<1||Number(i.quantity)>9999)return [i,`Изделие ${n+1}: укажите количество от 1 до 9999.`];if(!i.unknown&&(!window.AGMOrderModel.wholeMillimetres(i.width)||!window.AGMOrderModel.wholeMillimetres(i.height)||Number(i.width)>10000||Number(i.height)>10000))return [i,`Изделие ${n+1}: укажите размеры целыми числами от 1 до 10000 мм или отметьте «Размеры пока не знаю».`];}return null;}
-  $('#prepare').addEventListener('click',()=>{const invalid=validation();if(invalid){state.active=invalid[0]?.id||null;render();$('#cart-error').textContent=invalid[1];$('#cart-error').hidden=false;$('#cart-error').scrollIntoView({block:'nearest'});return;}closeCart();$('#request-preview').textContent=requestText();$('#export-status').textContent='';$('#request-dialog').showModal();});
-  $('#attachments').addEventListener('change',e=>{files=[...e.target.files];const bad=files.length>3||files.reduce((a,f)=>a+f.size,0)>10*1024*1024||files.some(f=>!(/\.(pdf|png|jpe?g|webp)$/i).test(f.name));$('#file-error').hidden=!bad;$('#file-error').textContent=bad?'Выберите до 3 файлов PDF, PNG, JPG или WebP, суммарно до 10 МБ.':'';if(bad){files=[];e.target.value='';}$('#file-list').replaceChildren(...files.map(f=>node('li',f.name)));});
-  $('#request-form').addEventListener('submit',e=>{e.preventDefault();if(!e.target.reportValidity())return;const f=new FormData(e.target);let text='ALFAGLASS — тестовая заявка на расчёт\n\n'+requestText()+'\n\nИмя: '+f.get('name')+'\nТелефон: '+f.get('phone')+'\nEmail: '+f.get('email')+'\nДоставка: '+(f.has('delivery')?'да':'нет')+'\nМонтаж: '+(f.has('install')?'да':'нет')+'\nКомментарий: '+f.get('comment');text+='\n\nЧертежи (приложить отдельно): '+(files.map(f=>f.name).join(', ')||'не выбраны')+'\n\nЗаявка сохранена локально, не отправлена. Стоимость не рассчитана.';const a=document.createElement('a');const url=URL.createObjectURL(new Blob(['\ufeff'+text],{type:'text/plain;charset=utf-8'}));a.href=url;a.download='ALFAGLASS-materials-request.txt';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000);$('#export-status').textContent='Заявка скачана. Менеджеру ничего не отправлено. Чертежи нужно приложить отдельно.';});
+  $('#prepare').textContent='Весь мой расчёт';
+  const editorHeading=$('#cart-panel .cart-heading h2');if(editorHeading)editorHeading.firstChild.textContent='Параметры материалов ';
+  $('#cart-panel').setAttribute('aria-label','Параметры материалов');
   function themeState(){const dark=document.documentElement.dataset.theme==='dark';$('#theme-toggle').setAttribute('aria-label',dark?'Включить светлую тему':'Включить тёмную тему');$('#theme-toggle').setAttribute('aria-pressed',String(dark));}
   $('#theme-toggle')?.addEventListener('click',()=>{document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark';try{localStorage.setItem('alfaglass-home-theme',document.documentElement.dataset.theme);}catch(e){}themeState();});
   $('#menu-toggle')?.addEventListener('click',()=>{const yes=$('#main-nav').classList.toggle('is-open');$('#menu-toggle').setAttribute('aria-expanded',String(yes));$('#menu-toggle').setAttribute('aria-label',yes?'Закрыть меню':'Открыть меню');});
-  if($('#theme-toggle'))themeState();render();if(omittedStoredItems)toast('Некоторые сохранённые позиции больше не соответствуют каталогу. Добавьте их заново с актуальным исполнением и толщиной.');
+  if($('#theme-toggle'))themeState();render();if(new URLSearchParams(location.search).has('quote-edit'))openCart();if(omittedStoredItems)toast('Некоторые сохранённые позиции больше не соответствуют каталогу. Добавьте их заново с актуальным исполнением и толщиной.');
 })();

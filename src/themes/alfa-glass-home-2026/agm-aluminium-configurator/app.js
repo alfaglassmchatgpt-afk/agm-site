@@ -1,3 +1,4 @@
+import {connectFacadeQuote} from './quote.js?v=20261029';
 import * as T from 'three';
 import {OrbitControls} from './vendor/OrbitControls.js';
 import {Reflector} from './vendor/Reflector.js';
@@ -17,6 +18,12 @@ glasses.none=['Без наполнения','none'];
 for(const item of catalogue.items)glasses[item.id]=[item.title,item.color];
 const $=s=>document.querySelector(s), s={profile:profiles[0].id,w:350,h:600,color:profiles[0].colors[0],glass:'none',glassOpaque:false,backdrop:false,hinge:'none',side:'left',origin:'top',hinges:[],handle:false,mask:false,reed:'vertical',view:'3d'};
 const defaults=structuredClone(s), project=new FacadeProject(defaults), confirmation=new ProjectConfirmation();
+const quote=await window.AGMQuoteReady;
+const sharedProject=connectFacadeQuote(project,confirmation,quote);
+Object.assign(s,structuredClone(project.current().config));
+$('#width').value=s.w;$('#height').value=s.h;
+for(const id of ['side','reed','origin','count'])$('#'+id).value=id==='count'?s.hinges.length:s[id];
+function saveProject(addAll=false){try{sharedProject.save(addAll);}catch(error){const p=document.createElement('p');p.textContent='Не удалось сохранить проект: '+error.message;$('#messages').append(p);}}
 const pair=()=>project.partner();
 const previewSide=()=>s.side;
 const scene=new T.Scene();scene.background=studioBackdrop();
@@ -171,7 +178,7 @@ function drawing(){const scale=Math.min(480/s.h,470/s.w),w=s.w*scale,h=s.h*scale
  const stripes=ribbed?`<defs><pattern id="drawing-ribs" patternUnits="userSpaceOnUse" width="${step}" height="${step}"><path d="${horizontal?'M0 .5H'+step:'M.5 0V'+step}" stroke="#426473" stroke-opacity=".38" stroke-width=".7"/></pattern></defs><rect data-rib-direction="${horizontal?'horizontal':'vertical'}" x="${x+inset}" y="${y+inset}" width="${Math.max(0,w-2*inset)}" height="${Math.max(0,h-2*inset)}" fill="url(#drawing-ribs)" pointer-events="none"><title>Направление рифления; частота полос на схеме условная</title></rect>`:'';
  $('#drawing').innerHTML=`${mfFrame||`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${glasses[s.glass][1]}" stroke="${colors[s.color][1]}" stroke-width="${Math.max(3,p.b*scale)}"/>`}${stripes}<path d="M${x} ${y-18}H${x+w} M${x-22} ${y}V${y+h}" class="dimension"/><text x="380" y="${y-26}" text-anchor="middle" class="dimtext">${s.w} мм</text><text x="${x-30}" y="310" transform="rotate(-90 ${x-30} 310)" text-anchor="middle" class="dimtext">${s.h} мм</text>${p.series==='MF-20'?s.hinges.map((v,i)=>`<circle cx="${hx}" cy="${i?y+h-6:y+6}" r="7" fill="#087ca7"/>`).join(''):s.hinges.map((v,i)=>`<g><circle class="hinge-dot" data-i="${i}" cx="${hx}" cy="${y+v*scale}" r="10" fill="#087ca7" stroke="white" stroke-width="3"/><text x="${previewSide()==='left'?hx+18:hx-18}" y="${y+v*scale+4}" text-anchor="${previewSide()==='left'?'start':'end'}" class="dimtext">${i+1} · ${s.origin==='top'?v:s.h-v} мм</text></g>`).join('')}`;}
 let drag=null;$('#drawing').onpointerdown=e=>{if(e.target.dataset.i!==undefined){drag=+e.target.dataset.i;$('#drawing').setPointerCapture(e.pointerId);}};$('#drawing').onpointermove=e=>{if(drag===null)return;const pt=new DOMPoint(e.clientX,e.clientY).matrixTransform($('#drawing').getScreenCTM().inverse());s.hinges[drag]=Math.max(1,Math.min(s.h-1,Math.round((pt.y-geometry.y)/geometry.scale)));hingeFields();update();};$('#drawing').onpointerup=$('#drawing').onpointercancel=()=>drag=null;
-function update(){if(profiles.find(p=>p.id===s.profile).series==='MF-20'&&s.hinges.length)s.hinges=[1,s.h-1];project.update(s);const p=profiles.find(p=>p.id===s.profile),v=validate(s);$('#export').disabled=project.items.some(item=>validate(item.config).errors.length>0);$('#messages').innerHTML=[...v.errors.map(t=>`<div class="message error">${t}</div>`),...v.warnings.map(t=>`<div class="message">${t}</div>`)].join('');$('#model-title').textContent='MODUS '+(s.view==='profile'&&s.handle?'MZ 13-01':assemblyLabel(p));$('#model-size').textContent=s.view==='profile'?(p.series!=='MZ'?(p.gripLength?'Хват 250 мм · профиль по 100 мм сверху и снизу':'Образец профиля 450 мм'):`Сечение ${sections[s.handle?'13-01':p.id].b} × ${sections[s.handle?'13-01':p.id].d} мм · отрезок 90 мм`):`${s.w} × ${s.h} мм`;$('#fact-profile').textContent=`${p.b} × ${p.d} мм`;$('#fact-glass').textContent=s.glass==='none'?'Без наполнения':`${glassCut(s).width} × ${glassCut(s).height} × 4`;$('#fact-limit').textContent=`${p.h} × ${p.w} мм`;$('#summary-title').textContent=`${assemblyLabel(p)} / ${s.w} × ${s.h} мм`;$('#summary-line').textContent=`${colors[s.color][0]} · ${glasses[s.glass][0]} · ${s.hinges.length?s.hinges.length+' петли':'Без петель и присадок'}`;renderProject();for(const item of project.items){if(item.id===project.activeId)continue;const errors=validate(item.config).errors;if(errors.length){const note=document.createElement('div');note.className='message error';note.textContent=item.name+': '+errors.join(' ');$('#messages').append(note);}}if(Number.isInteger(s.w)&&Number.isInteger(s.h)&&s.w>=200&&s.h>=200&&s.w<=6000&&s.h<=6000){build();drawing();}}
+function update(){if(profiles.find(p=>p.id===s.profile).series==='MF-20'&&s.hinges.length)s.hinges=[1,s.h-1];project.update(s);const p=profiles.find(p=>p.id===s.profile),v=validate(s);$('#export').disabled=project.items.some(item=>validate(item.config).errors.length>0);$('#messages').innerHTML=[...v.errors.map(t=>`<div class="message error">${t}</div>`),...v.warnings.map(t=>`<div class="message">${t}</div>`)].join('');$('#model-title').textContent='MODUS '+(s.view==='profile'&&s.handle?'MZ 13-01':assemblyLabel(p));$('#model-size').textContent=s.view==='profile'?(p.series!=='MZ'?(p.gripLength?'Хват 250 мм · профиль по 100 мм сверху и снизу':'Образец профиля 450 мм'):`Сечение ${sections[s.handle?'13-01':p.id].b} × ${sections[s.handle?'13-01':p.id].d} мм · отрезок 90 мм`):`${s.w} × ${s.h} мм`;$('#fact-profile').textContent=`${p.b} × ${p.d} мм`;$('#fact-glass').textContent=s.glass==='none'?'Без наполнения':`${glassCut(s).width} × ${glassCut(s).height} × 4`;$('#fact-limit').textContent=`${p.h} × ${p.w} мм`;$('#summary-title').textContent=`${assemblyLabel(p)} / ${s.w} × ${s.h} мм`;$('#summary-line').textContent=`${colors[s.color][0]} · ${glasses[s.glass][0]} · ${s.hinges.length?s.hinges.length+' петли':'Без петель и присадок'}`;renderProject();for(const item of project.items){if(item.id===project.activeId)continue;const errors=validate(item.config).errors;if(errors.length){const note=document.createElement('div');note.className='message error';note.textContent=item.name+': '+errors.join(' ');$('#messages').append(note);}}if(Number.isInteger(s.w)&&Number.isInteger(s.h)&&s.w>=200&&s.h>=200&&s.w<=6000&&s.h<=6000){build();drawing();}saveProject();}
 function glassChoices(){
  $('#glass-selected').textContent='Выбрано: '+glassItems[s.glass].title;
  $('#glass-categories').querySelectorAll('[data-glass]').forEach(b=>{const active=b.dataset.glass===s.glass;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});
@@ -224,7 +231,7 @@ function renderProject(){
 function activate(id){project.activeId=id;const view=s.view;Object.assign(s,structuredClone(project.current().config),{view});
  $('#width').value=s.w;$('#height').value=s.h;for(const id of ['side','reed','origin','count'])$('#'+id).value=id==='count'?s.hinges.length:s[id];controls();update();fit();}
 $('#facade-select').onchange=e=>activate(e.target.value);
-$('#facade-name').oninput=e=>{project.current().name=e.target.value.trim()||'Без названия';renderProject();};
+$('#facade-name').oninput=e=>{project.current().name=e.target.value.trim()||'Без названия';renderProject();saveProject();};
 $('#remove-facade').onclick=()=>{project.update(s);if(project.remove())activate(project.activeId);};
 $('#undo-remove').onclick=()=>{project.update(s);if(project.undoRemove())activate(project.activeId);};
 $('#add-facade').onclick=()=>$('#add-dialog').showModal();
@@ -232,25 +239,8 @@ $('#close-add').onclick=()=>$('#add-dialog').close();
 for(const kind of ['mirror','copy','new'])$('#add-'+kind).onclick=()=>{project.update(s);const item=project.add(kind);$('#add-dialog').close();activate(item.id);};
 $('#theme').onclick=()=>document.body.classList.toggle('dark');
 $('#profile-details').onclick=()=>{const p=profiles.find(p=>p.id===s.profile);$('#detail-title').textContent='MODUS '+assemblyLabel(p);$('#detail-body').innerHTML=svgSection(p.id,colors[s.color][1],true)+(s.handle?svgSection('13-01',colors[s.color][1],true):'')+`<p class="section-source">${sectionNotes}</p><p>Габарит сечения ${p.b} × ${p.d} мм. Стекло 4 мм. Минимальный размер в модели — 200 × 200 мм; это не производственный допуск. Рекомендуемые максимальные размеры: высота ${p.h}, ширина ${p.w} мм.</p><p>Для стекла: из ширины вычитается ${p.deltaW??p.delta} мм, из высоты — ${p.deltaH??p.delta} мм. ${p.edge?'Кромки стекла дополнительно обрабатываются; заполнение вклеивается.':''}</p><p>${p.note||'Цвета указаны по каталогу; доступность проверяется при заказе.'}</p><p>Сечения построены по каталогу, неуказанные толщины и радиусы оценочные. Петли условные. Чертежи обработки на странице 65 относятся к сборочным уголкам, а не к присадке петель. Для производства необходима выбранная модель петли и согласованный чертёж.</p>`;$('#details').showModal();};$('#close-details').onclick=()=>$('#details').close();
-$('#confirm-project').onclick=()=>{project.update(s);confirmation.confirm(project.items,!project.items.some(item=>validate(item.config).errors.length));confirmationControls();};
-$('#send-project').onclick=event=>{project.update(s);if(!confirmationControls()){event.preventDefault();event.stopImmediatePropagation();return;}
- const form=$('#al-request-form');
- form.elements.product.value='facades';
- form.elements.product.closest('label').style.display='none';
- $('#al-request-title').textContent='Мой расчёт · Фасады';
- $('#al-request-title').nextElementSibling.textContent='Оставьте контакты — уточним стоимость и изготовление выбранных фасадов.';
- form.elements.dimensions.readOnly=true;
- form.elements.dimensions.value='Количество фасадов: '+project.items.length+'; комплектация ниже.';
- form.elements.facade_details.value=project.items.map((item,i)=>{
-  const c=item.config,p=profiles.find(p=>p.id===c.profile),cut=c.glass==='none'?null:glassCut(c);
-  return [(i+1)+'. '+item.name,c.w+' × '+c.h+' мм; количество: 1',
-   'Профиль: MODUS '+assemblyLabel(p),'Цвет: '+colors[c.color][0],'Заполнение: '+glasses[c.glass][0],
-   cut?'Стекло: '+cut.width+' × '+cut.height+' × 4 мм':'Без наполнения',
-   'Петли: '+({none:'Без петель',mf20:'Скрытые MF 20',narrow:'Для узкого профиля',mzf:'MZF 63',blum:'BLUM 71B950A',cup:'Чашка 35 мм — модель уточнить'}[c.hinge]||c.hinge)+'; сторона: '+(c.side==='left'?'слева':'справа')+'; отсчёт: '+(c.origin==='top'?'сверху':'снизу')+'; координаты, мм: '+c.hinges.join(', '),
-   'Ручка MZ 13-01: '+(c.handle?'да':'нет')+'; направление рифления: '+(c.reed==='vertical'?'вертикальное':'горизонтальное'),
-   'Маскировка зоны вклейки: '+(c.mask?'да':'нет'),...validate(c).warnings,'Параметры предварительные; производственный чертёж согласовать.'].join('\n');
- }).join('\n\n');
-};
+$('#confirm-project').onclick=()=>{project.update(s);confirmation.confirm(project.items,!project.items.some(item=>validate(item.config).errors.length));confirmationControls();saveProject();};
+$('#send-project').onclick=event=>{project.update(s);if(!confirmationControls()){event.preventDefault();event.stopImmediatePropagation();return;}saveProject(true);quote.open();};
 $('#export').onclick=()=>{project.update(s);if(project.items.some(item=>validate(item.config).errors.length))return;
  const items=project.items.map(item=>{const c=item.config,p=profiles.find(p=>p.id===c.profile),g=glassItems[c.glass];return {...structuredClone(item),quantity:1,series:p.series,baseProfile:p.baseId||p.id,integratedHandle:p.baseId?{id:p.id,length:p.gripLength||c.h}:null,profileAssembly:assemblyLabel(p),material:c.glass==='none'?null:{slug:g.slug,variant:g.variant,title:g.title,thickness:4,catalogueSnapshot:catalogue.snapshot},glassCut:c.glass==='none'?null:glassCut(c),hingePlacement:p.series==='MF-20'&&c.hinges.length?{type:'top-bottom',count:2,coordinatesAreSchematic:true}:null,warnings:validate(c).warnings};});
  const blob=new Blob([JSON.stringify({status:'prototype-not-for-production',source,items},null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='modus-facades-project.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};

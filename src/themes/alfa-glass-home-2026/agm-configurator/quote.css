@@ -1,0 +1,36 @@
+#quote-drawer,#quote-checkout,#quote-launcher{font:16px/1.5 Arial,sans-serif;color:#18343c;box-sizing:border-box}
+#quote-drawer *,#quote-checkout *{box-sizing:border-box}
+#quote-drawer[hidden]{display:none!important}
+#quote-drawer{position:fixed;inset:12px 12px 12px auto;width:min(470px,calc(100% - 24px));z-index:20000;background:#fafcfc;border:1px solid #c9d4d7;border-radius:18px;padding:22px;overflow:auto;box-shadow:0 12px 50px #112e3c30}
+#quote-launcher{position:fixed;right:22px;bottom:20px;z-index:1200;border:1px solid #b5cdd2;border-radius:50px;background:#173c48;color:#fff;padding:13px 22px;cursor:pointer}
+#quote-drawer h2,#quote-checkout h2{font:600 24px/1.2 Arial,sans-serif;margin:0}
+.quote-top{display:flex;align-items:center;justify-content:space-between;gap:16px}
+#quote-drawer h3{font:600 17px/1.4 Arial,sans-serif;margin:0 0 10px}
+#quote-drawer nav{position:static;display:flex;flex-wrap:wrap;justify-content:flex-start;align-items:center;gap:8px;margin:16px 0}
+#quote-drawer a,#quote-checkout a{color:#12667d;text-decoration:underline}
+#quote-drawer nav a{font-size:14px;background:#edf3f4;padding:6px 9px;border-radius:8px}
+.quote-item{border-top:1px solid #d5dfe1;padding:12px 0}
+#quote-drawer .quote-item p{font-size:14px;margin:6px 0;line-height:1.5}
+#quote-drawer details,#quote-checkout details{padding:0;border:0;background:none;box-shadow:none}
+#quote-drawer .quote-item details{margin:7px 0 10px}
+#quote-drawer summary{font:14px/1.5 Arial,sans-serif;padding:0;margin:0;cursor:pointer;color:#12667d}
+#quote-drawer pre,#quote-checkout pre{white-space:pre-wrap;overflow-wrap:anywhere;font:14px/1.6 Arial,sans-serif;color:inherit;margin:0 0 14px}
+.quote-item>div,.quote-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+#quote-drawer button,#quote-checkout button{font:inherit;cursor:pointer;background:#edf3f4;border:1px solid #c9d4d7;border-radius:9px;padding:8px 12px;color:inherit}
+#quote-drawer button:disabled,#quote-checkout button:disabled{opacity:.5;cursor:default}
+.quote-actions button:first-child,#quote-checkout button[type=submit]{background:#173c48;color:#fff}
+.quote-error{color:#a22c21;font-size:14px}
+#quote-checkout{width:min(600px,calc(100% - 24px));max-height:calc(100vh - 24px);max-height:calc(100dvh - 24px);background:#fafcfc;border:1px solid #c9d4d7;border-radius:18px;padding:24px;overflow:auto}
+#quote-checkout::backdrop{background:#172f3b80}
+#quote-checkout form{display:grid;gap:14px;margin-top:18px}
+#quote-checkout label{display:grid;gap:5px}
+#quote-checkout input:not([type=checkbox]),#quote-checkout textarea{width:100%;font:16px Arial,sans-serif;padding:11px;border:1px solid #aebfc4;border-radius:7px;background:white;color:#18343c}
+#quote-checkout .quote-consent{display:flex;align-items:flex-start;font-size:13px;gap:10px}
+#quote-checkout .quote-consent input{width:18px;height:18px;flex-shrink:0}
+#quote-checkout .quote-trap{position:absolute;left:-10000px}
+#quote-checkout p{margin:6px 0}
+#quote-checkout details{margin:16px 0}
+#quote-drawer button:focus-visible,#quote-checkout button:focus-visible,#quote-launcher:focus-visible{outline:2px solid #1586a1;outline-offset:3px}
+#mp-reopen{display:none!important}
+.agm-quote-ready .cart-mobile[data-open-cart]{display:none!important}
+@media(max-width:500px){#quote-drawer{padding:16px}#quote-launcher{right:12px;bottom:12px}#quote-checkout{padding:18px}}

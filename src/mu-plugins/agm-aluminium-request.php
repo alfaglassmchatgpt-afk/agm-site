@@ -8,6 +8,16 @@ function agm_al_request_disabled() {
 function agm_al_request_token($id, $time) {
     return hash_hmac('sha256', $id . '|' . $time, wp_salt('nonce'));
 }
+/** A single specification for mixed product types. No prices or manufacturing approval implied. */
+function agm_quote_items_text($items) {
+    if (!is_array($items) || !$items || array_keys($items)!==range(0,count($items)-1) || strlen(wp_json_encode($items))>1048576) return new WP_Error('items','Проверьте состав общей заявки (не более 1 МБ).',['status'=>400]);
+    $text='';
+    foreach ($items as $n=>$item) {
+        if (!is_array($item) || !isset($item['type'],$item['title'],$item['summary']) || !is_string($item['type']) || !in_array($item['type'],['material','mirror','facade','partition'],true) || !is_string($item['title']) || !is_string($item['summary']) || !trim($item['title']) || !trim($item['summary']) || strlen($item['title'])>1000 || strlen($item['summary'])>100000) return new WP_Error('items','Проверьте параметры каждой позиции.',['status'=>400]);
+        $text.=($n+1).'. '.sanitize_text_field($item['title'])."\n".sanitize_textarea_field($item['summary'])."\n\n";
+    }
+    return $text;
+}
 function agm_al_request_send($request) {
     if (agm_al_request_disabled()) return new WP_Error('disabled', 'Отправка в тестовой среде отключена.', ['status'=>503]);
     $p=$request->get_json_params();
@@ -22,7 +32,12 @@ function agm_al_request_send($request) {
     if (!preg_match('/^[a-f0-9]{32}$/D',$id) || $time>time()-2 || $time<time()-3600 || !hash_equals(agm_al_request_token($id,$time),$p['token'])) return new WP_Error('token','Обновите форму и повторите попытку.',['status'=>403]);
     $origin=$request->get_header('origin');
     if ($origin && wp_parse_url($origin,PHP_URL_HOST)!==wp_parse_url(home_url(),PHP_URL_HOST)) return new WP_Error('origin','Запрос отклонён.',['status'=>403]);
-    $types=['facades'=>'Фасады в алюминиевом профиле','partitions'=>'Перегородки в алюминиевом профиле','mirrors'=>'Зеркала в алюминиевой раме'];
+    $types=['facades'=>'Фасады в алюминиевом профиле','partitions'=>'Перегородки в алюминиевом профиле','mirrors'=>'Зеркала в алюминиевой раме','mixed'=>'Мой расчёт — общий заказ'];
+    $mixed='';
+    if ($p['product']==='mixed') {
+        $mixed=agm_quote_items_text($p['items']??null);
+        if (is_wp_error($mixed)) return $mixed;
+    }
     $phone=preg_replace('/\D/','',$p['phone']);
     if ($p['website']!=='' || $p['consent']!=='1' || !isset($types[$p['product']]) || !trim($p['name']) || strlen($p['name'])>400 || !preg_match('/^[78]\d{10}$/D',$phone) || ($p['email']!==''&&!is_email($p['email'])) || strlen($p['dimensions'])>1200) return new WP_Error('fields','Укажите изделие, имя, полный телефон и согласие. Проверьте email.',['status'=>400]);
     if (get_transient('agm_al_sent_'.$id)) return ['ok'=>true,'message'=>'Ваш запрос уже передан. Мы свяжемся с вами.'];
@@ -36,6 +51,7 @@ function agm_al_request_send($request) {
     $body="ALFAGLASS / ALUMINIUM\nИзделие: ".$types[$p['product']]."\n";
     foreach (['name'=>'Имя','phone'=>'Телефон','email'=>'Email','dimensions'=>'Размеры и количество','comment'=>'Комментарий'] as $key=>$label) $body.=$label.': '.sanitize_textarea_field($p[$key])."\n";
     $body.="Согласие на обработку персональных данных: получено.\n";
+    if ($mixed!=='') $body.="\nСостав общего заказа:\n".$mixed;
     if (!empty($p['mirror_details'])) $body.="\nЗеркала в заявке:\n".sanitize_textarea_field($p['mirror_details'])."\n";
     if (!empty($p['facade_details'])) $body.="\nФасады в заявке:\n".sanitize_textarea_field($p['facade_details'])."\n";
     // Reuse the site's public enquiry mailbox rather than a new delivery integration.

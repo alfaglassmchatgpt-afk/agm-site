@@ -297,6 +297,14 @@
     "prices": false,
     "mediaFiles": 24,
     "mediaInPublicGit": false
+  },
+  "localQuotePreview": {
+    "date": "2026-10-29",
+    "status": "local-only-awaiting-approval",
+    "host": "127.0.0.1",
+    "port": 8794,
+    "server": ".local/quote-preview/server.cjs",
+    "mailEnabled": false,
+    "productionDeployed": false
   }
 }
-

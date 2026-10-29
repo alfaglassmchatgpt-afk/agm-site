@@ -14,6 +14,8 @@ if (!in_array($slug, $allowed, true)) { status_header(404); exit; }
 $html = file_get_contents(get_template_directory() . '/agm-glass/' . $slug . '.html');
 if ($slug === 'catalog') { $html = agm_material_catalog_render($html); }
 if ($slug !== 'catalog') { $html = agm_order_render($html, $slug, false); }
+require_once __DIR__.'/inc/agm-quote.php';
+$html=agm_quote_assets($html);
 ob_start(); wp_head(); $head = ob_get_clean();
 ob_start(); wp_body_open(); $body = ob_get_clean();
 ob_start(); wp_footer(); $footer = ob_get_clean();

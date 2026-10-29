@@ -1,5 +1,9 @@
 # Инвентаризация 2026-09-21
 
+## Локальный предпросмотр общей заявки — 2026-10-29
+
+Loopback 127.0.0.1:8794, Node-сервер .local/quote-preview/server.cjs, PHP-рендер без WordPress/БД. Только GET; POST запрещён. Медиа и снимки вне Git. Ветка codex/unified-calculation, перенос на production не выполнен.
+
 ## Production: зеркала Aluminium — 2026-10-23
 
 Страница /aluminium/zerkala/ (5468); ресурсы agm-aluminium-catalog/mirrors.*, mirror-request.js; общий agm-configurator/mirror-panel.js. Заявка использует существующий REST Aluminium и wp_mail. Изображения WebP развёрнуты выборочно, вне Git. Разработка локальная, прежняя dev-ВМ не использовалась.
