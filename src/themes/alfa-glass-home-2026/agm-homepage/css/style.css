@@ -535,3 +535,7 @@ html[data-theme="dark"] .hero-caption #slide-label{color:#9fddfc}
 
 /* Eight unified product cards: four columns on wide screens. */
 @media(min-width:1100px){.products-grid,.products-grid.is-filtered{grid-template-columns:repeat(4,minmax(0,1fr))}}
+
+.detail-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px;align-items:center}
+.detail-actions [hidden]{display:none!important}
+.detail-actions .button{padding-inline:16px;font-size:12px}

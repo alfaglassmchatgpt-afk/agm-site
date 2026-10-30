@@ -119,6 +119,23 @@
     if (!item) return;
     state.detail = item;
     const materialPaths = {"m-mirror-silver": "zerkalo-serebro/", "m-mirror-clear": "zerkalo-osvetlyonnoe/", "m-mirror-tinted": "tonirovannye-zerkala/", "m-mirror-aged": "?group=sostarennye-zerkala", "m-glass-m1": "float-steklo-clear-m1/", "m-glass-clear": "steklo-osvetlyonnoe-clearvision/", "m-glass-fluted": "?group=riflenoe-steklo", "m-glass-tinted": "?group=tonirovannoe-steklo", "m-glass-reflective": "steklo-solnczezashhitnoe-stopsol/", "m-glass-painted": "?group=okrashennoe-steklo"};
+    const productPages = {
+      'p-partitions': ['aluminium/peregorodki/', 'Стеклянные перегородки'],
+      'p-facades': ['aluminium/fasady/', 'Мебельные фасады'],
+      'p-frame': ['aluminium/zerkala/', 'Зеркала в раме'],
+      'p-led': ['zerkala-s-podsvetkoj/', 'Зеркала с подсветкой']
+    };
+    const productLink = $('#detail-product-link');
+    const productPage = productPages[id];
+    if (productLink) {
+    productLink.hidden = !productPage;
+    productLink.removeAttribute('href');
+    productLink.textContent = '';
+    if (productPage) {
+      productLink.href = productLink.dataset.homeRoot + productPage[0];
+      productLink.textContent = productPage[1] + ' →';
+    }
+    }
     const materialLink = $('#detail-material-link');
     const materialPath = materialPaths[id];
     materialLink.hidden = !materialPath;
@@ -129,7 +146,8 @@
     $('#detail-kind').textContent = item.kind;
     $('#detail-title').textContent = item.title;
     $('#detail-description').textContent = item.description;
-    $('#detail-image').src = asset(item.img);
+    const cardImage = id.startsWith('p-') ? document.querySelector('#product-' + id.slice(2) + ' img') : null;
+    $('#detail-image').src = cardImage ? cardImage.src : asset(item.img);
     $('#detail-image').alt = item.title + ' — визуализация';
     const dl = $('#detail-specs'); dl.replaceChildren();
     item.specs.forEach(([name, value]) => {
