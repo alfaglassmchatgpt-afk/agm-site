@@ -1,0 +1,33 @@
+# Проверка публичных ссылок — 30 октября 2026
+
+Проверены 169 адресов без авторизации: обход HTML-ссылок от главной и страниц из page-, post- и category-sitemap. В число входят старые адреса с перенаправлениями и страница входа. Параметры фильтров и якоря объединены; ссылки, создаваемые только JavaScript, файлы и внешние сайты не проверялись. Полный технический отчёт хранится вне Git.
+
+## Найденные недоступные разделы
+
+| Адрес | Результат | Где есть ссылка |
+| --- | --- | --- |
+| /nashe-proizvodstvo/ | 404 | /zerkala-s-podsvetkoj/; старые /product/zerkalo-s-podsvetkoj/ и /catalog/zerkala-s-podsvetkoj/ перенаправляют на неё |
+| /payment/ | 410 — страница закрыта | /category/bez-rubriki/ |
+| /warranty/ | 410 — страница закрыта | /category/bez-rubriki/ |
+| /faq/ | 410 — страница закрыта | /category/bez-rubriki/ |
+| /izdeliya/steklyannye-dveri/ | Перенаправление на вход WordPress | Старые статьи и рубрика, список ниже |
+| /izdeliya/steklyannye-ograzhdeniya/ | Перенаправление на вход WordPress | Старые статьи и рубрика, список ниже |
+
+Старые /product/steklyannye-dveri/ и /product/steklyannye-lestnichnye-ograzhdeniya/ также ведут на закрытые страницы. Ответ 200 страницы входа не означает доступность товара.
+
+### Источники ссылок на закрытые двери и ограждения
+
+- /peskostrujnaya-obrabotka-dlya-chego-nuzhna/
+- /zerkala-v-interere-idei/
+- /iz-chego-delayut-zerkalo/
+- /riflenoe-steklo-v-interere/
+- /teploizolyaczionnye-harakteristiki-stekla-teploperedacha-i-teploprovodnost/
+- /plyusy-i-minusy-steklyannogo-fartuka-dlya-kuhni/
+- /teploizolyatsionnye-harakteristiki-stekla/
+- /category/bez-rubriki/
+
+## Подготовленные изменения
+
+Локально удалены три ссылки на производство: две из agm-homepage/index.html и одна из agm-led/index.html. На действующей публичной главной этих ссылок при обходе нет; на LED остаётся одна. Тексты о собственном производстве сохранены. Страница производства не удалялась и её доступ не менялся. Публикация пока не выполнялась: сначала утверждение локальных изменений. Перед переносом сравнить с текущими файлами БС и убрать только соответствующие ссылки.
+
+Остальные найденные ссылки пока только зафиксированы. Для старых меню нужно сверить актуальный шаблон и содержимое WordPress, сохранив подписи без переходов на закрытые страницы.
