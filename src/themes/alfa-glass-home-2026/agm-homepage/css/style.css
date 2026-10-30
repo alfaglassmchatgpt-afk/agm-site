@@ -532,3 +532,6 @@ html[data-theme="dark"] .hero-caption #slide-label{color:#9fddfc}
 /* Keep mirror products inside wide hero frames; SVG uses the same object position. */
 .hero-art>img.mirror-fit{object-position:50% 25%}
 @media(min-width:2000px){.hero-inner{min-height:max(550px,22vw)}}
+
+/* Eight unified product cards: four columns on wide screens. */
+@media(min-width:1100px){.products-grid,.products-grid.is-filtered{grid-template-columns:repeat(4,minmax(0,1fr))}}
