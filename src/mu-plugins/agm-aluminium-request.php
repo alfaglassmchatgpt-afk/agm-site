@@ -13,7 +13,7 @@ function agm_quote_items_text($items) {
     if (!is_array($items) || !$items || array_keys($items)!==range(0,count($items)-1) || strlen(wp_json_encode($items))>1048576) return new WP_Error('items','Проверьте состав общей заявки (не более 1 МБ).',['status'=>400]);
     $text='';
     foreach ($items as $n=>$item) {
-        if (!is_array($item) || !isset($item['type'],$item['title'],$item['summary']) || !is_string($item['type']) || !in_array($item['type'],['material','mirror','facade','partition'],true) || !is_string($item['title']) || !is_string($item['summary']) || !trim($item['title']) || !trim($item['summary']) || strlen($item['title'])>1000 || strlen($item['summary'])>100000) return new WP_Error('items','Проверьте параметры каждой позиции.',['status'=>400]);
+        if (!is_array($item) || !isset($item['type'],$item['title'],$item['summary']) || !is_string($item['type']) || !in_array($item['type'],['material','mirror','facade','partition','door'],true) || !is_string($item['title']) || !is_string($item['summary']) || !trim($item['title']) || !trim($item['summary']) || strlen($item['title'])>1000 || strlen($item['summary'])>100000) return new WP_Error('items','Проверьте параметры каждой позиции.',['status'=>400]);
         $text.=($n+1).'. '.sanitize_text_field($item['title'])."\n".sanitize_textarea_field($item['summary'])."\n\n";
     }
     return $text;

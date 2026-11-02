@@ -15,7 +15,7 @@
  top.append(heading,button('Закрыть',close));
  const intro=el('p','Все выбранные изделия — в одной заявке. Можно продолжить выбор на других страницах.'),list=el('div'),status=el('p');status.setAttribute('role','status');
  const links=el('nav');links.setAttribute('aria-label','Добавить к заказу');
- for(const [url,title] of [['/materialy/zerkalo-serebro/','Обычное зеркало'],['/aluminium/zerkala/','Зеркало в раме'],['/wp-content/themes/alfa-glass-home-2026/agm-aluminium-configurator/index.html','Фасад'],['/aluminium/peregorodki/','Перегородка']]){const a=el('a',title);a.href=url;links.append(a);}
+ for(const [url,title] of [['/materialy/zerkalo-serebro/','Обычное зеркало'],['/aluminium/zerkala/','Зеркало в раме'],['/wp-content/themes/alfa-glass-home-2026/agm-aluminium-configurator/index.html','Фасад'],['/aluminium/peregorodki/','Перегородка'],['/dveri-iz-stekla/','Дверь из стекла']]){const a=el('a',title);a.href=url;links.append(a);}
  const actions=el('div');actions.className='quote-actions';
  const checkout=button('Оформить общую заявку',prepare),download=button('Скачать весь расчёт',exportText);
  checkout.disabled=download.disabled=true;

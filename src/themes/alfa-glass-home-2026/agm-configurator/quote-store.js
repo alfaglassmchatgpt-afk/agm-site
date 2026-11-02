@@ -1,6 +1,6 @@
 (function(root,factory){const api=factory();if(typeof module==='object'&&module.exports)module.exports=api;else root.AGMQuoteStore=api;})(typeof globalThis!=='undefined'?globalThis:this,function(){
  'use strict';
- const prefix='agm-quote-v1:', types=['material','mirror','facade','partition'];
+ const prefix='agm-quote-v1:', types=['material','mirror','facade','partition','door'];
  const clone=x=>JSON.parse(JSON.stringify(x));
  function create(storage,notify=()=>{}){
   const key=(type,id)=>prefix+type+':'+encodeURIComponent(id);

@@ -1,7 +1,7 @@
 <?php
 /** Shared homepage header with Aluminium navigation; no duplicated contact data. */
 defined('ABSPATH') || exit;
-function agm_aluminium_header($slug) {
+function agm_aluminium_header($slug, $navigation = null, $requestTarget = null) {
     $home = file_get_contents(get_template_directory() . '/agm-homepage/index.html');
     if (!preg_match('~<header class="site-header">.*?</header>~s', $home, $match)) return '';
     $header = str_replace('class="site-header"', 'class="site-header aluminium-header"', $match[0]);
@@ -18,9 +18,16 @@ function agm_aluminium_header($slug) {
         $links .= '<a href="' . esc_url(home_url($url)) . '"' . ($key === $slug ? ' aria-current="page"' : '') . ($key === 'aluminium' ? ' class="aluminium-home"' : '') . '>' . $label . '</a>';
     }
     $links .= '<a href="' . esc_url(home_url('/materialy/')) . '">Стекло и зеркала</a>';
+    if ($navigation !== null) {
+        $links = '';
+        foreach ($navigation as $url => $label) {
+            $links .= '<a href="' . esc_url(home_url($url)) . '"' . ($url === '/' . $slug . '/' ? ' aria-current="page"' : '') . '>' . htmlspecialchars($label, ENT_QUOTES, 'UTF-8') . '</a>';
+        }
+    }
     $header = preg_replace_callback('~(<nav\b[^>]*>).*?</nav>~s', function($m) use ($links) { return $m[1] . $links . '</nav>'; }, $header);
     $header = preg_replace('~<button[^>]*class="[^"]*(?:asr-trigger|search-toggle)[^"]*"[^>]*>.*?</button>~s', '', $header);
     $target = $slug === 'fasady' ? '/wp-content/themes/alfa-glass-home-2026/agm-aluminium-configurator/index.html' : '/aluminium/' . $slug . '/#' . ($slug === 'zerkala' ? 'calculation' : 'partition-scene');
+    if ($requestTarget !== null) $target = $requestTarget;
     $attribute = ' data-open-quote';
     $header = str_replace('href="#request"', 'href="' . esc_url(home_url($target)) . '"' . $attribute, $header);
     return str_replace('Получить расчёт', 'Мой расчёт', $header);

@@ -1,0 +1,138 @@
+{
+  "float-steklo-clear-m1": {
+    "tint": "rgba(135,183,164,.19)",
+    "edge": "#6e9c88",
+    "type": "clear",
+    "blur": 0,
+    "spacing": 8,
+    "image": "/wp-content/themes/alfa-glass-home-2026/agm-glass/assets/generated/clear-m1-4mm-v2.png"
+  },
+  "estriado": {
+    "tint": "rgba(139,178,158,.24)",
+    "edge": "#729482",
+    "type": "ribbed",
+    "blur": 0.8,
+    "spacing": 5,
+    "image": "/wp-content/themes/alfa-glass-home-2026/agm-glass/assets/generated/estriado-ordinary-4-moru-style-v2.png"
+  },
+  "estriado-crystal": {
+    "tint": "rgba(184,211,202,.15)",
+    "edge": "#8aa99b",
+    "type": "ribbed",
+    "blur": 0.6,
+    "spacing": 5,
+    "image": "/wp-content/themes/alfa-glass-home-2026/agm-glass/assets/generated/estriado-crystal-4-moru-style-v2.png"
+  },
+  "estriado-ultra": {
+    "tint": "rgba(230,242,242,.10)",
+    "edge": "#a3bec0",
+    "type": "ribbed",
+    "blur": 0.5,
+    "spacing": 5,
+    "image": "/wp-content/themes/alfa-glass-home-2026/agm-glass/assets/generated/estriado-ultra-4-moru-style-v2.png"
+  },
+  "vison-sun": {
+    "tint": "rgba(220,237,240,.12)",
+    "edge": "#96b7be",
+    "type": "ribbed",
+    "blur": 0.6,
+    "spacing": 12,
+    "image": "/wp-content/themes/alfa-glass-home-2026/agm-glass/assets/generated/vision-sun-ultra-approved-v1.png"
+  },
+  "moru-crystal": {
+    "tint": "rgba(183,210,204,.17)",
+    "edge": "#8eaaa2",
+    "type": "ribbed",
+    "blur": 0.8,
+    "spacing": 8,
+    "image": "/wp-content/themes/alfa-glass-home-2026/agm-glass/assets/generated/moru-crystal-sample-v1.png"
+  },
+  "moru-ultra": {
+    "tint": "rgba(228,240,242,.10)",
+    "edge": "#9dbbc0",
+    "type": "ribbed",
+    "blur": 0.7,
+    "spacing": 8,
+    "image": "/wp-content/themes/alfa-glass-home-2026/agm-glass/assets/generated/moru-ultra-sample-v1.png"
+  },
+  "tonirovannoe-steklo-grey": {
+    "tint": "rgba(63,73,78,.46)",
+    "edge": "#596369",
+    "type": "tinted",
+    "blur": 0,
+    "spacing": 8,
+    "image": "/wp-content/themes/alfa-glass-home-2026/agm-glass/assets/generated/tinted-grey-v1.png"
+  },
+  "moru-bronze": {
+    "tint": "rgba(132,91,48,.47)",
+    "edge": "#85633d",
+    "type": "tinted",
+    "blur": 0,
+    "spacing": 8,
+    "image": "/wp-content/themes/alfa-glass-home-2026/agm-glass/assets/generated/moru-bronze-v1.png"
+  },
+  "tonirovannoe-steklo-green": {
+    "tint": "rgba(42,121,79,.43)",
+    "edge": "#337e57",
+    "type": "tinted",
+    "blur": 0,
+    "spacing": 8,
+    "image": "/wp-content/themes/alfa-glass-home-2026/agm-glass/assets/generated/tinted-green-4mm-v1.png"
+  },
+  "tonirovannoe-steklo-black": {
+    "tint": "rgba(20,24,28,.78)",
+    "edge": "#252d32",
+    "type": "tinted",
+    "blur": 0,
+    "spacing": 8,
+    "image": "/wp-content/themes/alfa-glass-home-2026/agm-glass/assets/generated/tinted-black-4mm-v1.png"
+  },
+  "steklo-matovoe-matelux": {
+    "tint": "rgba(219,231,220,.79)",
+    "edge": "#a0b7a5",
+    "type": "matte",
+    "blur": 7,
+    "spacing": 8,
+    "image": "/wp-content/themes/alfa-glass-home-2026/agm-glass/assets/generated/steklo-matovoe-matelux-v1.png"
+  },
+  "steklo-matovoe-osvetlyonnoe": {
+    "tint": "rgba(242,247,246,.86)",
+    "edge": "#c0cfcb",
+    "type": "matte",
+    "blur": 8,
+    "spacing": 8,
+    "image": "/wp-content/themes/alfa-glass-home-2026/agm-glass/assets/generated/matte-lowiron-4mm-v1.png"
+  },
+  "moru-bronze-mat": {
+    "tint": "rgba(161,125,87,.79)",
+    "edge": "#927453",
+    "type": "matte",
+    "blur": 7,
+    "spacing": 8,
+    "image": "/wp-content/themes/alfa-glass-home-2026/agm-glass/assets/generated/matte-bronze-4mm-v1.png"
+  },
+  "moru-grey-mat": {
+    "tint": "rgba(134,145,148,.80)",
+    "edge": "#79868c",
+    "type": "matte",
+    "blur": 7,
+    "spacing": 8,
+    "image": "/wp-content/themes/alfa-glass-home-2026/agm-glass/assets/generated/matte-grey-4mm-v1.png"
+  },
+  "steklo-kristalvizhn-crystalvision": {
+    "tint": "rgba(218,238,239,.08)",
+    "edge": "#a4c3c4",
+    "type": "clear",
+    "blur": 0,
+    "spacing": 8,
+    "image": "/wp-content/themes/alfa-glass-home-2026/agm-glass/assets/generated/clear-crystalvision-4mm-v2.png"
+  },
+  "steklo-osvetlyonnoe-clearvision": {
+    "tint": "rgba(240,249,249,.06)",
+    "edge": "#b4ccce",
+    "type": "clear",
+    "blur": 0,
+    "spacing": 8,
+    "image": "/wp-content/themes/alfa-glass-home-2026/agm-glass/assets/generated/clear-extra-clear-4mm-v2.png"
+  }
+}

@@ -25,8 +25,9 @@ class Request {public $data;function __construct($d){$this->data=$d;}function ge
 require dirname(__DIR__).'/src/mu-plugins/agm-aluminium-request.php';
 function check($condition,$label){if(!$condition)throw new Exception($label);}
 $items=[['type'=>'material','title'=>'Обычное зеркало','summary'=>"600 × 900 мм\n4 мм; 2 шт."],['type'=>'mirror','title'=>'Зеркало в раме','summary'=>"Диаметр 800 мм\nПодсветка: Да"],['type'=>'facade','title'=>'Фасад','summary'=>"350 × 600 мм\nMODUS MZ 01; Серебро"]];
+$items[]=['type'=>'door','title'=>'Маятниковая дверь','summary'=>"900 × 2100 мм\n8 мм; FKF-20 + FKF-21"];
 $id=str_repeat('a',32);$time=(string)(time()-5);
-$data=['id'=>$id,'time'=>$time,'token'=>agm_al_request_token($id,$time),'product'=>'mixed','name'=>'Локальная проверка','phone'=>'+70000000000','email'=>'','dimensions'=>'Позиций: 3','comment'=>'','consent'=>'1','website'=>'','items'=>$items];
+$data=['id'=>$id,'time'=>$time,'token'=>agm_al_request_token($id,$time),'product'=>'mixed','name'=>'Локальная проверка','phone'=>'+70000000000','email'=>'','dimensions'=>'Позиций: 4','comment'=>'','consent'=>'1','website'=>'','items'=>$items];
 $result=agm_al_request_send(new Request($data));
 if(defined('AGM_STAGING')){check(is_wp_error($result)&&$result->code==='disabled','staging blocked');check(!$mails,'No staging mail');echo "PASS staging remains disabled\n";exit;}
 check(!is_wp_error($result)&&$result['ok'],'Mixed handler succeeds');check(count($mails)===1,'Exactly one mail');
