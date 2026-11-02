@@ -138,7 +138,7 @@ html[data-theme="dark"] .client-photo{filter:brightness(.8)}
 .filter.active,.filter:hover{color:var(--blue);border-color:var(--blue);background:var(--soft-blue)}
 .materials-grid{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:10px}
 .material-card{min-width:0;border:1px solid var(--line);border-radius:7px;overflow:hidden;background:var(--surface);transition:border-color .2s,transform .2s}
-.material-card>button{padding:0 0 8px;display:flex;flex-direction:column;align-items:center;width:100%;height:100%;text-align:center}
+.material-card>button,.material-card>a{color:inherit;text-decoration:none;padding:0 0 8px;display:flex;flex-direction:column;align-items:center;width:100%;height:100%;text-align:center}
 .material-card img{width:100%;height:auto;aspect-ratio:1.03;object-fit:cover}
 .material-card h3{font-size:12px;font-weight:600;line-height:1.4;padding:12px 5px 4px;flex:1;overflow-wrap:anywhere}
 .material-more{display:flex;align-items:center;justify-content:center;gap:6px;color:var(--blue);font-size:10px;padding:5px 0;min-height:24px}
@@ -553,3 +553,8 @@ html[data-theme="dark"] .hero-caption #slide-label{color:#9fddfc}
 @media(max-width:340px){.home-reviews-frame{width:calc(100% + 8px);margin-inline:-4px}}
 
 @media screen and (min-width:1001px){.about-grid>.request-card{position:sticky;top:var(--request-sticky-top,180px);align-self:start}}
+/* The featured triplex card occupies two slots: 11 materials form balanced rows. */
+.materials-grid .material-card--triplex{grid-column:span 2}
+.materials-grid .material-card--triplex img{aspect-ratio:2.08;object-fit:cover}
+@media(min-width:1100px){#materials .materials-grid{grid-template-columns:repeat(6,minmax(0,1fr))}}
+@media(min-width:701px) and (max-width:1099px){#materials .materials-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}

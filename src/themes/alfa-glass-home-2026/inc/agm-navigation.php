@@ -28,7 +28,14 @@ function agm_navigation_render($html) {
         if ($section === 'materials') {
             $items = [];
             foreach (agm_material_grouped_pages() as $key => $group) {
-                $items[$group['title']] = ['url' => agm_material_group_url($key), 'card' => false];
+                $title = $key === 'craft-triplex' ? 'Триплекс' : $group['title'];
+                $items[$title] = ['url' => agm_material_group_url($key), 'card' => false];
+            }
+            // Landings can be published independently of material-group membership.
+            foreach (['riflenoe-steklo' => 'Рифлёное стекло', 'triplex' => 'Триплекс'] as $slug => $title) {
+                if (function_exists('agm_material_landing_ready') && agm_material_landing_ready($slug)) {
+                    $items[$title] = ['url' => home_url('/' . $slug . '/'), 'card' => false];
+                }
             }
         }
         if ($section === 'products') {

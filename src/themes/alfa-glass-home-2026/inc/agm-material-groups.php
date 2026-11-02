@@ -42,7 +42,7 @@ function agm_material_grouped_pages() {
 }
 
 function agm_material_group_url($key) {
-    return add_query_arg('group', $key, home_url('/materialy/'));
+    return apply_filters('agm_material_group_link', add_query_arg('group', $key, home_url('/materialy/')), $key);
 }
 
 function agm_material_catalog_render($html) {

@@ -1,0 +1,86 @@
+[
+  {
+    "description": "Обычное стекло с лёгким зеленоватым оттенком · 4, 6, 8 мм",
+    "image": "agm-glass/assets/generated/estriado-ordinary-4-moru-style-v2.png",
+    "slug": "estriado",
+    "title": "Estriado"
+  },
+  {
+    "description": "Полуосветлённое стекло Crystal · 4, 6, 8 мм",
+    "image": "agm-glass/assets/generated/estriado-crystal-4-moru-style-v2.png",
+    "slug": "estriado-crystal",
+    "title": "Estriado Crystal"
+  },
+  {
+    "description": "Осветлённое стекло Ultra · 4, 6, 8 мм",
+    "image": "agm-glass/assets/generated/estriado-ultra-4-moru-style-v2.png",
+    "slug": "estriado-ultra",
+    "title": "Estriado Ultra"
+  },
+  {
+    "description": "Рифлёное стекло · 4 мм",
+    "image": "agm-glass/assets/generated/flutelite-s-sample-v1.png",
+    "slug": "flutelite-s",
+    "title": "Flutelit-C"
+  },
+  {
+    "description": "Матовое осветлённое · 4 и 8 мм",
+    "image": "agm-glass/assets/generated/moru-satin-sample4-v2.png",
+    "slug": "flutes-moru-ultra-mat",
+    "title": "MORU Ultra матовое (на осветлённом стекле)"
+  },
+  {
+    "description": "Рифлёное стекло · 4, 8 мм",
+    "image": "agm-glass/assets/generated/moru-magnetron-bronze-v1.png",
+    "slug": "moru-magnetron-bronze",
+    "title": "MORU Бронза — магнетронное напыление"
+  },
+  {
+    "description": "Рифлёное стекло · 4, 8 мм",
+    "image": "agm-glass/assets/generated/moru-magnetron-grey-v1.png",
+    "slug": "moru-magnetron-grey",
+    "title": "MORU Серое — магнетронное напыление"
+  },
+  {
+    "description": "Тонированное в массе · 4, 5 и 8 мм",
+    "image": "agm-glass/assets/generated/moru-bronze-toned-sample-v1.png",
+    "slug": "moru-bronze-toned",
+    "title": "MORU тонированное в массе Bronze"
+  },
+  {
+    "description": "Тонированное в массе · 4, 5 и 8 мм",
+    "image": "agm-glass/assets/generated/moru-grey-catalog-v4.png",
+    "slug": "moru-grey",
+    "title": "MORU тонированное в массе Grey"
+  },
+  {
+    "description": "4 · Прозрачный",
+    "image": "agm-glass/assets/generated/raywall90t-approved-v1.png",
+    "slug": "raywall90",
+    "title": "Рифлёное стекло Raywall 90T"
+  },
+  {
+    "description": "Рифлёное стекло · 4, 5, 6, 8 мм",
+    "image": "agm-glass/assets/generated/vision-sun-ultra-approved-v1.png",
+    "slug": "vison-sun",
+    "title": "Vision Sun Ultra"
+  },
+  {
+    "description": "AGC · 4 и 6 мм · обычное, с зеленоватым оттенком",
+    "image": "agm-glass/assets/generated/flutes-agc-v1.png",
+    "slug": "riflenoe-steklo-flutes",
+    "title": "Рифлёное стекло Flutes"
+  },
+  {
+    "description": "Полуосветлённое · 4, 5, 6, 8 и 10 мм",
+    "image": "agm-glass/assets/generated/moru-crystal-sample-v1.png",
+    "slug": "moru-crystal",
+    "title": "Рифлёное стекло MORU CRYSTAL"
+  },
+  {
+    "description": "Ультраосветлённое · 4, 5, 6, 8 и 10 мм",
+    "image": "agm-glass/assets/generated/moru-ultra-sample-v1.png",
+    "slug": "moru-ultra",
+    "title": "Рифлёное стекло MORU ULTRA"
+  }
+]
