@@ -551,3 +551,5 @@ html[data-theme="dark"] .hero-caption #slide-label{color:#9fddfc}
 .home-reviews-fallback{display:inline-block;margin-top:12px}
 @media(max-width:600px){.home-reviews{margin-top:26px;padding-top:22px}.home-reviews-heading h3{font-size:20px}.home-reviews-frame{height:500px;border-radius:12px}}
 @media(max-width:340px){.home-reviews-frame{width:calc(100% + 8px);margin-inline:-4px}}
+
+@media screen and (min-width:1001px){.about-grid>.request-card{position:sticky;top:var(--request-sticky-top,180px);align-self:start}}

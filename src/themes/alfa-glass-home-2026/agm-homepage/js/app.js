@@ -531,3 +531,19 @@
   });
   serverState();
 })();
+
+// Follow the reviews column without trapping tall forms below the viewport.
+(() => {
+  const card=document.querySelector('.about-grid>.request-card');
+  if(!card)return;
+  const header=document.querySelector('.site-header');
+  const update=()=>{
+    const headerHeight=header?header.getBoundingClientRect().height:0;
+    const top=Math.min(headerHeight+18,window.innerHeight-card.getBoundingClientRect().height-24);
+    card.style.setProperty('--request-sticky-top',Math.round(top)+'px');
+  };
+  if('ResizeObserver' in window){const observer=new ResizeObserver(update);observer.observe(card);if(header)observer.observe(header);}
+  window.addEventListener('resize',update,{passive:true});
+  window.addEventListener('load',update,{once:true});
+  update();
+})();
