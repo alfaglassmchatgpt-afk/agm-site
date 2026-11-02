@@ -1,5 +1,10 @@
 # Резервные копии dev-ВМ
 
+## Production — посадочные материалов, 2 ноября 2026
+
+До изменения сохранены шесть актуальных файлов: index.html и style.css главной, inc/agm-material-groups.php, inc/agm-navigation.php, inc/agm-material-layout.php, agm-configurator/materials.json. Защищённая локальная копия: .local/material-landings-release-20261102/rollback.zip вне Git/web-root. Для отката дополнительно снять с публикации новые WP-страницы 5511/5513 и отключить новый MU-плагин agm-material-landings.php. БД существующих страниц не менялась. Это точечный откат, не полный бэкап сайта/БД; восстановление не запускалось. Архив доставки с БС удалён.
+
+
 ## Production — отзывы главной, 2 ноября 2026
 
 Точечная копия трёх исходных файлов agm-homepage (index.html, css/style.css, js/app.js): .local/reviews-release-20261102/rollback.zip, вне Git и web-root. Для отката восстановить соответствующие файлы из original. Не является полной копией WordPress/БД. Исторические копии не изменялись.

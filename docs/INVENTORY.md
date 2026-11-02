@@ -1,5 +1,10 @@
 # Инвентаризация 2026-09-21
 
+## 2026-11-02 — Посадочные материалов на production
+
+Опубликованы WP-страницы 5511 /triplex/ и 5513 /riflenoe-steklo/, общий шаблон page-agm-material-landing.php, agm-landings и MU-плагин agm-material-landings.php. Общий профиль dekorativnyy-triplex добавлен к 85 действующим профилям. Действующий обработчик раскладки сохраняет редакционный макет этой посадочной. Локальный preview 8794 сохранён. См. MATERIAL-LANDINGS-RELEASE.md и BACKUPS.md.
+
+
 ## Локальные посадочные материалов — 2026-11-02
 
 GET-only preview 8794 дополнен маршрутами /triplex/, /riflenoe-steklo/, /iz-chego-delayut-zerkalo/ и карточек материалов. PHP mocks и копия публичной статьи находятся в .local/quote-preview вне Git. Используются существующие медиа и общий конфигуратор; внешние интеграции не включались, БС не изменён. Детали: MATERIAL-LANDINGS-RELEASE.md.
