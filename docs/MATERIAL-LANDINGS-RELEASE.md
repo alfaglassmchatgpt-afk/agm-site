@@ -4,6 +4,10 @@
 
 ## Обновление изображения карточки — 2026-11-02
 
+Актуальный вариант после правки владельца: `.local/themes/alfa-glass-home-2026/agm-homepage/assets/triplex-layered-square-grey-v2.png`. Дальнее стекло серое тонированное. При публикации использовать именно этот файл; v1 сохранён как предыдущий вариант. Правка выполнена встроенным image_gen по исходному v1.
+
+Промпт правки: Edit this exact catalog image. Change ONLY the farthest/back rigid smooth glass pane (the pane extending up and left behind the milky film) from clear to neutral smoke-grey body-tinted transparent glass. Make its grey tint clearly visible, especially the exposed upper and left portions; it must still transmit light and show the background, not opaque or black. Account subtly for grey seen through overlapping layers. Preserve exactly the front clear vertically reeded glass, its fine rib pattern, middle pale translucent gently curled EVA film, all dimensions, positions, gaps, perspective, square framing, beige stone plinth, background and lighting. No extra panes, no text. This is a targeted glass-color change only.
+
 Карточка «Триплекс» возвращена к обычному размеру соседних карточек; специальные grid-span и пропорции удалены. Новый квадратный рендер создан встроенным image_gen. Локальный файл: `.local/themes/alfa-glass-home-2026/agm-homepage/assets/triplex-layered-square-v1.png`; при согласованной публикации скопировать в `agm-homepage/assets/` темы. Бинарник не включён в публичный Git. Главный рендер посадочной не менялся.
 
 Промпт генерации:
