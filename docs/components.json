@@ -1,5 +1,5 @@
 {
-  "localGlassDoors": {"updatedOn":"2026-11-02","status":"awaiting-owner-review","preview":"http://127.0.0.1:8794/dveri-iz-stekla/","template":"page-agm-doors.php","module":"agm-doors","basketType":"door","productionChanged":false},
+  "localGlassDoors": {"updatedOn":"2026-11-02","status":"deployed","preview":"http://127.0.0.1:8794/dveri-iz-stekla/","template":"page-agm-doors.php","module":"agm-doors","basketType":"door","productionChanged":true,"deployedOn":"2026-11-02","productionUrl":"https://alfaglass.ru/dveri-iz-stekla/"},
   "productionFacadeLogo": {"deployedOn": "2026-11-02", "assets": "shared agm-homepage logo-light.svg and logo-dark.svg", "files": ["agm-aluminium-configurator/index.html", "agm-aluminium-configurator/style.css"], "themePersistenceFix": "local-only"},
   "productionPublicLinkFilter": {"file": "wp-content/mu-plugins/agm-unavailable-links.php", "deployedOn": "2026-10-30", "status": "active", "rollback": "Rename new file to .disabled; no existing files replaced"},
   "inventoryContext": {
