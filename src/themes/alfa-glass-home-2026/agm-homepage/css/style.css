@@ -553,8 +553,3 @@ html[data-theme="dark"] .hero-caption #slide-label{color:#9fddfc}
 @media(max-width:340px){.home-reviews-frame{width:calc(100% + 8px);margin-inline:-4px}}
 
 @media screen and (min-width:1001px){.about-grid>.request-card{position:sticky;top:var(--request-sticky-top,180px);align-self:start}}
-/* The featured triplex card occupies two slots: 11 materials form balanced rows. */
-.materials-grid .material-card--triplex{grid-column:span 2}
-.materials-grid .material-card--triplex img{aspect-ratio:2.08;object-fit:cover}
-@media(min-width:1100px){#materials .materials-grid{grid-template-columns:repeat(6,minmax(0,1fr))}}
-@media(min-width:701px) and (max-width:1099px){#materials .materials-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}

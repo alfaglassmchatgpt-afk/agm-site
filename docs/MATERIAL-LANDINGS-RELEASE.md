@@ -2,6 +2,14 @@
 
 Публикация не выполнена. Владелец согласует локальные страницы до переноса на БС.
 
+## Обновление изображения карточки — 2026-11-02
+
+Карточка «Триплекс» возвращена к обычному размеру соседних карточек; специальные grid-span и пропорции удалены. Новый квадратный рендер создан встроенным image_gen. Локальный файл: `.local/themes/alfa-glass-home-2026/agm-homepage/assets/triplex-layered-square-v1.png`; при согласованной публикации скопировать в `agm-homepage/assets/` темы. Бинарник не включён в публичный Git. Главный рендер посадочной не менялся.
+
+Промпт генерации:
+
+> Create a square 1:1 photorealistic premium architectural glass catalog product photograph for a website material card called Triplex. No text, labels, logos or watermarks. Show a single upright square laminated glass sample in a restrained three-quarter view, on a pale beige stone plinth, softly lit neutral warm grey studio interior. The sample consists of exactly two thin rigid glass panes, each physically 4 mm thick, and one very thin translucent milky EVA film between them. Exploded view with modest separation 15-20 mm between the components so the layered construction is unmistakable, the film slightly gently curved at one corner, otherwise parallel. One pane clear smooth glass, the front pane subtly reeded glass with fine realistic vertical ribs, not coarse bars. Glass remains transparent with soft distorted background visible. Glass edges subtle pale green, physically thin not acrylic blocks. All three components have the same square dimensions, aligned and centered, occupying 75 percent of the square frame with generous clean margins, no cropped corners. Material itself is hero, no doors, no full room scene, no hardware. Soft realistic reflections and contact shadows, elegant catalog style, legible at small thumbnail size.
+
 ## Что подготовлено
 
 - `/riflenoe-steklo/`: 14 материалов действующего публичного каталога, переходы в их карточки к общему расчёту. Список и изображения сверены с публичным каталогом 2 ноября; `agm-landings/reeded.json` — редакционная подборка, при изменении ассортимента её нужно обновлять.
