@@ -9,3 +9,52 @@ document.querySelectorAll('[data-triplex-variant]').forEach(link => {
     }
   });
 });
+
+// Material / application slideshow. Four seconds still, then a soft dissolve.
+(() => {
+  const root = document.querySelector('.aml-showcase');
+  if (!root) return;
+  const slides = Array.from(root.querySelectorAll('.aml-slide'));
+  const dots = Array.from(root.querySelectorAll('[data-slide]'));
+  const pause = root.querySelector('.aml-slide-pause');
+  const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let request = 0, current = 0, timer, paused = motion.matches, hovered = false, focused = false, visible = true;
+  function controls() {
+    pause.textContent = paused ? '▷' : 'Ⅱ';
+    pause.setAttribute('aria-label', paused ? 'Продолжить слайды' : 'Приостановить слайды');
+  }
+  function schedule(delay = 4000) {
+    clearTimeout(timer);
+    if (!paused && !hovered && !focused && visible && !document.hidden) {
+      timer = setTimeout(() => show((current + 1) % slides.length), delay);
+    }
+  }
+  async function show(index) {
+    const ticket = ++request;
+    clearTimeout(timer);
+    const img = slides[index].querySelector('img');
+    img.loading = 'eager';
+    try { await img.decode(); } catch (_) { schedule(); return; }
+    if (ticket !== request) return;
+    slides[current].classList.remove('is-active');
+    slides[current].setAttribute('aria-hidden', 'true');
+    dots[current].setAttribute('aria-pressed', 'false');
+    current = index;
+    slides[current].classList.add('is-active');
+    slides[current].setAttribute('aria-hidden', 'false');
+    dots[current].setAttribute('aria-pressed', 'true');
+    schedule(motion.matches ? 4000 : 4900);
+  }
+  dots.forEach((dot, i) => dot.addEventListener('click', () => show(i)));
+  pause.addEventListener('click', () => { paused = !paused; controls(); schedule(); });
+  root.addEventListener('mouseenter', () => { hovered = true; schedule(); });
+  root.addEventListener('mouseleave', () => { hovered = false; schedule(); });
+  root.addEventListener('focusin', () => { focused = true; schedule(); });
+  root.addEventListener('focusout', event => { focused = root.contains(event.relatedTarget); schedule(); });
+  document.addEventListener('visibilitychange', () => schedule());
+  motion.addEventListener('change', () => { paused = motion.matches; controls(); schedule(); });
+  if ('IntersectionObserver' in window) new IntersectionObserver(entries => {
+    visible = entries[0].isIntersecting; schedule();
+  }).observe(root);
+  controls(); schedule();
+})();

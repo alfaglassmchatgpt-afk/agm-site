@@ -36,7 +36,24 @@ ob_start();
 <p class="aml-lead"><?php echo $triplex ? 'Прозрачный, цветной или с выразительной фактурой. Соберём сочетание стёкол и EVA-плёнки под ваш интерьер.' : 'Свет, фактура и приватность. Подберите рельеф, оттенок и толщину стекла под размеры вашего изделия.'; ?></p>
 <div class="aml-actions"><a class="aml-button" href="#<?php echo $triplex ? 'material-request' : 'collection'; ?>">Рассчитать по моим размерам</a><a href="#collection">Выбрать <?php echo $triplex ? 'сочетание' : 'стекло'; ?> ↓</a></div>
 <p class="aml-note">Изготовление по размерам · Москва и Московская область</p></div>
-<figure><img fetchpriority="high" src="<?php echo $asset($triplex ? 'agm-homepage/assets/triplex-layered-wave-v3.png' : 'agm-glass/assets/generated/moru-ultra-aluminium-v2.png'); ?>" alt="<?php echo $triplex ? 'Состав триплекса: рифлёное стекло, гибкая EVA-плёнка и серое стекло' : 'Визуализация рифлёного стекла MORU в алюминиевой перегородке'; ?>"><figcaption><?php echo $triplex ? 'Стекло + EVA-плёнка + стекло. Визуализация слоёв до соединения.' : 'Визуализация применения. Фактуру и оттенок выбираем по образцу.'; ?></figcaption></figure>
+<?php if ($triplex): $slides = [
+ ['МОРУ + матовое серое · 4+4 мм', 'Крупный план триплекса МОРУ с матовым серым стеклом и полированной кромкой'],
+ ['То же сочетание — в интерьере', 'Серая матовая перегородка МОРУ между прихожей и жилой комнатой'],
+ ['Латунная сетка внутри стекла', 'Кромка триплекса с тонкой латунной сеткой'],
+ ['Перегородка с латунной сеткой', 'Светлая перегородка в алюминиевых профилях с золотистыми нитями сетки'],
+ ['Цветной триплекс в фирменных цветах', 'Зелёный триплекс в перегородке коммерческого помещения'],
+ ['Silvit + серое · лестничные вставки', 'Визуализация вставок в лестничное ограждение по фото нашей работы']
+]; ?>
+<div class="aml-showcase" role="region" aria-roledescription="карусель" aria-label="Триплекс: материал и готовые решения">
+<div class="aml-slides">
+<?php foreach ($slides as $i => $slide): ?><figure class="aml-slide<?php echo $i === 0 ? ' is-active' : ''; ?>" aria-hidden="<?php echo $i === 0 ? 'false' : 'true'; ?>">
+<img <?php echo $i === 0 ? 'fetchpriority="high"' : 'loading="lazy"'; ?> src="<?php echo $asset('agm-landings/assets/triplex-hero-' . ($i + 1) . '-v1.' . ($i === 3 ? 'png' : 'jpg')); ?>" alt="<?php echo esc_attr($slide[1]); ?>" width="1254" height="1254">
+<figcaption><?php echo esc_html($slide[0]); ?></figcaption></figure><?php endforeach; ?>
+</div>
+<div class="aml-slide-controls"><div class="aml-slide-dots" aria-label="Выбор слайда"><?php foreach ($slides as $i => $slide): ?><button type="button" data-slide="<?php echo $i; ?>" aria-label="Слайд <?php echo $i + 1; ?>: <?php echo esc_attr($slide[0]); ?>" aria-pressed="<?php echo $i === 0 ? 'true' : 'false'; ?>"></button><?php endforeach; ?></div><button class="aml-slide-pause" type="button" aria-label="Приостановить слайды">Ⅱ</button></div>
+<p class="aml-note">Визуализации. Фактуру и оттенок согласуем по образцу.</p>
+</div>
+<?php else: ?><figure><img fetchpriority="high" src="<?php echo $asset('agm-glass/assets/generated/moru-ultra-aluminium-v2.png'); ?>" alt="Визуализация рифлёного стекла MORU в алюминиевой перегородке"><figcaption>Визуализация применения. Фактуру и оттенок выбираем по образцу.</figcaption></figure><?php endif; ?>
 </section>
 <?php if ($triplex): ?>
 <nav class="aml-jump" aria-label="На странице триплекса"><a href="#collection">Варианты триплекса</a><a href="#combination">Состав и фактура</a><a href="#project">Наша работа</a><a href="#material-request">Мой расчёт ↗</a></nav>
