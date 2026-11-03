@@ -1,0 +1,20 @@
+<section class="aml-section tb" id="triplex-builder" aria-labelledby="tb-title" hidden>
+  <p class="aml-eyebrow">Индивидуальный состав · предварительный расчёт</p>
+  <h2 id="tb-title">Соберите свой триплекс</h2>
+  <p class="tb-lead">Выберите два стекла и то, что будет между ними.</p>
+  <div class="tb-presets" aria-label="Готовые сочетания"><span>Начать с идеи:</span><button type="button" data-preset="moru">МОРУ + серое</button><button type="button" data-preset="mesh">Латунная сетка</button><button type="button" data-preset="color">Цветной</button><button type="button" data-preset="wood">Со шпоном</button></div>
+  <div class="tb-layout"><div class="tb-work">
+    <div class="tb-layers" aria-label="Слои вашего триплекса"></div>
+    <button type="button" class="tb-add">+ Ещё стекло</button>
+    <div class="tb-picker"><div class="tb-picker-head"><h3 id="tb-picker-title">Выберите первое стекло</h3><span>Нажмите на образец</span></div><div class="tb-options"></div><div class="tb-extra"></div></div>
+    <p class="tb-disclaimer">Визуализации помогают выбрать сочетание. Фактуру, оттенок, доступность шпона и совместимость слоёв подтвердим по образцу.</p>
+  </div><aside class="tb-summary" aria-label="Ваш триплекс">
+    <p class="aml-eyebrow">Ваш триплекс</p><div class="tb-composition" aria-live="polite"></div><p class="tb-thickness"></p>
+    <form id="tb-form"><div class="tb-dimensions"><label>Ширина, мм<input name="width" type="number" min="1" max="10000" step="1" inputmode="numeric" placeholder="800" required></label><span>×</span><label>Высота, мм<input name="height" type="number" min="1" max="10000" step="1" inputmode="numeric" placeholder="2200" required></label></div>
+    <label class="tb-check"><input name="unknown" type="checkbox">Пока не знаю размеры</label>
+    <div class="tb-fields"><label>Количество<input name="quantity" type="number" min="1" max="9999" step="1" value="1" required></label><label>Для чего<select name="purpose"><option>Перегородка</option><option>Дверь</option><option>Душевая</option><option>Ограждение</option><option>Другое</option></select></label></div>
+    <label class="tb-note">Пожелания <span>необязательно</span><textarea name="note" rows="2" maxlength="500" placeholder="Обработка кромки, отверстия, крепление…"></textarea></label>
+    <button class="tb-submit" type="submit">Добавить в мой расчёт →</button><p class="tb-status" role="status"></p>
+    <p class="tb-footnote">Цена и возможность изготовления — после проверки состава. Можно добавить несколько разных изделий в одну заявку.</p></form>
+  </aside></div>
+</section>
