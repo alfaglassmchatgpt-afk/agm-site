@@ -1,5 +1,9 @@
 # Резервные копии dev-ВМ
 
+## Production — триплекс, 3 ноября 2026
+
+Перед публикацией сохранены актуальные page-agm-material-landing.php, agm-landings/style.css и app.js. Комплект .local/triplex-page-release-20261103/rollback.zip находится вне Git и web-root. Для отката восстановить три файла из original; новые изображения можно оставить неиспользуемыми. Это точечная копия, не полный бэкап WordPress/БД. Архив доставки удалён с БС по подтверждению владельца; полная копия на конец дня ожидает выполнения.
+
 ## Production — посадочные материалов, 2 ноября 2026
 
 До изменения сохранены шесть актуальных файлов: index.html и style.css главной, inc/agm-material-groups.php, inc/agm-navigation.php, inc/agm-material-layout.php, agm-configurator/materials.json. Защищённая локальная копия: .local/material-landings-release-20261102/rollback.zip вне Git/web-root. Для отката дополнительно снять с публикации новые WP-страницы 5511/5513 и отключить новый MU-плагин agm-material-landings.php. БД существующих страниц не менялась. Это точечный откат, не полный бэкап сайта/БД; восстановление не запускалось. Архив доставки с БС удалён.

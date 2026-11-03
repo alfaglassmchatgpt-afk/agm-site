@@ -24,7 +24,7 @@ ob_start();
 ?><!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <?php wp_head(); ?>
 <link rel="stylesheet" href="<?php echo $asset('agm-doors/style.css'); ?>">
-<link rel="stylesheet" href="<?php echo $asset('agm-landings/style.css'); ?>">
+<link rel="stylesheet" href="<?php echo $asset('agm-landings/style.css?v=20261103-hero'); ?>">
 <link rel="stylesheet" href="<?php echo $asset('agm-aluminium-catalog/shared-header.css'); ?>">
 <script src="<?php echo $asset('agm-aluminium-catalog/shared-header.js'); ?>" defer></script>
 </head><body id="top">
@@ -84,7 +84,7 @@ ob_start();
 <?php endif; ?>
 <section class="aml-section aml-faq"><h2>Перед заказом</h2><details><summary>От чего зависит цена?</summary><p>От выбранного материала<?php echo $triplex ? ' и состава триплекса' : ''; ?>, толщины, размеров, количества, обработки и доставки. Для расчёта укажите параметры изделия; цену и срок подтвердим после проверки заказа.</p></details><details><summary>Можно ли выбрать по фотографии?</summary><p>Фотография помогает выбрать направление. Окончательно оттенок, фактуру и прозрачность лучше оценить на образце: свет и окружение влияют на восприятие стекла.</p></details><details><summary>Можно ли заказать несколько разных изделий?</summary><p>Да. Добавляйте материалы в «Мой расчёт» из их карточек и отправляйте общей заявкой.</p></details></section>
 </main><footer class="aml-footer"><a href="/materialy/">Все материалы</a><a href="/riflenoe-steklo/">Рифлёное стекло</a><a href="/triplex/">Триплекс</a><a href="/#contacts">Контакты</a></footer>
-<?php if ($triplex): ?><script src="<?php echo $asset('agm-landings/app.js'); ?>" defer></script><?php endif; ?>
+<?php if ($triplex): ?><script src="<?php echo $asset('agm-landings/app.js?v=20261103-hero'); ?>" defer></script><?php endif; ?>
 <?php wp_footer(); ?></body></html><?php
 $html = ob_get_clean();
 echo $triplex ? agm_order_render($html, 'dekorativnyy-triplex') : agm_quote_assets($html);
