@@ -28,7 +28,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     const color=i.fill==='color'?(colors.find(c=>c[0]===i.value)?.[1]||'#79bccb'):i.fill==='matte'?'#cfd5d3':'';
     return '<span class="tb-thumb"><span class="tb-filling '+(i.fill==='mesh'?'mesh':'')+'"'+(color?' style="background:'+color+'"':'')+'></span></span>';
   }
+  let reviewing = false;
   function render(){
+    root.querySelector('.tb-work').hidden = reviewing;
+    root.querySelector('.tb-summary').hidden = !reviewing;
+    root.querySelector('[data-trim]').hidden = layers.length === 3;
+    root.querySelector('.tb-picker [data-back]').hidden = active === 0;
+    root.querySelector('.tb-progress').textContent = 'Шаг ' + (active + 1) + ' из ' + (layers.length + 1);
+    root.querySelector('.tb-next').textContent = active === layers.length - 1
+      ? 'Далее: размеры →'
+      : layers[active + 1].glass ? 'Далее: стекло № ' + ((active + 1) / 2 + 1) + ' →' : 'Далее: наполнение →';
     root.querySelector('.tb-layers').innerHTML=layers.map((i,n)=>'<div class="tb-layer"><button type="button" class="tb-layer-choice" data-layer="'+n+'" aria-pressed="'+(n===active)+'"><small>'+ (i.glass?(n/2+1)+'. Стекло':'Между стёклами')+'</small>'+thumbnail(i)+'<strong>'+esc(name(i))+'</strong><em>Изменить ↗</em></button>'+(i.glass&&n>2?'<button type="button" class="tb-remove" data-remove="'+n+'">Убрать стекло и наполнение</button>':'')+'</div>').join('');
     root.querySelector('.tb-composition').innerHTML=layers.map(i=>'<div class="'+(i.glass?'':'tb-inter')+'">'+(i.glass?'<span class="tb-dot"></span>':'↳ ')+esc(name(i))+'</div>').join('');
     const sum=layers.filter(i=>i.glass).reduce((a,i)=>a+Number(i.thickness),0);
@@ -41,16 +50,25 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
   root.addEventListener('click',e=>{
     const b=e.target.closest('button');if(!b)return;
-    if(b.hasAttribute('data-layer'))active=Number(b.dataset.layer);
+    if (b.hasAttribute('data-next')) {
+      if (active === layers.length - 1) reviewing = true;
+      else active++;
+    } else if (b.hasAttribute('data-back')) {
+      if (reviewing) reviewing = false;
+      else active = Math.max(0, active - 1);
+    } else if (b.hasAttribute('data-trim') && layers.length > 3) {
+      layers.splice(-2);
+      active = layers.length - 1;
+    } else if(b.hasAttribute('data-layer'))active=Number(b.dataset.layer);
     else if(b.hasAttribute('data-remove')){layers.splice(Number(b.dataset.remove)-1,2);active=0;}
     else if(b.dataset.glass){const g=glass.find(g=>g.id===b.dataset.glass);layers[active]={glass:g.id,thickness:g.thicknesses.includes(layers[active].thickness)?layers[active].thickness:g.thicknesses[0]};}
     else if(b.dataset.fill)layers[active]={fill:b.dataset.fill,value:({wood:'oak',mesh:'Латунь',color:'Зелёный'})[b.dataset.fill]||''};
     else if(b.hasAttribute('data-value'))layers[active][layers[active].glass?'thickness':'value']=b.dataset.value;
-    else if(b.classList.contains('tb-add')){layers.push({fill:'clear',value:''},{glass:'float-steklo-clear-m1',thickness:'4'});active=layers.length-1;}
-    else if(b.dataset.preset){const p=b.dataset.preset;layers=[{glass:p==='moru'?glass[0].id:'steklo-osvetlyonnoe-clearvision',thickness:'4'},{fill:p==='mesh'?'mesh':p==='color'?'color':p==='wood'?'wood':'clear',value:p==='mesh'?'Латунь':p==='color'?'Зелёный':p==='wood'?'oak':''},{glass:p==='moru'?'tonirovannoe-steklo-grey':'float-steklo-clear-m1',thickness:'4'}];active=1;}
+    else if(b.classList.contains('tb-add')){layers.push({fill:'clear',value:''},{glass:'float-steklo-clear-m1',thickness:'4'});active=layers.length-2;reviewing=false;}
+    else if(b.dataset.preset){const p=b.dataset.preset;layers=[{glass:p==='moru'?glass[0].id:'steklo-osvetlyonnoe-clearvision',thickness:'4'},{fill:p==='mesh'?'mesh':p==='color'?'color':p==='wood'?'wood':'clear',value:p==='mesh'?'Латунь':p==='color'?'Зелёный':p==='wood'?'oak':''},{glass:p==='moru'?'tonirovannoe-steklo-grey':'float-steklo-clear-m1',thickness:'4'}];active=1;reviewing=false;root.querySelector('.tb-ideas').open=false;}
     else return;
     status.textContent='';render();
-    if(b.classList.contains('tb-add'))root.querySelector('[data-layer="'+active+'"]').scrollIntoView({block:'nearest',inline:'nearest'});
+    if (b.matches('[data-next],[data-back],.tb-add,[data-preset]')) root.scrollIntoView({block:'start'});
   });
   form.elements.unknown.addEventListener('change',()=>{['width','height'].forEach(k=>{form.elements[k].disabled=form.elements.unknown.checked;form.elements[k].required=!form.elements.unknown.checked;});});
   form.addEventListener('submit',e=>{
