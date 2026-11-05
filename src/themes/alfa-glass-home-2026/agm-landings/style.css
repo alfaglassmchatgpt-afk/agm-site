@@ -7,6 +7,9 @@
 .aml-jump{display:flex;flex-wrap:wrap;gap:12px 28px;padding:22px 0;margin-top:36px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .aml-jump a{font-size:14px;text-decoration:none}.aml-jump a:last-child{margin-left:auto}
 .aml-triplex #collection{border-top:0;margin-top:0;padding-top:48px}
+.aml-triplex #collection > h2 {
+  text-align: center;
+}
 .aml-triplex .aml-text-card{padding:28px 22px;border-top:3px solid var(--blue);min-height:270px}
 .aml-triplex .aml-text-card:nth-child(2){border-top-color:#719985}.aml-triplex .aml-text-card:nth-child(3){border-top-color:#ba9764}.aml-triplex .aml-text-card:nth-child(4){border-top-color:#919ba7}
 .aml-intro{max-width:720px;color:var(--muted);font-size:19px;margin-bottom:32px}
