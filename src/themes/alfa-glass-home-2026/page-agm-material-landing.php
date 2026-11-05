@@ -60,13 +60,27 @@ ob_start();
 </section>
 <?php if ($triplex): ?>
 <nav class="aml-jump" aria-label="На странице триплекса"><a href="#collection">Варианты триплекса</a><a href="#combination">Состав и фактура</a><a href="#material-request">Мой расчёт ↗</a></nav>
-<section class="aml-section" id="collection"><p class="aml-eyebrow">Четыре направления — множество сочетаний</p><h2>Какой триплекс вам нужен?</h2><div class="aml-grid aml-four">
-<?php foreach ([
- ['Прозрачный', 'Два стекла и прозрачная EVA-плёнка. Для решений, где важно сохранить обзор и свет.', 'clear'],
- ['Цветной', 'Цветная EVA-плёнка для акцентов в интерьере и фирменных цветов коммерческих пространств.', 'colored'],
- ['С металлической сеткой', 'Латунь, медь или нержавеющая сталь между стёклами. Характер поверхности меняется вместе со светом.', 'mesh'],
- ['Декоративный', 'Рифлёное или узорчатое стекло в сочетании с гладким: прозрачным, матовым или тонированным.', 'custom']
-] as $item): ?><article class="aml-card aml-text-card"><h3><?php echo esc_html($item[0]); ?></h3><p><?php echo esc_html($item[1]); ?></p><a href="#material-request" data-triplex-variant="<?php echo esc_attr($item[2]); ?>">Выбрать и рассчитать →</a></article><?php endforeach; ?>
+<section class="aml-section" id="collection">
+  <h2>Какой триплекс вам нужен?</h2>
+  <div class="aml-grid aml-four">
+    <article class="aml-card aml-text-card">
+      <h3>Из плоского стекла</h3>
+      <p>Листы плоского флоат-стекла (Float) — прозрачные, матовые или тонированные. Для межкомнатных дверей, душевых и офисных перегородок.</p>
+      <a href="#material-request">Рассчитать по моим размерам →</a>
+    </article>
+    <article class="aml-card aml-text-card">
+      <h3>С рифлёным стеклом</h3>
+      <p>Рифление МОРУ пропускает свет и размывает очертания за стеклом. Подходит для дверей гардеробной и перегородок между прихожей и комнатой.</p>
+      <a href="/riflenoe-steklo/">Посмотреть рифлёное стекло →</a>
+    </article>
+    <article class="aml-card aml-text-card">
+      <h3>Из декоративного стекла</h3>
+      <p>Узорчатое стекло задаёт рисунок, а второе стекло — оттенок. Например, Сильвит с серым стеклом используем для вставок в двери и лестничные ограждения.</p>
+    </article>
+    <article class="aml-card aml-text-card">
+      <h3>Свободная конфигурация</h3>
+      <p>Подберём сочетание стекла, плёнки и декоративных вставок по вашему эскизу. Например, для перегородки со шпоном или двери в фирменных цветах.</p>
+    </article>
 </div></section>
 <section class="aml-section" id="combination"><p class="aml-eyebrow">Индивидуальные решения</p><h2>Ваш замысел — в сочетании материалов</h2><p class="aml-intro">Рельеф задаёт характер, плёнка — цвет, второе стекло — глубину оттенка. Подбираем каждый слой под ваш проект.</p><div class="aml-grid aml-layers"><article class="aml-panel"><span class="aml-layer-label">Лицевая фактура</span><h3>Первое стекло</h3><p>Гладкое, рифлёное или подходящее узорчатое стекло. Для декоративной основы — 4 или 6 мм, в зависимости от материала.</p><a href="/riflenoe-steklo/">Рифлёные основы →</a></article><article class="aml-panel"><span class="aml-layer-label">Цвет и прозрачность</span><h3>EVA-плёнка</h3><p>Прозрачная по умолчанию. Цветная — для выразительных акцентов; матовый эффект согласуем по образцу.</p><div class="aml-colors" aria-label="Примеры цветов плёнки"><span style="--swatch:#3e8193">Голубой</span><span style="--swatch:#22724c">Зелёный</span><span style="--swatch:#9c2837">Красный</span><span style="--swatch:#dab52b">Жёлтый</span><span style="--swatch:#704787">Фиолетовый</span><span style="--swatch:#746e63">Серый</span></div><small>Цвета на экране условные. Желаемый цвет укажите в пожеланиях к изделию.</small></article><article class="aml-panel"><span class="aml-layer-label">Основа сочетания</span><h3>Второе стекло</h3><p>Прозрачное, осветлённое, матовое или тонированное. Например, Silvit с серым стеклом создаёт рельефный рисунок с дымчатым оттенком.</p><a href="#material-request" data-triplex-variant="custom">Подобрать сочетание →</a></article></div><p class="aml-note">Минимальный состав — 4+4 мм стекла плюс EVA-плёнка. Итоговая толщина больше 8 мм и зависит от состава.</p></section>
 <section class="aml-section aml-split aml-mesh"><div><p class="aml-eyebrow">Металл внутри стекла</p><h2>Тонкие нити. Живые отражения.</h2><p>Латунь, медь или нержавеющая сталь между стёклами — три разных характера поверхности. При смене освещения сетка становится заметнее или растворяется в отражениях.</p><p>Сочетание стекла, сетки и EVA-плёнки согласуем по образцу, чтобы оценить оттенок и прозрачность.</p><a class="aml-button" href="#material-request" data-triplex-variant="mesh">Триплекс с сеткой</a></div><div class="aml-metal-list"><div><span class="aml-metal aml-brass"></span><h3>Латунь</h3><p>Тёплый золотистый акцент</p></div><div><span class="aml-metal aml-copper"></span><h3>Медь</h3><p>Насыщенный медный оттенок</p></div><div><span class="aml-metal aml-steel"></span><h3>Нержавеющая сталь</h3><p>Холодный металлический блеск</p></div><small>Условные обозначения оттенков, не образцы плетения.</small></div></section>
