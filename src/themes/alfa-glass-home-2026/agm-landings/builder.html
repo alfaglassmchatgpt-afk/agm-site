@@ -1,6 +1,7 @@
 <section id="triplex-builder" class="aml-section tb" aria-labelledby="tb-title" hidden>
   <p class="aml-eyebrow">Мой расчёт</p>
   <h2 id="tb-title">Триплекс с плоским стеклом</h2>
+  <p data-agreement hidden>Если материалы, толщины или размеры выходят за условия стандартных групп, менеджер проверит возможность изготовления по вашей заявке.</p>
   <form id="tb-form">
     <fieldset><legend>Размеры и количество</legend>
       <div class="tb-row">
@@ -12,12 +13,13 @@
     </fieldset>
     <fieldset><legend>Состав триплекса</legend>
       <div class="tb-stack">
-        <div><h3>Первое стекло</h3><label>Вид стекла<select name="front"></select></label><label hidden>Оттенок стекла<select name="frontShade"></select></label><label>Толщина<select name="first"></select></label></div>
+        <div><h3>Первое стекло</h3><label>Вид стекла<select name="front"></select></label><label hidden>Оттенок стекла<select name="frontShade"></select></label><label>Толщина<select required name="first"></select></label></div>
         <div><h3>Между стёклами</h3><label>Наполнение<select name="fill"></select></label>
           <label hidden data-color>Желаемый цвет<input name="color" maxlength="60" list="tb-colors" placeholder="Выберите или введите цвет"></label><datalist id="tb-colors"></datalist>
+          <label hidden>Порода шпона<select name="wood"></select></label>
           <label hidden>Металл сетки<select name="metal"></select></label>
         </div>
-        <div><h3>Второе стекло</h3><label>Вид стекла<select name="back"></select></label><label hidden>Оттенок стекла<select name="backShade"></select></label><label>Толщина<select name="second"></select></label><small data-limit></small></div>
+        <div><h3>Второе стекло</h3><label>Вид стекла<select name="back"></select></label><label hidden>Оттенок стекла<select name="backShade"></select></label><label>Толщина<select required name="second"></select></label><small data-limit></small></div>
       </div>
     </fieldset>
     <fieldset><legend>Обработка</legend>
