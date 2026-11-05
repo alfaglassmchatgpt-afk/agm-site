@@ -1,93 +1,98 @@
 document.addEventListener('DOMContentLoaded', async () => {
-  'use strict';
-  const root=document.querySelector('#triplex-builder');
-  if(!root)return;
-  const quote=await window.AGMQuoteReady;
-  if(!quote)return;
-  const assets=root.dataset.assets;
-  const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const glass=[
-    ['flutes-moru-ultra','МОРУ осветлённое','moru-ultra-sample-v1.png'],
-    ['float-steklo-clear-m1','Прозрачное','clear-m1-4mm-v2.png'],
-    ['steklo-osvetlyonnoe-clearvision','Осветлённое','clear-extra-clear-4mm-v2.png'],
-    ['tonirovannoe-steklo-grey','Серое','tinted-grey-v1.png'],
-    ['steklo-matovoe-osvetlyonnoe','Матовое осветлённое','matte-lowiron-4mm-v1.png'],
-    ['flutes-moru-bronze','МОРУ бронза','moru-bronze-v1.png']
-  ].filter(([id])=>quote.materials[id]?.operations.includes('laminate')).map(([id,name,img])=>({id,name,img:'agm-glass/assets/generated/'+img,thicknesses:quote.materials[id].thicknesses.filter(t=>Number(t)>=4)}));
-  const woods=[['oak','Светлый дуб'],['walnut','Орех'],['cherry','Вишня'],['ebony','Эбен'],['zebrano','Зебрано']];
-  const colors=[['Голубой','#79bccb'],['Чёрный','#20262b'],['Оранжевый','#e59732'],['Фиолетовый','#794193'],['Зелёный','#138349'],['Голубой джейд','#278b9c'],['Серый','#8b8b7d'],['Бронза','#a08557'],['Синий','#1859a2'],['Голубой прозрачный','#46a9bd'],['Тёмно-серый','#414946'],['Жёлтый','#e7cc2c'],['Светло-зелёный','#9bbf57'],['Красный','#be2636'],['Фуксия','#ae2d78']];
-  const kinds=[['clear','Прозрачное'],['color','Цветное'],['matte','Матовое'],['mesh','Металлическая сетка'],['wood','Шпон']];
-  let layers=[{glass:glass[0].id,thickness:'4'},{fill:'clear',value:''},{glass:'float-steklo-clear-m1',thickness:'4'}],active=0;
-  const form=root.querySelector('form'),status=root.querySelector('.tb-status');
-  const spec=i=>glass.find(g=>g.id===i.glass);
-  function fillName(i){return i.fill==='clear'?'Прозрачная EVA-плёнка':i.fill==='color'?'EVA-плёнка · '+i.value:i.fill==='matte'?'Матовый эффект · по образцу':i.fill==='mesh'?'Сетка · '+i.value:'Шпон · '+(woods.find(w=>w[0]===i.value)?.[1]||'выбрать');}
-  function name(i){return i.glass?spec(i).name+' · '+i.thickness+' мм':fillName(i);}
-  function thumbnail(i){
-    let img=i.glass?spec(i).img:i.fill==='wood'?'agm-landings/assets/triplex-veneer-'+i.value+'-v1.png':null;
-    if(img)return '<span class="tb-thumb"><img src="'+esc(assets+img)+'" alt="'+esc(name(i))+'" loading="lazy"></span>';
-    const color=i.fill==='color'?(colors.find(c=>c[0]===i.value)?.[1]||'#79bccb'):i.fill==='matte'?'#cfd5d3':'';
-    return '<span class="tb-thumb"><span class="tb-filling '+(i.fill==='mesh'?'mesh':'')+'"'+(color?' style="background:'+color+'"':'')+'></span></span>';
+  const root = document.querySelector('#triplex-builder');
+  if (!root) return;
+  const quote = await window.AGMQuoteReady;
+  if (!quote) return;
+  const form = root.querySelector('form');
+  const fields = form.elements;
+  const query = new URLSearchParams(location.search);
+  if (query.has('quote-edit')) return; // Existing material positions use the shared editor.
+  const saved = query.has('flat-edit') && quote.store.all().find(item =>
+    item.type === 'material' && item.id === query.get('flat-edit') && item.flat);
+  const glassTypes = ['Обычное прозрачное', 'Осветлённое', 'Матовое', 'Осветлённое матовое', 'Тонированное', 'Тонированное матовое'];
+  const thicknesses = [4, 5, 6, 8, 10];
+  const films = ['Прозрачная', 'Матовая (сатин)', 'Цветная прозрачная', 'Цветная непрозрачная'];
+  const meshes = ['Латунь', 'Медь', 'Нержавейка'].map(metal => 'Сетка · ' + metal);
+  function options(select, values, labels = values) {
+    select.replaceChildren(...values.map((value, index) => new Option(labels[index], value)));
   }
-  let reviewing = false;
-  function render(){
-    root.querySelector('.tb-work').hidden = reviewing;
-    root.querySelector('.tb-summary').hidden = !reviewing;
-    root.querySelector('[data-trim]').hidden = layers.length === 3;
-    root.querySelector('.tb-picker [data-back]').hidden = active === 0;
-    root.querySelector('.tb-progress').textContent = 'Шаг ' + (active + 1) + ' из ' + (layers.length + 1);
-    root.querySelector('.tb-next').textContent = active === layers.length - 1
-      ? 'Далее: размеры →'
-      : layers[active + 1].glass ? 'Далее: стекло № ' + ((active + 1) / 2 + 1) + ' →' : 'Далее: наполнение →';
-    root.querySelector('.tb-layers').innerHTML=layers.map((i,n)=>'<div class="tb-layer"><button type="button" class="tb-layer-choice" data-layer="'+n+'" aria-pressed="'+(n===active)+'"><small>'+ (i.glass?(n/2+1)+'. Стекло':'Между стёклами')+'</small>'+thumbnail(i)+'<strong>'+esc(name(i))+'</strong><em>Изменить ↗</em></button>'+(i.glass&&n>2?'<button type="button" class="tb-remove" data-remove="'+n+'">Убрать стекло и наполнение</button>':'')+'</div>').join('');
-    root.querySelector('.tb-composition').innerHTML=layers.map(i=>'<div class="'+(i.glass?'':'tb-inter')+'">'+(i.glass?'<span class="tb-dot"></span>':'↳ ')+esc(name(i))+'</div>').join('');
-    const sum=layers.filter(i=>i.glass).reduce((a,i)=>a+Number(i.thickness),0);
-    root.querySelector('.tb-thickness').textContent='Стёкла: '+sum+' мм + наполнение. Итоговую толщину уточним.';
-    const i=layers[active];
-    root.querySelector('#tb-picker-title').textContent=i.glass?'Выберите стекло № '+(active/2+1):'Что будет между стёклами?';
-    root.querySelector('.tb-options').innerHTML=i.glass?glass.map(g=>'<button type="button" class="tb-option" data-glass="'+g.id+'" aria-pressed="'+(g.id===i.glass)+'">'+thumbnail({glass:g.id,thickness:g.thicknesses[0]})+'<strong>'+esc(g.name)+'</strong></button>').join(''):kinds.map(([id,title])=>'<button type="button" class="tb-option" data-fill="'+id+'" aria-pressed="'+(id===i.fill)+'">'+thumbnail({fill:id,value:id==='wood'?'oak':id==='mesh'?'Латунь':id==='color'?'Зелёный':''})+'<strong>'+title+'</strong></button>').join('');
-    const options=i.glass?spec(i).thicknesses.map(v=>[v,v+' мм']):i.fill==='wood'?woods:i.fill==='color'?colors.map(([v])=>[v,v]):i.fill==='mesh'?['Латунь','Медь','Нержавейка'].map(v=>[v,v]):[];
-    root.querySelector('.tb-extra').innerHTML=(options.length?'<span>'+(i.glass?'Толщина:':i.fill==='wood'?'Порода:':i.fill==='mesh'?'Металл:':'Цвет:')+'</span>':'')+options.map(([v,label])=>'<button type="button" class="tb-chip" data-value="'+esc(v)+'" aria-pressed="'+(v===(i.glass?i.thickness:i.value))+'">'+esc(label)+'</button>').join('')+(!i.glass&&['wood','mesh'].includes(i.fill)?'<p class="tb-footnote">Необходимые склеивающие EVA-плёнки учитываются с обеих сторон включения.</p>':'');
+  options(fields.front, glassTypes);
+  options(fields.back, glassTypes);
+  options(fields.fill, [...films, ...meshes]);
+  options(fields.first, thicknesses, thicknesses.map(n => n + ' мм'));
+  const colors = ['Голубой', 'Чёрный', 'Оранжевый', 'Фиолетовый', 'Зелёный', 'Голубой джейд', 'Серый', 'Бронза', 'Синий', 'Голубой прозрачный', 'Тёмно-серый', 'Жёлтый', 'Светло-зелёный', 'Красный', 'Фуксия'];
+  options(root.querySelector('#tb-colors'), colors);
+  function updateSecond(preferred) {
+    const first = Number(fields.first.value);
+    const allowed = thicknesses.filter(n => n <= first + 2);
+    options(fields.second, allowed, allowed.map(n => n + ' мм'));
+    fields.second.value = allowed.includes(Number(preferred)) ? preferred : first;
   }
-  root.addEventListener('click',e=>{
-    const b=e.target.closest('button');if(!b)return;
-    if (b.hasAttribute('data-next')) {
-      if (active === layers.length - 1) reviewing = true;
-      else active++;
-    } else if (b.hasAttribute('data-back')) {
-      if (reviewing) reviewing = false;
-      else active = Math.max(0, active - 1);
-    } else if (b.hasAttribute('data-trim') && layers.length > 3) {
-      layers.splice(-2);
-      active = layers.length - 1;
-    } else if(b.hasAttribute('data-layer'))active=Number(b.dataset.layer);
-    else if(b.hasAttribute('data-remove')){layers.splice(Number(b.dataset.remove)-1,2);active=0;}
-    else if(b.dataset.glass){const g=glass.find(g=>g.id===b.dataset.glass);layers[active]={glass:g.id,thickness:g.thicknesses.includes(layers[active].thickness)?layers[active].thickness:g.thicknesses[0]};}
-    else if(b.dataset.fill)layers[active]={fill:b.dataset.fill,value:({wood:'oak',mesh:'Латунь',color:'Зелёный'})[b.dataset.fill]||''};
-    else if(b.hasAttribute('data-value'))layers[active][layers[active].glass?'thickness':'value']=b.dataset.value;
-    else if(b.classList.contains('tb-add')){layers.push({fill:'clear',value:''},{glass:'float-steklo-clear-m1',thickness:'4'});active=layers.length-2;reviewing=false;}
-    else if(b.dataset.preset){const p=b.dataset.preset;layers=[{glass:p==='moru'?glass[0].id:'steklo-osvetlyonnoe-clearvision',thickness:'4'},{fill:p==='mesh'?'mesh':p==='color'?'color':p==='wood'?'wood':'clear',value:p==='mesh'?'Латунь':p==='color'?'Зелёный':p==='wood'?'oak':''},{glass:p==='moru'?'tonirovannoe-steklo-grey':'float-steklo-clear-m1',thickness:'4'}];active=1;reviewing=false;root.querySelector('.tb-ideas').open=false;}
-    else return;
-    status.textContent='';render();
-    if (b.matches('[data-next],[data-back],.tb-add,[data-preset]')) root.scrollIntoView({block:'start'});
+  updateSecond(4);
+  if (saved) {
+    for (const key of ['width','height','quantity','front','first','fill','color','back','edge']) fields[key].value = saved.flat[key];
+    updateSecond(saved.flat.second);
+    fields.tempered.checked = saved.flat.tempered;
+    fields.pack.checked = saved.flat.pack;
+    root.querySelector('[type=submit]').textContent = 'Сохранить изменения';
+  }
+  const isColored = () => fields.fill.value.startsWith('Цветная');
+  function filling() {
+    if (fields.fill.value === films[0]) return 'Прозрачная EVA-плёнка, 2 слоя';
+    if (meshes.includes(fields.fill.value)) return fields.fill.value + ' между двумя прозрачными EVA-плёнками';
+    return fields.fill.value + ' EVA-плёнка' + (isColored() && fields.color.value.trim() ? ' · ' + fields.color.value.trim() : '');
+  }
+  function composition() {
+    return [fields.front.value + ' ' + fields.first.value + ' мм', filling(), fields.back.value + ' ' + fields.second.value + ' мм'].join(' / ');
+  }
+  function refresh() {
+    const tempered = fields.tempered.checked;
+    fields.pack.disabled = tempered;
+    if (tempered) fields.pack.checked = false;
+    root.querySelector('[data-processing]').textContent = tempered ? 'Кромку каждого стекла обрабатываем до закаливания.' : 'В пакете — кромку обрабатываем после склеивания стёкол.';
+    root.querySelector('[data-color]').hidden = !isColored();
+    fields.color.disabled = !isColored();
+    fields.color.required = isColored();
+    root.querySelector('[data-film]').textContent = meshes.includes(fields.fill.value) ? 'По одному слою прозрачной EVA-плёнки с каждой стороны сетки.' : fields.fill.value === films[0] ? 'Два слоя прозрачной EVA-плёнки.' : '';
+    root.querySelector('[data-limit]').textContent = 'До ' + Math.min(10, Number(fields.first.value) + 2) + ' мм при выбранном первом стекле.';
+    fields.height.setCustomValidity(Math.min(fields.width.valueAsNumber, fields.height.valueAsNumber) > 2200 ? 'Одна из сторон должна быть не больше 2200 мм.' : '');
+    root.querySelector('[data-result]').textContent = composition();
+  }
+  form.addEventListener('input', event => {
+    if (event.target === fields.first) updateSecond(fields.second.value);
+    refresh();
   });
-  form.elements.unknown.addEventListener('change',()=>{['width','height'].forEach(k=>{form.elements[k].disabled=form.elements.unknown.checked;form.elements[k].required=!form.elements.unknown.checked;});});
-  form.addEventListener('submit',e=>{
-    e.preventDefault();
-    const composition=layers.map(name).join(' / ');
-    const note='Состав триплекса: '+composition+'\nНазначение: '+form.elements.purpose.value+'\nСостав и итоговая толщина требуют согласования.'+(layers.some(i=>['wood','mesh'].includes(i.fill))?' Включения с EVA-плёнкой с обеих сторон.':'')+(form.elements.note.value?'\nПожелания: '+form.elements.note.value:'');
-    if(note.length>2000){status.textContent='Состав слишком длинный для одной позиции. Разделите его на несколько заявок на согласование.';return;}
-    const item=AGMOrderModel.normalize({id:crypto.randomUUID(),material:'dekorativnyy-triplex',base:'custom',thickness:'unknown',width:form.elements.width.value,height:form.elements.height.value,quantity:form.elements.quantity.value,unknown:form.elements.unknown.checked,ops:[],note},quote.materials,()=>crypto.randomUUID());
-    const entry=AGMQuoteModel.material(item,quote.materials,quote.operations);
-    if(entry.errors.length){status.textContent=entry.errors[0];return;}
-    entry.editUrl='/triplex/?quote-edit='+encodeURIComponent(item.id);
-    try{quote.store.put(entry);document.dispatchEvent(new CustomEvent('agm:quote-editors-refresh'));status.textContent='Добавлено. Можно собрать ещё одно сочетание.';quote.open();}catch(err){status.textContent='Не удалось сохранить: '+err.message;}
+  form.addEventListener('submit', event => {
+    event.preventDefault();
+    refresh();
+    if (!form.reportValidity()) return;
+    const processing = [fields.edge.value + ' кромка', fields.pack.checked ? 'обработка в пакете' : 'обработка отдельных стёкол', fields.tempered.checked ? 'с закаливанием' : 'без закаливания'].join(', ');
+    const id = saved ? saved.id : crypto.randomUUID();
+    const flat = Object.fromEntries(new FormData(form));
+    flat.tempered = fields.tempered.checked;
+    flat.pack = fields.pack.checked;
+    flat.color = fields.color.disabled ? '' : fields.color.value.trim();
+    const item = AGMOrderModel.normalize({id, material:'dekorativnyy-triplex', base:'custom', thickness:'unknown',
+      width:flat.width, height:flat.height, quantity:flat.quantity, ops:[], note:composition() + '\n' + processing}, quote.materials, () => id);
+    const entry = AGMQuoteModel.material(item, quote.materials, quote.operations);
+    const status = root.querySelector('[data-status]');
+    if (entry.errors.length) {status.textContent = entry.errors[0]; return;}
+    entry.title = 'Триплекс с плоским стеклом';
+    entry.summary = [composition(), flat.width + ' × ' + flat.height + ' мм · ' + flat.quantity + ' шт.', processing].join('\n');
+    entry.flat = flat;
+    entry.editUrl = '/triplex/?flat-edit=' + encodeURIComponent(id) + '#triplex-builder';
+    try {
+      quote.store.put(entry);
+      document.dispatchEvent(new CustomEvent('agm:quote-editors-refresh'));
+      status.textContent = 'Состав сохранён в «Моём расчёте».';
+      quote.open();
+    } catch (error) {status.textContent = 'Не удалось сохранить: ' + error.message;}
   });
-  render();root.hidden=false;
-  // Keep the existing editor and its logic available for stored positions and fallback.
-  const legacy=document.querySelector('#material-request');
-  if(!new URLSearchParams(location.search).has('quote-edit')){
-    if(legacy)legacy.hidden=true;
-    document.querySelectorAll('a[href="#material-request"],a[href$="/triplex/#material-request"]').forEach(a=>{a.href='#triplex-builder';});
-    if(location.hash==='#material-request')root.scrollIntoView();
-  }
+  refresh();
+  root.hidden = false;
+  const legacy = document.querySelector('#material-request');
+  if (legacy) legacy.hidden = true;
+  document.querySelectorAll('a[href="#material-request"],a[href$="/triplex/#material-request"]').forEach(a => {a.href = '#triplex-builder';});
+  if (['#material-request', '#triplex-builder'].includes(location.hash)) root.scrollIntoView();
 });
+
