@@ -28,7 +28,7 @@
   previousEntries=entries();
   // A catalog color opens a fresh draft without changing existing cart items.
   const requestedVariant=new URLSearchParams(location.search).get('variant');
-  if(current==='tonirovannye-zerkala' && Object.hasOwn(materials[current].variants,requestedVariant)){
+  if(['tonirovannye-zerkala','dekorativnyy-triplex'].includes(current) && Object.hasOwn(materials[current].variants,requestedVariant)){
     nextDraft.base=requestedVariant;
     nextDraft.thickness=AGMOrderModel.thicknesses(materials[current],requestedVariant)[0];
     state.active=null;

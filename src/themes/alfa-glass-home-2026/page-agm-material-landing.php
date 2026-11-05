@@ -66,20 +66,22 @@ ob_start();
     <article class="aml-card aml-text-card">
       <h3>Из плоского стекла</h3>
       <p>Листы плоского флоат-стекла (Float) — прозрачные, матовые или тонированные. Для межкомнатных дверей, душевых и офисных перегородок.</p>
-      <a href="#material-request">Рассчитать по моим размерам →</a>
+      <a href="/triplex/#triplex-builder">Открыть конфигуратор →</a>
     </article>
     <article class="aml-card aml-text-card">
       <h3>С рифлёным стеклом</h3>
       <p>Рифление МОРУ пропускает свет и размывает очертания за стеклом. Подходит для дверей гардеробной и перегородок между прихожей и комнатой.</p>
-      <a href="/riflenoe-steklo/">Посмотреть рифлёное стекло →</a>
+      <a href="?variant=ribbed#material-request">Открыть конфигуратор →</a>
     </article>
     <article class="aml-card aml-text-card">
       <h3>Из декоративного стекла</h3>
       <p>Узорчатое стекло задаёт рисунок, а второе стекло — оттенок. Например, Сильвит с серым стеклом используем для вставок в двери и лестничные ограждения.</p>
+      <a href="?variant=patterned#material-request">Открыть конфигуратор →</a>
     </article>
     <article class="aml-card aml-text-card">
       <h3>Свободная конфигурация</h3>
       <p>Подберём сочетание стекла, плёнки и декоративных вставок по вашему эскизу. Например, для перегородки со шпоном или двери в фирменных цветах.</p>
+      <a href="?variant=custom#material-request">Открыть конфигуратор →</a>
     </article>
 </div></section>
 <section class="aml-section" id="combination"><p class="aml-eyebrow">Индивидуальные решения</p><h2>Ваш замысел — в сочетании материалов</h2><p class="aml-intro">Рельеф задаёт характер, плёнка — цвет, второе стекло — глубину оттенка. Подбираем каждый слой под ваш проект.</p><div class="aml-grid aml-layers"><article class="aml-panel"><span class="aml-layer-label">Лицевая фактура</span><h3>Первое стекло</h3><p>Гладкое, рифлёное или подходящее узорчатое стекло. Для декоративной основы — 4 или 6 мм, в зависимости от материала.</p><a href="/riflenoe-steklo/">Рифлёные основы →</a></article><article class="aml-panel"><span class="aml-layer-label">Цвет и прозрачность</span><h3>EVA-плёнка</h3><p>Прозрачная по умолчанию. Цветная — для выразительных акцентов; матовый эффект согласуем по образцу.</p><div class="aml-colors" aria-label="Примеры цветов плёнки"><span style="--swatch:#3e8193">Голубой</span><span style="--swatch:#22724c">Зелёный</span><span style="--swatch:#9c2837">Красный</span><span style="--swatch:#dab52b">Жёлтый</span><span style="--swatch:#704787">Фиолетовый</span><span style="--swatch:#746e63">Серый</span></div><small>Цвета на экране условные. Желаемый цвет укажите в пожеланиях к изделию.</small></article><article class="aml-panel"><span class="aml-layer-label">Основа сочетания</span><h3>Второе стекло</h3><p>Прозрачное, осветлённое, матовое или тонированное. Например, Silvit с серым стеклом создаёт рельефный рисунок с дымчатым оттенком.</p><a href="#material-request" data-triplex-variant="custom">Подобрать сочетание →</a></article></div><p class="aml-note">Минимальный состав — 4+4 мм стекла плюс EVA-плёнка. Итоговая толщина больше 8 мм и зависит от состава.</p></section>

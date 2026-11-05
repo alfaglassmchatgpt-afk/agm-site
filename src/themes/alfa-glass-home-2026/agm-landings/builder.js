@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const form = root.querySelector('form');
   const fields = form.elements;
   const query = new URLSearchParams(location.search);
-  if (query.has('quote-edit')) return; // Existing material positions use the shared editor.
+  if (query.has('quote-edit') || ['ribbed', 'patterned', 'custom'].includes(query.get('variant'))) return; // Existing material positions use the shared editor.
   const saved = query.has('flat-edit') && quote.store.all().find(item =>
     item.type === 'material' && item.id === query.get('flat-edit') && item.flat);
   const glassTypes = ['Обычное прозрачное', 'Осветлённое', 'Матовое', 'Осветлённое матовое', 'Тонированное', 'Тонированное матовое'];
