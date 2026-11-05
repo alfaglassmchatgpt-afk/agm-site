@@ -30,7 +30,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     custom: 'Свободная конфигурация триплекса'
   };
   const requested = saved ? saved.flat.group : query.get('variant');
-  const group = Object.hasOwn(titles, requested) ? requested : 'flat';
+  // Keep both recorded materials when reopening an older ribbed/ribbed combination.
+  const needsCustomEditor = saved && requested === 'ribbed' && !glassTypes.includes(saved.flat.back);
+  const group = needsCustomEditor ? 'custom' : Object.hasOwn(titles, requested) ? requested : 'flat';
   const free = group === 'custom';
   root.querySelector('#tb-title').textContent = titles[group];
   root.querySelector('[data-agreement]').hidden = !free;
@@ -40,7 +42,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const patterned = catalog.patterned.filter(id => id !== 'hithicross' && materials[id]?.operations.includes('laminate'));
   const allGlass = Object.keys(materials).filter(id => !['kuhonnye-fartuki', 'dekorativnyy-triplex'].includes(id));
   const frontChoices = {flat: glassTypes, ribbed, patterned, custom: allGlass};
-  const backChoices = {flat: glassTypes, ribbed: [...glassTypes, ...ribbed], patterned: glassTypes, custom: allGlass};
+  const backChoices = {flat: glassTypes, ribbed: glassTypes, patterned: glassTypes, custom: allGlass};
   for (const [field, choices] of [[fields.front, frontChoices[group]], [fields.back, backChoices[group]]]) {
     options(field, choices, choices.map(id => materials[id]?.title || id));
     if (free) field.value = 'float-steklo-clear-m1';
