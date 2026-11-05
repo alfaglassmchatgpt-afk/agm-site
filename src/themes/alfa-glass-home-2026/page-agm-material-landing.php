@@ -59,7 +59,6 @@ ob_start();
 <?php else: ?><figure><img fetchpriority="high" src="<?php echo $asset('agm-glass/assets/generated/moru-ultra-aluminium-v2.png'); ?>" alt="Визуализация рифлёного стекла MORU в алюминиевой перегородке"><figcaption>Визуализация применения. Фактуру и оттенок выбираем по образцу.</figcaption></figure><?php endif; ?>
 </section>
 <?php if ($triplex): ?>
-<nav class="aml-jump" aria-label="На странице триплекса"><a href="#collection">Варианты триплекса</a><a href="#combination">Состав и фактура</a><a href="#material-request">Мой расчёт ↗</a></nav>
 <section class="aml-section" id="collection">
   <h2>Какой триплекс вам нужен?</h2>
   <div class="aml-grid aml-four">
