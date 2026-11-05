@@ -10,6 +10,13 @@
     const k=storage.key(n);if(!k.startsWith(prefix))continue;
     const value=JSON.parse(storage.getItem(k));
     if(value.version!==1||!types.includes(value.type)||typeof value.id!=='string')throw Error('Не удалось прочитать сохранённый расчёт. Не очищайте данные браузера.');
+    if(value.flat && value.type==='material'){
+      // Older flat-triplex drafts included manufacturing details in the customer summary.
+      const publicText=text=>text.replace(/(Прозрачная EVA-плёнка), \d+ слоя/g,'$1')
+        .replace(/(Сетка · (?:Латунь|Медь|Нержавейка)) между [^/\n]+?(?= \/|\n|$)/g,'$1');
+      if(typeof value.summary==='string')value.summary=publicText(value.summary);
+      if(typeof value.data?.note==='string')value.data.note=publicText(value.data.note);
+    }
     items.push(value);
    }
    return items.sort((a,b)=>a.created-b.created||a.id.localeCompare(b.id));

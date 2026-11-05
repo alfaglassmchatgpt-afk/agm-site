@@ -12,38 +12,71 @@ document.addEventListener('DOMContentLoaded', async () => {
   const glassTypes = ['Обычное прозрачное', 'Осветлённое', 'Матовое', 'Осветлённое матовое', 'Тонированное', 'Тонированное матовое'];
   const thicknesses = [4, 5, 6, 8, 10];
   const films = ['Прозрачная', 'Матовая (сатин)', 'Цветная прозрачная', 'Цветная непрозрачная'];
-  const meshes = ['Латунь', 'Медь', 'Нержавейка'].map(metal => 'Сетка · ' + metal);
+  const meshes = ['Латунь', 'Медь', 'Нержавейка'];
+  const palettes = {
+    'Тонированное': {
+      'Бронза': 'moru-bronze', 'Серое': 'tonirovannoe-steklo-grey',
+      'Чёрное': 'tonirovannoe-steklo-black', 'Зелёное': 'tonirovannoe-steklo-green'
+    },
+    'Тонированное матовое': {'Бронза': 'moru-bronze-mat', 'Серое': 'moru-grey-mat'}
+  };
   function options(select, values, labels = values) {
     select.replaceChildren(...values.map((value, index) => new Option(labels[index], value)));
   }
   options(fields.front, glassTypes);
   options(fields.back, glassTypes);
-  options(fields.fill, [...films, ...meshes]);
+  options(fields.fill, [...films, 'Сетка']);
+  options(fields.metal, meshes);
   options(fields.first, thicknesses, thicknesses.map(n => n + ' мм'));
   const colors = ['Голубой', 'Чёрный', 'Оранжевый', 'Фиолетовый', 'Зелёный', 'Голубой джейд', 'Серый', 'Бронза', 'Синий', 'Голубой прозрачный', 'Тёмно-серый', 'Жёлтый', 'Светло-зелёный', 'Красный', 'Фуксия'];
   options(root.querySelector('#tb-colors'), colors);
-  function updateSecond(preferred) {
-    const first = Number(fields.first.value);
-    const allowed = thicknesses.filter(n => Math.abs(n - first) <= 2);
-    options(fields.second, allowed, allowed.map(n => n + ' мм'));
-    fields.second.value = allowed.includes(Number(preferred)) ? preferred : first;
+  function refreshGlass(side, thicknessField, preferredShade, preferredThickness) {
+    const palette = palettes[fields[side].value];
+    const shade = fields[side + 'Shade'];
+    shade.closest('label').hidden = !palette;
+    shade.disabled = !palette;
+    shade.required = Boolean(palette);
+    let allowed = thicknesses;
+    if (palette) {
+      options(shade, ['', ...Object.keys(palette)], ['Выберите оттенок', ...Object.keys(palette)]);
+      shade.value = preferredShade in palette ? preferredShade : '';
+      const material = quote.materials[palette[shade.value]];
+      if (material) allowed = allowed.filter(n => material.thicknesses.includes(String(n)));
+    }
+    if (side === 'back') allowed = allowed.filter(n => Math.abs(n - Number(fields.first.value)) <= 2);
+    options(thicknessField, allowed, allowed.map(n => n + ' мм'));
+    const preferred = Number(preferredThickness);
+    thicknessField.value = allowed.includes(preferred) ? preferred : allowed.reduce((best, n) =>
+      Math.abs(n - preferred) < Math.abs(best - preferred) ? n : best, allowed[0]);
   }
-  updateSecond(4);
+  function refreshStack(first = fields.first.value, second = fields.second.value) {
+    refreshGlass('front', fields.first, fields.frontShade.value, first);
+    refreshGlass('back', fields.second, fields.backShade.value, second);
+  }
+  refreshStack(4, 4);
   if (saved) {
-    for (const key of ['width','height','quantity','front','first','fill','color','back','edge']) fields[key].value = saved.flat[key];
-    updateSecond(saved.flat.second);
+    for (const key of ['width','height','quantity','front','color','back','edge']) fields[key].value = saved.flat[key];
+    const oldMetal = saved.flat.fill.replace(/^Сетка · /, '');
+    fields.fill.value = meshes.includes(oldMetal) ? 'Сетка' : saved.flat.fill;
+    fields.metal.value = saved.flat.metal || (meshes.includes(oldMetal) ? oldMetal : meshes[0]);
+    refreshGlass('front', fields.first, saved.flat.frontShade, saved.flat.first);
+    refreshGlass('back', fields.second, saved.flat.backShade, saved.flat.second);
     fields.tempered.checked = saved.flat.tempered;
     fields.pack.checked = saved.flat.pack;
     root.querySelector('[type=submit]').textContent = 'Сохранить изменения';
   }
   const isColored = () => fields.fill.value.startsWith('Цветная');
   function filling() {
-    if (fields.fill.value === films[0]) return 'Прозрачная EVA-плёнка, 2 слоя';
-    if (meshes.includes(fields.fill.value)) return fields.fill.value + ' между двумя прозрачными EVA-плёнками';
+
+    if (fields.fill.value === 'Сетка') return 'Сетка · ' + fields.metal.value;
     return fields.fill.value + ' EVA-плёнка' + (isColored() && fields.color.value.trim() ? ' · ' + fields.color.value.trim() : '');
   }
   function composition() {
-    return [fields.front.value + ' ' + fields.first.value + ' мм', filling(), fields.back.value + ' ' + fields.second.value + ' мм'].join(' / ');
+    function glassName(side, thickness) {
+      const shade = fields[side + 'Shade'];
+      return [fields[side].value, shade.disabled ? '' : shade.value, thickness.value + ' мм'].filter(Boolean).join(' · ');
+    }
+    return [glassName('front', fields.first), filling(), glassName('back', fields.second)].join(' / ');
   }
   function refresh() {
     const tempered = fields.tempered.checked;
@@ -53,13 +86,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     root.querySelector('[data-color]').hidden = !isColored();
     fields.color.disabled = !isColored();
     fields.color.required = isColored();
-    root.querySelector('[data-film]').textContent = meshes.includes(fields.fill.value) ? 'По одному слою прозрачной EVA-плёнки с каждой стороны сетки.' : fields.fill.value === films[0] ? 'Два слоя прозрачной EVA-плёнки.' : '';
+    fields.metal.disabled = fields.fill.value !== 'Сетка';
+    fields.metal.closest('label').hidden = fields.metal.disabled;
     root.querySelector('[data-limit]').textContent = 'Разница между толщинами стёкол — до 2 мм включительно.';
     fields.height.setCustomValidity(Math.min(fields.width.valueAsNumber, fields.height.valueAsNumber) > 2200 ? 'Одна из сторон должна быть не больше 2200 мм.' : '');
     root.querySelector('[data-result]').textContent = composition();
   }
   form.addEventListener('input', event => {
-    if (event.target === fields.first) updateSecond(fields.second.value);
+    if (['front', 'back', 'frontShade', 'backShade', 'first'].includes(event.target.name)) refreshStack();
     refresh();
   });
   form.addEventListener('submit', event => {
