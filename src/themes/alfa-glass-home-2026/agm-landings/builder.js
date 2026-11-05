@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   options(root.querySelector('#tb-colors'), colors);
   function updateSecond(preferred) {
     const first = Number(fields.first.value);
-    const allowed = thicknesses.filter(n => n <= first + 2);
+    const allowed = thicknesses.filter(n => Math.abs(n - first) <= 2);
     options(fields.second, allowed, allowed.map(n => n + ' мм'));
     fields.second.value = allowed.includes(Number(preferred)) ? preferred : first;
   }
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     fields.color.disabled = !isColored();
     fields.color.required = isColored();
     root.querySelector('[data-film]').textContent = meshes.includes(fields.fill.value) ? 'По одному слою прозрачной EVA-плёнки с каждой стороны сетки.' : fields.fill.value === films[0] ? 'Два слоя прозрачной EVA-плёнки.' : '';
-    root.querySelector('[data-limit]').textContent = 'До ' + Math.min(10, Number(fields.first.value) + 2) + ' мм при выбранном первом стекле.';
+    root.querySelector('[data-limit]').textContent = 'Разница между толщинами стёкол — до 2 мм включительно.';
     fields.height.setCustomValidity(Math.min(fields.width.valueAsNumber, fields.height.valueAsNumber) > 2200 ? 'Одна из сторон должна быть не больше 2200 мм.' : '');
     root.querySelector('[data-result]').textContent = composition();
   }
@@ -95,4 +95,3 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.querySelectorAll('a[href="#material-request"],a[href$="/triplex/#material-request"]').forEach(a => {a.href = '#triplex-builder';});
   if (['#material-request', '#triplex-builder'].includes(location.hash)) root.scrollIntoView();
 });
-
