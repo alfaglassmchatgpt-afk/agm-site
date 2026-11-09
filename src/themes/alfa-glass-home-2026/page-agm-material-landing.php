@@ -93,7 +93,7 @@ ob_start();
       <a href="?variant=patterned#triplex-builder" aria-label="Открыть конфигуратор — Из декоративного стекла">Открыть конфигуратор →</a>
     </article>
     <article class="aml-card aml-text-card">
-      <img src="<?php echo $asset('agm-landings/assets/triplex-card-custom.webp'); ?>" alt="Два образца стекла и волнистая EVA-плёнка между ними" width="640" height="640" loading="lazy">
+      <img src="<?php echo $asset('agm-landings/assets/triplex-card-estriado-k1-gold.webp'); ?>" alt="Рифлёное стекло Estriado Ultra, прозрачная EVA-плёнка и состаренное зеркало K1 Gold" width="640" height="640" loading="lazy">
       <h3>Свободная конфигурация</h3>
       <p>Подберём сочетание стекла, плёнки и декоративных вставок по вашему эскизу. Например, для перегородки со шпоном или двери в фирменных цветах.</p>
       <a href="?variant=custom#triplex-builder" aria-label="Открыть конфигуратор — Свободная конфигурация">Открыть конфигуратор →</a>
