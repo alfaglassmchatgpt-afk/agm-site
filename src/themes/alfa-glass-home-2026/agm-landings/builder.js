@@ -119,6 +119,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     return families;
   }
+  const familyOrder = [
+    'Прозрачное и осветлённое стекло', 'Матовое стекло', 'Стопсол', 'Тонированное стекло',
+    'Дихроичное стекло', 'Рифлёное стекло МОРУ', 'Рифлёное стекло Эстриадо',
+    'Рифлёное стекло', 'Узорчатое стекло', 'Зеркала', 'Тонированные зеркала',
+    'Двухсторонние зеркала', 'Состаренные зеркала'
+  ];
   const choices = {};
   function showFamily(side, preferred) {
     const entries = choices[side].get(fields[side + 'Family'].value);
@@ -135,7 +141,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     const families = materialChoices(ids);
     choices[side] = families;
     const selector = fields[side + 'Family'];
-    options(selector, [...families.keys()]);
+    const otherFamilies = [...families.keys()].filter(name =>
+      !familyOrder.includes(name) && name !== 'Lacobel' && name !== 'Matelac');
+    options(selector, [...familyOrder, ...otherFamilies, 'Lacobel', 'Matelac'].filter(name => families.has(name)));
     const initial = saved ? replacedGlass[saved.flat[side]] || saved.flat[side] : ids === allGlass ? flatIds[glassTypes[0]] : ids[0];
     const entries = [...families.values()].flat();
     const match = entries.find(e => e.value === initial && e.shade === saved?.flat?.[side + 'Shade']) || entries.find(e => e.value === initial);
