@@ -42,9 +42,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   root.querySelector('[data-agreement]').hidden = !free;
   const catalog = JSON.parse(document.querySelector('#tb-catalog').textContent);
   const materials = quote.materials;
-  const ribbed = catalog.ribbed.filter(id => materials[id]);
-  const patterned = catalog.patterned.filter(id => id !== 'hithicross' && materials[id]?.operations.includes('laminate'));
-  const allGlass = Object.keys(materials).filter(id => !materials[id].fixedComposition && !['kuhonnye-fartuki', 'dekorativnyy-triplex'].includes(id));
+  const replacedGlass = {
+    'flutes-moru-ultra': 'moru-ultra',
+    'flutes-moru-grey': 'moru-grey',
+    'flutes-moru-bronze': 'moru-bronze-toned'
+  };
+  const ribbed = catalog.ribbed.filter(id => materials[id] && !replacedGlass[id]);
+  const patterned = catalog.patterned.filter(id => !replacedGlass[id] && id !== 'hithicross' && materials[id]?.operations.includes('laminate'));
+  const allGlass = Object.keys(materials).filter(id => !replacedGlass[id] && !materials[id].fixedComposition && !['kuhonnye-fartuki', 'dekorativnyy-triplex'].includes(id));
   const frontChoices = {flat: glassTypes, ribbed, patterned, custom: allGlass};
   const backChoices = {flat: glassTypes, ribbed: glassTypes, patterned: glassTypes, custom: allGlass};
   for (const [field, choices] of [[fields.front, frontChoices[group]], [fields.back, backChoices[group]]]) {
@@ -105,7 +110,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
   refreshStack(4, 4);
   if (saved) {
-    for (const key of ['width','height','quantity','front','color','back','edge']) fields[key].value = saved.flat[key];
+    for (const key of ['width','height','quantity','color','edge']) fields[key].value = saved.flat[key];
+    for (const side of ['front', 'back']) fields[side].value = replacedGlass[saved.flat[side]] || saved.flat[side];
     const oldMetal = saved.flat.fill.replace(/^Сетка · /, '');
     fields.fill.value = meshes.includes(oldMetal) ? 'Сетка' : saved.flat.fill;
     fields.metal.value = saved.flat.metal || (meshes.includes(oldMetal) ? oldMetal : meshes[0]);

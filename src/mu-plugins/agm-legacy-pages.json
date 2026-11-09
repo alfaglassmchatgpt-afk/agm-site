@@ -311,7 +311,7 @@
     "id": 1677,
     "source": "/product/flutes-moru-bronze/",
     "status": 301,
-    "target": "/materialy/flutes-moru-bronze/",
+    "target": "/materialy/moru-bronze-toned/",
     "reason": "Актуальная замена"
   },
   {
@@ -325,7 +325,7 @@
     "id": 1686,
     "source": "/product/flutes-moru-grey/",
     "status": 301,
-    "target": "/materialy/flutes-moru-grey/",
+    "target": "/materialy/moru-grey/",
     "reason": "Актуальная замена"
   },
   {
@@ -339,7 +339,7 @@
     "id": 1683,
     "source": "/product/flutes-moru-ultra/",
     "status": 301,
-    "target": "/materialy/flutes-moru-ultra/",
+    "target": "/materialy/moru-ultra/",
     "reason": "Актуальная замена"
   },
   {
@@ -1027,5 +1027,26 @@
     "status": 410,
     "target": "",
     "reason": "Старая страница без прямого аналога"
+  },
+  {
+    "id": 5181,
+    "source": "/materialy/flutes-moru-ultra/",
+    "status": 301,
+    "target": "/materialy/moru-ultra/",
+    "reason": "Актуальная карточка MORU"
+  },
+  {
+    "id": 5179,
+    "source": "/materialy/flutes-moru-grey/",
+    "status": 301,
+    "target": "/materialy/moru-grey/",
+    "reason": "Актуальная карточка MORU"
+  },
+  {
+    "id": 5177,
+    "source": "/materialy/flutes-moru-bronze/",
+    "status": 301,
+    "target": "/materialy/moru-bronze-toned/",
+    "reason": "Актуальная карточка MORU"
   }
 ]
