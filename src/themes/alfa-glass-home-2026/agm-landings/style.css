@@ -20,7 +20,9 @@
 .aml-triplex #collection > h2 {
   text-align: center;
 }
-.aml-triplex .aml-text-card{padding:28px 22px;border-top:3px solid var(--blue);min-height:270px}
+.aml-triplex .aml-text-card > a::after { content: ""; position: absolute; inset: 0; }
+.aml-triplex .aml-text-card:focus-within { outline: 2px solid var(--focus); outline-offset: 3px; }
+.aml-triplex .aml-text-card{position:relative;padding:28px 22px;border-top:3px solid var(--blue);min-height:270px}
 .aml-triplex .aml-text-card > img {
   display: block;
   width: 100%;

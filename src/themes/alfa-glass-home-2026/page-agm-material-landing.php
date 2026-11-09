@@ -25,7 +25,7 @@ ob_start();
 ?><!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <?php wp_head(); ?>
 <link rel="stylesheet" href="<?php echo $asset('agm-doors/style.css'); ?>">
-<link rel="stylesheet" href="<?php echo $asset('agm-landings/style.css?v=20261109-caret'); ?>">
+<link rel="stylesheet" href="<?php echo $asset('agm-landings/style.css?v=20261109-cards'); ?>">
 <link rel="stylesheet" href="<?php echo $asset('agm-aluminium-catalog/shared-header.css'); ?>">
 <script src="<?php echo $asset('agm-aluminium-catalog/shared-header.js'); ?>" defer></script>
 </head><body id="top">
@@ -78,25 +78,25 @@ ob_start();
       <img src="<?php echo $asset('agm-landings/assets/triplex-card-flat.webp'); ?>" alt="Полированная кромка прозрачного триплекса" width="640" height="640" loading="lazy">
       <h3>Из плоского стекла</h3>
       <p>Листы плоского флоат-стекла (Float) — прозрачные, матовые или тонированные. Для межкомнатных дверей, душевых и офисных перегородок.</p>
-      <a href="/triplex/#triplex-builder">Открыть конфигуратор →</a>
+      <a href="/triplex/#triplex-builder" aria-label="Открыть конфигуратор — Из плоского стекла">Открыть конфигуратор →</a>
     </article>
     <article class="aml-card aml-text-card">
       <img src="<?php echo $asset('agm-landings/assets/triplex-card-ribbed.webp'); ?>" alt="Образец бронзового стекла МОРУ с вертикальным рифлением" width="640" height="640" loading="lazy">
       <h3>С рифлёным стеклом</h3>
       <p>Рифление МОРУ пропускает свет и размывает очертания за стеклом. Подходит для дверей гардеробной и перегородок между прихожей и комнатой.</p>
-      <a href="?variant=ribbed#triplex-builder">Открыть конфигуратор →</a>
+      <a href="?variant=ribbed#triplex-builder" aria-label="Открыть конфигуратор — С рифлёным стеклом">Открыть конфигуратор →</a>
     </article>
     <article class="aml-card aml-text-card">
       <img src="<?php echo $asset('agm-landings/assets/triplex-card-patterned-v2.webp'); ?>" alt="Фактурное стекло крупным планом, полированная кромка и металлическое крепление" width="640" height="640" loading="lazy">
       <h3>Из декоративного стекла</h3>
       <p>Узорчатое стекло задаёт рисунок, а второе стекло — оттенок. Например, Сильвит с серым стеклом используем для вставок в двери и лестничные ограждения.</p>
-      <a href="?variant=patterned#triplex-builder">Открыть конфигуратор →</a>
+      <a href="?variant=patterned#triplex-builder" aria-label="Открыть конфигуратор — Из декоративного стекла">Открыть конфигуратор →</a>
     </article>
     <article class="aml-card aml-text-card">
       <img src="<?php echo $asset('agm-landings/assets/triplex-card-custom.webp'); ?>" alt="Два образца стекла и волнистая EVA-плёнка между ними" width="640" height="640" loading="lazy">
       <h3>Свободная конфигурация</h3>
       <p>Подберём сочетание стекла, плёнки и декоративных вставок по вашему эскизу. Например, для перегородки со шпоном или двери в фирменных цветах.</p>
-      <a href="?variant=custom#triplex-builder">Открыть конфигуратор →</a>
+      <a href="?variant=custom#triplex-builder" aria-label="Открыть конфигуратор — Свободная конфигурация">Открыть конфигуратор →</a>
     </article>
 </div></section>
 <?php
