@@ -86,7 +86,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       const variants = Object.entries(profile.variants || {});
       for (const [shade, variant] of variants.length ? variants : [['', '']]) {
         let label = profile.title;
-        if (id === 'zerkalo-serebro') label = shade === 'clear' ? 'Серебро на осветлённом стекле' : 'Обычное зеркало серебро';
+        if (id === 'zerkalo-serebro' && shade !== 'standard') continue;
+        if (id === 'zerkalo-serebro') label = 'Обычное зеркало';
         else if (id === 'zerkalo-osvetlyonnoe') label = 'Осветлённое зеркало Crystalvision';
         else if (id === 'tonirovannye-zerkala' || id === 'zerkalo-gezella') label = variant;
         else if (id === 'dihroichnoe-steklo') label = 'Дихроичное стекло';
@@ -118,6 +119,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     const match = entries.find(e => e.value === initial && e.shade === saved?.flat?.[side + 'Shade']) || entries.find(e => e.value === initial);
     if (match) selector.value = familyName(match.id);
     showFamily(side, match);
+    if (initial === 'zerkalo-serebro' && saved?.flat?.[side + 'Shade'] === 'clear') {
+      const placeholder = new Option('Укажите замену для серебра на осветлённом стекле', '');
+      placeholder.disabled = true;
+      fields[side].add(placeholder);
+      fields[side].value = '';
+    }
   }
   const fills = [...films];
   if (group === 'flat' || free) fills.push('Сетка');
@@ -130,6 +137,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   options(root.querySelector('#tb-colors'), colors);
   function refreshGlass(side, thicknessField, preferredThickness) {
     const choice = selectedGlass(side);
+    if (!choice) {
+      options(thicknessField, [''], ['Сначала выберите зеркало']);
+      return;
+    }
     const selected = materials[choice.id];
     const catalogValues = selected.variantThicknesses?.[choice.shade] ?? selected.thicknesses ?? [];
     const numeric = catalogValues.map(Number).filter(n => Number.isFinite(n) && n > 0);
@@ -183,6 +194,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   function composition() {
     function glassName(side, thickness) {
       const choice = selectedGlass(side);
+      if (!choice) return 'Выберите зеркало';
       const name = palettes[choice.value] || ['tonirovannye-zerkala', 'zerkalo-gezella'].includes(choice.id)
         ? familyName(choice.id) + ' · ' + choice.label : choice.label;
       return [name, thickness.value && thickness.selectedOptions[0].text].filter(Boolean).join(' · ');
@@ -190,7 +202,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     return [glassName('front', fields.first), filling(), glassName('back', fields.second)].join(' / ');
   }
   function refresh() {
-    const canTemper = ['front', 'back'].every(side => materials[selectedGlass(side).id].operations.includes('temper'));
+    const canTemper = ['front', 'back'].every(side => materials[selectedGlass(side)?.id]?.operations.includes('temper'));
     fields.tempered.disabled = !canTemper;
     if (!canTemper) fields.tempered.checked = false;
     const tempered = fields.tempered.checked;
