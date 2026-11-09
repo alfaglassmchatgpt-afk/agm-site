@@ -11,6 +11,14 @@
   text-align: center;
 }
 .aml-triplex .aml-text-card{padding:28px 22px;border-top:3px solid var(--blue);min-height:270px}
+.aml-triplex .aml-text-card > img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  border-radius: 6px;
+  margin-bottom: 18px;
+}
 .aml-triplex .aml-text-card:nth-child(2){border-top-color:#719985}.aml-triplex .aml-text-card:nth-child(3){border-top-color:#ba9764}.aml-triplex .aml-text-card:nth-child(4){border-top-color:#919ba7}
 .aml-intro{max-width:720px;color:var(--muted);font-size:19px;margin-bottom:32px}
 .aml-layer-label{display:block;color:var(--muted);font-size:12px;letter-spacing:.06em;margin-bottom:20px}.aml-layers .aml-panel{border:1px solid var(--line);padding:28px}

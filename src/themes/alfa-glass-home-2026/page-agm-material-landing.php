@@ -64,21 +64,25 @@ ob_start();
   <h2>Какой триплекс вам нужен?</h2>
   <div class="aml-grid aml-four">
     <article class="aml-card aml-text-card">
+      <img src="<?php echo $asset('agm-landings/assets/triplex-card-flat.webp'); ?>" alt="Полированная кромка прозрачного триплекса" width="640" height="640" loading="lazy">
       <h3>Из плоского стекла</h3>
       <p>Листы плоского флоат-стекла (Float) — прозрачные, матовые или тонированные. Для межкомнатных дверей, душевых и офисных перегородок.</p>
       <a href="/triplex/#triplex-builder">Открыть конфигуратор →</a>
     </article>
     <article class="aml-card aml-text-card">
+      <img src="<?php echo $asset('agm-landings/assets/triplex-card-ribbed.webp'); ?>" alt="Образец бронзового стекла МОРУ с вертикальным рифлением" width="640" height="640" loading="lazy">
       <h3>С рифлёным стеклом</h3>
       <p>Рифление МОРУ пропускает свет и размывает очертания за стеклом. Подходит для дверей гардеробной и перегородок между прихожей и комнатой.</p>
       <a href="?variant=ribbed#triplex-builder">Открыть конфигуратор →</a>
     </article>
     <article class="aml-card aml-text-card">
+      <img src="<?php echo $asset('agm-landings/assets/triplex-card-patterned.webp'); ?>" alt="Вставка из Сильвита и серого стекла в лестничном ограждении" width="640" height="640" loading="lazy">
       <h3>Из декоративного стекла</h3>
       <p>Узорчатое стекло задаёт рисунок, а второе стекло — оттенок. Например, Сильвит с серым стеклом используем для вставок в двери и лестничные ограждения.</p>
       <a href="?variant=patterned#triplex-builder">Открыть конфигуратор →</a>
     </article>
     <article class="aml-card aml-text-card">
+      <img src="<?php echo $asset('agm-landings/assets/triplex-card-custom.webp'); ?>" alt="Два образца стекла и волнистая EVA-плёнка между ними" width="640" height="640" loading="lazy">
       <h3>Свободная конфигурация</h3>
       <p>Подберём сочетание стекла, плёнки и декоративных вставок по вашему эскизу. Например, для перегородки со шпоном или двери в фирменных цветах.</p>
       <a href="?variant=custom#triplex-builder">Открыть конфигуратор →</a>
