@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (id.startsWith('sostarennye-zerkala')) return 'Состаренные зеркала';
     if (id.startsWith('lacobel-') || id === 'steklo-lacobel') return 'Lacobel';
     if (id.startsWith('matelac-') || id === 'steklo-matelak') return 'Matelac';
-    if (id.startsWith('stopsol-')) return 'Солнцезащитное стекло';
+    if (id.startsWith('stopsol-') || id === 'steklo-solnczezashhitnoe-stopsol') return 'Стопсол';
     for (const [name, variants] of Object.entries(series)) {
       if (Object.hasOwn(variants, id)) return name;
     }
