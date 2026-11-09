@@ -10,7 +10,7 @@ document.querySelectorAll('[data-triplex-variant]').forEach(link => {
   });
 });
 
-// Material / application slideshow. Four seconds still, then a soft dissolve.
+// Material / application slideshow. Each pair shares one story.
 (() => {
   const root = document.querySelector('.aml-showcase');
   if (!root) return;
@@ -21,6 +21,7 @@ document.querySelectorAll('[data-triplex-variant]').forEach(link => {
   let request = 0, current = 0, timer, paused = motion.matches, hovered = false, focused = false, visible = true;
   const stories = document.querySelectorAll('.aml-story [data-story]');
   const copy = document.querySelector('[data-story-copy]');
+  const interval = 4000;
   let storyIndex = -1, typing;
   function updateStory() {
     const index = Math.floor(current / 2);
@@ -28,13 +29,21 @@ document.querySelectorAll('[data-triplex-variant]').forEach(link => {
     const phrase = stories[index].textContent;
     if (paused || motion.matches) {
       clearTimeout(typing);
+      copy.classList.remove('is-typing');
       copy.textContent = phrase;
     } else if (index !== storyIndex) {
       clearTimeout(typing);
-      let length = 0;
+      const start = performance.now();
+      copy.classList.add('is-typing');
       function tick() {
-        copy.textContent = phrase.slice(0, ++length);
-        if (length < phrase.length) typing = setTimeout(tick, 65);
+        const elapsed = performance.now() - start;
+        const length = Math.min(phrase.length, Math.floor(elapsed * phrase.length / interval));
+        copy.textContent = phrase.slice(0, length);
+        if (length < phrase.length) {
+          typing = setTimeout(tick, (length + 1) * interval / phrase.length - elapsed);
+        } else {
+          copy.classList.remove('is-typing');
+        }
       }
       tick();
     }
@@ -44,10 +53,10 @@ document.querySelectorAll('[data-triplex-variant]').forEach(link => {
     pause.textContent = paused ? '▷' : 'Ⅱ';
     pause.setAttribute('aria-label', paused ? 'Продолжить слайды' : 'Приостановить слайды');
   }
-  function schedule(delay = 4000) {
+  function schedule() {
     clearTimeout(timer);
     if (!paused && !hovered && !focused && visible && !document.hidden) {
-      timer = setTimeout(() => show((current + 1) % slides.length), delay);
+      timer = setTimeout(() => show((current + 1) % slides.length), current % 2 === 0 ? interval * 2 : interval);
     }
   }
   async function show(index) {
@@ -65,7 +74,7 @@ document.querySelectorAll('[data-triplex-variant]').forEach(link => {
     slides[current].classList.add('is-active');
     slides[current].setAttribute('aria-hidden', 'false');
     dots[current].setAttribute('aria-pressed', 'true');
-    schedule(motion.matches ? 4000 : 4900);
+    schedule();
   }
   dots.forEach((dot, i) => dot.addEventListener('click', () => show(i)));
   pause.addEventListener('click', () => { paused = !paused; updateStory(); controls(); schedule(); });

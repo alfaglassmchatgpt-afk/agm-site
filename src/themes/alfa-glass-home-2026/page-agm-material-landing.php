@@ -25,7 +25,7 @@ ob_start();
 ?><!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <?php wp_head(); ?>
 <link rel="stylesheet" href="<?php echo $asset('agm-doors/style.css'); ?>">
-<link rel="stylesheet" href="<?php echo $asset('agm-landings/style.css?v=20261103-hero'); ?>">
+<link rel="stylesheet" href="<?php echo $asset('agm-landings/style.css?v=20261109-type'); ?>">
 <link rel="stylesheet" href="<?php echo $asset('agm-aluminium-catalog/shared-header.css'); ?>">
 <script src="<?php echo $asset('agm-aluminium-catalog/shared-header.js'); ?>" defer></script>
 </head><body id="top">
@@ -35,11 +35,11 @@ ob_start();
 <section class="aml-hero">
 <div><p class="aml-eyebrow">Материал для вашего проекта</p><h1><?php echo esc_html($title); ?> на заказ</h1>
 <?php if ($triplex): $stories = [
-    'Для перегородки в прихожей сочетаем рифлёный МОРУ с матовым серым стеклом. За стеклом видны лишь силуэты.',
-    'Бронзовый МОРУ придаёт двери тёплый оттенок. Свет за дверью подчёркивает вертикальные рёбра стекла.',
-    'Тонкая латунная сетка между стёклами переливается на свету. В перегородке её плетение выглядит как золотистые нити.',
-    'Прозрачная зелёная плёнка окрашивает стекло. Так перегородка в офисе может повторить фирменный цвет компании.',
-    'Для лестничного ограждения сочетаем Сильвит с серым стеклом. Боковой свет проявляет рисунок каждой вставки.',
+    'Рифлёный триплекс для перегородок. Рельеф размывает силуэты, а матовое стекло добавляет приватности.',
+    'Тонированный триплекс для дверей. Подберите оттенок стекла к отделке комнаты и добавьте рифление, чтобы смягчить очертания предметов за дверью.',
+    'Триплекс с металлической сеткой. Плетение из латуни, меди или нержавеющей стали видно сквозь стекло и защищено от прикосновений.',
+    'Цветной триплекс на заказ. Подберём EVA-плёнку под фирменные цвета или палитру интерьера.',
+    'Декоративный триплекс по вашим размерам. Сочетайте узорчатое стекло с прозрачным или тонированным для вставок в двери и ограждения.',
 ]; ?>
 <div class="aml-story aml-lead">
   <?php foreach ($stories as $story): ?><span data-story aria-hidden="true"><?php echo esc_html($story); ?></span><?php endforeach; ?>
@@ -121,7 +121,7 @@ $builder_catalog = [
 <?php endif; ?>
 <section class="aml-section aml-faq"><h2>Перед заказом</h2><details><summary>От чего зависит цена?</summary><p>От выбранного материала<?php echo $triplex ? ' и состава триплекса' : ''; ?>, толщины, размеров, количества, обработки и доставки. Для расчёта укажите параметры изделия; цену и срок подтвердим после проверки заказа.</p></details><details><summary>Можно ли выбрать по фотографии?</summary><p>Фотография помогает выбрать направление. Окончательно оттенок, фактуру и прозрачность лучше оценить на образце: свет и окружение влияют на восприятие стекла.</p></details><details><summary>Можно ли заказать несколько разных изделий?</summary><p>Да. Добавляйте материалы в «Мой расчёт» из их карточек и отправляйте общей заявкой.</p></details></section>
 </main><footer class="aml-footer"><a href="/materialy/">Все материалы</a><a href="/riflenoe-steklo/">Рифлёное стекло</a><a href="/triplex/">Триплекс</a><a href="/#contacts">Контакты</a></footer>
-<?php if ($triplex): ?><script src="<?php echo $asset('agm-landings/app.js?v=20261103-hero'); ?>" defer></script><?php endif; ?>
+<?php if ($triplex): ?><script src="<?php echo $asset('agm-landings/app.js?v=20261109-type'); ?>" defer></script><?php endif; ?>
 <link rel="stylesheet" href="<?php echo $asset('agm-landings/builder.css'); ?>"><?php if ($triplex): ?><script src="<?php echo $asset('agm-landings/builder.js'); ?>" defer></script><?php endif; ?><?php wp_footer(); ?></body></html><?php
 $html = ob_get_clean();
 echo $triplex ? agm_order_render($html, 'dekorativnyy-triplex') : agm_quote_assets($html);
