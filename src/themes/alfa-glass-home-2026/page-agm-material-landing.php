@@ -34,7 +34,18 @@ ob_start();
 <nav class="aml-crumbs" aria-label="Хлебные крошки"><a href="/">Главная</a> / <a href="/materialy/">Материалы</a> / <span><?php echo esc_html($title); ?></span></nav>
 <section class="aml-hero">
 <div><p class="aml-eyebrow">Материал для вашего проекта</p><h1><?php echo esc_html($title); ?> на заказ</h1>
-<p class="aml-lead"><?php echo $triplex ? 'Прозрачный, цветной или с выразительной фактурой. Соберём сочетание стёкол и EVA-плёнки под ваш интерьер.' : 'Свет, фактура и приватность. Подберите рельеф, оттенок и толщину стекла под размеры вашего изделия.'; ?></p>
+<?php if ($triplex): $stories = [
+    'Для перегородки в прихожей сочетаем рифлёный МОРУ с матовым серым стеклом. За стеклом видны лишь силуэты.',
+    'Бронзовый МОРУ придаёт двери тёплый оттенок. Свет за дверью подчёркивает вертикальные рёбра стекла.',
+    'Тонкая латунная сетка между стёклами переливается на свету. В перегородке её плетение выглядит как золотистые нити.',
+    'Прозрачная зелёная плёнка окрашивает стекло. Так перегородка в офисе может повторить фирменный цвет компании.',
+    'Для лестничного ограждения сочетаем Сильвит с серым стеклом. Боковой свет проявляет рисунок каждой вставки.',
+]; ?>
+<div class="aml-story aml-lead">
+  <?php foreach ($stories as $story): ?><span data-story aria-hidden="true"><?php echo esc_html($story); ?></span><?php endforeach; ?>
+  <p data-story-copy><?php echo esc_html($stories[0]); ?></p>
+</div>
+<?php else: ?><p class="aml-lead">Свет, фактура и приватность. Подберите рельеф, оттенок и толщину стекла под размеры вашего изделия.</p><?php endif; ?>
 <div class="aml-actions"><a class="aml-button" href="#<?php echo $triplex ? 'material-request' : 'collection'; ?>">Рассчитать по моим размерам</a><a href="#collection">Выбрать <?php echo $triplex ? 'сочетание' : 'стекло'; ?> ↓</a></div>
 <p class="aml-note">Изготовление по размерам · Москва и Московская область</p></div>
 <?php if ($triplex): $slides = [

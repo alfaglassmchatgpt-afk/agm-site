@@ -7,6 +7,10 @@
 .aml-jump{display:flex;flex-wrap:wrap;gap:12px 28px;padding:22px 0;margin-top:36px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .aml-jump a{font-size:14px;text-decoration:none}.aml-jump a:last-child{margin-left:auto}
 .aml-triplex #collection{border-top:0;margin-top:0;padding-top:48px}
+.aml-triplex .aml-hero > div:first-child { align-self: start; }
+.aml-story { display: grid; line-height: 1.65; }
+.aml-story > * { grid-area: 1 / 1; margin: 0; }
+.aml-story > [data-story] { visibility: hidden; }
 .aml-triplex #collection > h2 {
   text-align: center;
 }
