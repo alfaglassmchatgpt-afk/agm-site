@@ -10,15 +10,19 @@ document.addEventListener('DOMContentLoaded', async () => {
   const saved = query.has('flat-edit') && quote.store.all().find(item =>
     item.type === 'material' && item.id === query.get('flat-edit') && item.flat);
   const glassTypes = ['Обычное прозрачное', 'Осветлённое', 'Матовое', 'Осветлённое матовое', 'Тонированное', 'Тонированное матовое'];
-  const thicknesses = [4, 5, 6, 8, 10];
+  const flatIds = {
+    'Обычное прозрачное': 'float-steklo-clear-m1', 'Осветлённое': 'steklo-osvetlyonnoe-clearvision',
+    'Матовое': 'steklo-matovoe-matelux', 'Осветлённое матовое': 'steklo-matovoe-osvetlyonnoe'
+  };
   const films = ['Прозрачная', 'Матовая (сатин)', 'Цветная прозрачная', 'Цветная непрозрачная'];
   const meshes = ['Латунь', 'Медь', 'Нержавейка'];
   const palettes = {
     'Тонированное': {
       'Бронза': 'moru-bronze', 'Серое': 'tonirovannoe-steklo-grey',
-      'Чёрное': 'tonirovannoe-steklo-black', 'Зелёное': 'tonirovannoe-steklo-green'
+      'Чёрное': 'tonirovannoe-steklo-black', 'Зелёное': 'tonirovannoe-steklo-green',
+      'Синее': 'tonirovannoe-steklo-blue', 'Дарк грей': 'moru-dark-grey'
     },
-    'Тонированное матовое': {'Бронза': 'moru-bronze-mat', 'Серое': 'moru-grey-mat'}
+    'Тонированное матовое': {'Бронза': 'moru-bronze-mat', 'Серое': 'moru-grey-mat', 'Дарк грей': 'moru-dark-grey-mat'}
   };
   function options(select, values, labels = values) {
     select.replaceChildren(...values.map((value, index) => new Option(labels[index], value)));
@@ -40,7 +44,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const materials = quote.materials;
   const ribbed = catalog.ribbed.filter(id => materials[id]);
   const patterned = catalog.patterned.filter(id => id !== 'hithicross' && materials[id]?.operations.includes('laminate'));
-  const allGlass = Object.keys(materials).filter(id => !['kuhonnye-fartuki', 'dekorativnyy-triplex'].includes(id));
+  const allGlass = Object.keys(materials).filter(id => !materials[id].fixedComposition && !['kuhonnye-fartuki', 'dekorativnyy-triplex'].includes(id));
   const frontChoices = {flat: glassTypes, ribbed, patterned, custom: allGlass};
   const backChoices = {flat: glassTypes, ribbed: glassTypes, patterned: glassTypes, custom: allGlass};
   for (const [field, choices] of [[fields.front, frontChoices[group]], [fields.back, backChoices[group]]]) {
@@ -54,17 +58,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (query.get('fill') === 'mesh' && fills.includes('Сетка')) fields.fill.value = 'Сетка';
   options(fields.metal, meshes);
   options(fields.wood, ['Светлый дуб', 'Орех', 'Вишня', 'Эбен', 'Зебрано']);
-  if (free) {
-    for (const select of [fields.first, fields.second]) {
-      const input = document.createElement('input');
-      Object.assign(input, {type: 'number', name: select.name, step: 'any', required: true, value: '4'});
-      const list = document.createElement('datalist');
-      list.id = 'tb-mm-' + select.name;
-      input.setAttribute('list', list.id);
-      select.replaceWith(input, list);
-      input.parentElement.firstChild.textContent = 'Толщина, мм';
-    }
-  }
   const colors = ['Голубой', 'Чёрный', 'Оранжевый', 'Фиолетовый', 'Зелёный', 'Голубой джейд', 'Серый', 'Бронза', 'Синий', 'Голубой прозрачный', 'Тёмно-серый', 'Жёлтый', 'Светло-зелёный', 'Красный', 'Фуксия'];
   options(root.querySelector('#tb-colors'), colors);
   function refreshGlass(side, thicknessField, preferredShade, preferredThickness) {
@@ -78,30 +71,28 @@ document.addEventListener('DOMContentLoaded', async () => {
     shade.closest('label').firstChild.textContent = palette ? 'Оттенок стекла' : 'Вариант материала';
     shade.disabled = !hasChoice;
     shade.required = hasChoice;
-    let allowed = thicknesses;
+    let selected = profile || materials[flatIds[value]];
     if (palette) {
       options(shade, ['', ...Object.keys(palette)], ['Выберите оттенок', ...Object.keys(palette)]);
       shade.value = preferredShade in palette ? preferredShade : '';
-      const material = materials[palette[shade.value]];
-      if (material) allowed = material.thicknesses.map(Number);
+      selected = materials[palette[shade.value]];
     } else if (profile) {
       options(shade, variants.map(([id]) => id), variants.map(([, label]) => label));
       if (Object.hasOwn(profile.variants, preferredShade)) shade.value = preferredShade;
-      allowed = (profile.variantThicknesses?.[shade.value] || profile.thicknesses).map(Number);
-    } else if (group !== 'flat') {
-      const ids = ['float-steklo-clear-m1', 'steklo-osvetlyonnoe-clearvision', 'steklo-matovoe-matelux', 'steklo-matovoe-osvetlyonnoe'];
-      const flatProfile = materials[ids[glassTypes.indexOf(value)]];
-      if (flatProfile) allowed = flatProfile.thicknesses.map(Number);
     }
-    if (free) {
-      options(thicknessField.list, allowed);
-      thicknessField.value = preferredThickness;
+    const catalogValues = selected?.variantThicknesses?.[shade.value] ?? selected?.thicknesses ?? [];
+    const numeric = catalogValues.map(Number).filter(n => Number.isFinite(n) && n > 0);
+    let allowed = numeric;
+    if (!free && side === 'back') allowed = numeric.filter(n => Math.abs(n - Number(fields.first.value)) <= 2);
+    options(thicknessField, allowed, allowed.map(n => n + ' мм'));
+    if (free && !numeric.length && catalogValues.includes('unknown')) {
+      thicknessField.add(new Option('Уточнить с менеджером', 'unknown'));
       return;
     }
-    if (side === 'back') allowed = allowed.filter(n => Math.abs(n - Number(fields.first.value)) <= 2);
-    options(thicknessField, allowed, allowed.map(n => n + ' мм'));
     if (!allowed.length) {
-      thicknessField.add(new Option('Нет совместимой толщины', ''));
+      const hint = !selected ? 'Сначала выберите материал и оттенок' :
+        numeric.length ? 'Нет совместимой толщины' : 'Толщина требует уточнения';
+      thicknessField.add(new Option(hint, ''));
       return;
     }
     const preferred = Number(preferredThickness);
@@ -120,6 +111,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     fields.metal.value = saved.flat.metal || (meshes.includes(oldMetal) ? oldMetal : meshes[0]);
     refreshGlass('front', fields.first, saved.flat.frontShade, saved.flat.first);
     refreshGlass('back', fields.second, saved.flat.backShade, saved.flat.second);
+    for (const key of ['first', 'second']) {
+      if (fields[key].value && fields[key].value !== String(saved.flat[key])) {
+        fields[key].add(new Option('Выберите актуальную толщину', ''), 0);
+        fields[key].value = '';
+      }
+    }
+    if (!free && !fields.first.value) refreshGlass('back', fields.second, saved.flat.backShade, saved.flat.second);
     if (saved.flat.wood) fields.wood.value = saved.flat.wood;
     fields.tempered.checked = saved.flat.tempered;
     fields.pack.checked = saved.flat.pack;
@@ -135,7 +133,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   function composition() {
     function glassName(side, thickness) {
       const shade = fields[side + 'Shade'];
-      return [fields[side].selectedOptions[0]?.text, shade.disabled ? '' : shade.selectedOptions[0]?.text, thickness.value && thickness.value + ' мм'].filter(Boolean).join(' · ');
+      return [fields[side].selectedOptions[0]?.text, shade.disabled ? '' : shade.selectedOptions[0]?.text, thickness.selectedOptions[0]?.value && thickness.selectedOptions[0].text].filter(Boolean).join(' · ');
     }
     return [glassName('front', fields.first), filling(), glassName('back', fields.second)].join(' / ');
   }
@@ -159,11 +157,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     fields.metal.closest('label').hidden = fields.metal.disabled;
     root.querySelector('[data-limit]').textContent = 'Разница между толщинами стёкол — до 2 мм включительно.';
     root.querySelector('[data-limit]').hidden = free;
-    if (free) {
-      for (const input of [fields.first, fields.second]) {
-        input.setCustomValidity(input.valueAsNumber <= 0 ? 'Введите положительную толщину.' : '');
-      }
-    }
     fields.height.setCustomValidity(Math.min(fields.width.valueAsNumber, fields.height.valueAsNumber) > 2200 ? 'Одна из сторон должна быть не больше 2200 мм.' : '');
     root.querySelector('[data-result]').textContent = composition();
   }
