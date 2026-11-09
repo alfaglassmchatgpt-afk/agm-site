@@ -13,13 +13,13 @@
     </fieldset>
     <fieldset><legend>Состав триплекса</legend>
       <div class="tb-stack">
-        <div><h3>Первое стекло</h3><label>Вид стекла<select name="front"></select></label><label hidden>Оттенок стекла<select name="frontShade"></select></label><label>Толщина<select required name="first"></select></label></div>
+        <div><h3>Первое стекло</h3><label>Группа материалов<select name="frontFamily"></select></label><label>Вариант материала<select required name="front"></select></label><label>Толщина<select required name="first"></select></label></div>
         <div><h3>Между стёклами</h3><label>Наполнение<select name="fill"></select></label>
           <label hidden data-color>Желаемый цвет<input name="color" maxlength="60" list="tb-colors" placeholder="Выберите или введите цвет"></label><datalist id="tb-colors"></datalist>
           <label hidden>Порода шпона<select name="wood"></select></label>
           <label hidden>Металл сетки<select name="metal"></select></label>
         </div>
-        <div><h3>Второе стекло</h3><label>Вид стекла<select name="back"></select></label><label hidden>Оттенок стекла<select name="backShade"></select></label><label>Толщина<select required name="second"></select></label><small data-limit></small></div>
+        <div><h3>Второе стекло</h3><label>Группа материалов<select name="backFamily"></select></label><label>Вариант материала<select required name="back"></select></label><label>Толщина<select required name="second"></select></label><small data-limit></small></div>
       </div>
     </fieldset>
     <fieldset><legend>Обработка</legend>

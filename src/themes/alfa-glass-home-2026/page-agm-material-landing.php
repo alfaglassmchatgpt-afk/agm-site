@@ -102,6 +102,7 @@ ob_start();
 <?php
 $groups = agm_material_groups();
 $builder_catalog = [
+    'families' => $groups,
     'ribbed' => array_column(json_decode(file_get_contents(__DIR__ . '/agm-landings/reeded.json'), true), 'slug'),
     'patterned' => array_merge($groups['uzorchatoe-steklo']['slugs'], ['krezet']),
 ];

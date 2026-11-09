@@ -50,11 +50,74 @@ document.addEventListener('DOMContentLoaded', async () => {
   const ribbed = catalog.ribbed.filter(id => materials[id] && !replacedGlass[id]);
   const patterned = catalog.patterned.filter(id => !replacedGlass[id] && id !== 'hithicross' && materials[id]?.operations.includes('laminate'));
   const allGlass = Object.keys(materials).filter(id => !replacedGlass[id] && !materials[id].fixedComposition && !['kuhonnye-fartuki', 'dekorativnyy-triplex'].includes(id));
-  const frontChoices = {flat: glassTypes, ribbed, patterned, custom: allGlass};
-  const backChoices = {flat: glassTypes, ribbed: glassTypes, patterned: glassTypes, custom: allGlass};
-  for (const [field, choices] of [[fields.front, frontChoices[group]], [fields.back, backChoices[group]]]) {
-    options(field, choices, choices.map(id => materials[id]?.title || id));
-    if (free) field.value = 'float-steklo-clear-m1';
+  const familyById = new Map();
+  for (const family of Object.values(catalog.families)) {
+    for (const id of family.slugs) familyById.set(id, family.title);
+  }
+  function familyName(id) {
+    if (id === 'tonirovannye-zerkala') return 'Тонированные зеркала';
+    if (id === 'zerkalo-gezella') return 'Двухсторонние зеркала';
+    if (id.startsWith('sostarennye-zerkala')) return 'Состаренные зеркала';
+    if (id.startsWith('lacobel-') || id === 'steklo-lacobel') return 'Lacobel';
+    if (id.startsWith('matelac-') || id === 'steklo-matelak') return 'Matelac';
+    if (id.startsWith('stopsol-')) return 'Солнцезащитное стекло';
+    if (Object.values(palettes['Тонированное матовое']).includes(id)) return 'Тонированное матовое стекло';
+    if (id.startsWith('tonirovannoe-steklo-')) return 'Тонированное стекло';
+    if (id === flatIds['Осветлённое матовое']) return 'Матовое стекло';
+    if (catalog.ribbed.includes(id)) return 'Рифлёное стекло';
+    if (catalog.patterned.includes(id)) return 'Узорчатое стекло';
+    return familyById.get(id) || 'Другие материалы';
+  }
+  function materialChoices(ids) {
+    const families = new Map();
+    function add(family, choice) {
+      if (!families.has(family)) families.set(family, []);
+      families.get(family).push(choice);
+    }
+    for (const value of ids) {
+      if (palettes[value]) {
+        for (const [shade, id] of Object.entries(palettes[value])) {
+          if (materials[id]) add(familyName(id), {value, id, shade, label: shade});
+        }
+        continue;
+      }
+      const id = flatIds[value] || value;
+      const profile = materials[id];
+      const variants = Object.entries(profile.variants || {});
+      for (const [shade, variant] of variants.length ? variants : [['', '']]) {
+        let label = profile.title;
+        if (id === 'zerkalo-serebro') label = shade === 'clear' ? 'Серебро на осветлённом стекле' : 'Обычное зеркало серебро';
+        else if (id === 'zerkalo-osvetlyonnoe') label = 'Осветлённое зеркало Crystalvision';
+        else if (id === 'tonirovannye-zerkala' || id === 'zerkalo-gezella') label = variant;
+        else if (id === 'dihroichnoe-steklo') label = 'Дихроичное стекло';
+        else if (variants.length > 1) label += ' · ' + variant;
+        add(familyName(id), {value, id, shade, label});
+      }
+    }
+    return families;
+  }
+  const choices = {};
+  function showFamily(side, preferred) {
+    const entries = choices[side].get(fields[side + 'Family'].value);
+    options(fields[side], entries.map((_, index) => index), entries.map(entry => entry.label));
+    if (preferred) fields[side].selectedIndex = entries.indexOf(preferred);
+  }
+  function selectedGlass(side) {
+    return choices[side].get(fields[side + 'Family'].value)[fields[side].selectedIndex];
+  }
+  for (const side of ['front', 'back']) {
+    let ids = glassTypes;
+    if (free) ids = allGlass;
+    else if (side === 'front' && group !== 'flat') ids = group === 'ribbed' ? ribbed : patterned;
+    const families = materialChoices(ids);
+    choices[side] = families;
+    const selector = fields[side + 'Family'];
+    options(selector, [...families.keys()]);
+    const initial = saved ? replacedGlass[saved.flat[side]] || saved.flat[side] : ids === allGlass ? flatIds[glassTypes[0]] : ids[0];
+    const entries = [...families.values()].flat();
+    const match = entries.find(e => e.value === initial && e.shade === saved?.flat?.[side + 'Shade']) || entries.find(e => e.value === initial);
+    if (match) selector.value = familyName(match.id);
+    showFamily(side, match);
   }
   const fills = [...films];
   if (group === 'flat' || free) fills.push('Сетка');
@@ -65,27 +128,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   options(fields.wood, ['Светлый дуб', 'Орех', 'Вишня', 'Эбен', 'Зебрано']);
   const colors = ['Голубой', 'Чёрный', 'Оранжевый', 'Фиолетовый', 'Зелёный', 'Голубой джейд', 'Серый', 'Бронза', 'Синий', 'Голубой прозрачный', 'Тёмно-серый', 'Жёлтый', 'Светло-зелёный', 'Красный', 'Фуксия'];
   options(root.querySelector('#tb-colors'), colors);
-  function refreshGlass(side, thicknessField, preferredShade, preferredThickness) {
-    const value = fields[side].value;
-    const profile = materials[value];
-    const palette = palettes[value];
-    const variants = Object.entries(profile?.variants || {});
-    const shade = fields[side + 'Shade'];
-    const hasChoice = Boolean(palette) || variants.length > 1;
-    shade.closest('label').hidden = !hasChoice;
-    shade.closest('label').firstChild.textContent = palette ? 'Оттенок стекла' : 'Вариант материала';
-    shade.disabled = !hasChoice;
-    shade.required = hasChoice;
-    let selected = profile || materials[flatIds[value]];
-    if (palette) {
-      options(shade, ['', ...Object.keys(palette)], ['Выберите оттенок', ...Object.keys(palette)]);
-      shade.value = preferredShade in palette ? preferredShade : '';
-      selected = materials[palette[shade.value]];
-    } else if (profile) {
-      options(shade, variants.map(([id]) => id), variants.map(([, label]) => label));
-      if (Object.hasOwn(profile.variants, preferredShade)) shade.value = preferredShade;
-    }
-    const catalogValues = selected?.variantThicknesses?.[shade.value] ?? selected?.thicknesses ?? [];
+  function refreshGlass(side, thicknessField, preferredThickness) {
+    const choice = selectedGlass(side);
+    const selected = materials[choice.id];
+    const catalogValues = selected.variantThicknesses?.[choice.shade] ?? selected.thicknesses ?? [];
     const numeric = catalogValues.map(Number).filter(n => Number.isFinite(n) && n > 0);
     let allowed = numeric;
     if (!free && side === 'back') allowed = numeric.filter(n => Math.abs(n - Number(fields.first.value)) <= 2);
@@ -95,8 +141,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       return;
     }
     if (!allowed.length) {
-      const hint = !selected ? 'Сначала выберите материал и оттенок' :
-        numeric.length ? 'Нет совместимой толщины' : 'Толщина требует уточнения';
+      const hint = numeric.length ? 'Нет совместимой толщины' : 'Толщина требует уточнения';
       thicknessField.add(new Option(hint, ''));
       return;
     }
@@ -105,25 +150,24 @@ document.addEventListener('DOMContentLoaded', async () => {
       Math.abs(n - preferred) < Math.abs(best - preferred) ? n : best, allowed[0]);
   }
   function refreshStack(first = fields.first.value, second = fields.second.value) {
-    refreshGlass('front', fields.first, fields.frontShade.value, first);
-    refreshGlass('back', fields.second, fields.backShade.value, second);
+    refreshGlass('front', fields.first, first);
+    refreshGlass('back', fields.second, second);
   }
   refreshStack(4, 4);
   if (saved) {
     for (const key of ['width','height','quantity','color','edge']) fields[key].value = saved.flat[key];
-    for (const side of ['front', 'back']) fields[side].value = replacedGlass[saved.flat[side]] || saved.flat[side];
     const oldMetal = saved.flat.fill.replace(/^Сетка · /, '');
     fields.fill.value = meshes.includes(oldMetal) ? 'Сетка' : saved.flat.fill;
     fields.metal.value = saved.flat.metal || (meshes.includes(oldMetal) ? oldMetal : meshes[0]);
-    refreshGlass('front', fields.first, saved.flat.frontShade, saved.flat.first);
-    refreshGlass('back', fields.second, saved.flat.backShade, saved.flat.second);
+    refreshGlass('front', fields.first, saved.flat.first);
+    refreshGlass('back', fields.second, saved.flat.second);
     for (const key of ['first', 'second']) {
       if (fields[key].value && fields[key].value !== String(saved.flat[key])) {
         fields[key].add(new Option('Выберите актуальную толщину', ''), 0);
         fields[key].value = '';
       }
     }
-    if (!free && !fields.first.value) refreshGlass('back', fields.second, saved.flat.backShade, saved.flat.second);
+    if (!free && !fields.first.value) refreshGlass('back', fields.second, saved.flat.second);
     if (saved.flat.wood) fields.wood.value = saved.flat.wood;
     fields.tempered.checked = saved.flat.tempered;
     fields.pack.checked = saved.flat.pack;
@@ -138,13 +182,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
   function composition() {
     function glassName(side, thickness) {
-      const shade = fields[side + 'Shade'];
-      return [fields[side].selectedOptions[0]?.text, shade.disabled ? '' : shade.selectedOptions[0]?.text, thickness.selectedOptions[0]?.value && thickness.selectedOptions[0].text].filter(Boolean).join(' · ');
+      const choice = selectedGlass(side);
+      const name = palettes[choice.value] || ['tonirovannye-zerkala', 'zerkalo-gezella'].includes(choice.id)
+        ? familyName(choice.id) + ' · ' + choice.label : choice.label;
+      return [name, thickness.value && thickness.selectedOptions[0].text].filter(Boolean).join(' · ');
     }
     return [glassName('front', fields.first), filling(), glassName('back', fields.second)].join(' / ');
   }
   function refresh() {
-    const canTemper = [fields.front, fields.back].every(field => !materials[field.value] || materials[field.value].operations.includes('temper'));
+    const canTemper = ['front', 'back'].every(side => materials[selectedGlass(side).id].operations.includes('temper'));
     fields.tempered.disabled = !canTemper;
     if (!canTemper) fields.tempered.checked = false;
     const tempered = fields.tempered.checked;
@@ -168,7 +214,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
   form.addEventListener('input', event => {
     const name = event.target.name;
-    if (['front', 'back', 'frontShade', 'backShade'].includes(name) || (name === 'first' && !free)) refreshStack();
+    if (name === 'frontFamily' || name === 'backFamily') showFamily(name.replace('Family', ''));
+    if (['front', 'back', 'frontFamily', 'backFamily'].includes(name) || (name === 'first' && !free)) refreshStack();
     refresh();
   });
   form.addEventListener('submit', event => {
@@ -178,6 +225,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     const processing = [fields.edge.value + ' кромка', fields.pack.checked ? 'обработка в пакете' : 'обработка отдельных стёкол', fields.tempered.checked ? 'с закаливанием' : 'без закаливания'].join(', ');
     const id = saved ? saved.id : crypto.randomUUID();
     const flat = Object.fromEntries(new FormData(form));
+    for (const side of ['front', 'back']) {
+      const choice = selectedGlass(side);
+      flat[side] = choice.value;
+      flat[side + 'Shade'] = choice.shade;
+      delete flat[side + 'Family'];
+    }
     flat.group = group;
     flat.tempered = fields.tempered.checked;
     flat.pack = fields.pack.checked;
