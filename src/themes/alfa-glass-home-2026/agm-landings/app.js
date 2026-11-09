@@ -33,14 +33,12 @@ document.querySelectorAll('[data-triplex-variant]').forEach(link => {
       copy.textContent = phrase;
     } else if (index !== storyIndex) {
       clearTimeout(typing);
-      const start = performance.now();
+      let length = 0;
       copy.classList.add('is-typing');
       function tick() {
-        const elapsed = performance.now() - start;
-        const length = Math.min(phrase.length, Math.floor(elapsed * phrase.length / interval));
-        copy.textContent = phrase.slice(0, length);
+        copy.textContent = phrase.slice(0, ++length);
         if (length < phrase.length) {
-          typing = setTimeout(tick, (length + 1) * interval / phrase.length - elapsed);
+          typing = setTimeout(tick, 65);
         } else {
           copy.classList.remove('is-typing');
         }

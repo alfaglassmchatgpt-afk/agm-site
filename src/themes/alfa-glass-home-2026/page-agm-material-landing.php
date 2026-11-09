@@ -35,11 +35,11 @@ ob_start();
 <section class="aml-hero">
 <div><p class="aml-eyebrow">Материал для вашего проекта</p><h1><?php echo esc_html($title); ?> на заказ</h1>
 <?php if ($triplex): $stories = [
-    'Рифлёный триплекс для перегородок. Рельеф размывает силуэты, а матовое стекло добавляет приватности.',
-    'Тонированный триплекс для дверей. Подберите оттенок стекла к отделке комнаты и добавьте рифление, чтобы смягчить очертания предметов за дверью.',
-    'Триплекс с металлической сеткой. Плетение из латуни, меди или нержавеющей стали видно сквозь стекло и защищено от прикосновений.',
-    'Цветной триплекс на заказ. Подберём EVA-плёнку под фирменные цвета или палитру интерьера.',
-    'Декоративный триплекс по вашим размерам. Сочетайте узорчатое стекло с прозрачным или тонированным для вставок в двери и ограждения.',
+    'Рифлёный триплекс для перегородок с матовым и тонированным стеклом.',
+    'Триплекс с тонированным рифлёным стеклом для дверей и перегородок.',
+    'Триплекс с металлической сеткой.',
+    'Цветной триплекс для перегородок.',
+    'Триплекс с декоративным стеклом.',
 ]; ?>
 <div class="aml-story aml-lead">
   <?php foreach ($stories as $story): ?><span data-story aria-hidden="true"><?php echo esc_html($story); ?></span><?php endforeach; ?>
@@ -121,7 +121,7 @@ $builder_catalog = [
 <?php endif; ?>
 <section class="aml-section aml-faq"><h2>Перед заказом</h2><details><summary>От чего зависит цена?</summary><p>От выбранного материала<?php echo $triplex ? ' и состава триплекса' : ''; ?>, толщины, размеров, количества, обработки и доставки. Для расчёта укажите параметры изделия; цену и срок подтвердим после проверки заказа.</p></details><details><summary>Можно ли выбрать по фотографии?</summary><p>Фотография помогает выбрать направление. Окончательно оттенок, фактуру и прозрачность лучше оценить на образце: свет и окружение влияют на восприятие стекла.</p></details><details><summary>Можно ли заказать несколько разных изделий?</summary><p>Да. Добавляйте материалы в «Мой расчёт» из их карточек и отправляйте общей заявкой.</p></details></section>
 </main><footer class="aml-footer"><a href="/materialy/">Все материалы</a><a href="/riflenoe-steklo/">Рифлёное стекло</a><a href="/triplex/">Триплекс</a><a href="/#contacts">Контакты</a></footer>
-<?php if ($triplex): ?><script src="<?php echo $asset('agm-landings/app.js?v=20261109-type'); ?>" defer></script><?php endif; ?>
+<?php if ($triplex): ?><script src="<?php echo $asset('agm-landings/app.js?v=20261109-type2'); ?>" defer></script><?php endif; ?>
 <link rel="stylesheet" href="<?php echo $asset('agm-landings/builder.css'); ?>"><?php if ($triplex): ?><script src="<?php echo $asset('agm-landings/builder.js'); ?>" defer></script><?php endif; ?><?php wp_footer(); ?></body></html><?php
 $html = ob_get_clean();
 echo $triplex ? agm_order_render($html, 'dekorativnyy-triplex') : agm_quote_assets($html);
