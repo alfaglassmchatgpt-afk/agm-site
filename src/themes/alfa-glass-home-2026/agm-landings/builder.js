@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
   const series = {
     'Рифлёное стекло МОРУ': {
-      'moru-ultra': 'Ультра', 'moru-crystal': 'Кристал',
+      'moru-ultra': 'Ультра', 'flutes-moru-ultra-mat': 'Ультра матовое (на осветлённом стекле)', 'moru-crystal': 'Кристал',
       'moru-bronze-toned': 'Бронза', 'moru-grey': 'Серое',
       'moru-magnetron-bronze': 'Бронза с напылением', 'moru-magnetron-grey': 'Серое с напылением'
     },
