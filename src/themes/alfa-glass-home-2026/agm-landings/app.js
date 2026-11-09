@@ -21,11 +21,13 @@ document.querySelectorAll('[data-triplex-variant]').forEach(link => {
   let request = 0, current = 0, timer, paused = motion.matches, hovered = false, focused = false, visible = true;
   const stories = document.querySelectorAll('.aml-story [data-story]');
   const copy = document.querySelector('[data-story-copy]');
+  const storyTones = ['graphite', 'bronze', 'brass', 'green', 'smoke'];
   const interval = 4000;
   let storyIndex = -1, typing;
   function updateStory() {
     const index = Math.floor(current / 2);
     if (!copy || !stories[index]) return;
+    copy.dataset.tone = storyTones[index] || '';
     const phrase = stories[index].textContent;
     copy.classList.toggle('is-paused', paused);
     if (paused || motion.matches) {
