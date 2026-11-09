@@ -27,20 +27,17 @@ document.querySelectorAll('[data-triplex-variant]').forEach(link => {
     const index = Math.floor(current / 2);
     if (!copy || !stories[index]) return;
     const phrase = stories[index].textContent;
+    copy.classList.toggle('is-paused', paused);
     if (paused || motion.matches) {
       clearTimeout(typing);
-      copy.classList.remove('is-typing');
       copy.textContent = phrase;
     } else if (index !== storyIndex) {
       clearTimeout(typing);
       let length = 0;
-      copy.classList.add('is-typing');
       function tick() {
         copy.textContent = phrase.slice(0, ++length);
         if (length < phrase.length) {
           typing = setTimeout(tick, 65);
-        } else {
-          copy.classList.remove('is-typing');
         }
       }
       tick();

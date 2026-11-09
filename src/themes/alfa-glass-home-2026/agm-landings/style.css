@@ -12,7 +12,7 @@
 .aml-story > p { line-height: inherit; }
 .aml-story > *::after { content: ""; display: inline-block; width: .07em; height: .9em; margin-left: .08em; vertical-align: -.05em; background: currentColor; }
 @media (prefers-reduced-motion: no-preference) {
-  .aml-story .is-typing::after { animation: aml-caret 1s steps(1) infinite; }
+  .aml-story [data-story-copy]:not(.is-paused)::after { animation: aml-caret 1s steps(1) infinite; }
 }
 @keyframes aml-caret { 50% { opacity: 0; } }
 .aml-story > * { grid-area: 1 / 1; margin: 0; }
