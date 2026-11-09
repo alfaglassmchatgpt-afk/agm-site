@@ -76,7 +76,7 @@ ob_start();
       <a href="?variant=ribbed#triplex-builder">Открыть конфигуратор →</a>
     </article>
     <article class="aml-card aml-text-card">
-      <img src="<?php echo $asset('agm-landings/assets/triplex-card-patterned.webp'); ?>" alt="Вставка из Сильвита и серого стекла в лестничном ограждении" width="640" height="640" loading="lazy">
+      <img src="<?php echo $asset('agm-landings/assets/triplex-card-patterned-v2.webp'); ?>" alt="Фактурное стекло крупным планом, полированная кромка и металлическое крепление" width="640" height="640" loading="lazy">
       <h3>Из декоративного стекла</h3>
       <p>Узорчатое стекло задаёт рисунок, а второе стекло — оттенок. Например, Сильвит с серым стеклом используем для вставок в двери и лестничные ограждения.</p>
       <a href="?variant=patterned#triplex-builder">Открыть конфигуратор →</a>
