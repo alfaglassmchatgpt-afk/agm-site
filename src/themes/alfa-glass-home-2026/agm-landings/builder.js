@@ -15,7 +15,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     'Матовое': 'steklo-matovoe-matelux', 'Осветлённое матовое': 'steklo-matovoe-osvetlyonnoe'
   };
   const films = ['Прозрачная', 'Матовая (сатин)', 'Цветная прозрачная', 'Цветная непрозрачная'];
-  const meshes = ['Латунь', 'Медь', 'Нержавейка'];
   const palettes = {
     'Тонированное': {
       'Бронза': 'moru-bronze', 'Серое': 'tonirovannoe-steklo-grey',
@@ -159,13 +158,39 @@ document.addEventListener('DOMContentLoaded', async () => {
       fields[side].value = '';
     }
   }
-  const fills = [...films];
-  if (group === 'flat' || free) fills.push('Сетка');
-  if (group === 'patterned' || free) fills.push('Шпон');
-  options(fields.fill, fills);
-  if (query.get('fill') === 'mesh' && fills.includes('Сетка')) fields.fill.value = 'Сетка';
-  options(fields.metal, meshes);
-  options(fields.wood, ['Светлый дуб', 'Орех', 'Вишня', 'Эбен', 'Зебрано']);
+  options(fields.fill, films);
+  const effects = root.querySelector('.tb-effects');
+  const samples = new Map();
+  function addSamples(title, materials) {
+    const section = document.createElement('section');
+    const heading = document.createElement('h3');
+    heading.textContent = title;
+    const grid = document.createElement('div');
+    grid.className = 'tb-samples';
+    for (const [id, name] of Object.entries(materials)) {
+      samples.set(id, title + ' · ' + name);
+      const card = document.createElement('label');
+      const image = document.createElement('img');
+      image.src = '/wp-content/themes/alfa-glass-home-2026/agm-landings/assets/triplex-effect-' + id + '.jpg';
+      image.alt = '';
+      image.loading = 'lazy';
+      const radio = document.createElement('input');
+      radio.type = 'radio';
+      radio.name = 'effect';
+      radio.value = id;
+      card.append(image, radio, document.createTextNode(name));
+      grid.append(card);
+    }
+    section.append(heading, grid);
+    effects.querySelector('[data-effect-gallery]').append(section);
+  }
+  if (group === 'flat' || free) addSamples('Сетка', {brass:'Латунь', copper:'Медь', steel:'Нержавейка'});
+  if (group === 'patterned' || free) addSamples('Шпон', {oak:'Светлый дуб', walnut:'Орех', cherry:'Вишня', ebony:'Эбен', zebrano:'Зебрано'});
+  effects.hidden = !samples.size;
+  if (!saved && query.get('fill') === 'mesh' && samples.has('brass')) {
+    fields.effect.value = 'brass';
+    effects.open = true;
+  }
   const colors = ['Голубой', 'Чёрный', 'Оранжевый', 'Фиолетовый', 'Зелёный', 'Голубой джейд', 'Серый', 'Бронза', 'Синий', 'Голубой прозрачный', 'Тёмно-серый', 'Жёлтый', 'Светло-зелёный', 'Красный', 'Фуксия'];
   options(root.querySelector('#tb-colors'), colors);
   function refreshGlass(side, thicknessField, preferredThickness) {
@@ -200,9 +225,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   refreshStack(4, 4);
   if (saved) {
     for (const key of ['width','height','quantity','color','edge']) fields[key].value = saved.flat[key];
-    const oldMetal = saved.flat.fill.replace(/^Сетка · /, '');
-    fields.fill.value = meshes.includes(oldMetal) ? 'Сетка' : saved.flat.fill;
-    fields.metal.value = saved.flat.metal || (meshes.includes(oldMetal) ? oldMetal : meshes[0]);
+    const previousFill = saved.flat.fill;
+    fields.fill.value = films.includes(previousFill) ? previousFill : films[0];
+    if (samples.size) {
+      const legacyLabel = previousFill === 'Шпон' ? 'Шпон · ' + saved.flat.wood
+        : previousFill === 'Сетка' ? 'Сетка · ' + saved.flat.metal : previousFill;
+      const previous = [...samples].find(([, label]) => label === legacyLabel || label === 'Сетка · ' + legacyLabel);
+      fields.effect.value = saved.flat.effect ?? previous?.[0] ?? '';
+    }
     refreshGlass('front', fields.first, saved.flat.first);
     refreshGlass('back', fields.second, saved.flat.second);
     for (const key of ['first', 'second']) {
@@ -212,7 +242,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     }
     if (!free && !fields.first.value) refreshGlass('back', fields.second, saved.flat.second);
-    if (saved.flat.wood) fields.wood.value = saved.flat.wood;
     fields.tempered.checked = saved.flat.tempered;
     fields.pack.checked = saved.flat.pack;
     root.querySelector('[type=submit]').textContent = 'Сохранить изменения';
@@ -220,9 +249,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   const isColored = () => fields.fill.value.startsWith('Цветная');
   function filling() {
 
-    if (fields.fill.value === 'Шпон') return 'Шпон · ' + fields.wood.value;
-    if (fields.fill.value === 'Сетка') return 'Сетка · ' + fields.metal.value;
-    return fields.fill.value + ' EVA-плёнка' + (isColored() && fields.color.value.trim() ? ' · ' + fields.color.value.trim() : '');
+    const film = fields.fill.value + ' EVA-плёнка' + (isColored() && fields.color.value.trim() ? ' · ' + fields.color.value.trim() : '');
+    return [film, samples.get(fields.effect.value)].filter(Boolean).join(' / ');
   }
   function composition() {
     function glassName(side, thickness) {
@@ -245,13 +273,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (fields.pack.disabled) fields.pack.checked = false;
     root.querySelector('[data-processing]').textContent = tempered ? 'Кромку каждого стекла обрабатываем до закаливания.' : 'В пакете — кромку обрабатываем после склеивания стёкол.';
     root.querySelector('[data-processing]').hidden = !canPack && !tempered;
-    fields.wood.disabled = fields.fill.value !== 'Шпон';
-    fields.wood.closest('label').hidden = fields.wood.disabled;
+    effects.querySelector('[data-effect-label]').textContent = samples.get(fields.effect.value) || 'Без декора';
     root.querySelector('[data-color]').hidden = !isColored();
     fields.color.disabled = !isColored();
     fields.color.required = isColored();
-    fields.metal.disabled = fields.fill.value !== 'Сетка';
-    fields.metal.closest('label').hidden = fields.metal.disabled;
     root.querySelector('[data-limit]').textContent = 'Разница между толщинами стёкол — до 2 мм включительно.';
     root.querySelector('[data-limit]').hidden = free;
     fields.height.setCustomValidity(Math.min(fields.width.valueAsNumber, fields.height.valueAsNumber) > 2200 ? 'Одна из сторон должна быть не больше 2200 мм.' : '');

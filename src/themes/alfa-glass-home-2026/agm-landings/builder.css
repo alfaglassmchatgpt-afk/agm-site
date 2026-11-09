@@ -18,3 +18,13 @@
 .tb-result button {border:0;border-radius:7px;padding:12px 20px;background:var(--button);color:var(--button-ink);font:inherit;cursor:pointer}
 @media(max-width:760px){.tb-stack,.tb-row {grid-template-columns:1fr}.tb-row:first-child {gap:8px}.tb-stack {gap:10px}.tb {scroll-margin-top:90px}}
 
+.tb-effects {margin-top:16px;padding:14px 18px;border:1px solid var(--line);border-radius:12px;background:var(--soft)}
+.tb-effects summary {cursor:pointer;font-weight:600}
+.tb-effects summary span {margin-left:.6em;color:var(--muted);font-weight:400}
+.tb-effects .tb-no-effect {display:flex;align-items:center;gap:8px;margin-top:16px}
+.tb-effects section {margin-top:18px}
+.tb-samples {display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:12px}
+.tb .tb-samples label {display:block;margin:0;padding:8px;border:1px solid var(--line);border-radius:8px;cursor:pointer;color:var(--ink)}
+.tb-samples label:has(:checked) {outline:2px solid currentColor}
+.tb-samples img {display:block;width:100%;aspect-ratio:4/3;object-fit:contain;background:var(--surface);margin-bottom:8px}
+.tb .tb-effects input[type=radio] {width:auto;margin:0 6px 0 0;padding:0;accent-color:currentColor}
