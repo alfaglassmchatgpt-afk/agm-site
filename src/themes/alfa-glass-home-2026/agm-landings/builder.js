@@ -68,13 +68,13 @@ document.addEventListener('DOMContentLoaded', async () => {
       'moru-grey-mat': 'Серое', 'moru-bronze-mat': 'Бронза'
     }
   };
-  const withdrawn = new Set(['flutes-moru-bronze-mat', 'flutes-moru-grey-mat', 'moru-dark-grey-mat']);
+  const withdrawn = new Set(['flutes-moru-bronze-mat', 'flutes-moru-grey-mat', 'moru-dark-grey-mat', 'steklo-lacobel', 'steklo-matelak']);
   function familyName(id) {
     if (id === 'tonirovannye-zerkala') return 'Тонированные зеркала';
     if (id === 'zerkalo-gezella') return 'Двухсторонние зеркала';
     if (id.startsWith('sostarennye-zerkala')) return 'Состаренные зеркала';
-    if (id.startsWith('lacobel-') || id === 'steklo-lacobel') return 'Lacobel';
-    if (id.startsWith('matelac-') || id === 'steklo-matelak') return 'Matelac';
+    if (id.startsWith('lacobel-')) return 'Lacobel';
+    if (id.startsWith('matelac-')) return 'Matelac';
     if (id.startsWith('stopsol-') || id === 'steklo-solnczezashhitnoe-stopsol') return 'Стопсол';
     for (const [name, variants] of Object.entries(series)) {
       if (Object.hasOwn(variants, id)) return name;
