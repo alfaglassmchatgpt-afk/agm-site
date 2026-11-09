@@ -101,7 +101,14 @@ ob_start();
 </div></section>
 <?php
 $groups = agm_material_groups();
+$published_materials = [];
+foreach (agm_material_grouped_pages() as $family) {
+    foreach ($family['pages'] as $page) {
+        $published_materials[$page->post_name] = $page->post_title;
+    }
+}
 $builder_catalog = [
+    'published' => $published_materials,
     'families' => $groups,
     'ribbed' => array_column(json_decode(file_get_contents(__DIR__ . '/agm-landings/reeded.json'), true), 'slug'),
     'patterned' => array_merge($groups['uzorchatoe-steklo']['slugs'], ['krezet']),

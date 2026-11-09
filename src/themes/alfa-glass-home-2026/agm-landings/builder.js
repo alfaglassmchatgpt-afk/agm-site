@@ -87,6 +87,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   function materialChoices(ids) {
     const families = new Map();
     function add(family, choice) {
+      if (!Object.hasOwn(catalog.published, choice.id)) return;
       if (!families.has(family)) families.set(family, []);
       families.get(family).push({...choice, label: series[family]?.[choice.id] || choice.label});
     }
@@ -102,7 +103,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       const profile = materials[id];
       const variants = Object.entries(profile.variants || {});
       for (const [shade, variant] of variants.length ? variants : [['', '']]) {
-        let label = profile.title;
+        let label = catalog.published[id] || profile.title;
         if (id === 'zerkalo-serebro' && shade !== 'standard') continue;
         if (id === 'zerkalo-serebro') label = 'Обычное зеркало';
         else if (id === 'zerkalo-osvetlyonnoe') label = 'Осветлённое зеркало Crystalvision';
@@ -142,8 +143,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     showFamily(side, match);
     const oldShade = saved?.flat?.[side + 'Shade'];
     const oldMirror = initial === 'zerkalo-serebro' && oldShade === 'clear';
-    if (oldMirror || withdrawn.has(initial) || (initial === 'Тонированное матовое' && oldShade === 'Дарк грей')) {
-      const previous = oldMirror ? 'Серебро на осветлённом стекле' : materials[initial]?.title || oldShade;
+    if ((saved && !match) || oldMirror || withdrawn.has(initial) || (initial === 'Тонированное матовое' && oldShade === 'Дарк грей')) {
+      const previous = oldMirror ? 'Серебро на осветлённом стекле' : materials[initial]?.title || oldShade || initial;
       const placeholder = new Option('Выберите замену: ' + previous, '');
       placeholder.disabled = true;
       fields[side].add(placeholder);
