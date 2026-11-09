@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       'Чёрное': 'tonirovannoe-steklo-black', 'Зелёное': 'tonirovannoe-steklo-green',
       'Синее': 'tonirovannoe-steklo-blue', 'Дарк грей': 'moru-dark-grey'
     },
-    'Тонированное матовое': {'Бронза': 'moru-bronze-mat', 'Серое': 'moru-grey-mat', 'Дарк грей': 'moru-dark-grey-mat'}
+    'Тонированное матовое': {'Серое': 'moru-grey-mat', 'Бронза': 'moru-bronze-mat'}
   };
   function options(select, values, labels = values) {
     select.replaceChildren(...values.map((value, index) => new Option(labels[index], value)));
@@ -54,6 +54,21 @@ document.addEventListener('DOMContentLoaded', async () => {
   for (const family of Object.values(catalog.families)) {
     for (const id of family.slugs) familyById.set(id, family.title);
   }
+  const series = {
+    'Рифлёное стекло МОРУ': {
+      'moru-ultra': 'Ультра', 'moru-crystal': 'Кристал',
+      'moru-bronze-toned': 'Бронза', 'moru-grey': 'Серое',
+      'moru-magnetron-bronze': 'Бронза с напылением', 'moru-magnetron-grey': 'Серое с напылением'
+    },
+    'Рифлёное стекло Эстриадо': {
+      'estriado': 'Обычное', 'estriado-crystal': 'Кристал', 'estriado-ultra': 'Ультра'
+    },
+    'Матовое стекло': {
+      'steklo-matovoe-matelux': 'Обычное', 'steklo-matovoe-osvetlyonnoe': 'Осветлённое',
+      'moru-grey-mat': 'Серое', 'moru-bronze-mat': 'Бронза'
+    }
+  };
+  const withdrawn = new Set(['flutes-moru-bronze-mat', 'flutes-moru-grey-mat', 'moru-dark-grey-mat']);
   function familyName(id) {
     if (id === 'tonirovannye-zerkala') return 'Тонированные зеркала';
     if (id === 'zerkalo-gezella') return 'Двухсторонние зеркала';
@@ -61,9 +76,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (id.startsWith('lacobel-') || id === 'steklo-lacobel') return 'Lacobel';
     if (id.startsWith('matelac-') || id === 'steklo-matelak') return 'Matelac';
     if (id.startsWith('stopsol-')) return 'Солнцезащитное стекло';
-    if (Object.values(palettes['Тонированное матовое']).includes(id)) return 'Тонированное матовое стекло';
+    for (const [name, variants] of Object.entries(series)) {
+      if (Object.hasOwn(variants, id)) return name;
+    }
     if (id.startsWith('tonirovannoe-steklo-')) return 'Тонированное стекло';
-    if (id === flatIds['Осветлённое матовое']) return 'Матовое стекло';
     if (catalog.ribbed.includes(id)) return 'Рифлёное стекло';
     if (catalog.patterned.includes(id)) return 'Узорчатое стекло';
     return familyById.get(id) || 'Другие материалы';
@@ -72,9 +88,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     const families = new Map();
     function add(family, choice) {
       if (!families.has(family)) families.set(family, []);
-      families.get(family).push(choice);
+      families.get(family).push({...choice, label: series[family]?.[choice.id] || choice.label});
     }
     for (const value of ids) {
+      if (withdrawn.has(value)) continue;
       if (palettes[value]) {
         for (const [shade, id] of Object.entries(palettes[value])) {
           if (materials[id]) add(familyName(id), {value, id, shade, label: shade});
@@ -94,6 +111,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         else if (variants.length > 1) label += ' · ' + variant;
         add(familyName(id), {value, id, shade, label});
       }
+    }
+    for (const [family, variants] of Object.entries(series)) {
+      const order = Object.keys(variants);
+      families.get(family)?.sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id));
     }
     return families;
   }
@@ -119,8 +140,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     const match = entries.find(e => e.value === initial && e.shade === saved?.flat?.[side + 'Shade']) || entries.find(e => e.value === initial);
     if (match) selector.value = familyName(match.id);
     showFamily(side, match);
-    if (initial === 'zerkalo-serebro' && saved?.flat?.[side + 'Shade'] === 'clear') {
-      const placeholder = new Option('Укажите замену для серебра на осветлённом стекле', '');
+    const oldShade = saved?.flat?.[side + 'Shade'];
+    const oldMirror = initial === 'zerkalo-serebro' && oldShade === 'clear';
+    if (oldMirror || withdrawn.has(initial) || (initial === 'Тонированное матовое' && oldShade === 'Дарк грей')) {
+      const previous = oldMirror ? 'Серебро на осветлённом стекле' : materials[initial]?.title || oldShade;
+      const placeholder = new Option('Выберите замену: ' + previous, '');
       placeholder.disabled = true;
       fields[side].add(placeholder);
       fields[side].value = '';
@@ -138,7 +162,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   function refreshGlass(side, thicknessField, preferredThickness) {
     const choice = selectedGlass(side);
     if (!choice) {
-      options(thicknessField, [''], ['Сначала выберите зеркало']);
+      options(thicknessField, [''], ['Сначала выберите материал']);
       return;
     }
     const selected = materials[choice.id];
@@ -194,8 +218,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   function composition() {
     function glassName(side, thickness) {
       const choice = selectedGlass(side);
-      if (!choice) return 'Выберите зеркало';
-      const name = palettes[choice.value] || ['tonirovannye-zerkala', 'zerkalo-gezella'].includes(choice.id)
+      if (!choice) return 'Выберите материал';
+      const name = series[familyName(choice.id)] || palettes[choice.value] || ['tonirovannye-zerkala', 'zerkalo-gezella'].includes(choice.id)
         ? familyName(choice.id) + ' · ' + choice.label : choice.label;
       return [name, thickness.value && thickness.selectedOptions[0].text].filter(Boolean).join(' · ');
     }
