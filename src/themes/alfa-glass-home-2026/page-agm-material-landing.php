@@ -34,6 +34,11 @@ ob_start();
 .triplex-hero .hero-art .aml-slide{opacity:0;transition:opacity .9s ease}
 .triplex-hero .hero-art .aml-slide.is-active{opacity:1}
 .triplex-hero .hero-inner{z-index:1;pointer-events:none}
+@media(min-width:701px){
+  .triplex-hero .hero-brand{position:relative;color:var(--blue)}
+  .triplex-hero .hero-brand img{display:block}
+  .triplex-hero .hero-brand::after{content:"";position:absolute;top:0;bottom:0;left:calc(100% + 9px);width:1px;background:currentColor;pointer-events:none}
+}
 .triplex-hero .hero-buttons{pointer-events:auto}
 .triplex-hero .hero-controls{z-index:2}
 @media(prefers-reduced-motion:reduce){.triplex-hero .hero-art .aml-slide{transition:none}}
