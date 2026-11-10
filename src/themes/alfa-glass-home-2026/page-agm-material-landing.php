@@ -274,7 +274,7 @@ $builder_catalog = [
 .lamination{margin-top:14px;flex:1;min-height:156px;display:flex;flex-direction:column;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface);scroll-margin-top:calc(var(--header-height,140px) + 16px)}
 .lamination h3{text-align:center;margin:0;padding:10px 14px;font-size:1rem;line-height:1.25}
 .lamination-stage{position:relative;flex:1;min-height:116px;container-type:size;overflow:hidden;background:radial-gradient(ellipse at 64% 16%,#f6faf6,#d6e2e0 62%,#b6c9c8)}
-.lam-pane{position:absolute;inset:0;margin:auto;width:min(54%,158cqh);height:min(65%,34cqw);transform-style:preserve-3d;transform:rotateX(0deg) rotateY(-5deg)}
+.lam-pane{position:absolute;inset:0;margin:auto;width:min(54%,245px);height:65%;transform-style:preserve-3d;transform:rotateX(0deg) rotateY(-5deg)}
 .lam-pane i{position:absolute;inset:0;border-radius:2px;box-sizing:border-box;border:1px solid #729796;background:linear-gradient(114deg,#a7c8c9cf,#e2f4f296 36%,#f9ffffcd 39%,#b8d5d4ae 50%,#91b4b4bc);box-shadow:inset 0 0 0 1px #f2ffffb0,1px 2px 0 #719191}
 .lam-pane .film{border:1px solid #b9aa87;background:linear-gradient(120deg,#fbf9e582,#e9d299a8,#fffbed8c);box-shadow:none}
 .lam-pane .front::after{content:"";position:absolute;inset:0;opacity:0;background:linear-gradient(110deg,transparent 5%,#ffc07a 40%,#ffdc9f 55%,transparent 85%);background-size:200% 100%}
@@ -324,7 +324,7 @@ $builder_catalog = [
 <section class="aml-section example-group" id="examples-ribbed" aria-labelledby="title-ribbed">
  <div><h2 id="title-ribbed">Триплекс с рифлёным стеклом</h2><p>Для двери или перегородки можно сочетать рифлёное стекло с плоским. Рельеф преломляет свет и размывает контуры предметов. От второго стекла зависит, насколько светлым получится полотно и что будет видно за ним.</p>
  <a href="?variant=ribbed#triplex-builder">Подобрать рифлёный триплекс →</a>   <style>
-.rib-stack{position:absolute;inset:0;margin:auto;width:min(54%,158cqh);height:min(65%,34cqw);transform-style:preserve-3d}
+.rib-stack{position:absolute;inset:0;margin:auto;width:min(54%,245px);height:65%;transform-style:preserve-3d}
 .rib-stack span{position:absolute;inset:0;box-sizing:border-box;border-radius:2px}
 .rib-base{border:1px solid #596567;background:linear-gradient(117deg,#47515499,#c6d0ce96 38%,#697475a8 49%,#475051a6);box-shadow:0 2px 0 #566263}
 .rib-stack .rib-film{border:1px solid #f4ffffc4;background:linear-gradient(124deg,#dbe9e728 23%,#ffffffad 41%,#f7fffd72 45%,#e2efeb26 68%)}
@@ -380,7 +380,7 @@ $builder_catalog = [
 <section class="aml-section example-group" id="examples-patterned" aria-labelledby="title-patterned">
  <div><h2 id="title-patterned">Декоративный триплекс</h2><p>Декоративный триплекс используют в межкомнатных дверях, перегородках, душевых и вставках для лестничных ограждений. Узорчатая поверхность преломляет свет и смягчает очертания предметов за стеклом. Цветной слой придаёт полотну оттенок, а сетка или шпон между стёклами добавляют металлический блеск или рисунок древесины.</p>
   <a href="?variant=patterned#triplex-builder">Подобрать декоративный триплекс →</a>   <style>
-.mesh-stack{position:absolute;inset:0;margin:auto;width:min(54%,158cqh);height:min(65%,34cqw);transform-style:preserve-3d}
+.mesh-stack{position:absolute;inset:0;margin:auto;width:min(54%,245px);height:65%;transform-style:preserve-3d}
 .mesh-stack span{position:absolute;inset:0;border-radius:2px;box-sizing:border-box}
 .mesh-glass{border:1px solid #72918e;background:linear-gradient(118deg,#e9ffff40,#ffffff15 31%,#ffffff87 37%,#eef9f81a 44%,#94b5ba32);box-shadow:inset 0 0 0 1px #ffffff55,1px 2px 0 #829b99}
 .mesh-film{border:1px solid #f8f9e8;background:linear-gradient(112deg,#e8e7c84f,#ffffffa1 40%,#f1eccf38 53%)}
