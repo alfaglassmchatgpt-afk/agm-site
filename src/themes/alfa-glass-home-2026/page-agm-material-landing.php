@@ -48,6 +48,11 @@ ob_start();
 .triplex-hero .hero-buttons{pointer-events:auto}
 .triplex-hero .hero-controls{z-index:2}
 @media(prefers-reduced-motion:reduce){.triplex-hero .hero-art .aml-slide{transition:none}}
+.triplex-hero .hero-price-label {
+    display: inline-block;
+    transform: scale(1.25);
+    transform-origin: left center;
+}
 </style>
 <script>document.addEventListener('DOMContentLoaded',()=>{
   const $=(s,p=document)=>p.querySelector(s), $$=(s,p=document)=>Array.from(p.querySelectorAll(s));
@@ -149,7 +154,7 @@ endif; ?>
     <p class="eyebrow"><span></span> Материал для вашего проекта</p>
     <h1 id="hero-title"><strong>Триплекс на заказ</strong></h1>
     <div class="aml-story"><?php foreach ($stories as $story): ?><span data-story aria-hidden="true"><?php echo esc_html($story); ?></span><?php endforeach; ?><p data-story-copy><?php echo esc_html($stories[0]); ?></p></div>
-    <p class="hero-intro">от <strong>2 500 ₽/м²</strong> с НДС</p>
+    <p class="hero-intro"><span class="hero-price-label">от <strong>2 500 ₽/м²</strong> с НДС</span></p>
     <div class="hero-buttons"><a class="button" href="#material-request">Рассчитать по моим размерам</a><a class="button button-outline" href="#collection">Выбрать сочетание</a></div>
     <p class="hero-chips">Изготовление по размерам · Москва и Московская область</p>
   </div>
