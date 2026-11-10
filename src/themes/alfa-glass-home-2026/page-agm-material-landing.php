@@ -24,35 +24,26 @@ add_action('wp_footer', $cleanup, 0);
 ob_start();
 ?><!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <?php wp_head(); ?>
-<link rel="stylesheet" href="<?php echo $asset('agm-doors/style.css'); ?>">
+<link rel="stylesheet" href="<?php echo $asset($triplex ? 'agm-homepage/css/style.css' : 'agm-doors/style.css'); ?>">
 <link rel="stylesheet" href="<?php echo $asset('agm-landings/style.css?v=20261109-cards'); ?>">
+<?php if (!$triplex): ?>
 <link rel="stylesheet" href="<?php echo $asset('agm-aluminium-catalog/shared-header.css'); ?>">
-<?php if (!$triplex): ?><script src="<?php echo $asset('agm-aluminium-catalog/shared-header.js'); ?>" defer></script><?php endif; ?>
-<?php if ($triplex): ?>
+<script src="<?php echo $asset('agm-aluminium-catalog/shared-header.js'); ?>" defer></script>
+<?php else: ?>
 <style>
-.aluminium-header .desktop-nav{gap:18px;min-height:51px}
-.aluminium-header .desktop-nav a{min-height:51px;font-size:11px;white-space:nowrap}
-@media(min-width:801px) and (max-width:1000px){
-.aluminium-header .nav-line{display:none}
-.aluminium-header .menu-toggle{display:inline-flex}
-.aluminium-header .mobile-nav:not([hidden]){display:grid;padding:12px 20px;max-height:60vh;overflow:auto;background:var(--surface)}
-}
-.nav-dropdown{position:relative}
-.nav-expand{display:flex;align-items:center;justify-content:center;width:32px;height:44px;border:0;background:transparent;color:inherit;cursor:pointer;border-radius:6px}
-.nav-expand[aria-expanded="true"] svg{transform:rotate(180deg)}
-.nav-expand:hover,.nav-expand:focus-visible{background:var(--surface);color:var(--blue)}
-.nav-expand:focus-visible,.nav-panel a:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
-.nav-panel{position:absolute;top:100%;left:-18px;width:310px;padding:10px;background:var(--surface);border:1px solid var(--line);border-radius:0 0 12px 12px;box-shadow:var(--shadow-hover);max-height:calc(100dvh - var(--header-height,180px) - 20px);overflow:auto;z-index:60}
-.nav-panel[hidden]{display:none}
-.aluminium-header .desktop-nav .nav-panel a,.nav-panel a{display:block;min-height:0;margin:0;padding:11px 12px;font-size:14px;line-height:1.4;letter-spacing:0;text-transform:none;font-weight:500;white-space:normal;border:0;border-radius:6px}
-.nav-panel a:hover{background:var(--bg);color:var(--blue)}
-.nav-panel .nav-view-all{color:var(--blue);border-top:1px solid var(--line);border-radius:0;margin-top:6px;font-weight:600}
-.mobile-nav .nav-dropdown{grid-column:1/-1;border-bottom:1px solid var(--line)}
-.mobile-nav .nav-parent>a{display:flex;align-items:center;min-height:48px;font-size:14px;flex:1}
-.mobile-nav .nav-panel{position:static;width:100%;max-height:none;border:0;box-shadow:none;padding:0 0 10px 12px;background:transparent}
+.triplex-hero .hero-art .aml-slide{opacity:0;transition:opacity .9s ease}
+.triplex-hero .hero-art .aml-slide.is-active{opacity:1}
+.triplex-hero .hero-inner{z-index:1;pointer-events:none}
+.triplex-hero .hero-buttons{pointer-events:auto}
+.triplex-hero .hero-controls{z-index:2}
+@media(prefers-reduced-motion:reduce){.triplex-hero .hero-art .aml-slide{transition:none}}
 </style>
 <script>document.addEventListener('DOMContentLoaded',()=>{
   const $=(s,p=document)=>p.querySelector(s), $$=(s,p=document)=>Array.from(p.querySelectorAll(s));
+  $('.search-toggle').addEventListener('click', () => location.assign('/#site-search'));
+  $$('.asr-trigger').forEach(button => button.addEventListener('click', () => {
+    if (!document.querySelector('#agm-service-dialog')) location.assign('/service/');
+  }));
   const disclosures = $$('.nav-dropdown');
   function toggleDisclosure(item, open) {
     $('.nav-expand', item).setAttribute('aria-expanded', String(open));
@@ -106,45 +97,54 @@ ob_start();
 
 });</script>
 <?php endif; ?>
-<style>.aml-triplex .aml-hero h1{font-weight:400}.aml-triplex .triplex-rate{display:table;margin:20px 0 0;padding-left:12px;border-left:2px solid var(--strong-line);color:var(--ink);font-size:16px;line-height:1.35}.triplex-rate strong{font-size:20px}.triplex-rate small{margin-left:4px;font-size:14px;color:var(--muted)}</style></head><body id="top">
-<?php
-$header = agm_aluminium_header($slug, ['/materialy/' => 'Все материалы', '/riflenoe-steklo/' => 'Рифлёное стекло', '/triplex/' => 'Триплекс', '/aluminium/peregorodki/' => 'Перегородки', '/#contacts' => 'Контакты'], '/' . $slug . '/#material-request');
-if ($triplex) {
-    $home_markup = agm_navigation_render(file_get_contents(__DIR__ . '/agm-homepage/index.html'));
-    if (preg_match('~<header class="site-header">.*?</header>~s', $home_markup, $home_header)) {
-        preg_match_all('~<nav\b[^>]*>.*?</nav>~s', $home_header[0], $menus);
-        if (count($menus[0]) === 2) {
-            $index = 0;
-            $header = preg_replace_callback('~<nav\b[^>]*>.*?</nav>~s', function () use (&$index, $menus) {
-                return strtr($menus[0][$index++], [
-                    '__AGM_HOME__' => esc_url(home_url('/')),
-                    'href="#' => 'href="' . esc_url(home_url('/')) . '#',
-                ]);
-            }, $header);
-        }
-    }
-}
-echo $header;
-?>
-<main class="aml<?php echo $triplex ? ' aml-triplex' : ''; ?>" id="main">
+</head><body id="top">
+<?php if ($triplex):
+    $home = agm_navigation_render(file_get_contents(__DIR__ . '/agm-homepage/index.html'));
+    preg_match('~<svg[^>]*class="svg-library".*?</svg>~s', $home, $icons);
+    preg_match('~<header class="site-header">.*?</header>~s', $home, $header);
+    echo $icons[0];
+    $page_header = preg_replace_callback('~(<a\b[^>]*?\shref=")#([^"]*)"~', static function ($match) {
+        if ($match[2] === 'request') return $match[1] . '#triplex-builder" data-open-quote';
+        return $match[1] . esc_url(home_url('/')) . ($match[2] === 'top' ? '' : '#' . $match[2]) . '"';
+    }, $header[0]);
+    echo strtr($page_header, [
+        '__AGM_ASSETS__' => $asset('agm-homepage'),
+        '__AGM_HOME__' => esc_url(home_url('/')),
+    ]);
+else:
+    echo agm_aluminium_header($slug, ['/materialy/' => 'Все материалы', '/riflenoe-steklo/' => 'Рифлёное стекло', '/triplex/' => 'Триплекс', '/aluminium/peregorodki/' => 'Перегородки', '/#contacts' => 'Контакты'], '/' . $slug . '/#material-request');
+endif; ?>
+<main id="main"<?php if (!$triplex) echo ' class="aml"'; ?>>
+<?php if (!$triplex): ?>
 <nav class="aml-crumbs" aria-label="Хлебные крошки"><a href="/">Главная</a> / <a href="/materialy/">Материалы</a> / <span><?php echo esc_html($title); ?></span></nav>
 <section class="aml-hero">
 <div><p class="aml-eyebrow">Материал для вашего проекта</p><h1><?php echo esc_html($title); ?> на заказ</h1>
-<?php if ($triplex): $stories = [
+<p class="aml-lead">Свет, фактура и приватность. Подберите рельеф, оттенок и толщину стекла под размеры вашего изделия.</p>
+<div class="aml-actions"><a class="aml-button" href="#collection">Рассчитать по моим размерам</a><a href="#collection">Выбрать стекло ↓</a></div>
+<p class="aml-note">Изготовление по размерам · Москва и Московская область</p></div>
+<figure><img fetchpriority="high" src="<?php echo $asset('agm-glass/assets/generated/moru-ultra-aluminium-v2.png'); ?>" alt="Визуализация рифлёного стекла MORU в алюминиевой перегородке"><figcaption>Визуализация применения. Фактуру и оттенок выбираем по образцу.</figcaption></figure>
+</section>
+<?php else: $stories = [
     'Рифлёный триплекс для перегородок с матовым и тонированным стеклом.',
     'Триплекс с тонированным рифлёным стеклом для дверей и перегородок.',
     'Триплекс с металлической сеткой.',
     'Цветной триплекс для перегородок.',
     'Триплекс с декоративным стеклом.',
 ]; ?>
-<div class="aml-story aml-lead">
-  <?php foreach ($stories as $story): ?><span data-story aria-hidden="true"><?php echo esc_html($story); ?></span><?php endforeach; ?>
-  <p data-story-copy><?php echo esc_html($stories[0]); ?></p>
+<section class="hero aml-showcase triplex-hero" aria-labelledby="hero-title">
+<div class="container hero-inner">
+  <div class="hero-brand"><img src="<?php echo $asset('agm-homepage/assets/brand-mark.svg'); ?>" alt="" width="214" height="208"></div>
+  <div class="hero-copy">
+    <p class="eyebrow"><span></span> Материал для вашего проекта</p>
+    <h1 id="hero-title"><strong>Триплекс на заказ</strong></h1>
+    <div class="aml-story"><?php foreach ($stories as $story): ?><span data-story aria-hidden="true"><?php echo esc_html($story); ?></span><?php endforeach; ?><p data-story-copy><?php echo esc_html($stories[0]); ?></p></div>
+    <p class="hero-intro">от <strong>2 500 ₽/м²</strong> с НДС</p>
+    <div class="hero-buttons"><a class="button" href="#material-request">Рассчитать по моим размерам</a><a class="button button-outline" href="#collection">Выбрать сочетание</a></div>
+    <p class="hero-chips">Изготовление по размерам · Москва и Московская область</p>
+  </div>
+  <div class="hero-caption"><span id="slide-label"></span></div>
 </div>
-<?php else: ?><p class="aml-lead">Свет, фактура и приватность. Подберите рельеф, оттенок и толщину стекла под размеры вашего изделия.</p><?php endif; ?>
-<?php if ($triplex): ?><p class="triplex-rate">от <strong>2 500 ₽/м²</strong> <small>с НДС</small></p><?php endif; ?><div class="aml-actions"><a class="aml-button" href="#<?php echo $triplex ? 'material-request' : 'collection'; ?>">Рассчитать по моим размерам</a><a href="#collection">Выбрать <?php echo $triplex ? 'сочетание' : 'стекло'; ?> ↓</a></div>
-<p class="aml-note">Изготовление по размерам · Москва и Московская область</p></div>
-<?php if ($triplex): $slides = [
+<?php $slides = [
  ['Матовое стекло · серое, бронзовое и белый сатин', 'Три образца триплекса на подставке. Матовое стекло · серое, бронзовое и белый сатин', 'triplex-trio-satin-v1.jpg'],
  ['МОРУ с матовым серым стеклом в интерьере', 'Серая матовая перегородка МОРУ между прихожей и жилой комнатой', 'triplex-hero-2-v1.jpg'],
  ['МОРУ бронза, серое Estriado и прозрачное VisionSun', 'Три образца триплекса на подставке. МОРУ бронза, серое Estriado и прозрачное VisionSun', 'triplex-trio-ribbed-v1.jpg'],
@@ -155,18 +155,14 @@ echo $header;
  ['Цветной триплекс в фирменных цветах', 'Зелёный триплекс в перегородке коммерческого помещения', 'triplex-hero-5-v1.jpg'],
  ['Серый Сильвит, бронзовый Кафедрал Клейн и прозрачный Кризет', 'Три образца триплекса на подставке. Серый Сильвит, бронзовый Кафедрал Клейн и прозрачный Кризет', 'triplex-trio-patterned-v1.jpg'],
  ['Silvit + серое · лестничные вставки', 'Визуализация вставок в лестничное ограждение по фото нашей работы', 'triplex-hero-6-v1.jpg']
-]; ?><div class="aml-showcase" role="region" aria-roledescription="карусель" aria-label="Триплекс: материал и готовые решения">
-<div class="aml-slides">
-<?php foreach ($slides as $i => $slide): ?><figure class="aml-slide<?php echo $i === 0 ? ' is-active' : ''; ?>" aria-hidden="<?php echo $i === 0 ? 'false' : 'true'; ?>">
-<img <?php echo $i === 0 ? 'fetchpriority="high"' : 'loading="lazy"'; ?> src="<?php echo $asset('agm-landings/assets/' . $slide[2]); ?>" alt="<?php echo esc_attr($slide[1]); ?>" width="1254" height="1254">
-<figcaption><?php echo esc_html($slide[0]); ?></figcaption></figure><?php endforeach; ?>
-</div>
-<div class="aml-slide-controls"><div class="aml-slide-dots" aria-label="Выбор слайда"><?php foreach ($slides as $i => $slide): ?><button type="button" data-slide="<?php echo $i; ?>" aria-label="Слайд <?php echo $i + 1; ?>: <?php echo esc_attr($slide[0]); ?>" aria-pressed="<?php echo $i === 0 ? 'true' : 'false'; ?>"></button><?php endforeach; ?></div><button class="aml-slide-pause" type="button" aria-label="Приостановить слайды">Ⅱ</button></div>
-<p class="aml-note">Визуализации. Фактуру и оттенок согласуем по образцу.</p>
-</div>
-<?php else: ?><figure><img fetchpriority="high" src="<?php echo $asset('agm-glass/assets/generated/moru-ultra-aluminium-v2.png'); ?>" alt="Визуализация рифлёного стекла MORU в алюминиевой перегородке"><figcaption>Визуализация применения. Фактуру и оттенок выбираем по образцу.</figcaption></figure><?php endif; ?>
+]; ?>
+<div class="hero-art">
+<?php foreach ($slides as $i => $slide): ?><img class="aml-slide<?php if (!$i) echo ' is-active'; ?>" data-caption="<?php echo esc_attr($slide[0]); ?>" aria-hidden="<?php echo $i ? 'true' : 'false'; ?>" <?php echo $i ? 'loading="lazy"' : 'fetchpriority="high"'; ?> src="<?php echo $asset('agm-landings/assets/' . $slide[2]); ?>" alt="<?php echo esc_attr($slide[1]); ?>" width="1254" height="1254"><?php endforeach; ?>
+<div class="hero-shade"></div></div>
+<div class="hero-controls"><button id="hero-pause" class="aml-slide-pause" type="button" aria-label="Приостановить слайды">Ⅱ</button></div>
 </section>
-<?php if ($triplex): ?>
+<div class="aml aml-triplex">
+<nav class="aml-crumbs" aria-label="Хлебные крошки"><a href="/">Главная</a> / <a href="/materialy/">Материалы</a> / <span><?php echo esc_html($title); ?></span></nav>
 <section class="aml-section" id="collection">
   <h2>Какой триплекс вам нужен?</h2><details class="triplex-intro" id="what-is-triplex">
   <summary>Что такое триплекс?</summary>
@@ -465,7 +461,7 @@ document.querySelectorAll('.example-gallery').forEach(gallery => {
  }));
 });
 </script>
-<?php else: ?>
+<?php endif; if (!$triplex): ?>
 <section class="aml-section" id="collection"><p class="aml-eyebrow">Коллекция фактур</p><h2>Выберите рифлёное стекло</h2><p>Откройте материал, чтобы выбрать доступную толщину, указать размеры и добавить изделие в общий «Мой расчёт».</p><div class="aml-grid">
 <?php foreach (json_decode(file_get_contents(__DIR__ . '/agm-landings/reeded.json'), true) as $card): ?>
 <article class="aml-card"><a href="/materialy/<?php echo esc_attr($card['slug']); ?>/"><img loading="lazy" src="<?php echo $asset($card['image']); ?>" alt="<?php echo esc_attr($card['title']); ?>"><h3><?php echo esc_html($card['title']); ?></h3></a><p><?php echo esc_html($card['description']); ?></p><a class="aml-card-action" href="/materialy/<?php echo esc_attr($card['slug']); ?>/#material-request">Рассчитать по моим размерам →</a></article>
@@ -475,8 +471,9 @@ document.querySelectorAll('.example-gallery').forEach(gallery => {
 <?php endif; ?>
 <?php if (!$triplex): ?><section class="aml-section aml-faq"><h2>Перед заказом</h2><details><summary>От чего зависит цена?</summary><p>От выбранного материала<?php echo $triplex ? ' и состава триплекса' : ''; ?>, толщины, размеров, количества, обработки и доставки. Для расчёта укажите параметры изделия; цену и срок подтвердим после проверки заказа.</p></details><details><summary>Можно ли выбрать по фотографии?</summary><p>Фотография помогает выбрать направление. Окончательно оттенок, фактуру и прозрачность лучше оценить на образце: свет и окружение влияют на восприятие стекла.</p></details><details><summary>Можно ли заказать несколько разных изделий?</summary><p>Да. Добавляйте материалы в «Мой расчёт» из их карточек и отправляйте общей заявкой.</p></details></section>
 <?php endif; ?>
+<?php if ($triplex) echo '</div>'; ?>
 </main><footer class="aml-footer"><a href="/materialy/">Все материалы</a><a href="/riflenoe-steklo/">Рифлёное стекло</a><a href="/triplex/">Триплекс</a><a href="/#contacts">Контакты</a></footer>
-<?php if ($triplex): ?><script src="<?php echo $asset('agm-landings/app.js?v=20261109-caret'); ?>" defer></script><?php endif; ?>
+<?php if ($triplex): ?><script src="<?php echo $asset('agm-landings/app.js?v=20261110-home-hero'); ?>" defer></script><?php endif; ?>
 <link rel="stylesheet" href="<?php echo $asset('agm-landings/builder.css'); ?>"><?php if ($triplex): ?><script src="<?php echo $asset('agm-landings/builder.js'); ?>" defer></script><?php endif; ?><?php wp_footer(); ?></body></html><?php
 $html = ob_get_clean();
 echo $triplex ? agm_order_render($html, 'dekorativnyy-triplex') : agm_quote_assets($html);

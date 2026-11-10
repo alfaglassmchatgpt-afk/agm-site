@@ -379,6 +379,7 @@
     });
   }
   $('.search-toggle').addEventListener('click', () => { search(); showDialog($('#search-dialog')); $('#search-input').focus(); });
+  if (location.hash === '#site-search') $('.search-toggle').click();
   $('#search-input').addEventListener('input', search);
 
   $$('[data-supply-link]').forEach(a => a.addEventListener('click', e => {
