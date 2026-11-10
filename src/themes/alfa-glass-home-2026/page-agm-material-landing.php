@@ -27,9 +27,105 @@ ob_start();
 <link rel="stylesheet" href="<?php echo $asset('agm-doors/style.css'); ?>">
 <link rel="stylesheet" href="<?php echo $asset('agm-landings/style.css?v=20261109-cards'); ?>">
 <link rel="stylesheet" href="<?php echo $asset('agm-aluminium-catalog/shared-header.css'); ?>">
-<script src="<?php echo $asset('agm-aluminium-catalog/shared-header.js'); ?>" defer></script>
+<?php if (!$triplex): ?><script src="<?php echo $asset('agm-aluminium-catalog/shared-header.js'); ?>" defer></script><?php endif; ?>
+<?php if ($triplex): ?>
+<style>
+.aluminium-header .desktop-nav{gap:18px;min-height:51px}
+.aluminium-header .desktop-nav a{min-height:51px;font-size:11px;white-space:nowrap}
+@media(min-width:801px) and (max-width:1000px){
+.aluminium-header .nav-line{display:none}
+.aluminium-header .menu-toggle{display:inline-flex}
+.aluminium-header .mobile-nav:not([hidden]){display:grid;padding:12px 20px;max-height:60vh;overflow:auto;background:var(--surface)}
+}
+.nav-dropdown{position:relative}
+.nav-expand{display:flex;align-items:center;justify-content:center;width:32px;height:44px;border:0;background:transparent;color:inherit;cursor:pointer;border-radius:6px}
+.nav-expand[aria-expanded="true"] svg{transform:rotate(180deg)}
+.nav-expand:hover,.nav-expand:focus-visible{background:var(--surface);color:var(--blue)}
+.nav-expand:focus-visible,.nav-panel a:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.nav-panel{position:absolute;top:100%;left:-18px;width:310px;padding:10px;background:var(--surface);border:1px solid var(--line);border-radius:0 0 12px 12px;box-shadow:var(--shadow-hover);max-height:calc(100dvh - var(--header-height,180px) - 20px);overflow:auto;z-index:60}
+.nav-panel[hidden]{display:none}
+.aluminium-header .desktop-nav .nav-panel a,.nav-panel a{display:block;min-height:0;margin:0;padding:11px 12px;font-size:14px;line-height:1.4;letter-spacing:0;text-transform:none;font-weight:500;white-space:normal;border:0;border-radius:6px}
+.nav-panel a:hover{background:var(--bg);color:var(--blue)}
+.nav-panel .nav-view-all{color:var(--blue);border-top:1px solid var(--line);border-radius:0;margin-top:6px;font-weight:600}
+.mobile-nav .nav-dropdown{grid-column:1/-1;border-bottom:1px solid var(--line)}
+.mobile-nav .nav-parent>a{display:flex;align-items:center;min-height:48px;font-size:14px;flex:1}
+.mobile-nav .nav-panel{position:static;width:100%;max-height:none;border:0;box-shadow:none;padding:0 0 10px 12px;background:transparent}
+</style>
+<script>document.addEventListener('DOMContentLoaded',()=>{
+  const $=(s,p=document)=>p.querySelector(s), $$=(s,p=document)=>Array.from(p.querySelectorAll(s));
+  const disclosures = $$('.nav-dropdown');
+  function toggleDisclosure(item, open) {
+    $('.nav-expand', item).setAttribute('aria-expanded', String(open));
+    $('.nav-panel', item).hidden = !open;
+  }
+  function openDisclosure(item) {
+    disclosures.forEach(other => toggleDisclosure(other, other === item));
+  }
+  disclosures.forEach(item => {
+    const button = $('.nav-expand', item);
+    button.addEventListener('click', () => {
+      if (button.getAttribute('aria-expanded') === 'true') toggleDisclosure(item, false);
+      else openDisclosure(item);
+    });
+    item.addEventListener('pointerenter', e => {
+      if (e.pointerType === 'mouse' && item.closest('.desktop-nav')) openDisclosure(item);
+    });
+    item.addEventListener('pointerleave', e => {
+      if (e.pointerType === 'mouse' && item.closest('.desktop-nav') && !item.contains(document.activeElement)) toggleDisclosure(item, false);
+    });
+    item.addEventListener('focusout', e => { if (!item.contains(e.relatedTarget)) toggleDisclosure(item, false); });
+    item.addEventListener('keydown', e => {
+      if (e.key === 'Escape') { e.stopPropagation(); toggleDisclosure(item, false); button.focus(); }
+    });
+    $$('.nav-panel a', item).forEach(a => a.addEventListener('click', () => {
+      toggleDisclosure(item, false);
+    }));
+  });
+  document.addEventListener('click', e => { if (!e.target.closest('.nav-dropdown')) disclosures.forEach(item => toggleDisclosure(item, false)); });
+  const menu = $('#mobile-nav');
+  const menuButton = $('.menu-toggle');
+  function closeMenu(focus = false) {
+    menu.hidden = true;
+    menuButton.setAttribute('aria-expanded', 'false');
+    menuButton.setAttribute('aria-label', 'Открыть меню');
+    if (focus) menuButton.focus();
+  }
+  menuButton.addEventListener('click', () => {
+    const opening = menu.hidden;
+    menu.hidden = !opening;
+    menuButton.setAttribute('aria-expanded', String(opening));
+    menuButton.setAttribute('aria-label', opening ? 'Закрыть меню' : 'Открыть меню');
+  });
+  $$('#mobile-nav a').forEach(a => a.addEventListener('click', () => closeMenu()));
+  document.addEventListener('click', e => { if (!menu.hidden && !e.target.closest('.site-header')) closeMenu(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !menu.hidden) closeMenu(true); });
+  window.addEventListener('resize', () => { if (innerWidth > 1000) closeMenu(); }, { passive: true });
+  if ('ResizeObserver' in window) {
+    new ResizeObserver(() => document.documentElement.style.setProperty('--header-height', $('.site-header').getBoundingClientRect().height + 'px')).observe($('.site-header'));
+  }
+
+});</script>
+<?php endif; ?>
 <style>.aml-triplex .aml-hero h1{font-weight:400}.aml-triplex .triplex-rate{display:table;margin:20px 0 0;padding-left:12px;border-left:2px solid var(--strong-line);color:var(--ink);font-size:16px;line-height:1.35}.triplex-rate strong{font-size:20px}.triplex-rate small{margin-left:4px;font-size:14px;color:var(--muted)}</style></head><body id="top">
-<?php echo agm_aluminium_header($slug, ['/materialy/' => 'Все материалы', '/riflenoe-steklo/' => 'Рифлёное стекло', '/triplex/' => 'Триплекс', '/aluminium/peregorodki/' => 'Перегородки', '/#contacts' => 'Контакты'], '/' . $slug . '/#material-request'); ?>
+<?php
+$header = agm_aluminium_header($slug, ['/materialy/' => 'Все материалы', '/riflenoe-steklo/' => 'Рифлёное стекло', '/triplex/' => 'Триплекс', '/aluminium/peregorodki/' => 'Перегородки', '/#contacts' => 'Контакты'], '/' . $slug . '/#material-request');
+if ($triplex) {
+    $home_markup = agm_navigation_render(file_get_contents(__DIR__ . '/agm-homepage/index.html'));
+    if (preg_match('~<header class="site-header">.*?</header>~s', $home_markup, $home_header)) {
+        preg_match_all('~<nav\b[^>]*>.*?</nav>~s', $home_header[0], $menus);
+        if (count($menus[0]) === 2) {
+            $index = 0;
+            $header = preg_replace_callback('~<nav\b[^>]*>.*?</nav>~s', function () use (&$index, $menus) {
+                return strtr($menus[0][$index++], [
+                    '__AGM_HOME__' => esc_url(home_url('/')),
+                    'href="#' => 'href="' . esc_url(home_url('/')) . '#',
+                ]);
+            }, $header);
+        }
+    }
+}
+echo $header;
+?>
 <main class="aml<?php echo $triplex ? ' aml-triplex' : ''; ?>" id="main">
 <nav class="aml-crumbs" aria-label="Хлебные крошки"><a href="/">Главная</a> / <a href="/materialy/">Материалы</a> / <span><?php echo esc_html($title); ?></span></nav>
 <section class="aml-hero">
