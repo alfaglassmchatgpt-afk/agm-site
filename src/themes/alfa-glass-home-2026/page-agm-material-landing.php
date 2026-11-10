@@ -35,10 +35,16 @@ ob_start();
 .triplex-hero .hero-art .aml-slide.is-active{opacity:1}
 .triplex-hero .hero-inner{z-index:1;pointer-events:none}
 @media(min-width:701px){
+  .triplex-hero .hero-inner{min-height:clamp(390px,32vw,460px);padding-block:38px 58px}
+  .triplex-hero .hero-art{left:54%}
   .triplex-hero .hero-brand{position:relative;color:var(--blue)}
   .triplex-hero .hero-brand img{display:block}
   .triplex-hero .hero-brand::after{content:"";position:absolute;top:0;bottom:0;left:calc(100% + 9px);width:1px;background:currentColor;pointer-events:none}
 }
+@media(max-width:700px){
+  .triplex-hero .hero-art{width:90%;max-width:520px;align-self:center}
+}
+.triplex-hero .hero-art .aml-slide{transform:none}
 .triplex-hero .hero-buttons{pointer-events:auto}
 .triplex-hero .hero-controls{z-index:2}
 @media(prefers-reduced-motion:reduce){.triplex-hero .hero-art .aml-slide{transition:none}}
@@ -478,7 +484,7 @@ document.querySelectorAll('.example-gallery').forEach(gallery => {
 <?php endif; ?>
 <?php if ($triplex) echo '</div>'; ?>
 </main><footer class="aml-footer"><a href="/materialy/">Все материалы</a><a href="/riflenoe-steklo/">Рифлёное стекло</a><a href="/triplex/">Триплекс</a><a href="/#contacts">Контакты</a></footer>
-<?php if ($triplex): ?><script src="<?php echo $asset('agm-landings/app.js?v=20261110-home-hero'); ?>" defer></script><?php endif; ?>
+<?php if ($triplex): ?><script src="<?php echo $asset('agm-landings/app.js?v=20261110-resume'); ?>" defer></script><?php endif; ?>
 <link rel="stylesheet" href="<?php echo $asset('agm-landings/builder.css'); ?>"><?php if ($triplex): ?><script src="<?php echo $asset('agm-landings/builder.js'); ?>" defer></script><?php endif; ?><?php wp_footer(); ?></body></html><?php
 $html = ob_get_clean();
 echo $triplex ? agm_order_render($html, 'dekorativnyy-triplex') : agm_quote_assets($html);

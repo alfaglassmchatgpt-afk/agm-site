@@ -19,7 +19,7 @@ document.querySelectorAll('[data-triplex-variant]').forEach(link => {
   caption.textContent = slides[0].dataset.caption;
   const pause = root.querySelector('.aml-slide-pause');
   const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  let request = 0, current = 0, timer, paused = motion.matches, hovered = false, focused = false, visible = true;
+  let request = 0, current = 0, timer, paused = motion.matches, visible = true;
   const stories = document.querySelectorAll('.aml-story [data-story]');
   const copy = document.querySelector('[data-story-copy]');
   const storyTones = ['graphite', 'bronze', 'brass', 'green', 'smoke'];
@@ -53,7 +53,7 @@ document.querySelectorAll('[data-triplex-variant]').forEach(link => {
   }
   function schedule() {
     clearTimeout(timer);
-    if (!paused && !hovered && !focused && visible && !document.hidden) {
+    if (!paused && visible && !document.hidden) {
       timer = setTimeout(() => show((current + 1) % slides.length), current % 2 === 0 ? interval * 2 : interval);
     }
   }
@@ -74,11 +74,14 @@ document.querySelectorAll('[data-triplex-variant]').forEach(link => {
     schedule();
   }
 
-  pause.addEventListener('click', () => { paused = !paused; updateStory(); controls(); schedule(); });
-  root.addEventListener('mouseenter', () => { hovered = true; schedule(); });
-  root.addEventListener('mouseleave', () => { hovered = false; schedule(); });
-  root.addEventListener('focusin', () => { focused = true; schedule(); });
-  root.addEventListener('focusout', event => { focused = root.contains(event.relatedTarget); schedule(); });
+  pause.addEventListener('click', () => {
+    paused = !paused;
+    ++request;
+    updateStory();
+    controls();
+    if (paused) clearTimeout(timer);
+    else show((current + 1) % slides.length);
+  });
   document.addEventListener('visibilitychange', () => schedule());
   motion.addEventListener('change', () => { paused = motion.matches; updateStory(); controls(); schedule(); });
   if ('IntersectionObserver' in window) new IntersectionObserver(entries => {
