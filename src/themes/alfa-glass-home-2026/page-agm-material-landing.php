@@ -36,7 +36,12 @@ ob_start();
 .triplex-hero .hero-inner{z-index:1;pointer-events:none}
 @media(min-width:701px){
   .triplex-hero .hero-inner{min-height:clamp(390px,32vw,460px);padding-block:38px 58px}
-  .triplex-hero .hero-art{left:54%}
+  .triplex-hero .hero-art {
+    left: 54%;
+    right: max(0px, calc((100% - 1344px) / 2));
+  }
+  .triplex-hero .hero-art .aml-slide { object-position: right center; }
+  .triplex-hero .hero-controls { right: max(24px, calc((100% - 1344px) / 2 + 12px)); }
   .triplex-hero .hero-brand{position:relative;color:var(--blue)}
   .triplex-hero .hero-brand img{display:block}
   .triplex-hero .hero-brand::after{content:"";position:absolute;top:0;bottom:0;left:calc(100% + 9px);width:1px;background:currentColor;pointer-events:none}
@@ -44,7 +49,7 @@ ob_start();
 @media(max-width:700px){
   .triplex-hero .hero-art{width:90%;max-width:520px;align-self:center}
 }
-.triplex-hero .hero-art .aml-slide{transform:none}
+.triplex-hero .hero-art .aml-slide { transform: none; object-fit: contain; }
 .triplex-hero .hero-buttons{pointer-events:auto}
 .triplex-hero .hero-controls{z-index:2}
 @media(prefers-reduced-motion:reduce){.triplex-hero .hero-art .aml-slide{transition:none}}
