@@ -86,7 +86,7 @@ export function render(order){
    if(cut){const row=[name,cut.width+' × '+cut.height+' × 4 мм',g.pitch?c.reed==='horizontal'?'Горизонтально':'Вертикально':'—'];const key=JSON.stringify(row);if(!glass.has(key))glass.set(key,{row,n:0});glass.get(key).n+=quantity;}
    const base=profiles.find(q=>q.id===p.baseId)||p,baseStock=p.series==='MZ'?6000:5500;
    const add=(label,stock,parts,handle=false,singleGrip=false)=>{const key=label+'|'+color;if(!rails.has(key))rails.set(key,{label,color,stock,parts:[],handle,singleGrip});for(let i=0;i<quantity;i++)rails.get(key).parts.push(...parts);};
-   hingeSheets.push(hingeSheet(item,p,base,color,quantity));
+   if(c.hinges.length)hingeSheets.push({name:item.title,html:hingeSheet(item,p,base,color,quantity)});
    const rail=profileLabel(base);
    if(c.handle&&p.id==='13'){
      const span=Math.min(250,c.h-80),end=(c.h-span)/2;
@@ -101,6 +101,25 @@ export function render(order){
  const groups=[...rails.values()].sort((a,b)=>Number(a.handle)-Number(b.handle)).map(group=>({group,bars:planCuts(group)}));
  const profileRows=groups.map(({group:g,bars})=>[g.label+(g.handle?' · ручка':''),g.color,g.stock+' мм',bars?bars.length+' шт.':'Уточнить раскрой']);
  const contact=[['Имя',order.name],['Телефон',order.phone],['Email',order.email],['Комментарий',order.comment]].filter(([,v])=>v).map(([k,v])=>'<p>'+k+': '+esc(v)+'</p>').join('');
- return '<!doctype html><html lang="ru"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>'+title+'</title><style>*{box-sizing:border-box}body{max-width:920px;margin:32px auto;padding:0 20px;color:#183039;font:16px/1.5 system-ui}h1,h2,h3{line-height:1.18}h1{font-size:clamp(24px,4vw,38px)}article{display:flex;align-items:center;gap:20px;border-top:1px solid #bccbd0;break-inside:avoid}article svg{width:min(36%,255px);flex:none}svg text{text-anchor:middle;font:14px sans-serif}p{margin:6px 0}.scroll{overflow-x:auto}table{border-collapse:collapse;width:100%}td,th{padding:9px;text-align:left;border-bottom:1px solid #ccd7db}th{background:#eef3f4}pre{white-space:pre-wrap;font:inherit}small{color:#53646c}.hinge-head{display:flex;align-items:center;gap:18px}.hinge-layout{width:110px;flex:none}.hinge-detail{display:block;width:min(100%,440px)}@media print{.cuts,.hinge-page{break-before:page;page-break-before:always}.scroll{overflow:visible}tr,h3{break-inside:avoid}h3{break-after:avoid}details{display:none}body{margin:0}}</style><main><h2>Заявка «Мой расчёт»</h2>'+contact+'<details open><summary>Состав заявки · '+positions.length+'</summary>'+positions.map(i=>'<p><b>'+esc(i.title)+'</b></p><pre>'+esc(i.summary)+'</pre>').join('')+'</details>'+(cards.length?'<h1>'+title+'</h1><p>Фасады в заявке: '+facadeCount+' шт.</p>'+cards.join('')+'<h2>Материалы для цеха</h2><h3>Стекло в раскрой</h3>'+(glass.size?table(['Вид стекла','Ш × В × толщина','Рифление','Количество'],[...glass.values()].map(g=>[...g.row,g.n+' шт.'])):'<p>Стекло не заказано.</p>')+'<h3>Профиль к закупке</h3>'+table(['Артикул','Цвет','Длина палки','Количество'],profileRows)+'<small>Пропил 4 мм. Торцовка палок 6 и 5,5 м — по 50 мм с каждого конца. Профиль-ручка 2,85 м — без торцовки. Для MF с центральным хватом предусмотрена одна стойка с хватом на заготовку. Эскиз показывает габариты и сторону петель; присадку согласуют по модели петли.</small>'+cutSheet(groups,facadeCount)+hingeSheets.join(''):'')+'</main></html>';
+ const sheets=[];
+ function sheet(label,html){sheets.push({label,html});}
+ sheet('Заявка «Мой расчёт»','<h1>Заявка «Мой расчёт»</h1>'+contact+'<h2>Состав заявки</h2>'+positions.map(i=>'<p><b>'+esc(i.title)+'</b></p><pre>'+esc(i.summary)+'</pre>').join(''));
+ if(cards.length){
+   const glassTable=glass.size?table(['Вид стекла','Ш × В × толщина','Рифление','Количество'],[...glass.values()].map(g=>[...g.row,g.n+' шт.'])):'<p>Стекло не заказано.</p>';
+   sheet('Ведомость материалов','<h1>'+title+'</h1><p>Фасады в заявке: '+facadeCount+' шт.</p>'+cards.join('')+'<h2>Материалы для цеха</h2><h3>Стекло в раскрой</h3>'+glassTable+'<h3>Профиль к закупке</h3>'+table(['Артикул','Цвет','Длина палки','Количество'],profileRows));
+   sheet('Карта раскроя',cutSheet(groups,facadeCount));
+   for(const entry of hingeSheets)sheet('Присадка · '+entry.name,entry.html);
+ }
+ const options=sheets.map((s,i)=>'<option value="'+i+'">'+esc(s.label)+'</option>').join('');
+ const forms=sheets.map((s,i)=>'<section class="print-form" data-sheet="'+i+'">'+s.html+'</section>').join('');
+ return `<!doctype html><html lang="ru"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${title}</title><style>*{box-sizing:border-box}body{max-width:920px;margin:32px auto;padding:0 20px;color:#183039;font:16px/1.5 system-ui}h1,h2,h3{line-height:1.18}h1{font-size:clamp(24px,4vw,38px)}article{display:flex;align-items:center;gap:20px;border-top:1px solid #bccbd0;break-inside:avoid}article svg{width:min(36%,255px);flex:none}svg text{text-anchor:middle;font:14px sans-serif}p{margin:6px 0}.scroll{overflow-x:auto}table{border-collapse:collapse;width:100%}td,th{padding:9px;text-align:left;border-bottom:1px solid #ccd7db}th{background:#eef3f4}pre{white-space:pre-wrap;font:inherit}small{color:#53646c}.hinge-head{display:flex;align-items:center;gap:18px}.hinge-layout{width:110px;flex:none}.hinge-detail{display:block;width:min(100%,440px)}
+ .print-tools{padding:12px 0;border-bottom:1px solid #ccd7db}.print-tools select,.print-tools button{padding:7px;font:inherit}
+ @page{size:A4;margin:13mm}@media print{.print-tools{display:none}.print-form+.print-form{break-before:page}.skip-print{display:none}.scroll{overflow:visible}tr{break-inside:avoid}h2,h3{break-after:avoid}body{margin:0;padding:0;font-size:11pt}article svg{max-width:110px}article p{margin:2px 0}article h3{margin:6px 0}td,th{padding:5px}pre{overflow-wrap:anywhere}}
+ </style><main><div class="print-tools"><label>Печатная форма <select id="sheet"><option value="">Весь комплект</option>${options}</select></label> <button type="button" id="print">Печать</button></div>${forms}</main>
+ <script>
+ const selector=document.getElementById('sheet');
+ function selectSheet(){for(const form of document.querySelectorAll('[data-sheet]'))form.classList.toggle('skip-print',selector.value!==''&&selector.value!==form.dataset.sheet);}
+ selector.onchange=selectSheet;
+ document.getElementById('print').onclick=()=>{selectSheet();window.print();};
+ </script></html>`;
 }
-
