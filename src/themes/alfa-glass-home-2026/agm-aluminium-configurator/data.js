@@ -32,6 +32,21 @@ export function orderProfileLabel(p,handle){
 }
 export function glassCut(s){const p=profiles.find(p=>p.id===s.profile),dw=p.deltaW??p.delta,dh=p.deltaH??p.delta;return {width:s.w-dw,height:s.h-dh,thickness:4,offsetX:(s.side==='right'?1:-1)*(dw-dh)/2};}
 export const defaultHinge=p=>p.series==='MF-20'?'mf20':p.series==='MF-30'||p.b<20?'narrow':'cup';
+// MODUS catalogue: frame dimensions are recommendations for standard orders.
+// The mass of cut glass alone is a lower bound; it cannot certify a complete door.
+export function hingeOptions(s,count=s.hinges.length||2){
+ const p=profiles.find(q=>q.id===s.profile),base=profiles.find(q=>q.id===p.baseId)||p;
+ if(!Number.isInteger(s.w)||!Number.isInteger(s.h)||s.w<200||s.h<200||s.w>p.w||s.h>p.h)return [];
+ const cut=s.glass==='none'?null:glassCut(s);
+ const glassKg=cut?cut.width*cut.height*0.00001:0; // 4 mm: approx. 10 kg/m²
+ if(p.maxWeight&&glassKg>=p.maxWeight)return [];
+ if(p.series==='MF-20')return count===2?['mf20']:[];
+ if(p.id==='07'&&s.glass!=='none'&&!(s.glassOpaque??['opaque','mirror'].includes(s.glass)))return ['blum'];
+ const options=[defaultHinge(p)];
+ if(['01','02','07','MF30'].includes(base.id)&&base.b>=19&&base.b<=22&&base.d>=20&&base.d<=25&&glassKg<4*count)options.push('mzf');
+ if(p.id==='07')options.push('blum');
+ return options;
+}
 export const colors={'00':['Серебро','#b6bec1'],'04':['Инокс','#91948d'],'06':['Шампань','#bfac8e'],'07':['Коньяк','#79503a'],'11':['Белый матовый','#eeeae4'],'16':['Белый глянец','#faf8f2'],'18':['Титан','#7d7b74'],'21':['Латунь','#b49b64'],'25':['Чёрный браш','#323331'],'26':['Чёрный матовый','#242729'],'29':['Серебро браш','#bfc5c4'],'28':['Кофе','#67594f']};
 export const glasses={clear:['Прозрачное М1','#c4e0dc'],bronze:['Тонированное — бронза','#b29676'],grey:['Тонированное — серое','#819096'],satin:['Матовое','#d6dfdc'],reeded:['Рифлёное — демонстрация','#c2d7cf'],opaque:['Окрашенное непрозрачное','#b9ad9b'],mirror:['Зеркало — серебро','#b7c5cb']};
 export function validate(s){const p=profiles.find(p=>p.id===s.profile), errors=[],warnings=[];
@@ -40,7 +55,7 @@ export function validate(s){const p=profiles.find(p=>p.id===s.profile), errors=[
  if(s.glass!=='none'&&s.hinges.length&&p.id==='07'&&!(s.glassOpaque??['opaque','mirror'].includes(s.glass))&&s.hinge!=='blum')errors.push('Для прозрачного наполнения MZ 07 каталог указывает BLUM 71B950A. Выберите эту петлю либо непрозрачное стекло.');
  if(s.glass!=='none'&&['07','17'].includes(p.id)&&!(s.glassOpaque??['opaque','mirror'].includes(s.glass))&&!s.mask)errors.push('Для MZ 07/17 область приклейки стекла к профилю должна быть непрозрачной. Подтвердите непрозрачную зону.');
  if(p.series==='MF-20'&&s.hinges.length&&(s.hinge!=='mf20'||s.hinges.length!==2))errors.push('MF-20: используются только две скрытые петли серии MF 20.');
- if(p.series==='MF-30'&&s.hinges.length&&s.hinge!=='narrow')errors.push('MF-30: выберите петлю для узкого рамочного профиля.');
+ if((s.hinge!=='none'||s.hinges.length)&&(![2,3,4,5,6].includes(s.hinges.length)||!hingeOptions(s).includes(s.hinge)))errors.push('Выбранные петли не подходят для этих параметров. Измените выбор или укажите «Без петель и присадок».');
  if(p.gripLength&&s.h<p.gripLength+2*p.baseWidth)errors.push('В модели не хватает места для хвата 250 мм и угловых соединений. Увеличьте высоту фасада; нестандартный вариант требует согласования.');
  if(p.maxWeight)warnings.push('Максимальный вес двери — 20 кг. Полная масса с профилем и фурнитурой проверяется при согласовании.');
  if(p.series==='MF-20'&&s.hinges.length)warnings.push('Петли показаны условно сверху и снизу; производственную присадку определяют чертежи MF 20.');
