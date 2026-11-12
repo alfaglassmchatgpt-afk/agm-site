@@ -1,6 +1,6 @@
 import quoteStore from '../../src/themes/alfa-glass-home-2026/agm-configurator/quote-store.js';
 import {readFileSync} from 'node:fs';
-import {profiles,colors,profileLabel,assemblyLabel,glassCut,validate} from '../../src/themes/alfa-glass-home-2026/agm-aluminium-configurator/data.js';
+import {profiles,colors,profileLabel,handleProfileLabel,orderProfileLabel,glassCut,validate} from '../../src/themes/alfa-glass-home-2026/agm-aluminium-configurator/data.js';
 const catalog=JSON.parse(readFileSync(new URL('../../src/themes/alfa-glass-home-2026/agm-aluminium-configurator/glass-catalog.json',import.meta.url))).items;
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const title='Ведомость материалов для изготовления фасада';
@@ -90,16 +90,16 @@ export function render(order){
    const rail=profileLabel(base);
    if(c.handle&&p.id==='13'){
      const span=Math.min(250,c.h-80),end=(c.h-span)/2;
-     add(rail,baseStock,[c.w,c.w,c.h,end,end]);add('MZ 13-01',2850,[span],true);
+     add(rail,baseStock,[c.w,c.w,c.h,end,end]);add(handleProfileLabel('MZ 13-01'),2850,[span],true);
    }else if(p.baseId){
      const horizontal=c.w-(p.b-p.baseWidth);
      add(rail,baseStock,[horizontal,horizontal,c.h]);
-     add(profileLabel(p),p.gripLength?2850:5500,[c.h],true,Boolean(p.gripLength));
+     add(handleProfileLabel(profileLabel(p)),p.gripLength?2850:5500,[c.h],true,Boolean(p.gripLength));
    }else add(rail,baseStock,[c.w,c.w,c.h,c.h]);
-   cards.push('<article>'+sketch(c,p,g)+'<div><h3>'+esc(item.title)+'</h3><p>'+esc(assemblyLabel(p)+(c.handle&&p.id==='13'?' + MZ 13-01':''))+' · '+esc(color)+'</p><p>Петли: '+esc(hinges[c.hinge])+' · '+c.hinges.length+' шт.'+(c.hinges.length?' · '+(c.side==='left'?'слева':'справа'):'')+'</p><p>Стекло: '+esc(name)+'</p><p>Количество: '+quantity+' шт.</p></div></article>');
+   cards.push('<article>'+sketch(c,p,g)+'<div><h3>'+esc(item.title)+'</h3><p>'+esc(orderProfileLabel(p,c.handle))+' · '+esc(color)+'</p><p>Петли: '+esc(hinges[c.hinge])+' · '+c.hinges.length+' шт.'+(c.hinges.length?' · '+(c.side==='left'?'слева':'справа'):'')+'</p><p>Стекло: '+esc(name)+'</p><p>Количество: '+quantity+' шт.</p></div></article>');
  }
  const groups=[...rails.values()].sort((a,b)=>Number(a.handle)-Number(b.handle)).map(group=>({group,bars:planCuts(group)}));
- const profileRows=groups.map(({group:g,bars})=>[g.label+(g.handle?' · ручка':''),g.color,g.stock+' мм',bars?bars.length+' шт.':'Уточнить раскрой']);
+ const profileRows=groups.map(({group:g,bars})=>[g.label,g.color,g.stock+' мм',bars?bars.length+' шт.':'Уточнить раскрой']);
  const contact=[['Имя',order.name],['Телефон',order.phone],['Email',order.email],['Комментарий',order.comment]].filter(([,v])=>v).map(([k,v])=>'<p>'+k+': '+esc(v)+'</p>').join('');
  const sheets=[];
  function sheet(label,html){sheets.push({label,html});}

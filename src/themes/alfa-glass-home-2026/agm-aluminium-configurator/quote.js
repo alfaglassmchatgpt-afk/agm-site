@@ -1,5 +1,5 @@
 import {numberFacades} from './project.js';
-import {profiles,colors,glasses,validate,assemblyLabel,glassCut} from './data.js?v=mf-series-20261021';
+import {profiles,colors,glasses,validate,orderProfileLabel,glassCut} from './data.js?v=mf-series-20261021';
 
 // Product-specific serialization; storage and checkout live in the shared configurator.
 export function facadeEntry(item,confirmed){
@@ -7,10 +7,10 @@ export function facadeEntry(item,confirmed){
  return {id:item.id,type:'facade',title:item.name,data:structuredClone(item),
   editUrl:'/wp-content/themes/alfa-glass-home-2026/agm-aluminium-configurator/index.html?quote-edit='+encodeURIComponent(item.id),
   errors:[...validate(c).errors,...(confirmed?[]:['Подтвердите изменённую конфигурацию фасадов.'])],
-  summary:[c.w+' × '+c.h+' мм; количество: 1','Профиль: MODUS '+assemblyLabel(p),'Цвет: '+colors[c.color][0],'Заполнение: '+glasses[c.glass][0],
+  summary:[c.w+' × '+c.h+' мм; количество: 1','Профиль: MODUS '+orderProfileLabel(p,c.handle),'Цвет: '+colors[c.color][0],'Заполнение: '+glasses[c.glass][0],
    cut?'Стекло: '+cut.width+' × '+cut.height+' × 4 мм':'Без наполнения',
    'Петли: '+({none:'Без петель',mf20:'Скрытые MF 20',narrow:'Для узкого профиля',mzf:'MZF 63',blum:'BLUM 71B950A',cup:'Чашка 35 мм — модель уточнить'}[c.hinge]||c.hinge)+'; сторона: '+(c.side==='left'?'слева':'справа')+'; координаты от верха, мм: '+c.hinges.join(', '),
-   'Ручка MZ 13-01: '+(c.handle?'да':'нет')+'; направление рифления: '+(c.reed==='vertical'?'вертикальное':'горизонтальное'),
+   'Направление рифления: '+(c.reed==='vertical'?'вертикальное':'горизонтальное'),
    'Маскировка зоны вклейки: '+(c.mask?'да':'нет'),...validate(c).warnings,'Параметры предварительные; производственный чертёж согласовать.'].join('\n')};
 }
 

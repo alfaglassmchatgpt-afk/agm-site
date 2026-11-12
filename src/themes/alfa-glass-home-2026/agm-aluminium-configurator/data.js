@@ -25,6 +25,11 @@ profiles.push(...mfRows.map(([id,series,b,d,deltaW,baseWidth,baseId,gripLength])
 export const profileSeries=['MZ','MF-20','MF-30'];
 export const profileLabel=p=>p.series==='MZ'?`MZ ${p.id}`:p.id.replace('MF','MF ');
 export const assemblyLabel=p=>p.baseId?`${p.baseId.replace('MF','MF ')} + ${profileLabel(p)}`:profileLabel(p);
+export const handleProfileLabel=article=>'Профиль-ручка '+article;
+export function orderProfileLabel(p,handle){
+ if(p.baseId)return p.baseId.replace('MF','MF ')+' + '+handleProfileLabel(profileLabel(p));
+ return profileLabel(p)+(p.id==='13'&&handle?' + '+handleProfileLabel('MZ 13-01'):'');
+}
 export function glassCut(s){const p=profiles.find(p=>p.id===s.profile),dw=p.deltaW??p.delta,dh=p.deltaH??p.delta;return {width:s.w-dw,height:s.h-dh,thickness:4,offsetX:(s.side==='right'?1:-1)*(dw-dh)/2};}
 export const defaultHinge=p=>p.series==='MF-20'?'mf20':p.series==='MF-30'||p.b<20?'narrow':'cup';
 export const colors={'00':['Серебро','#b6bec1'],'04':['Инокс','#91948d'],'06':['Шампань','#bfac8e'],'07':['Коньяк','#79503a'],'11':['Белый матовый','#eeeae4'],'16':['Белый глянец','#faf8f2'],'18':['Титан','#7d7b74'],'21':['Латунь','#b49b64'],'25':['Чёрный браш','#323331'],'26':['Чёрный матовый','#242729'],'29':['Серебро браш','#bfc5c4'],'28':['Кофе','#67594f']};
