@@ -46,8 +46,34 @@ function cutSheet(groups,facades){
  }).join('');
  return '<section class="cuts"><h2>Карта раскроя рамочного профиля</h2><p>Фасадов в заявке: '+facades+'. Размер рамочной детали — по наружной длинной стороне. Пропил 4 мм. Торцовка с каждого конца 6- и 5,5-метровой палки — 50 мм. Профиль 2850 мм используется без торцовки.</p>'+sections+'</section>';
 }
+function hingeSheet(item, profile, base, color){
+ const c=item.config;
+ if(!c.hinges.length)return '';
+ const left=c.side==='left', hidden=profile.series==='MF-20';
+ const side=left?'левая':'правая';
+ const positions=[...c.hinges].sort((a,b)=>a-b);
+ const x=left?41:135;
+ const marks=hidden?[25,179]:positions.map(v=>25+154*v/c.h);
+ const diagram='<svg class="hinge-layout" viewBox="0 0 175 205" role="img" aria-label="Расположение петель, вид спереди"><rect x="41" y="25" width="94" height="154" fill="none" stroke="#87979d"/><path d="M'+x+' 25V179" stroke="#335e70" stroke-width="4"/>'+marks.map(y=>'<circle cx="'+x+'" cy="'+y+'" r="4" fill="#183039"/>').join('')+'<text x="87" y="16">Верх</text><text x="87" y="199">Низ</text></svg>';
+ const member=profileLabel(base);
+ const rows=hidden?[
+   ['Верхний угол','Верхняя поперечина и '+side+' стойка','Узел верхней скрытой петли'],
+   ['Нижний угол','Нижняя поперечина и '+side+' стойка','Узел нижней скрытой петли']
+ ]:positions.map((v,i)=>[i+1,v+' мм',(c.h-v)+' мм']);
+ const header=hidden?['Узел','Детали '+member,'Операция']:['Петля','Центр от верха','Центр от низа'];
+ let detail;
+ if(hidden){
+   const width=c.w-(profile.baseId?profile.b-profile.baseWidth:0);
+   detail='<p>Поперечины — 2 × '+width+' мм. Фрезеровка в основном профиле MF 20. Положение и обработку углов сверить с чертежами MODUS, стр. 68–69.</p>';
+ }else if(c.hinge==='mzf'){
+   detail='<h3>Фрезеровка под MZF 63 · на каждую петлю</h3><svg class="hinge-detail" viewBox="0 0 440 95" role="img" aria-label="Два вида обработки MZF 63"><g fill="none" stroke="#183039" stroke-width="2"><rect x="28" y="27" width="135" height="33" rx="16.5"/><rect x="289" y="17" width="63" height="53"/><circle cx="274" cy="48" r="13"/><circle cx="367" cy="48" r="13"/><circle cx="274" cy="48" r="7"/><circle cx="367" cy="48" r="7"/></g><text x="96" y="86">Паз 41 × 10 · R5</text><text x="320" y="86">Окно и два крепления</text></svg><p>Окно 19 × 16 мм. Два отверстия Ø4,3 мм с зенковкой Ø8 мм. Между центрами 28 мм, ось крепежа в 7 мм от кромки по чертежу. Ориентация граней и привязка паза — MODUS, стр. 66.</p>';
+ }else{
+   detail='<p>'+ (c.hinge==='cup'?'Чашка Ø35 мм. ':'')+'Перед обработкой сверить артикул петли и монтажный чертёж. По нему определить форму выборки, отступ от кромки, отверстия крепежа и глубину.</p>';
+ }
+ return '<section class="hinge-page"><h2>Лист присадки под петли</h2><h3>'+esc(item.title)+' · '+c.w+' × '+c.h+' мм</h3><div class="hinge-head">'+diagram+'<div><p>Петлевая стойка — '+side+' при виде спереди.</p><p>'+esc(member)+' · '+esc(color)+' · '+c.h+' мм · 1 шт.</p><p>'+esc(hinges[c.hinge])+' · '+positions.length+' шт.</p></div></div>'+table(header,rows)+detail+'<small>Эскиз условный. Положение петель из заявки подлежит согласованию перед присадкой.</small></section>';
+}
 export function render(order){
- const glass=new Map(),rails=new Map(),cards=[];
+ const glass=new Map(),rails=new Map(),cards=[],hingeSheets=[];
  for(const item of order.items.filter(i=>i.type==='facade')){
    const c=item.config,p=profiles.find(p=>p.id===c?.profile),g=catalog.find(g=>g.id===c?.glass);
    if(!p||!colors[c.color]||!Array.isArray(c.hinges)||!Object.hasOwn(hinges,c.hinge)||!['left','right'].includes(c.side)||!['horizontal','vertical'].includes(c.reed)||(!g&&c.glass!=='none')||validate(c).errors.length)throw Error('Проверьте сохранённую конфигурацию фасада.');
@@ -55,6 +81,7 @@ export function render(order){
    if(cut){const row=[name,cut.width+' × '+cut.height+' × 4 мм',g.pitch?c.reed==='horizontal'?'Горизонтально':'Вертикально':'—'];const key=JSON.stringify(row);if(!glass.has(key))glass.set(key,{row,n:0});glass.get(key).n++;}
    const base=profiles.find(q=>q.id===p.baseId)||p,baseStock=p.series==='MZ'?6000:5500;
    const add=(label,stock,parts,handle=false,singleGrip=false)=>{const key=label+'|'+color;if(!rails.has(key))rails.set(key,{label,color,stock,parts:[],handle,singleGrip});rails.get(key).parts.push(...parts);};
+   hingeSheets.push(hingeSheet(item,p,base,color));
    const rail=profileLabel(base);
    if(c.handle&&p.id==='13'){
      const span=Math.min(250,c.h-80),end=(c.h-span)/2;
@@ -69,6 +96,6 @@ export function render(order){
  const groups=[...rails.values()].sort((a,b)=>Number(a.handle)-Number(b.handle)).map(group=>({group,bars:planCuts(group)}));
  const profileRows=groups.map(({group:g,bars})=>[g.label+(g.handle?' · ручка':''),g.color,g.stock+' мм',bars?bars.length+' шт.':'Уточнить раскрой']);
  const contact=[['Имя',order.name],['Телефон',order.phone],['Email',order.email],['Комментарий',order.comment]].filter(([,v])=>v).map(([k,v])=>'<p>'+k+': '+esc(v)+'</p>').join('');
- return '<!doctype html><html lang="ru"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>'+title+'</title><style>*{box-sizing:border-box}body{max-width:920px;margin:32px auto;padding:0 20px;color:#183039;font:16px/1.5 system-ui}h1,h2,h3{line-height:1.18}h1{font-size:clamp(24px,4vw,38px)}article{display:flex;align-items:center;gap:20px;border-top:1px solid #bccbd0;break-inside:avoid}article svg{width:min(36%,255px);flex:none}svg text{text-anchor:middle;font:14px sans-serif}p{margin:6px 0}.scroll{overflow-x:auto}table{border-collapse:collapse;width:100%}td,th{padding:9px;text-align:left;border-bottom:1px solid #ccd7db}th{background:#eef3f4}pre{white-space:pre-wrap;font:inherit}small{color:#53646c}@media print{.cuts{break-before:page;page-break-before:always}.scroll{overflow:visible}tr,h3{break-inside:avoid}h3{break-after:avoid}details{display:none}body{margin:0}}</style><main><h2>Заявка «Мой расчёт»</h2>'+contact+'<details open><summary>Состав заявки · '+order.items.length+'</summary>'+order.items.map(i=>'<p><b>'+esc(i.title)+'</b></p><pre>'+esc(i.summary)+'</pre>').join('')+'</details>'+(cards.length?'<h1>'+title+'</h1><p>Фасады в заявке: '+cards.length+' шт.</p>'+cards.join('')+'<h2>Материалы для цеха</h2><h3>Стекло в раскрой</h3>'+(glass.size?table(['Вид стекла','Ш × В × толщина','Рифление','Количество'],[...glass.values()].map(g=>[...g.row,g.n+' шт.'])):'<p>Стекло не заказано.</p>')+'<h3>Профиль к закупке</h3>'+table(['Артикул','Цвет','Длина палки','Количество'],profileRows)+'<small>Пропил 4 мм. Торцовка палок 6 и 5,5 м — по 50 мм с каждого конца. Профиль-ручка 2,85 м — без торцовки. Для MF с центральным хватом предусмотрена одна стойка с хватом на заготовку. Эскиз показывает габариты и сторону петель; присадку согласуют по модели петли.</small>'+cutSheet(groups,cards.length):'')+'</main></html>';
+ return '<!doctype html><html lang="ru"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>'+title+'</title><style>*{box-sizing:border-box}body{max-width:920px;margin:32px auto;padding:0 20px;color:#183039;font:16px/1.5 system-ui}h1,h2,h3{line-height:1.18}h1{font-size:clamp(24px,4vw,38px)}article{display:flex;align-items:center;gap:20px;border-top:1px solid #bccbd0;break-inside:avoid}article svg{width:min(36%,255px);flex:none}svg text{text-anchor:middle;font:14px sans-serif}p{margin:6px 0}.scroll{overflow-x:auto}table{border-collapse:collapse;width:100%}td,th{padding:9px;text-align:left;border-bottom:1px solid #ccd7db}th{background:#eef3f4}pre{white-space:pre-wrap;font:inherit}small{color:#53646c}.hinge-head{display:flex;align-items:center;gap:18px}.hinge-layout{width:110px;flex:none}.hinge-detail{display:block;width:min(100%,440px)}@media print{.cuts,.hinge-page{break-before:page;page-break-before:always}.scroll{overflow:visible}tr,h3{break-inside:avoid}h3{break-after:avoid}details{display:none}body{margin:0}}</style><main><h2>Заявка «Мой расчёт»</h2>'+contact+'<details open><summary>Состав заявки · '+order.items.length+'</summary>'+order.items.map(i=>'<p><b>'+esc(i.title)+'</b></p><pre>'+esc(i.summary)+'</pre>').join('')+'</details>'+(cards.length?'<h1>'+title+'</h1><p>Фасады в заявке: '+cards.length+' шт.</p>'+cards.join('')+'<h2>Материалы для цеха</h2><h3>Стекло в раскрой</h3>'+(glass.size?table(['Вид стекла','Ш × В × толщина','Рифление','Количество'],[...glass.values()].map(g=>[...g.row,g.n+' шт.'])):'<p>Стекло не заказано.</p>')+'<h3>Профиль к закупке</h3>'+table(['Артикул','Цвет','Длина палки','Количество'],profileRows)+'<small>Пропил 4 мм. Торцовка палок 6 и 5,5 м — по 50 мм с каждого конца. Профиль-ручка 2,85 м — без торцовки. Для MF с центральным хватом предусмотрена одна стойка с хватом на заготовку. Эскиз показывает габариты и сторону петель; присадку согласуют по модели петли.</small>'+cutSheet(groups,cards.length)+hingeSheets.join(''):'')+'</main></html>';
 }
 
