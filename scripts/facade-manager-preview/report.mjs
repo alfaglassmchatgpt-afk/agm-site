@@ -1,4 +1,5 @@
 import quoteStore from '../../src/themes/alfa-glass-home-2026/agm-configurator/quote-store.js';
+import {reedSlugs} from '../../src/themes/alfa-glass-home-2026/agm-aluminium-configurator/glass-groups.js';
 import {readFileSync} from 'node:fs';
 import {profiles,colors,profileLabel,handleProfileLabel,orderProfileLabel,glassCut,validate} from '../../src/themes/alfa-glass-home-2026/agm-aluminium-configurator/data.js';
 const catalog=JSON.parse(readFileSync(new URL('../../src/themes/alfa-glass-home-2026/agm-aluminium-configurator/glass-catalog.json',import.meta.url))).items;
@@ -9,7 +10,7 @@ function table(headers,rows){return '<div class="scroll"><table><thead><tr>'+hea
 function sketch(c,p,g){
  const scale=Math.min(205/c.w,208/c.h),w=c.w*scale,h=c.h*scale,x=(320-w)/2,y=(278-h)/2;
  const pins=c.hinges.map((v,i)=>'<circle r="3.6" fill="#147097" cx="'+(c.side==='left'?x+5:x+w-5)+'" cy="'+(p.series==='MF-20'?(i?y+h-5:y+5):y+v*scale)+'"/>').join('');
- const ribs=g?.pitch?'<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" fill="url(#reed-'+c.reed+')"/>':'';
+ const ribs=reedSlugs.includes(g?.slug)?'<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" fill="url(#reed-'+c.reed+')"/>':'';
  const pattern='<defs><pattern id="reed-'+c.reed+'" width="6" height="6" patternUnits="userSpaceOnUse"><path d="'+(c.reed==='horizontal'?'M0 1H6':'M1 0V6')+'" stroke="#586970" opacity=".45"/></pattern></defs>';
  const handleHeight=(c.handle?Math.min(250,c.h-80):p.gripLength||c.h)*scale;
  const handleX=c.side==='left'?x+w:x;
@@ -83,7 +84,7 @@ export function render(order){
    const quantity=item.members.length;
    facadeCount+=quantity;
    const cut=g&&glassCut(c),name=g?.title||'Без наполнения',color=colors[c.color][0];
-   if(cut){const row=[name,cut.width+' × '+cut.height+' × 4 мм',g.pitch?c.reed==='horizontal'?'Горизонтально':'Вертикально':'—'];const key=JSON.stringify(row);if(!glass.has(key))glass.set(key,{row,n:0});glass.get(key).n+=quantity;}
+   if(cut){const row=[name,cut.width+' × '+cut.height+' × 4 мм',reedSlugs.includes(g.slug)?c.reed==='horizontal'?'Горизонтально':'Вертикально':'—'];const key=JSON.stringify(row);if(!glass.has(key))glass.set(key,{row,n:0});glass.get(key).n+=quantity;}
    const base=profiles.find(q=>q.id===p.baseId)||p,baseStock=p.series==='MZ'?6000:5500;
    const add=(label,stock,parts,handle=false,singleGrip=false)=>{const key=label+'|'+color;if(!rails.has(key))rails.set(key,{label,color,stock,parts:[],handle,singleGrip});for(let i=0;i<quantity;i++)rails.get(key).parts.push(...parts);};
    if(c.hinges.length)hingeSheets.push({name:item.title,html:hingeSheet(item,p,base,color,quantity)});
@@ -105,7 +106,8 @@ export function render(order){
  function sheet(label,html){sheets.push({label,html});}
  sheet('Заявка «Мой расчёт»','<h1>Заявка «Мой расчёт»</h1>'+contact+'<h2>Состав заявки</h2>'+positions.map(i=>'<p><b>'+esc(i.title)+'</b></p><pre>'+esc(i.summary)+'</pre>').join(''));
  if(cards.length){
-   const glassTable=glass.size?table(['Вид стекла','Ш × В × толщина','Рифление','Количество'],[...glass.values()].map(g=>[...g.row,g.n+' шт.'])):'<p>Стекло не заказано.</p>';
+   const showDirection=[...glass.values()].some(g=>g.row[2]!=='—');
+   const glassTable=glass.size?table(['Вид стекла','Ш × В × толщина',...(showDirection?['Рифление']:[]),'Количество'],[...glass.values()].map(g=>[...g.row.slice(0,showDirection?3:2),g.n+' шт.'])):'<p>Стекло не заказано.</p>';
    sheet('Ведомость материалов','<h1>'+title+'</h1><p>Фасады в заявке: '+facadeCount+' шт.</p>'+cards.join('')+'<h2>Материалы для цеха</h2><h3>Стекло в раскрой</h3>'+glassTable+'<h3>Профиль к закупке</h3>'+table(['Артикул','Цвет','Длина палки','Количество'],profileRows));
    sheet('Карта раскроя',cutSheet(groups,facadeCount));
    for(const entry of hingeSheets)sheet('Присадка · '+entry.name,entry.html);
