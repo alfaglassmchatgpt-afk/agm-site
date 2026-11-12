@@ -2,6 +2,29 @@
  'use strict';
  const prefix='agm-quote-v1:', types=['material','mirror','facade','partition','door'];
  const clone=x=>JSON.parse(JSON.stringify(x));
+ function groupFacades(items){
+  const groups=[], matching=new Map();
+  for(const item of items){
+   const config=item.config||item.data?.config;
+   let group;
+   if(item.type==='facade'&&config&&Array.isArray(config.hinges)){
+    const {origin,view,backdrop,...spec}=config;
+    spec.hinges=[...spec.hinges].sort((a,b)=>a-b);
+    const key=JSON.stringify(Object.keys(spec).sort().map(k=>[k,spec[k]]));
+    group=matching.get(key);
+    if(!group){group={...item,members:[]};matching.set(key,group);groups.push(group);}
+    group.members.push(item);
+   }else groups.push({...item,members:[item]});
+  }
+  for(const group of groups){
+   const count=group.members.length;
+   if(count>1){
+    group.summary=/количество: 1\b/i.test(group.summary)?group.summary.replace(/количество: 1\b/i,'количество: '+count):group.summary+'\nКоличество: '+count+' шт.';
+    group.errors=[...new Set(group.members.flatMap(i=>i.errors||[]))];
+   }
+  }
+  return groups;
+ }
  function create(storage,notify=()=>{}){
   const key=(type,id)=>prefix+type+':'+encodeURIComponent(id);
   function all(){
@@ -42,9 +65,9 @@
   function payload(){
    const items=all();if(!items.length)throw Error('Добавьте хотя бы одно изделие.');
    const invalid=items.find(i=>i.errors.length);if(invalid)throw Error(invalid.title+': '+invalid.errors[0]);
-   return items.map(({type,title,summary})=>({type,title,summary}));
+   return groupFacades(items).map(({type,title,summary})=>({type,title,summary}));
   }
   return {all,put,remove,sync,migrate,payload};
  }
- return {create,prefix,types};
+ return {create,prefix,types,groupFacades};
 });

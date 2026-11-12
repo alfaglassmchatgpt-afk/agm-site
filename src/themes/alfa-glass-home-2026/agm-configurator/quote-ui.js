@@ -34,15 +34,15 @@
    const items=store.all();launcher.textContent='Мой расчёт · '+items.length;
    document.querySelectorAll('[data-quote-count]').forEach(n=>n.textContent=items.length);
    list.replaceChildren();if(!items.length)list.append(el('p','Пока нет изделий. Выберите их в каталоге.'));
-   for(const [n,item] of items.entries()){
+   for(const [n,item] of AGMQuoteStore.groupFacades(items).entries()){
     const row=el('article');row.className='quote-item';row.append(el('h3',(n+1)+'. '+item.title));
     row.append(el('p',item.summary.split('\n').slice(0,2).join(' · ')));
     const details=el('details');details.append(el('summary','Все параметры'),el('pre',item.summary));row.append(details);
     if(item.errors.length){const message=el('p',item.errors.join(' '));message.className='quote-error';row.append(message);}
-    const controls=el('div'),edit=el('a','Изменить параметры');
+    const controls=el('div'),edit=el('a',item.members.length>1?'Изменить 1 шт.':'Изменить параметры');
     // Saved browser data may not introduce external links or script URLs.
     const url=new URL(item.editUrl,location.origin);edit.href=url.origin===location.origin?url.href:'/materialy/';
-    controls.append(edit,button('Удалить',()=>{try{store.remove(item.type,item.id);document.dispatchEvent(new CustomEvent('agm:quote-editors-refresh'));render();}catch(e){report(e);}}));row.append(controls);list.append(row);
+    controls.append(edit,button(item.members.length>1?'Удалить 1 шт.':'Удалить',()=>{try{store.remove(item.type,item.id);document.dispatchEvent(new CustomEvent('agm:quote-editors-refresh'));render();}catch(e){report(e);}}));row.append(controls);list.append(row);
    }
    checkout.disabled=download.disabled=!items.length;
   }catch(e){loadError=e;report(e);}
@@ -52,7 +52,7 @@
  function prepare(){
   try{if(loadError)throw loadError;const items=store.payload();status.textContent='';dialog.querySelector('pre').textContent=text(items);dialog.querySelector('[data-count]').textContent='Позиций: '+items.length+'. Контакты указываются один раз для всего заказа.';dialog.showModal();if(!local)credentialsReady().catch(e=>feedback.textContent=e.message);}catch(e){report(e);}
  }
- function exportText(){try{const items=store.all();if(!items.length)return;const url=URL.createObjectURL(new Blob(['\ufeffALFAGLASS — Мой расчёт\n\n'+text(items)+'\n\n'+items.filter(i=>i.errors.length).map(i=>i.title+': '+i.errors.join(' ')).join('\n')+'\nСтоимость и комплектация согласуются.'],{type:'text/plain;charset=utf-8'}));const a=el('a');a.href=url;a.download='ALFAGLASS-my-calculation.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}catch(e){report(e);}}
+ function exportText(){try{const items=store.all();if(!items.length)return;const url=URL.createObjectURL(new Blob(['\ufeffALFAGLASS — Мой расчёт\n\n'+text(AGMQuoteStore.groupFacades(items))+'\n\n'+items.filter(i=>i.errors.length).map(i=>i.title+': '+i.errors.join(' ')).join('\n')+'\nСтоимость и комплектация согласуются.'],{type:'text/plain;charset=utf-8'}));const a=el('a');a.href=url;a.download='ALFAGLASS-my-calculation.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}catch(e){report(e);}}
  async function credentialsReady(){
   if(credentials&&Date.now()/1000-Number(credentials.time)<3500)return;
   if(!pending)pending=(async()=>{const r=await fetch(endpoint,{cache:'no-store',credentials:'same-origin'}),data=await r.json();if(!r.ok||!data.enabled)throw Error('Отправка недоступна. Расчёт сохранён — его можно скачать.');credentials=data;})().finally(()=>pending=null);
