@@ -89,6 +89,12 @@
   const read=async name=>{const r=await fetch(new URL(name,asset));if(!r.ok)throw Error('Не удалось загрузить каталог для расчёта. Обновите страницу.');return r.json();};
   [materials,operations]=await Promise.all([read('materials.json'),read('operations.json')]);
   store=AGMQuoteStore.create(localStorage,()=>document.dispatchEvent(new CustomEvent('agm:quote-change')));
+  const oldFacades=store.all().filter(i=>i.type==='facade'&&i.data?.config);
+  if(oldFacades.some(i=>i.title.startsWith('Фасад · '))){
+   const {numberFacades}=await import(new URL('../agm-aluminium-configurator/project.js',asset));
+   numberFacades(oldFacades.map(i=>i.data));
+   for(const entry of oldFacades)if(entry.title!==entry.data.name)store.put({...entry,title:entry.data.name});
+  }
   // Import once, leave original drafts intact. Deleting an imported position never resurrects it.
   const legacy=JSON.parse(localStorage.getItem('agm-materials-request-v2')||localStorage.getItem('agm-materials-request-v1')||'null');
   store.migrate('materials',(legacy?.items||[]).map(i=>{const normalized=AGMOrderModel.normalize(i,materials,()=>crypto.randomUUID());return normalized?AGMQuoteModel.material(normalized,materials,operations):{id:i.id||crypto.randomUUID(),type:'material',title:'Сохранённый материал',summary:JSON.stringify(i),errors:['Проверьте устаревшее исполнение материала.'],data:i,editUrl:'/materialy/'};}));

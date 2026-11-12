@@ -1,9 +1,10 @@
+import {numberFacades} from './project.js';
 import {profiles,colors,glasses,validate,assemblyLabel,glassCut} from './data.js?v=mf-series-20261021';
 
 // Product-specific serialization; storage and checkout live in the shared configurator.
 export function facadeEntry(item,confirmed){
  const c=item.config,p=profiles.find(p=>p.id===c.profile),cut=c.glass==='none'?null:glassCut(c);
- return {id:item.id,type:'facade',title:'Фасад · '+item.name,data:structuredClone(item),
+ return {id:item.id,type:'facade',title:item.name,data:structuredClone(item),
   editUrl:'/wp-content/themes/alfa-glass-home-2026/agm-aluminium-configurator/index.html?quote-edit='+encodeURIComponent(item.id),
   errors:[...validate(c).errors,...(confirmed?[]:['Подтвердите изменённую конфигурацию фасадов.'])],
   summary:[c.w+' × '+c.h+' мм; количество: 1','Профиль: MODUS '+assemblyLabel(p),'Цвет: '+colors[c.color][0],'Заполнение: '+glasses[c.glass][0],
@@ -27,6 +28,9 @@ export function connectFacadeQuote(project,confirmation,quote){
   if(!validData(entry.data))throw Error('Проверьте сохранённый фасад.');
   const n=project.items.findIndex(i=>i.id===entry.id);if(n>=0)project.items[n]=structuredClone(entry.data);else project.items.push(structuredClone(entry.data));
  }
+ const confirmedBeforeRename=confirmation.signature===confirmation.fingerprint(project.items);
+ numberFacades(project.items);
+ if(confirmedBeforeRename)confirmation.confirm(project.items,true);
  project.nextId=Math.max(Number(project.nextId)||1,...project.items.map(i=>(Number(i.id.replace('facade-',''))||0)+1));
  const selected=new URLSearchParams(location.search).get('quote-edit');
  project.activeId=project.items.find(i=>i.id===(selected||project.activeId))?.id||project.items[0].id;
