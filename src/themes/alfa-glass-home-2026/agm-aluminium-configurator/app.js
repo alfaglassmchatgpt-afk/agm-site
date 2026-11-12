@@ -1,4 +1,4 @@
-import {connectFacadeQuote} from './quote.js?v=20261029';
+import {connectFacadeQuote,facadeEntry} from './quote.js?v=20261029';
 import * as T from 'three';
 import {OrbitControls} from './vendor/OrbitControls.js';
 import {Reflector} from './vendor/Reflector.js';
@@ -247,8 +247,8 @@ $('#profile-details').onclick=()=>{const p=profiles.find(p=>p.id===s.profile);$(
 $('#confirm-project').onclick=()=>{project.update(s);confirmation.confirm(project.items,!project.items.some(item=>validate(item.config).errors.length));confirmationControls();saveProject();};
 $('#send-project').onclick=event=>{project.update(s);if(!confirmationControls()){event.preventDefault();event.stopImmediatePropagation();return;}saveProject(true);quote.open();};
 $('#export').onclick=()=>{project.update(s);if(project.items.some(item=>validate(item.config).errors.length))return;
- const items=project.items.map(item=>{const c=item.config,p=profiles.find(p=>p.id===c.profile),g=glassItems[c.glass];return {...structuredClone(item),quantity:1,series:p.series,baseProfile:p.baseId||p.id,integratedHandle:p.baseId?{id:p.id,length:p.gripLength||c.h}:null,profileAssembly:assemblyLabel(p),material:c.glass==='none'?null:{slug:g.slug,variant:g.variant,title:g.title,thickness:4,catalogueSnapshot:catalogue.snapshot},glassCut:c.glass==='none'?null:glassCut(c),hingePlacement:p.series==='MF-20'&&c.hinges.length?{type:'top-bottom',count:2,coordinatesAreSchematic:true}:null,warnings:validate(c).warnings};});
- const blob=new Blob([JSON.stringify({status:'prototype-not-for-production',source,items},null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='modus-facades-project.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
+ const other=quote.store.all().filter(i=>i.type!=='facade');
+ quote.exportText([...other,...project.items.map(i=>facadeEntry(i,true))]);};
 // Explicit review link only; the ordinary configurator still starts empty.
 if(['raywall-optics','raywall-studio'].includes(new URLSearchParams(location.search).get('preview'))){
  s.glass='raywall90__standard';showSampleCabinet='kitchen';project.update(s);

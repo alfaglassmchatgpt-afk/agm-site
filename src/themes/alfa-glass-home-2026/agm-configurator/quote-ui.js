@@ -17,7 +17,7 @@
  const links=el('nav');links.setAttribute('aria-label','Добавить к заказу');
  for(const [url,title] of [['/materialy/zerkalo-serebro/','Обычное зеркало'],['/aluminium/zerkala/','Зеркало в раме'],['/wp-content/themes/alfa-glass-home-2026/agm-aluminium-configurator/index.html','Фасад'],['/aluminium/peregorodki/','Перегородка'],['/dveri-iz-stekla/','Дверь из стекла']]){const a=el('a',title);a.href=url;links.append(a);}
  const actions=el('div');actions.className='quote-actions';
- const checkout=button('Оформить общую заявку',prepare),download=button('Скачать весь расчёт',exportText);
+ const checkout=button('Оформить общую заявку',prepare),download=button('Скачать весь расчёт',()=>exportText());
  checkout.disabled=download.disabled=true;
  actions.append(checkout,download);drawer.append(top,intro,links,list,actions,status);document.body.append(drawer);
  const launcher=button('Мой расчёт',()=>open());launcher.id='quote-launcher';document.body.append(launcher);
@@ -52,7 +52,7 @@
  function prepare(){
   try{if(loadError)throw loadError;const items=store.payload();status.textContent='';dialog.querySelector('pre').textContent=text(items);dialog.querySelector('[data-count]').textContent='Позиций: '+items.length+'. Контакты указываются один раз для всего заказа.';dialog.showModal();if(!local)credentialsReady().catch(e=>feedback.textContent=e.message);}catch(e){report(e);}
  }
- function exportText(){try{const items=store.all();if(!items.length)return;const url=URL.createObjectURL(new Blob(['\ufeffALFAGLASS — Мой расчёт\n\n'+text(AGMQuoteStore.groupFacades(items))+'\n\n'+items.filter(i=>i.errors.length).map(i=>i.title+': '+i.errors.join(' ')).join('\n')+'\nСтоимость и комплектация согласуются.'],{type:'text/plain;charset=utf-8'}));const a=el('a');a.href=url;a.download='ALFAGLASS-my-calculation.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}catch(e){report(e);}}
+ function exportText(items=store.all()){try{if(!items.length)return;const url=URL.createObjectURL(new Blob(['\ufeffALFAGLASS — Мой расчёт\n\n'+text(AGMQuoteStore.groupFacades(items).map(i=>i.type==='facade'?{...i,summary:i.summary.split('\n').filter(line=>/^(?:\d+ × |Профиль:|Цвет:|Заполнение:|Петли:|Направление рифления:|Маскировка зоны вклейки:|Количество:)/.test(line)).map(line=>line.split('; координаты от верха')[0]).join('\n')}:i))+'\nСтоимость и комплектация согласуются.'],{type:'text/plain;charset=utf-8'}));const a=el('a');a.href=url;a.download='ALFAGLASS-my-calculation.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}catch(e){report(e);}}
  async function credentialsReady(){
   if(credentials&&Date.now()/1000-Number(credentials.time)<3500)return;
   if(!pending)pending=(async()=>{const r=await fetch(endpoint,{cache:'no-store',credentials:'same-origin'}),data=await r.json();if(!r.ok||!data.enabled)throw Error('Отправка недоступна. Расчёт сохранён — его можно скачать.');credentials=data;})().finally(()=>pending=null);
@@ -65,7 +65,7 @@
    const items=store.payload(),contact=Object.fromEntries(new FormData(form)),phone=contact.phone.replace(/\D/g,'');
    if(!contact.name.trim())throw Error('Укажите ваше имя.');
    if(!/^[78]\d{10}$/.test(phone))throw Error('Укажите полный российский телефон, начиная с +7 или 8.');
-   const data={...contact,product:'mixed',dimensions:'Позиций: '+items.length,items},current=JSON.stringify(data);
+   const data={...contact,product:'mixed',dimensions:'Позиций: '+items.length,items,...(items.some(i=>i.type==='facade')?{managerItems:store.all().map(({type,title,summary,data})=>({type,title,summary,...(type==='facade'?{config:data.config}:{})}))}:{})},current=JSON.stringify(data);
    if(current===sentFingerprint){feedback.textContent='Эта заявка уже передана.';return;}
    if(fingerprint&&fingerprint!==current)credentials=null;fingerprint=current;
    dialog.querySelector('pre').textContent=text(items);

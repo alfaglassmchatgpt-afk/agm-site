@@ -20,7 +20,7 @@ function set_transient($k,$v,...$args){global $transients;$transients[$k]=$v;}
 function add_option($k,$v,...$args){global $options;if(isset($options[$k]))return false;$options[$k]=$v;return true;}
 function delete_option($k){global $options;unset($options[$k]);}
 function wp_schedule_single_event(...$args){}
-function wp_mail($to,$subject,$body){global $mails;$mails[]=$body;return true;}
+function wp_mail($to,$subject,$body,$headers=[],$files=[]){global $mails,$sheet,$saved;$mails[]=$body;if($files){$saved=$files[0];$sheet=file_get_contents($saved);}return true;}
 class Request {public $data;function __construct($d){$this->data=$d;}function get_json_params(){return $this->data;}function get_header($n){return 'https://example.invalid';}}
 require dirname(__DIR__).'/src/mu-plugins/agm-aluminium-request.php';
 function check($condition,$label){if(!$condition)throw new Exception($label);}
@@ -28,9 +28,13 @@ $items=[['type'=>'material','title'=>'Обычное зеркало','summary'=>
 $items[]=['type'=>'door','title'=>'Маятниковая дверь','summary'=>"900 × 2100 мм\n8 мм; FKF-20 + FKF-21"];
 $id=str_repeat('a',32);$time=(string)(time()-5);
 $data=['id'=>$id,'time'=>$time,'token'=>agm_al_request_token($id,$time),'product'=>'mixed','name'=>'Локальная проверка','phone'=>'+70000000000','email'=>'','dimensions'=>'Позиций: 4','comment'=>'','consent'=>'1','website'=>'','items'=>$items];
+$data['managerItems']=$items;
+$data['managerItems'][2]['config']=['profile'=>'01','w'=>350,'h'=>600,'color'=>'00','glass'=>'none','hinge'=>'mzf','hinges'=>[100,500],'side'=>'left','reed'=>'vertical'];
 $result=agm_al_request_send(new Request($data));
 if(defined('AGM_STAGING')){check(is_wp_error($result)&&$result->code==='disabled','staging blocked');check(!$mails,'No staging mail');echo "PASS staging remains disabled\n";exit;}
 check(!is_wp_error($result)&&$result['ok'],'Mixed handler succeeds');check(count($mails)===1,'Exactly one mail');
+check(!file_exists($saved),'Private attachment cleaned up');
+foreach(['Ведомость материалов','Карта раскроя','Лист присадки','Эскиз фасада','Маятниковая дверь'] as $section)check(strpos($sheet,$section)!==false,'Missing manager section');
 foreach($items as $item){check(strpos($mails[0],$item['title'])!==false,'All titles included');check(strpos($mails[0],$item['summary'])!==false,'All details included');}
 agm_al_request_send(new Request($data));check(count($mails)===1,'Retry deduplicated');
 check(is_wp_error(agm_quote_items_text([])),'Empty rejected');check(is_wp_error(agm_quote_items_text([['type'=>'bogus','title'=>'x','summary'=>'x']])),'Unknown type rejected');

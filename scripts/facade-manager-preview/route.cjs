@@ -14,8 +14,8 @@ module.exports=function(req,res,u,root,prefix){
    const data=JSON.parse(body);
    if(!data.name?.trim()||!(/^[78]\d{10}$/).test(data.phone.replace(/\D/g,''))||data.consent!=='1'||data.website||!data.items?.length)throw Error('Проверьте поля заявки');
    const {render}=await import('./report.mjs');
-   const html=render(data);
-   res.setHeader('Content-Type','text/html;charset=utf-8');res.end(html);
+   render({...data,items:data.managerItems||data.items});
+   res.setHeader('Content-Type','application/json;charset=utf-8');res.end(JSON.stringify({ok:true}));
  })().catch(e=>res.writeHead(400,{'Content-Type':'text/plain;charset=utf-8'}).end(e.message));
  return true;
 };
