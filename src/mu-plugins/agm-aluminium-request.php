@@ -60,7 +60,7 @@ function agm_al_request_send($request) {
     preg_match('/href="mailto:([^"?]+)(?:[^"]*)"/',$home,$mail);
     $to=sanitize_email($mail[1]??'');
     $deliver=function($files=[])use($to,$types,$p,$body){return is_email($to)&&wp_mail($to,'ALFAGLASS — Aluminium — '.$types[$p['product']],$body,[],$files);};
-    $needs_sheet=$p['product']==='mixed'&&in_array('facade',array_column($p['items'],'type'),true);
+    $needs_sheet=isset($p['managerItems'])&&$p['product']==='mixed'&&in_array('facade',array_column($p['items'],'type'),true);
     $ok=$needs_sheet?agm_with_facade_attachment($p,$deliver):$deliver();
     delete_option($lock);
     if (!$ok) return new WP_Error('mail','Не удалось передать запрос. Позвоните нам или попробуйте позже.',['status'=>503]);
