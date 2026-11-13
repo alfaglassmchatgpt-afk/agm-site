@@ -1,6 +1,13 @@
 <?php
 /** Template Name: ALFAGLASS — душевые перегородки */
 defined('ABSPATH') || exit;
+$description = 'Душевые перегородки из стекла на заказ: для ниши и угловой душевой, без двери, с распашной или раздвижной створкой. Выберите стекло и рассчитайте проект по своим размерам.';
+add_filter('wpseo_metadesc', static function () use ($description) { return $description; });
+if (!defined('WPSEO_VERSION')) {
+    add_action('wp_head', static function () use ($description) {
+        echo '<meta name="description" content="' . esc_attr($description) . '">';
+    }, 2);
+}
 // Same isolated page shell as Aluminium; retain WordPress SEO and shared theme hooks.
 $cleanup = function () {
     foreach (wp_styles()->queue as $handle) {

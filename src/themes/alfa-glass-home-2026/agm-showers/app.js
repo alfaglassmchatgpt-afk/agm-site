@@ -185,6 +185,11 @@
     $('status').textContent = '';
   });
   form.addEventListener('change', update);
+  document.querySelectorAll('[data-ags-mode]').forEach(link => link.addEventListener('click', () => {
+    $('mode').value = link.dataset.agsMode;
+    $('mode').dispatchEvent(new Event('change', {bubbles:true}));
+    $('mode').focus({preventScroll:true});
+  }));
   const controls = [...form.querySelectorAll('input[id], select[id], textarea[id]')];
   const buttons = [...document.querySelectorAll('button[type="submit"]')].filter(button => button.form === form);
   let editing = new URLSearchParams(location.search).get('quote-edit');
