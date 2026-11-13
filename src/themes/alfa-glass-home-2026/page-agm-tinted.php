@@ -4,6 +4,9 @@ defined('ABSPATH') || exit;
 require_once __DIR__ . '/inc/agm-configurator.php';
 $agm_html = file_get_contents(get_template_directory() . '/agm-materials/tinted.html');
 { $agm_html = agm_order_render($agm_html, 'tonirovannye-zerkala', true); }
+require_once __DIR__ . '/inc/agm-mirror-card-header.php';
+$agm_html = agm_mirror_card_header($agm_html);
+
 ob_start(); wp_head(); $agm_head = ob_get_clean();
 ob_start(); wp_body_open(); $agm_body = ob_get_clean();
 ob_start(); wp_footer(); $agm_footer = ob_get_clean();
