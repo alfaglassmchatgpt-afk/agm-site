@@ -13,6 +13,22 @@ function agm_manager_can_calculate() {
 function agm_manager_url() {
     return add_query_arg('agm_facade_manager', '1', home_url('/'));
 }
+/** Some catalogue pages render standalone footer templates instead of footer.php. */
+add_action('template_redirect', static function () {
+    if (is_feed() || is_robots() || is_trackback() || isset($_GET['agm_facade_manager'])) return;
+    $link = '<a data-agm-manager-entry href="'.esc_url(agm_manager_url()).'">Вход для менеджеров</a>';
+    ob_start(static function ($html) use ($link) {
+        return preg_replace_callback('~<footer\b[^>]*>.*?</footer>~is', static function ($match) use ($link) {
+            $footer = $match[0];
+            if (strpos($footer, 'data-agm-manager-entry') !== false) return $footer;
+            if (preg_match('~<nav\b~i', $footer)) {
+                return preg_replace('~</nav>~i', ' '.$link.'</nav>', $footer, 1);
+            }
+            return preg_replace('~(</div>\s*)*</footer>$~i', ' '.$link.'$0', $footer, 1);
+        }, $html, 1);
+    });
+}, 9);
+
 add_filter('login_redirect', static function ($url, $requested, $user) {
     if ($user instanceof WP_User && user_can($user, 'agm_calculate_facades')) return agm_manager_url();
     return $url;
