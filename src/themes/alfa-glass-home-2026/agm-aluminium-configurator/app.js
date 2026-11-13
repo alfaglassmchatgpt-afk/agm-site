@@ -18,12 +18,13 @@ glasses.none=['Без наполнения','none'];
 for(const item of catalogue.items)glasses[item.id]=[item.title,item.color];
 const $=s=>document.querySelector(s), s={profile:profiles[0].id,w:350,h:600,color:profiles[0].colors[0],glass:'none',glassOpaque:false,backdrop:false,hinge:'none',side:'left',origin:'top',hinges:[],handle:false,mask:false,reed:'vertical',view:'3d'};
 const defaults=structuredClone(s), project=new FacadeProject(defaults), confirmation=new ProjectConfirmation();
-const quote=await window.AGMQuoteReady;
-const sharedProject=connectFacadeQuote(project,confirmation,quote);
+const managerForm=document.querySelector('#manager-report-form');
+const quote=managerForm ? null : await window.AGMQuoteReady;
+const sharedProject=quote ? connectFacadeQuote(project,confirmation,quote) : null;
 Object.assign(s,structuredClone(project.current().config));
 $('#width').value=s.w;$('#height').value=s.h;
 for(const id of ['side','reed','origin','count'])$('#'+id).value=id==='count'?s.hinges.length:s[id];
-function saveProject(addAll=false){try{sharedProject.save(addAll);}catch(error){const p=document.createElement('p');p.textContent='Не удалось сохранить проект: '+error.message;$('#messages').append(p);}}
+function saveProject(addAll=false){try{sharedProject?.save(addAll);}catch(error){const p=document.createElement('p');p.textContent='Не удалось сохранить проект: '+error.message;$('#messages').append(p);}}
 const pair=()=>project.partner();
 const previewSide=()=>s.side;
 const scene=new T.Scene();scene.background=studioBackdrop();
@@ -245,8 +246,22 @@ for(const kind of ['mirror','copy','new'])$('#add-'+kind).onclick=()=>{project.u
 
 $('#profile-details').onclick=()=>{const p=profiles.find(p=>p.id===s.profile);$('#detail-title').textContent='MODUS '+assemblyLabel(p);$('#detail-body').innerHTML=svgSection(p.id,colors[s.color][1],true)+(s.handle?svgSection('13-01',colors[s.color][1],true):'')+`<p class="section-source">${sectionNotes}</p><p>Габарит сечения ${p.b} × ${p.d} мм. Стекло 4 мм. Минимальный размер в модели — 200 × 200 мм; это не производственный допуск. Рекомендуемые максимальные размеры: высота ${p.h}, ширина ${p.w} мм.</p><p>Для стекла: из ширины вычитается ${p.deltaW??p.delta} мм, из высоты — ${p.deltaH??p.delta} мм. ${p.edge?'Кромки стекла дополнительно обрабатываются; заполнение вклеивается.':''}</p><p>${p.note||'Цвета указаны по каталогу; доступность проверяется при заказе.'}</p><p>Сечения построены по каталогу, неуказанные толщины и радиусы оценочные. Петли условные. Чертежи обработки на странице 65 относятся к сборочным уголкам, а не к присадке петель. Для производства необходима выбранная модель петли и согласованный чертёж.</p>`;$('#details').showModal();};$('#close-details').onclick=()=>$('#details').close();
 $('#confirm-project').onclick=()=>{project.update(s);confirmation.confirm(project.items,!project.items.some(item=>validate(item.config).errors.length));confirmationControls();saveProject();};
-$('#send-project').onclick=event=>{project.update(s);if(!confirmationControls()){event.preventDefault();event.stopImmediatePropagation();return;}saveProject(true);quote.open();};
-$('#export').onclick=()=>{project.update(s);if(project.items.some(item=>validate(item.config).errors.length))return;
+$('#send-project').onclick=event=>{
+ project.update(s);
+ if(!confirmationControls()){event.preventDefault();event.stopImmediatePropagation();return;}
+ if(managerForm){
+  const entries=project.items.map(item=>facadeEntry(item,true));
+  managerForm.elements.project.value=JSON.stringify({
+   managerItems:entries.map(({type,title,summary,data})=>({type,title,summary,config:data.config})),
+   items:AGMQuoteStore.groupFacades(entries).map(({type,title,summary})=>({type,title,summary}))
+  });
+  managerForm.requestSubmit();
+  return;
+ }
+ saveProject(true);
+ quote.open();
+};
+if(quote) $('#export').onclick=()=>{project.update(s);if(project.items.some(item=>validate(item.config).errors.length))return;
  const other=quote.store.all().filter(i=>i.type!=='facade');
  quote.exportText([...other,...project.items.map(i=>facadeEntry(i,true))]);};
 // Explicit review link only; the ordinary configurator still starts empty.

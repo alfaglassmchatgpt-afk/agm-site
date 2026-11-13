@@ -1,4 +1,5 @@
 {
+  "localFacadeManager": {"previewPort":8798,"route":"/?agm_facade_manager=1","status":"local-only","plugin":"agm-facade-manager.php"},
   "localMaterialLandings": {"updatedOn":"2026-11-02","status":"deployed","previewPort":8794,"routes":["/triplex/","/riflenoe-steklo/","/iz-chego-delayut-zerkalo/#mirror-choice"],"template":"page-agm-material-landing.php","productionChanged":true,"deployedOn":"2026-11-02","pageIds":[5511,5513]},
   "localGlassDoors": {"updatedOn":"2026-11-02","status":"deployed","preview":"http://127.0.0.1:8794/dveri-iz-stekla/","template":"page-agm-doors.php","module":"agm-doors","basketType":"door","productionChanged":true,"deployedOn":"2026-11-02","productionUrl":"https://alfaglass.ru/dveri-iz-stekla/"},
   "productionFacadeLogo": {"deployedOn": "2026-11-02", "assets": "shared agm-homepage logo-light.svg and logo-dark.svg", "files": ["agm-aluminium-configurator/index.html", "agm-aluminium-configurator/style.css"], "themePersistenceFix": "local-only"},

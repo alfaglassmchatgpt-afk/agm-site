@@ -28,6 +28,8 @@ add_action('init', function () {
         // Native WordPress authentication, capabilities and nonces still apply.
         global $pagenow;
         if ($pagenow === 'wp-login.php' && ($_REQUEST['action'] ?? 'login') === 'login') { return; }
+        if ($pagenow === 'admin-post.php' && ($_POST['action'] ?? '') === 'agm_facade_manager_report'
+            && current_user_can('agm_calculate_facades') && wp_verify_nonce($_POST['_wpnonce'] ?? '', 'agm_facade_manager_report')) { return; }
         // REST cookie authentication runs later; gate writes in rest_pre_dispatch below.
         $path = parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH);
         if (isset($_GET['rest_route']) || strpos($path ?: '', '/wp-json/') === 0) { return; }
