@@ -46,6 +46,12 @@
 .ags-scene p{color:#42545e}
 .agd-hero-description,.ags-sample small{color:var(--muted)}
 
+.ags-types article svg,.ags-live-plan svg{width:100%;height:auto;aspect-ratio:280/215;display:block;background:#f0f6f6;border-radius:8px}
+.ags-live-plan{padding:18px}.ags-live-plan h3{margin:0 0 10px}.ags-live-plan p{margin:8px 0 0;font-size:14px}
+#ags-guide-layout{font:inherit;padding:8px;margin:8px 0 8px 8px;max-width:100%}
+.ags-plan-key{display:flex;flex-wrap:wrap;gap:8px 20px;font-size:14px}
+.ags-plan-key span::before{content:"";display:inline-block;width:20px;height:5px;background:#627278;vertical-align:middle;margin-right:6px}
+.ags-plan-key span:nth-child(2)::before{background:#117774}.ags-plan-key span:nth-child(3)::before{background:#a45321}
 #ags-form fieldset > legend {
   float: left;
   width: 100%;

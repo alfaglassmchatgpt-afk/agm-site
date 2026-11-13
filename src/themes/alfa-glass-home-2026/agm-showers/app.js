@@ -18,6 +18,40 @@
     num = id => Number($(id).value),
     tag = (name, attrs, inside = '') => lt + name + ' ' + attrs + '>' + inside + lt + '/' + name + '>';
 
+  function planView(layout, mode, left, doorFraction = .5) {
+    const diagonal = layout === 'pentagon';
+    const front = diagonal ? Math.SQRT2 * 66 : 190;
+    const leaf = front * doorFraction;
+    const split = mode === 'fixed' ? front * .64 : front - leaf;
+    const walls = layout === 'niche' ? 'M40 123V27H230V123' : 'M40 123V27H230';
+    const sides = diagonal ? 'M40 123H164 M230 57V27' : layout === 'corner' ? 'M230 27V123' : '';
+    const position = diagonal ? 'translate(164 123) rotate(-45)' : 'translate(40 123)';
+    const line = (path, color, width, dashed = false) =>
+      tag('path', 'd="' + path + '" fill="none" stroke="' + color + '" stroke-width="' + width + '"' + (dashed ? ' stroke-dasharray="4 4"' : ''));
+    const door = '#a45321';
+    let face = line('M0 0H' + split, '#117774', 5);
+    if (mode === 'hinged') {
+      face += line('M' + split + ' 0H' + front, door, 2, true);
+      face += line('M' + split + ' 0a' + leaf + ' ' + leaf + ' 0 0 0 ' + (leaf * .5) + ' ' + (leaf * .866), door, 1.5, true);
+      face += line('M' + front + ' 0l-' + (leaf * .5) + ' ' + (leaf * .866), door, 4);
+    } else if (mode === 'sliding') {
+      face += line('M' + (split - 5) + ' 7H' + front, door, 4);
+      face += line('M' + (split + 25) + ' 22h-40l7-5m-7 5 7 5', door, 2.5);
+    } else {
+      face += line('M' + ((front + split) / 2) + ' 22v-45l-6 8m6-8 6 8', door, 3);
+    }
+    const drawing = line(walls, '#627278', 8) + line(sides, '#117774', 5) + tag('g', 'transform="' + position + '"', face);
+    return tag('svg', 'viewBox="0 0 280 245" aria-hidden="true"', tag('g', left ? 'transform="translate(270 0) scale(-1 1)"' : '', drawing));
+  }
+
+  function refreshGuide() {
+    document.querySelectorAll('[data-ags-mode]').forEach(link => {
+      link.closest('article').querySelector('svg').outerHTML = planView($('guide-layout').value, link.dataset.agsMode, false);
+    });
+  }
+  $('guide-layout').addEventListener('change', refreshGuide);
+  refreshGuide();
+
   function draw() {
     const m = materials[num('glass')],
       mode = $('mode').value,
@@ -106,6 +140,8 @@
     svg += tag('text', 'x="220" y="335" text-anchor="middle" fill="#607580" font-size="12"', num('width') + ' × ' + num('height') + ' мм');
     $('svg').innerHTML = tag('svg', 'viewBox="0 0 440 345" aria-hidden="true"', svg);
     $('scene').dataset.mode = mode;
+    $('plan').innerHTML = planView(layout, mode, $('opening').value === 'left', Number.isFinite(ratio) ? ratio : .5);
+    $('plan-caption').textContent = txt('layout') + '. ' + txt('mode') + '. Вход ' + txt('opening').toLowerCase() + '.';
     $('scene').dataset.layout = layout;
     $('scene').dataset.glassName = m.name;
     $('scene').dataset.finish = $('finish').value;
@@ -186,6 +222,7 @@
   });
   form.addEventListener('change', update);
   document.querySelectorAll('[data-ags-mode]').forEach(link => link.addEventListener('click', () => {
+    $('layout').value = $('guide-layout').value;
     $('mode').value = link.dataset.agsMode;
     $('mode').dispatchEvent(new Event('change', {bubbles:true}));
     $('mode').focus({preventScroll:true});
