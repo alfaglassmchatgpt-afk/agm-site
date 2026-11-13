@@ -57,6 +57,7 @@
   const deliveryLabel=node('label',undefined,'packing');
   const delivery=node('input');
   delivery.type='checkbox'; delivery.id='material-delivery';
+  deliveryLabel.insertAdjacentHTML('afterbegin','<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 5h12v12H8m-4 0H2V5m12 3h4l4 5v4h-2m-4 0h-2m1-4h7"/><circle cx="6" cy="17" r="2"/><circle cx="18" cy="17" r="2"/></svg>');
   deliveryLabel.append(node('span','Доставка'),delivery);
   const addressLabel=node('label',undefined,'field');
   const address=node('input');
