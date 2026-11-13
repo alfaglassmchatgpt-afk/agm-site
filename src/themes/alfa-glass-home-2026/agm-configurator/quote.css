@@ -40,4 +40,3 @@
 .operation-grid .edge-suggested{outline:2px solid currentColor;outline-offset:2px}
 @media(prefers-reduced-motion:no-preference){.operation-grid .edge-suggested{animation:agm-edge-pulse 1s ease-in-out 4}}
 @keyframes agm-edge-pulse{50%{outline-color:transparent}}
-dialog[aria-labelledby="material-size-heading"] form{display:grid;gap:12px}

@@ -82,9 +82,11 @@
  document.addEventListener('click',e=>{
   const trigger=e.target.closest('[data-open-quote],[data-open-cart],[data-open-mirror-order],[data-al-request],#prepare,#mp-export,#mp-reopen');
   if(!trigger)return;e.preventDefault();e.stopImmediatePropagation();
+  if(trigger.id==='prepare'&&!document.dispatchEvent(new Event('agm:material-prepare',{cancelable:true})))return;
   open();
  },true);
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!drawer.hidden&&!dialog.open)close();});
+ document.addEventListener('agm:material-quote-ready',open);
  window.AGMQuoteReady=(async()=>{
   const read=async name=>{const r=await fetch(new URL(name,asset));if(!r.ok)throw Error('Не удалось загрузить каталог для расчёта. Обновите страницу.');return r.json();};
   [materials,operations]=await Promise.all([read('materials.json'),read('operations.json')]);
