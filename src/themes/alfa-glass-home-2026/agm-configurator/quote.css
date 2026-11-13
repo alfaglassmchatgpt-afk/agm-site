@@ -34,3 +34,10 @@
 #mp-reopen{display:none!important}
 .agm-quote-ready .cart-mobile[data-open-cart]{display:none!important}
 @media(max-width:500px){#quote-drawer{padding:16px}#quote-launcher{right:12px;bottom:12px}#quote-checkout{padding:18px}}
+
+.material-edge-hint:not([hidden]){padding:16px;border:1px solid currentColor;border-radius:12px;margin:12px 0;scroll-margin-top:6rem}
+.material-edge-hint p{margin:0 0 10px}
+.operation-grid .edge-suggested{outline:2px solid currentColor;outline-offset:2px}
+@media(prefers-reduced-motion:no-preference){.operation-grid .edge-suggested{animation:agm-edge-pulse 1s ease-in-out 4}}
+@keyframes agm-edge-pulse{50%{outline-color:transparent}}
+dialog[aria-labelledby="material-size-heading"] form{display:grid;gap:12px}

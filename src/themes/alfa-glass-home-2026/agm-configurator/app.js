@@ -65,19 +65,20 @@
   address.placeholder='Город, улица, дом'; address.autocomplete='street-address';
   addressLabel.append(node('span','Адрес доставки'),address);
   $('#packaging').closest('label').after(deliveryLabel,addressLabel);
-  delivery.addEventListener('change',()=>{
+  delivery.addEventListener('change',async()=>{
     const checked=delivery.checked;
-    const item=ensureItem(); if(!item)return;
+    const item=await ensureItem(); if(!item){renderOps();return;}
     item.delivery=checked;
     if(!checked)item.deliveryAddress='';
     save();render();
-    if(checked)address.focus();
+    if(hintItem)suggestEdge(item);else if(checked)address.focus();
   });
   address.addEventListener('input',()=>{
     if(active()?.delivery){active().deliveryAddress=address.value;save();}
   });
   function renderOps(){
     const i=active(), selected=i?.ops||[], target=materials[i?.material||current];
+    if(hintItem&&hintItem!==i?.id)dismissEdge();
     const grid=$('.operation-grid'); grid.replaceChildren();
     AGMOrderModel.operations(target,(i||nextDraft).thickness).forEach(id=>{const op=opById.get(id),card=node('article',undefined,'operation');card.dataset.opCard=id;
       const icon=node('div',undefined,'operation-icon');icon.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+op.icon+'</svg>';
@@ -88,7 +89,7 @@
     $('#packaging').closest('label').hidden=target.policy==='craft';
     if($('#operation-material-note'))$('#operation-material-note').textContent=target.note;
 
-    $$('[data-op-card]').forEach(card=>{const yes=selected.includes(card.dataset.opCard);card.classList.toggle('selected',yes);const b=card.querySelector('[data-toggle-op]');b.setAttribute('aria-pressed',String(yes));b.textContent=yes?'✓ Добавлено':'+ В расчёт';});
+    $$('[data-op-card]').forEach(card=>{const yes=selected.includes(card.dataset.opCard);card.classList.toggle('selected',yes);const b=card.querySelector('[data-toggle-op]');b.setAttribute('aria-pressed',String(yes));b.textContent=yes?'✓ Добавлено':'+ В расчёт';if(hintItem&&['polish','grind'].includes(card.dataset.opCard))b.classList.add('edge-suggested');});
     if($('#packaging'))$('#packaging').checked=!!i?.packaging;
     delivery.checked=!!i?.delivery;
     address.disabled=!delivery.checked; address.required=delivery.checked;
@@ -114,7 +115,7 @@
     renderList();renderOps();renderProcessing();$('#cart-error').hidden=true;
     const i=active(), selection=onThisPage(i)?i:nextDraft;
     const profile=materials[i?.material||current];
-    $('#unknown').closest('label').hidden=profile.policy==='craft';
+    $('#unknown').closest('label').hidden=!i?.unknown||profile.policy==='craft';
     $('#width').max=profile.maxSize?.width||10000;$('#height').max=profile.maxSize?.height||10000;
     if(i){$('#width').value=i.width;$('#height').value=i.height;$('#quantity').value=i.quantity;$('#unknown').checked=i.unknown;$('#width').disabled=i.unknown;$('#height').disabled=i.unknown;$('#item-note').value=i.note;$('#active-item-label').textContent='Параметры изделия '+(state.items.indexOf(i)+1);}
     if(mirrorPage){$$('input[name=base]').forEach(r=>r.checked=r.value===selection.base);$$('input[name=thickness]').forEach(r=>{r.checked=r.value===selection.thickness;r.disabled=!AGMOrderModel.thicknesses(materials[current],selection.base).includes(r.value);});$('#variant-note').textContent=materialName(selection)+': '+baseName(selection)+', '+thicknessName(selection)+'.'+(i&&!onThisPage(i)?' В расчёте выбрано изделие другого материала. Нажмите «Добавить ещё изделие», чтобы добавить этот вариант.':'');$('#add-material').textContent=i?'Добавить ещё изделие →':'Добавить к расчёту →';}
@@ -155,35 +156,75 @@
       const [l,t]=field('Расположение отверстий','hole-location',i.drill.location,'textarea');t.placeholder='Опишите расположение или укажите: по чертежу. Чертёж можно выбрать при подготовке заявки.';t.addEventListener('input',()=>{i.drill.location=t.value;commit();});box.append(l,node('p','Диаметры и отступы проверим по проекту.','small muted'));processing.append(box);
     }
   }
-  function addItem(){
+  const sizeDialog=node('dialog'),sizeForm=node('form'),sizeHeading=node('h2','Размеры изделия');
+  sizeHeading.id='material-size-heading';sizeDialog.setAttribute('aria-labelledby',sizeHeading.id);
+  const sizeFields=['Ширина, мм','Высота, мм'].map((title,n)=>field(title,'material-size-'+n,'','number'));
+  const proceed=node('button','Продолжить','btn primary'),cancel=node('button','Отмена','btn');
+  proceed.type='submit';cancel.type='button';cancel.onclick=()=>sizeDialog.close();
+  sizeForm.append(sizeHeading,...sizeFields.map(([label])=>label),proceed,cancel);
+  sizeDialog.append(sizeForm);$('#operation-dialog').after(sizeDialog);
+  function askSize(profile){
+    return new Promise(resolve=>{
+      sizeFields.forEach(([,input],n)=>{input.value='';input.required=true;input.step='1';input.min='1';input.inputMode='numeric';input.max=(n?profile.maxSize?.height:profile.maxSize?.width)||10000;});
+      let result=null;
+      sizeForm.onsubmit=e=>{e.preventDefault();result=sizeFields.map(([,input])=>input.value);sizeDialog.close();};
+      sizeDialog.addEventListener('close',()=>resolve(result),{once:true});
+      sizeDialog.showModal();sizeFields[0][1].focus();
+    });
+  }
+  const hint=node('div',undefined,'material-edge-hint'),skip=node('button','Продолжить без обработки кромки','btn');
+  skip.type='button';hint.hidden=true;hint.tabIndex=-1;
+  hint.append(node('p','После резки кромка остаётся острой. Рекомендуем выбрать полированную или шлифованную еврокромку.'),skip);
+  $('.operation-grid').before(hint);
+  let hintItem=null;
+  function dismissEdge(){hint.hidden=true;hintItem=null;$$('.edge-suggested').forEach(el=>el.classList.remove('edge-suggested'));}
+  function suggestEdge(i){
+    dismissEdge();
+    if(i.ops.length!==1||!['cut','shape'].includes(i.ops[0]))return false;
+    const buttons=$$('[data-toggle-op="polish"],[data-toggle-op="grind"]');
+    if(!buttons.length)return false;
+    if(panel.classList.contains('is-open'))closeCart();
+    hintItem=i.id;hint.hidden=false;buttons.forEach(el=>el.classList.add('edge-suggested'));
+    hint.scrollIntoView({block:'center'});hint.focus({preventScroll:true});return true;
+  }
+  skip.onclick=()=>{dismissEdge();openCart();};
+  async function addItem(initialOp){
     const selection={material:current,base:$('input[name=base]:checked').value,thickness:$('input[name=thickness]:checked').value};
-    const item=normalize({id:newId(),material:selection.material,base:selection.base,thickness:selection.thickness,quantity:'1',ops:[]});if(!item){toast('Проверьте исполнение и доступную толщину.');return null;}state.items.push(item);state.active=item.id;save();render();return item;
+    const profile=materials[current],size=await askSize(profile);if(!size)return null;
+    const available=AGMOrderModel.operations(profile,selection.thickness);
+    const ops=initialOp==='shape'?[]:available.includes('cut')?['cut']:[];
+    if(initialOp&&available.includes(initialOp)&&!ops.includes(initialOp))ops.push(initialOp);
+    const item=normalize({...selection,id:newId(),width:size[0],height:size[1],quantity:'1',ops});if(!item)return null;
+    state.items.push(item);state.active=item.id;save();render();suggestEdge(item);return item;
   }
   function ensureItem(){return active()||addItem();}
-  function toggleOp(id,onlyAdd=false){
-    if(!opById.has(id))return;const i=ensureItem();if(!i||!AGMOrderModel.operations(materials[i.material],i.thickness).includes(id))return;
-    if(i.ops.includes(id)){if(!onlyAdd)i.ops=i.ops.filter(x=>x!==id);}
-    else {const alternative={polish:'grind',grind:'polish'}[id];if(alternative&&i.ops.includes(alternative)){i.ops=i.ops.filter(x=>x!==alternative);toast('Для одной кромки выбран новый вид обработки. Разные стороны укажите в комментарии.');}i.ops.push(id);}
-    save();render();
+  async function toggleOp(id,onlyAdd=false){
+    if(!opById.has(id))return;const i=active();if(!i){await addItem(id);return;}
+    const allowed=AGMOrderModel.operations(materials[i.material],i.thickness);if(!allowed.includes(id))return;
+    if(i.ops.includes(id)){if(!onlyAdd&&id!=='cut')i.ops=i.ops.filter(x=>x!==id);}
+    else {const alternative={polish:'grind',grind:'polish',cut:'shape',shape:'cut'}[id];i.ops=i.ops.filter(x=>x!==alternative);i.ops.push(id);}
+    if(!i.ops.includes('shape')&&!i.ops.includes('cut')&&allowed.includes('cut'))i.ops.unshift('cut');
+    save();render();suggestEdge(i);
   }
   $('#cart-list').addEventListener('click',e=>{const select=e.target.closest('[data-select-item]'),del=e.target.closest('[data-delete-item]');if(select){state.active=select.dataset.selectItem;save();render();}if(del){state.items=state.items.filter(i=>i.id!==del.dataset.deleteItem);if(!active())state.active=state.items[0]?.id||null;save();render();}});
   $('#selected-ops').addEventListener('click',e=>{const b=e.target.closest('[data-remove-op]');if(!b||!active())return;if(b.dataset.removeOp==='delivery'){active().delivery=false;active().deliveryAddress='';save();render();}else if(b.dataset.removeOp==='packaging'){active().packaging=false;save();render();}else toggleOp(b.dataset.removeOp);});
   ['width','height','quantity'].forEach(id=>$('#'+id).addEventListener('input',e=>{if(active()){active()[id]=e.target.value;save();renderList();if(id==='quantity')renderProcessing();$('#cart-error').hidden=true;}}));
   $('#item-note').addEventListener('input',e=>{if(active()){active().note=e.target.value;save();}});
   $('#unknown').addEventListener('change',e=>{if(active()){active().unknown=e.target.checked;save();render();}});
-  $$('[data-add-current]').forEach(b=>b.addEventListener('click',()=>{addItem();openCart();}));
-  $('#add-another').addEventListener('click',()=>{addItem();toast('Добавлено новое изделие. У него свой набор обработок.');});
+  async function addFromButton(){const item=await addItem();if(item&&!hintItem)openCart();}
+  $$('[data-add-current]').forEach(b=>b.addEventListener('click',addFromButton));
+  $('#add-another').addEventListener('click',addFromButton);
   if(mirrorPage){
-    $('#add-material').addEventListener('click',()=>{addItem();toast('Изделие добавлено в «Мой расчёт»');openCart();});
+    $('#add-material').addEventListener('click',addFromButton);
     $$('input[name=base],input[name=thickness]').forEach(r=>r.addEventListener('change',()=>{const i=onThisPage(active())?active():nextDraft;i.base=$('input[name=base]:checked').value;i.thickness=$('input[name=thickness]:checked').value;const allowed=AGMOrderModel.thicknesses(materials[current],i.base);if(!allowed.includes(i.thickness)){i.thickness=allowed[0];toast('Для этого исполнения доступна толщина '+i.thickness+' мм.');}if(i.ops){const before=i.ops.length;i.ops=i.ops.filter(op=>AGMOrderModel.operations(materials[i.material],i.thickness).includes(op));if(i.ops.length<before)toast('Недоступная для этой толщины комплектация удалена из расчёта.');}save();render();}));
     $('.operation-grid').addEventListener('click',e=>{
       const toggle=e.target.closest('[data-toggle-op]'),b=e.target.closest('[data-info]');
-      if(toggle){const id=toggle.dataset.toggleOp;toggleOp(id);$('.operation-grid [data-toggle-op="'+id+'"]')?.focus();toast('Выбор обновлён в «Мой расчёт»');}
+      if(toggle){const id=toggle.dataset.toggleOp;toggleOp(id).then(()=>{if(hint.hidden)$('.operation-grid [data-toggle-op="'+id+'"]')?.focus({preventScroll:true});});}
       if(b){opDialogId=b.dataset.info;const op=opById.get(opDialogId);$('#op-title').textContent=op.title;$('#op-description').textContent=op.description;$('#op-note').textContent=op.note;let guide=$('#op-guide');if(!guide){guide=node('a','Подробнее об обработке →');guide.id='op-guide';guide.style.display='block';guide.style.margin='16px 0';$('#op-note').after(guide);}guide.href=config.processingUrl+'#'+op.id;$('#op-diagram').replaceChildren(b.closest('.operation').querySelector('svg').cloneNode(true));$('#op-diagram').style.height=op.image?'auto':'';$('#op-diagram').style.flexDirection=op.image?'column':'';if(op.image){const photo=node('img');photo.src=config.operationAssetsUrl+op.image;photo.alt=op.imageAlt||op.title;photo.style.cssText='display:block;width:100%;max-width:440px;height:auto;max-height:260px;object-fit:contain;margin:auto';const caption=node('p','Визуализация','small muted');$('#op-diagram').replaceChildren(photo,caption);}if(op.images?.length&&window.agmOperationGallery){window.agmOperationGallery($('#op-diagram'),op.images,config.operationAssetsUrl);}$('#op-add').textContent=active()?.ops.includes(op.id)?'Уже в расчёте':'Добавить к расчёту';$('#operation-dialog').showModal();}
     });
-    $('#packaging').addEventListener('change',e=>{const checked=e.target.checked;const i=ensureItem();if(i){i.packaging=checked;save();render();}});
+    $('#packaging').addEventListener('change',async e=>{const checked=e.target.checked;const i=await ensureItem();if(i){i.packaging=checked;save();render();if(hintItem)suggestEdge(i);}else renderOps();});
   }
-  $('#op-add').addEventListener('click',()=>{toggleOp(opDialogId,true);$('#operation-dialog').close();toast('Обработка добавлена к выбранному изделию');});
+  $('#op-add').addEventListener('click',()=>{$('#operation-dialog').close();toggleOp(opDialogId,true);});
   $$('[data-close-dialog]').forEach(b=>b.addEventListener('click',()=>b.closest('dialog').close()));
   const mobile=matchMedia('(max-width:980px)'), panel=$('#cart-panel');
   function openCart(){if(!mobile.matches){panel.scrollIntoView({block:'nearest',behavior:'smooth'});panel.focus({preventScroll:true});return;}returnFocus=document.activeElement;panel.classList.add('is-open');panel.setAttribute('role','dialog');panel.setAttribute('aria-modal','true');$('#cart-shade').hidden=false;document.body.style.overflow='hidden';panel.focus();}
