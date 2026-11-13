@@ -54,6 +54,27 @@
       const del=node('button','×','delete-item');del.type='button';del.dataset.deleteItem=i.id;del.setAttribute('aria-label','Удалить изделие '+(n+1));row.append(select,del);list.append(row);
     });
   }
+  const deliveryLabel=node('label',undefined,'packing');
+  const delivery=node('input');
+  delivery.type='checkbox'; delivery.id='material-delivery';
+  deliveryLabel.append(node('span','Доставка'),delivery);
+  const addressLabel=node('label',undefined,'field');
+  const address=node('input');
+  address.id='material-delivery-address'; address.type='text'; address.maxLength=500;
+  address.placeholder='Город, улица, дом'; address.autocomplete='street-address';
+  addressLabel.append(node('span','Адрес доставки'),address);
+  $('#packaging').closest('label').after(deliveryLabel,addressLabel);
+  delivery.addEventListener('change',()=>{
+    const checked=delivery.checked;
+    const item=ensureItem(); if(!item)return;
+    item.delivery=checked;
+    if(!checked)item.deliveryAddress='';
+    save();render();
+    if(checked)address.focus();
+  });
+  address.addEventListener('input',()=>{
+    if(active()?.delivery){active().deliveryAddress=address.value;save();}
+  });
   function renderOps(){
     const i=active(), selected=i?.ops||[], target=materials[i?.material||current];
     const grid=$('.operation-grid'); grid.replaceChildren();
@@ -68,8 +89,14 @@
 
     $$('[data-op-card]').forEach(card=>{const yes=selected.includes(card.dataset.opCard);card.classList.toggle('selected',yes);const b=card.querySelector('[data-toggle-op]');b.setAttribute('aria-pressed',String(yes));b.textContent=yes?'✓ Добавлено':'+ В расчёт';});
     if($('#packaging'))$('#packaging').checked=!!i?.packaging;
+    delivery.checked=!!i?.delivery;
+    address.disabled=!delivery.checked; address.required=delivery.checked;
+    addressLabel.hidden=!delivery.checked;
+    addressLabel.style.display=delivery.checked?'':'none';
+    address.value=i?.deliveryAddress||'';
     const ul=$('#selected-ops');ul.replaceChildren();
     const entries=selected.map(id=>({id,title:opById.get(id).title}));if(i?.packaging)entries.push({id:'packaging',title:'Упаковка в картон'});
+    if(i?.delivery)entries.push({id:'delivery',title:'Доставка'});
     if(!entries.length)ul.append(node('li','Обработки пока не выбраны'));
     entries.forEach(o=>{const li=node('li');const b=node('button','×');b.type='button';b.dataset.removeOp=o.id;b.setAttribute('aria-label','Убрать: '+o.title);li.append(node('span',o.title),b);ul.append(li);});
   }
@@ -139,7 +166,7 @@
     save();render();
   }
   $('#cart-list').addEventListener('click',e=>{const select=e.target.closest('[data-select-item]'),del=e.target.closest('[data-delete-item]');if(select){state.active=select.dataset.selectItem;save();render();}if(del){state.items=state.items.filter(i=>i.id!==del.dataset.deleteItem);if(!active())state.active=state.items[0]?.id||null;save();render();}});
-  $('#selected-ops').addEventListener('click',e=>{const b=e.target.closest('[data-remove-op]');if(!b||!active())return;if(b.dataset.removeOp==='packaging'){active().packaging=false;save();render();}else toggleOp(b.dataset.removeOp);});
+  $('#selected-ops').addEventListener('click',e=>{const b=e.target.closest('[data-remove-op]');if(!b||!active())return;if(b.dataset.removeOp==='delivery'){active().delivery=false;active().deliveryAddress='';save();render();}else if(b.dataset.removeOp==='packaging'){active().packaging=false;save();render();}else toggleOp(b.dataset.removeOp);});
   ['width','height','quantity'].forEach(id=>$('#'+id).addEventListener('input',e=>{if(active()){active()[id]=e.target.value;save();renderList();if(id==='quantity')renderProcessing();$('#cart-error').hidden=true;}}));
   $('#item-note').addEventListener('input',e=>{if(active()){active().note=e.target.value;save();}});
   $('#unknown').addEventListener('change',e=>{if(active()){active().unknown=e.target.checked;save();render();}});

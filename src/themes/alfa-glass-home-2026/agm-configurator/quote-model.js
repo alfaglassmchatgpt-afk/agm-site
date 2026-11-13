@@ -23,6 +23,11 @@ function mirrorError(i){if(i.shape==='Прямоугольник'&&!['3','8','15
   if(!i.unknown&&(!AGMOrderModel.wholeMillimetres(i.width)||!AGMOrderModel.wholeMillimetres(i.height)||Number(i.width)>10000||Number(i.height)>10000))errors.push('Укажите размеры целыми числами от 1 до 10000 мм либо выберите уточнение размеров.');
   if(m.maxSize&&(i.unknown||!AGMOrderModel.wholeMillimetres(i.width)||!AGMOrderModel.wholeMillimetres(i.height)||Number(i.width)>m.maxSize.width||Number(i.height)>m.maxSize.height))errors.push('Допустимый формат: до '+m.maxSize.width+' × '+m.maxSize.height+' мм; направление рисунка сохраняется.');
   const extra=[];
+  if(i.delivery){
+   const address=(i.deliveryAddress||'').trim();
+   if(!address)errors.push('Укажите адрес доставки.');
+   extra.push('Доставка: '+(address||'адрес не указан'));
+  }
   if(i.ops.includes('bevel')){
    if(!['5','10','15','20','25','30','35'].includes(i.bevel.width))errors.push('Выберите ширину фацета.');
    if(i.bevel.scope==='sides'&&!i.bevel.sides.trim())errors.push('Укажите стороны фацета.');
