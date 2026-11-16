@@ -76,8 +76,14 @@
         image.dataset.nicheSrc = image.getAttribute('src');
         image.dataset.nicheAlt = image.alt;
       }
+      const heading = card.querySelector('h3');
+      if (!heading.dataset.nicheTitle) heading.dataset.nicheTitle = heading.textContent;
+      const shape = layout === 'corner' ? 'Угловая' : 'Пятиугольная';
+      heading.textContent = layout === 'niche' ? heading.dataset.nicheTitle : shape + (mode === 'fixed'
+        ? ' душевая перегородка без двери'
+        : ' душевая кабина с ' + (mode === 'hinged' ? 'распашной' : 'раздвижной') + ' дверью');
       image.src = layout === 'niche' ? image.dataset.nicheSrc : '/wp-content/uploads/2026/11/shower-guide-' + layout + '-' + mode + '.webp';
-      image.alt = layout === 'niche' ? image.dataset.nicheAlt : txt('guide-layout') + ' — ' + card.querySelector('h3').textContent;
+      image.alt = layout === 'niche' ? image.dataset.nicheAlt : heading.textContent;
       card.querySelector('svg').outerHTML = planView(layout, mode, false);
     });
   }
