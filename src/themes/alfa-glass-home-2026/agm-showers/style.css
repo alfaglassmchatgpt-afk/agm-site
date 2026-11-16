@@ -90,3 +90,8 @@
   outline: 2px solid #39a9d2;
   outline-offset: 2px;
 }
+
+.ags-example {display:block;width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:6px}
+.ags-types article svg {height:125px;aspect-ratio:auto;margin-top:8px}
+.ags-options {margin-block:16px;border-block:1px solid var(--line)}
+.ags-options summary {padding:16px 4px;font-weight:650;cursor:pointer}

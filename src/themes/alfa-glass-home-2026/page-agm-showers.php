@@ -1,6 +1,9 @@
 <?php
 /** Template Name: ALFAGLASS — душевые перегородки */
 defined('ABSPATH') || exit;
+$shower_title = static function () { return 'Душевые перегородки из стекла на заказ в Москве и области | Альфа Гласс'; };
+add_filter('wpseo_title', $shower_title);
+add_filter('pre_get_document_title', $shower_title);
 $description = 'Душевые перегородки из стекла на заказ: для ниши и угловой душевой, без двери, с распашной или раздвижной створкой. Выберите стекло и рассчитайте проект по своим размерам.';
 add_filter('wpseo_metadesc', static function () use ($description) { return $description; });
 if (!defined('WPSEO_VERSION')) {
@@ -28,6 +31,7 @@ $asset = function ($path) use ($url) {
 ob_start();
 ?><!doctype html>
 <html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<?php if (!current_theme_supports('title-tag') && !defined('WPSEO_VERSION')) : ?><title><?php echo esc_html(wp_get_document_title()); ?></title><?php endif; ?>
 <?php wp_head(); ?>
 <link rel="stylesheet" href="<?php echo $asset('agm-doors/style.css'); ?>">
 <link rel="stylesheet" href="<?php echo $asset('agm-aluminium-catalog/shared-header.css'); ?>">
