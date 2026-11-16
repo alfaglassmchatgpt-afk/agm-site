@@ -105,8 +105,15 @@
 #ags-form > .agd-actions {margin-top:16px}
 .ags-measure {margin-top:20px;padding:16px;border:1px solid var(--line);border-radius:8px}
 .ags-measure summary {cursor:pointer;font-weight:650}
-.ags-measure-body {display:grid;grid-template-columns:minmax(140px,35%) 1fr;align-items:center;gap:20px;margin-top:14px}
-#ags-measure-plan svg {display:block;width:100%;height:205px;border-radius:6px;background:#f5eee3}
+.ags-measure-body {display:grid;grid-template-columns:minmax(210px,48%) 1fr;align-items:center;gap:20px;margin-top:14px}
+.ags-measure-sheet {margin:0;padding:12px;background:#fff;color:#344855;border:1px solid #acbac1}
+.ags-measure-sheet figcaption {display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 12px;padding-bottom:6px;border-bottom:1px solid #cbd5da;font-size:14px;font-weight:650}
+.ags-measure-sheet small {font-size:11px;font-weight:400}
+#ags-measure-plan svg {display:block;width:100%;height:auto;margin:10px auto;max-height:290px}
+.ags-measure-key {display:flex;gap:16px;border-top:1px solid #cbd5da;padding-top:6px;font-size:12px}
+.ags-measure-key span {display:inline-flex;align-items:center;gap:6px}
+.ags-measure-key span::before {content:"";width:18px;height:6px;border:1px solid #344855;background:repeating-linear-gradient(135deg,#fff 0 3px,#84939b 3px 4px)}
+.ags-measure-key span+span::before {height:2px;border:0;background:#117774}
 .ags-measure-body p {margin:0 0 10px}
 @media(max-width:600px){.ags-measure-body{grid-template-columns:1fr;gap:12px}}
 .ags-reference summary {cursor:pointer;color:var(--text);padding-block:4px}

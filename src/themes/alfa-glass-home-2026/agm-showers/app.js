@@ -29,8 +29,8 @@
     const position = diagonal ? 'translate(133 150) rotate(-45)' : 'translate(40 123)';
     const line = (path, color, width, dashed = false) =>
       tag('path', 'd="' + path + '" fill="none" stroke="' + color + '" stroke-width="' + width + '"' + (dashed ? ' stroke-dasharray="4 4"' : ''));
-    const door = '#a45321';
-    let face = line('M0 0H' + split, '#117774', 5);
+    const door = measure ? '#475967' : '#a45321';
+    let face = line('M0 0H' + split, '#117774', measure ? 2.5 : 5);
     if (mode === 'hinged') {
       face += line('M' + split + ' 0H' + front, door, 2, true);
       face += line('M' + split + ' 0a' + leaf + ' ' + leaf + ' 0 0 0 ' + (leaf * .5) + ' ' + (leaf * .866), door, 1.5, true);
@@ -52,26 +52,40 @@
     const mirrorX = x => left ? 270 - x : x;
     const label = (x, y, word) => tag('text', 'x="' + mirrorX(x) + '" y="' + y + '" text-anchor="middle" fill="#354245" stroke="#f5eee3" stroke-width="3" paint-order="stroke" font-size="13"', word);
     const floor = diagonal ? 'M67 18H199V84L133 150H67Z' : 'M40 27H230V123H40Z';
-    const tileId = 'ags-tile-' + (measure ? 'measure' : live ? 'live' : 'guide') + '-' + layout + '-' + mode;
+    if (measure) {
+      const niche = layout === 'niche';
+      const x1 = diagonal ? 67 : 40, x2 = diagonal ? 199 : 230;
+      const y1 = diagonal ? 18 : 27, y2 = diagonal ? 150 : 123;
+      const ink = '#344855';
+      const hatch = tag('pattern', 'id="ags-wall-hatch" width="5" height="5" patternUnits="userSpaceOnUse"',
+        tag('rect', 'width="5" height="5" fill="#e8ecee"') + line('M-1 1l2-2 M0 5l5-5 M4 6l2-2', '#84939b', .7));
+      const wallSection = 'M' + x1 + ' ' + y2 + 'V' + y1 + 'H' + x2 +
+        (niche ? 'V' + y2 + 'h7V' : 'v-7H' + (x1-7) + 'V' + y2 + 'Z');
+      const outline = niche ? wallSection + (y1-7) + 'H' + (x1-7) + 'V' + y2 + 'Z' : wallSection;
+      const structure = tag('path', 'd="' + outline + '" fill="url(#ags-wall-hatch)" stroke="' + ink + '" stroke-width="1.2"') +
+        line(sides, '#117774', 2.5) + tag('g', 'transform="' + position + '"', face);
+      const widthLine = 'M' + x1 + ' ' + (y1-9) + 'V-9 M' + x2 + ' ' + (y1-9) + 'V-9 M' + x1 + ' -4H' + x2 +
+        ' M' + (x1-3) + ' -1l6-6 M' + (x2-3) + ' -1l6-6';
+      const depthLine = 'M' + (x1-9) + ' ' + y1 + 'H13 M' + (x1-9) + ' ' + y2 + 'H13 M18 ' + y1 + 'V' + y2 +
+        ' M15 ' + (y1+3) + 'l6-6 M15 ' + (y2+3) + 'l6-6';
+      const dimension = id => $(id).value && $(id).validity.valid ? $(id).value + ' мм' : '—';
+      const widthText = 'Ширина ' + dimension('width');
+      const depthText = 'Глубина ' + dimension('depth');
+      const depthLabel = niche ? '' : tag('text', 'transform="translate(' + mirrorX(11) + ' ' + ((y1+y2)/2) + ') rotate(-90)"', depthText);
+      const marks = line(widthLine, ink, 1) + (niche ? '' : line(depthLine, ink, 1));
+      const accessible = 'Обмерный план. ' + widthText + (niche ? '' : '. ' + depthText);
+      const bottom = mode === 'hinged' ? Math.max(y2+16, diagonal ? 110 + leaf : y2 + leaf*.866 + 10) : y2+30;
+      return tag('svg', 'viewBox="-7 -27 284 ' + (bottom+27) + '" role="img" aria-label="' + accessible + '"',
+        tag('defs', '', hatch) + tag('g', left ? 'transform="translate(270 0) scale(-1 1)"' : '', structure + marks) +
+        tag('g', 'text-anchor="middle" fill="' + ink + '" font-size="12"', tag('text', 'x="' + mirrorX((x1+x2)/2) + '" y="-10"', widthText) + depthLabel));
+    }
+    const tileId = 'ags-tile-' + (live ? 'live' : 'guide') + '-' + layout + '-' + mode;
     const tiles = tag('pattern', 'id="' + tileId + '" width="32" height="32" patternUnits="userSpaceOnUse"',
       tag('rect', 'width="32" height="32" fill="#e8dfcf"') + line('M32 0H0V32', '#c6bba9', 1));
     const drawing = tag('path', 'd="' + floor + '" fill="url(#' + tileId + ')"') +
       line(walls, '#958777', 8) + line('M110 48h34', '#a39988', 3) +
       line(sides, '#117774', 5) + tag('g', 'transform="' + position + '"', face);
     const oriented = tag('g', left ? 'transform="translate(270 0) scale(-1 1)"' : '', drawing);
-    if (measure) {
-      const x1 = diagonal ? 67 : 44, x2 = diagonal ? 199 : layout === 'niche' ? 226 : 230;
-      const y1 = diagonal ? 18 : 27, y2 = diagonal ? 150 : 123;
-      const ink = '#245974';
-      const widthArrow = line('M' + x1 + ' ' + y1 + 'V-7 M' + x2 + ' ' + y1 + 'V-7 M' + x1 + ' -3H' + x2 +
-        'm-6 -3 6 3-6 3 M' + x1 + ' -3l6 -3m-6 3 6 3', ink, 1.5);
-      const depthArrow = layout === 'niche' ? '' : line('M' + x1 + ' ' + y1 + 'H18 M' + x1 + ' ' + y2 + 'H18 M22 ' + y1 + 'V' + y2 +
-        'm-3 -6 3 6 3-6 M22 ' + y1 + 'l-3 6m3-6 3 6', ink, 1.5);
-      const arrows = tag('g', left ? 'transform="translate(270 0) scale(-1 1)"' : '', widthArrow + depthArrow);
-      const depthLabel = layout === 'niche' ? '' : tag('text', 'transform="translate(' + mirrorX(12) + ' ' + ((y1+y2)/2) + ') rotate(-90)" text-anchor="middle" font-size="13" fill="' + ink + '"', 'Глубина');
-      return tag('svg', 'viewBox="-5 -26 280 258" aria-hidden="true"', tag('defs','',tiles) + oriented + arrows +
-        label((x1+x2)/2,-10,'Ширина') + depthLabel + (diagonal ? label(193,160,'Вход') : ''));
-    }
     const labels = label(110, diagonal ? 13 : 19, 'Стена') +
       label(diagonal ? 98 : 64, diagonal ? 171 : 146, 'Стекло') +
       label(diagonal ? 218 : 214, diagonal ? 135 : 155, mode === 'fixed' ? 'Вход' : 'Дверь');
