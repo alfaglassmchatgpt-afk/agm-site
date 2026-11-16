@@ -103,6 +103,10 @@
 #ags-materials {display:grid;gap:12px}
 #ags-materials fieldset {min-width:0;margin:0}
 #ags-form > .agd-actions {margin-top:16px}
+.ags-file {display:grid;gap:5px;margin-top:16px;padding-block:12px;border-block:1px solid var(--line);overflow-wrap:anywhere}
+.ags-file small {color:var(--muted)}
+.ags-file input {min-width:0;max-width:100%}
+.ags-file button {justify-self:start}
 .ags-measure {margin-top:20px;padding:16px;border:1px solid var(--line);border-radius:8px}
 .ags-measure summary {cursor:pointer;font-weight:650}
 .ags-measure-body {display:grid;grid-template-columns:minmax(210px,48%) 1fr;align-items:center;gap:20px;margin-top:14px}

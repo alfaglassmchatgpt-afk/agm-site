@@ -395,7 +395,36 @@
     $('mode').value = link.dataset.agsMode;
     $('mode').dispatchEvent(new Event('change', {bubbles:true}));
   }));
-  const controls = [...form.querySelectorAll('input[id], select[id], textarea[id]')];
+  const fileInput = $('sketch-file');
+  let savedFile = null;
+  function displayFile() {
+    const file = fileInput.files[0] || savedFile;
+    $('file-state').textContent = file ? file.name : '';
+    $('file-remove').hidden = !file;
+  }
+  fileInput.addEventListener('change', () => {
+    const file = fileInput.files[0];
+    const invalid = file && (!/\.(pdf|jpe?g|png)$/i.test(file.name) || !file.size || file.size > 1048576);
+    fileInput.setCustomValidity(invalid ? 'Выберите PDF, JPG или PNG размером до 1 МБ.' : '');
+    displayFile();
+    if (invalid) fileInput.reportValidity();
+  });
+  $('file-remove').addEventListener('click', () => {
+    fileInput.value = '';
+    fileInput.setCustomValidity('');
+    savedFile = null;
+    displayFile();
+  });
+  async function readSketch(file) {
+    const reader = new FileReader();
+    const contents = await new Promise((resolve,reject) => {
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = () => reject(new Error('Не удалось прочитать файл схемы.'));
+      reader.readAsDataURL(file);
+    });
+    return {name:file.name, base64:contents.slice(contents.indexOf(',')+1)};
+  }
+  const controls = [...form.querySelectorAll('input[id]:not([type=file]), select[id], textarea[id]')];
   const buttons = [...document.querySelectorAll('button[type="submit"]')].filter(button => button.form === form);
   let editing = new URLSearchParams(location.search).get('quote-edit');
 
@@ -407,10 +436,12 @@
     event.preventDefault();
     update();
     if (!form.reportValidity()) return;
+    buttons.forEach(button => button.disabled = true);
     try {
       const quote = await window.AGMQuoteReady;
       const id = editing || crypto.randomUUID();
       const fields = Object.fromEntries(controls.map(control => [control.id, control.value]));
+      const sketch = fileInput.files[0] ? await readSketch(fileInput.files[0]) : savedFile;
       const url = new URL(location.pathname, location.origin);
       url.searchParams.set('quote-edit', id);
       url.hash = 'shower-configurator';
@@ -418,19 +449,24 @@
         type: 'partition',
         id,
         title: 'Душевая перегородка',
-        summary: spec,
+        summary: sketch ? spec + '\nФайл схемы: ' + sketch.name : spec,
         errors: [],
         data: {
-          shower: fields
+          shower: fields, sketch
         },
         editUrl: url.pathname + url.search + url.hash
       });
       editing = id;
+      savedFile = sketch;
+      fileInput.value = '';
+      displayFile();
       setButtonText();
       $('status').textContent = 'Душевая перегородка добавлена в расчёт.';
       quote.open();
     } catch (error) {
-      $('status').textContent = error.message;
+      $('status').textContent = error.name === 'QuotaExceededError' ? 'В браузере недостаточно места. Уменьшите файл схемы и сохраните позицию ещё раз.' : error.message;
+    } finally {
+      buttons.forEach(button => button.disabled = false);
     }
   });
   document.addEventListener('agm:quote-editors-refresh', () => {
@@ -476,6 +512,8 @@
       return;
     }
     for (const key of ['ags-layout', 'ags-mode', 'ags-glass']) document.getElementById(key).value = fields[key];
+    savedFile = entry.data.sketch || null;
+    displayFile();
     update();
     for (const control of controls)
       if (Object.hasOwn(fields, control.id)) control.value = fields[control.id];

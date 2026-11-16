@@ -107,15 +107,39 @@ function agm_shower_report($p) {
     return $html.'</html>';
 }
 
-function agm_with_shower_attachment($p,$files,$deliver) {
+function agm_shower_decode_sketch($item) {
+    $file=$item['sketch'];
+    if (($item['type']??'')!=='partition' || !is_array($item['shower']??null) || !is_array($file)
+        || !is_string($file['name']??null) || !is_string($file['base64']??null)
+        || strlen($file['name'])>1024 || strlen($file['base64'])>1398104) return null;
+    $ext=strtolower(pathinfo($file['name'],PATHINFO_EXTENSION));
+    $bytes=base64_decode($file['base64'],true);
+    if (!$bytes || strlen($bytes)>1048576) return null;
+    if ($ext==='pdf') {
+        if (strncmp($bytes,'%PDF-',5)!==0 || strpos(substr($bytes,-1024),'%%EOF')===false) return null;
+    } else {
+        $types=['png'=>IMAGETYPE_PNG,'jpg'=>IMAGETYPE_JPEG,'jpeg'=>IMAGETYPE_JPEG];
+        if (!isset($types[$ext]) || (@getimagesizefromstring($bytes)[2]??0)!==$types[$ext]) return null;
+    }
+    return ['ext'=>$ext,'bytes'=>$bytes];
+}
+
+function agm_with_shower_attachment($p,$files,$deliver,$sketches=[]) {
     $dir=sys_get_temp_dir().DIRECTORY_SEPARATOR.'agm-'.bin2hex(random_bytes(16));
     if (!mkdir($dir,0700)) return false;
     $file=$dir.'/ALFAGLASS-showers.html';
+    $temporary=[$file];
     try {
         $html=agm_shower_report($p);
         if (file_put_contents($file,$html)!==strlen($html)) return false;
         $files[]=$file;
+        foreach ($sketches as $index=>$sketch) {
+            $path=$dir.'/shower-'.($index+1).'-client.'.$sketch['ext'];
+            $temporary[]=$path;
+            if (file_put_contents($path,$sketch['bytes'])!==strlen($sketch['bytes'])) return false;
+            $files[]=$path;
+        }
         return $deliver($files);
     } catch (Throwable $error) { return false; }
-    finally { if (is_file($file)) unlink($file); rmdir($dir); }
+    finally { foreach ($temporary as $path) if (is_file($path)) unlink($path); rmdir($dir); }
 }

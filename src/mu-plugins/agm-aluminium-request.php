@@ -36,7 +36,17 @@ function agm_al_request_send($request) {
     if ($origin && wp_parse_url($origin,PHP_URL_HOST)!==wp_parse_url(home_url(),PHP_URL_HOST)) return new WP_Error('origin','Запрос отклонён.',['status'=>403]);
     $types=['facades'=>'Фасады в алюминиевом профиле','partitions'=>'Перегородки в алюминиевом профиле','mirrors'=>'Зеркала в алюминиевой раме','mixed'=>'Мой расчёт — общий заказ'];
     $mixed='';
+    $sketches=[];
     if ($p['product']==='mixed') {
+        if (is_array($p['items']??null)) {
+            foreach ($p['items'] as $index=>$item) {
+                if (!isset($item['sketch'])) continue;
+                $sketch=agm_shower_decode_sketch($item);
+                if (!$sketch || count($sketches)>=4) return new WP_Error('sketch','Проверьте схемы: PDF, JPG или PNG до 1 МБ, до четырёх файлов в заявке.',['status'=>400]);
+                $sketches[$index]=$sketch;
+                unset($p['items'][$index]['sketch']);
+            }
+        }
         $mixed=agm_quote_items_text($p['items']??null);
         if (is_wp_error($mixed)) return $mixed;
     }
@@ -64,7 +74,7 @@ function agm_al_request_send($request) {
     $needs_sheet=isset($p['managerItems'])&&$p['product']==='mixed'&&in_array('facade',array_column($p['items'],'type'),true);
     if ($p['product']==='mixed' && array_column($p['items'],'shower')) {
         $send_mail=$deliver;
-        $deliver=static function($files=[])use($p,$send_mail){return agm_with_shower_attachment($p,$files,$send_mail);};
+        $deliver=static function($files=[])use($p,$send_mail,$sketches){return agm_with_shower_attachment($p,$files,$send_mail,$sketches);};
     }
     $ok=$needs_sheet?agm_with_facade_attachment($p,$deliver):$deliver();
     delete_option($lock);
