@@ -18,14 +18,15 @@
     num = id => Number($(id).value),
     tag = (name, attrs, inside = '') => lt + name + ' ' + attrs + '>' + inside + lt + '/' + name + '>';
 
+  const fixedScreenFraction = .7;
   function planView(layout, mode, left, doorFraction = .5) {
     const diagonal = layout === 'pentagon';
     const front = diagonal ? Math.SQRT2 * 66 : 190;
     const leaf = front * doorFraction;
-    const split = mode === 'fixed' ? front * .64 : front - leaf;
-    const walls = layout === 'niche' ? 'M40 123V27H230V123' : 'M40 123V27H230';
-    const sides = diagonal ? 'M40 123H164 M230 57V27' : layout === 'corner' ? 'M230 27V123' : '';
-    const position = diagonal ? 'translate(164 123) rotate(-45)' : 'translate(40 123)';
+    const split = mode === 'fixed' ? front * fixedScreenFraction : front - leaf;
+    const walls = diagonal ? 'M67 150V18H199' : layout === 'niche' ? 'M40 123V27H230V123' : 'M40 123V27H230';
+    const sides = diagonal ? 'M67 150H133 M199 84V18' : layout === 'corner' ? 'M230 27V123' : '';
+    const position = diagonal ? 'translate(133 150) rotate(-45)' : 'translate(40 123)';
     const line = (path, color, width, dashed = false) =>
       tag('path', 'd="' + path + '" fill="none" stroke="' + color + '" stroke-width="' + width + '"' + (dashed ? ' stroke-dasharray="4 4"' : ''));
     const door = '#a45321';
@@ -64,7 +65,7 @@
       fw = Math.min(layout === 'niche' ? 300 : layout === 'corner' ? 280 : 240, Math.max(150, num('width') * .19)),
       x = layout === 'corner' ? (440 - fw - sideX) / 2 : (440 - fw) / 2,
       xr = x + fw,
-      ratio = mode === 'sliding' ? .5 : Math.max(.3, Math.min(.68, num('door') / num('width'))),
+      ratio = num('width') > 0 ? Math.min(1, num('door') / num('width')) : .5,
       split = x + fw * (1 - ratio),
       fill = m.type === 'ribbed' ? 'url(#ags-ribs)' : m.tint;
     let svg = tag('defs', '', tag('pattern', 'id="ags-ribs" width="' + m.spacing / 3 + '" height="8" patternUnits="userSpaceOnUse"', tag('rect', 'width="100%" height="100%" fill="' + m.tint + '"') + tag('path', 'd="M0 0V8" stroke="white" stroke-opacity=".65"') + tag('path', 'd="M' + m.spacing / 6 + ' 0V8" stroke="#647b80" stroke-opacity=".3"')));
@@ -86,8 +87,7 @@
           [x - 3, bottom + 3],
           [xr + 3, bottom + 3],
           [xr + sideX + 3, bottom - sideY],
-          [xr + sideX - 8, bottom - sideY - 24],
-          [x - sideX + 8, bottom - sideY - 24],
+          [(x + xr) / 2, bottom - sideY * 2],
           [x - sideX - 3, bottom - sideY]
         ] : [
           [x - 3, bottom + 3],
@@ -113,7 +113,7 @@
       panes += glass(xr + ',' + top + ' ' + (xr + sideX) + ',' + (top - sideY) + ' ' + (xr + sideX) + ',' + (bottom - sideY) + ' ' + xr + ',' + bottom);
     }
     if (mode === 'fixed') {
-      const edge = x + fw * .7;
+      const edge = x + fw * fixedScreenFraction;
       panes += glass(x + ',' + top + ' ' + edge + ',' + top + ' ' + edge + ',' + bottom + ' ' + x + ',' + bottom);
       panes += tag('path', 'd="M' + x + ' ' + top + 'V' + bottom + 'H' + edge + '" fill="none" stroke="' + c + '" stroke-width="4"') + tag('path', 'd="M' + (edge - 8) + ' ' + (top + 4) + 'L' + (edge - 20) + ' ' + (top - sideY) + '" stroke="' + c + '" stroke-width="4"');
     } else {
