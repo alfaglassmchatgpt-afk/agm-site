@@ -69,7 +69,7 @@
     const item={type,title,summary};
     if(type==='partition' && data?.shower){
      item.shower={};
-     for(const key of ['layout','mode','opening','swing','width','height','depth','door']){
+     for(const key of ['layout','mode','opening','swing','width','height','depth','door','handle']){
       item.shower[key]=data.shower['ags-'+key];
      }
     }

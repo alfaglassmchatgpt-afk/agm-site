@@ -42,21 +42,64 @@ function agm_shower_views($s) {
     $edge=round(45+180*$fraction,2);
     $pane=static function($x,$width,$color){return '<rect x="'.$x.'" y="30" width="'.$width.'" height="110" fill="#e8f5f5" stroke="'.$color.'" stroke-width="2"/>';};
     $elevation=$pane(45,$edge-45,$glass);
-    if ($mode!=='fixed') $elevation.=$pane($edge,225-$edge,$door);
+    if ($mode!=='fixed') {
+        $elevation.=$pane($edge,225-$edge,$door);
+        if ($mode==='sliding') {
+            $elevation.=$path('M44 26H226','#586970',2);
+            foreach ([$edge+4,221] as $cx) $elevation.='<circle cx="'.$cx.'" cy="26" r="2.4" fill="#586970"/>';
+        } else {
+            $elevation.=$path('M222 48h6 M222 120h6','#586970',4);
+        }
+        $hx=$edge+(225-$edge)*.20;
+        $handle=$s['handle']??'';
+        if ($handle==='bar') $elevation.=$path("M$hx 85v-12",'#394950',2.5);
+        if ($handle==='knob'||$handle==='recessed') $elevation.='<ellipse cx="'.$hx.'" cy="80" rx="2.5" ry="'.($handle==='knob'?2.5:5).'" fill="white" stroke="#394950"/>';
+    }
     $sidePane='<path d="M225 30l21-9v110l-21 9Z" fill="#d5e9eb" stroke="'.$glass.'" stroke-width="2"/>';
     if ($layout!=='niche') $elevation.=$sidePane;
     if ($pent) $elevation.='<g transform="translate(270 0) scale(-1 1)">'.$sidePane.'</g>';
     return '<div class="views"><figure><figcaption>Обмерный план · вид сверху</figcaption>'.$plan.'<small>Ширина '.$w.' мм'.$depth.'</small></figure><figure><figcaption>Вид со стороны входа</figcaption><svg viewBox="0 0 270 160"><g transform="'.$mirror.'">'.$elevation.'</g></svg><small>Высота конструкции '.$h.' мм</small></figure></div>';
 }
 
+function agm_shower_sample($summary) {
+    if (!preg_match('/^Стекло: ([^\r\n]+)/mu',$summary,$match)) return '';
+    $files=[
+        'Стекло прозрачное (М1)'=>'clear-m1-4mm-v2.png',
+        'Estriado'=>'estriado-ordinary-4-moru-style-v2.png',
+        'Estriado Crystal'=>'estriado-crystal-4-moru-style-v2.png',
+        'Estriado Ultra'=>'estriado-ultra-4-moru-style-v2.png',
+        'Vision Sun Ultra'=>'vision-sun-ultra-approved-v1.png',
+        'Рифлёное стекло MORU CRYSTAL'=>'moru-crystal-sample-v1.png',
+        'Рифлёное стекло MORU ULTRA'=>'moru-ultra-sample-v1.png',
+        'Тонированное стекло Серое'=>'tinted-grey-v1.png',
+        'Тонированное стекло зелёное (Green)'=>'tinted-green-4mm-v1.png',
+        'Тонированное стекло Черное (Black)'=>'tinted-black-4mm-v1.png',
+        'Матовое стекло Matelux'=>'steklo-matovoe-matelux-v1.png',
+        'Матовое осветлённое стекло'=>'matte-lowiron-4mm-v1.png',
+        'Матовое бронзовое стекло'=>'matte-bronze-4mm-v1.png',
+        'Матовое серое стекло'=>'matte-grey-4mm-v1.png',
+        'Стекло осветлённое Crystalvision'=>'clear-crystalvision-4mm-v2.png',
+        'Стекло осветлённое Extra Clear, Optiwhite'=>'clear-extra-clear-4mm-v2.png',
+    ];
+    $name=$match[1];
+    if (!isset($files[$name])) return '';
+    $file=get_template_directory().'/agm-glass/assets/generated/'.$files[$name];
+    if (!is_readable($file) || filesize($file)>2097152) return '';
+    $png=file_get_contents($file);
+    if (!$png) return '';
+    return '<figure class="sample"><img alt="Образец стекла" width="120" height="96" src="data:image/png;base64,'.base64_encode($png).'"><figcaption>'.esc_html($name).'</figcaption></figure>';
+}
+
 function agm_shower_report($p) {
-    $html='<!doctype html><html lang="ru"><meta charset="utf-8"><title>Заявка на расчёт душевой</title><style>body{max-width:900px;margin:24px auto;padding:0 16px;font:15px/1.45 Arial;color:#20353e}h1{font-size:24px}h2{font-size:18px}.views{display:flex;gap:12px}figure{flex:1;min-width:0;margin:0;border:1px solid #adbfc5;padding:10px}svg{display:block;width:100%;height:180px}pre{font:inherit;white-space:pre-wrap;overflow-wrap:anywhere}section+section{break-before:page}figure{break-inside:avoid}@page{size:A4;margin:13mm}</style>';
+    $html='<!doctype html><html lang="ru"><meta charset="utf-8"><title>Заявка на расчёт душевой</title><style>body{max-width:900px;margin:24px auto;padding:0 16px;font:15px/1.45 Arial;color:#20353e}h1{font-size:24px}h2{font-size:18px}.views{display:flex;gap:12px}figure{flex:1;min-width:0;margin:0;border:1px solid #adbfc5;padding:10px}.sample{display:flex;align-items:center;gap:16px;margin:10px 0}.sample img{object-fit:contain}svg{display:block;width:100%;height:180px}pre{font:inherit;white-space:pre-wrap;overflow-wrap:anywhere}section+section{break-before:page}figure{break-inside:avoid}@page{size:A4;margin:13mm}</style>';
     foreach ($p['items'] as $index=>$item) {
         if ($item['type']!=='partition'||!isset($item['shower'])) continue;
         $html.='<section><h1>Заявка на расчёт душевой</h1><p>'.esc_html(implode(' · ',array_filter([$p['name'],$p['phone'],$p['email']]))).'</p>';
         if ($p['comment']!=='') $html.='<p>Комментарий к заказу: '.esc_html($p['comment']).'</p>';
         $html.='<h2>Позиция '.($index+1).' · '.esc_html($item['title']).'</h2>'.agm_shower_views($item['shower']);
-        $html.='<p>Эскиз без масштаба. Геометрию скосов и размеры для изготовления уточнить по замеру.</p><pre>'.esc_html($item['summary']).'</pre></section>';
+        $html.=agm_shower_sample($item['summary']);
+        $printSummary=preg_replace('/^(?:Материал|Каталог|Обмерная схема \(вид сверху\)): https?:\/\/[^\s]+\R?/mu','',$item['summary']);
+        $html.='<p>Эскиз без масштаба. Геометрию скосов и размеры для изготовления уточнить по замеру.</p><pre>'.esc_html($printSummary).'</pre></section>';
     }
     return $html.'</html>';
 }
