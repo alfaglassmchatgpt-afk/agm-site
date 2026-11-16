@@ -103,6 +103,12 @@
 #ags-materials {display:grid;gap:12px}
 #ags-materials fieldset {min-width:0;margin:0}
 #ags-form > .agd-actions {margin-top:16px}
+.ags-measure {margin-top:20px;padding:16px;border:1px solid var(--line);border-radius:8px}
+.ags-measure summary {cursor:pointer;font-weight:650}
+.ags-measure-body {display:grid;grid-template-columns:minmax(140px,35%) 1fr;align-items:center;gap:20px;margin-top:14px}
+#ags-measure-plan svg {display:block;width:100%;height:205px;border-radius:6px;background:#f5eee3}
+.ags-measure-body p {margin:0 0 10px}
+@media(max-width:600px){.ags-measure-body{grid-template-columns:1fr;gap:12px}}
 .ags-reference summary {cursor:pointer;color:var(--text);padding-block:4px}
 @media (min-width:1150px) {
   #ags-materials {grid-template-columns:repeat(2,minmax(0,1fr))}

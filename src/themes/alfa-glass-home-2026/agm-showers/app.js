@@ -19,7 +19,7 @@
     tag = (name, attrs, inside = '') => lt + name + ' ' + attrs + '>' + inside + lt + '/' + name + '>';
 
   const fixedScreenFraction = .7;
-  function planView(layout, mode, left, doorFraction = .5, pendulum = false, live = false) {
+  function planView(layout, mode, left, doorFraction = .5, pendulum = false, live = false, measure = false) {
     const diagonal = layout === 'pentagon';
     const front = diagonal ? Math.SQRT2 * 66 : 190;
     const leaf = front * doorFraction;
@@ -52,18 +52,33 @@
     const mirrorX = x => left ? 270 - x : x;
     const label = (x, y, word) => tag('text', 'x="' + mirrorX(x) + '" y="' + y + '" text-anchor="middle" fill="#354245" stroke="#f5eee3" stroke-width="3" paint-order="stroke" font-size="13"', word);
     const floor = diagonal ? 'M67 18H199V84L133 150H67Z' : 'M40 27H230V123H40Z';
-    const tiles = tag('pattern', 'id="ags-tile-' + (live ? 'live' : 'guide') + '-' + layout + '-' + mode + '" width="32" height="32" patternUnits="userSpaceOnUse"',
+    const tileId = 'ags-tile-' + (measure ? 'measure' : live ? 'live' : 'guide') + '-' + layout + '-' + mode;
+    const tiles = tag('pattern', 'id="' + tileId + '" width="32" height="32" patternUnits="userSpaceOnUse"',
       tag('rect', 'width="32" height="32" fill="#e8dfcf"') + line('M32 0H0V32', '#c6bba9', 1));
-    const drawing = tag('path', 'd="' + floor + '" fill="url(#ags-tile-' + (live ? 'live' : 'guide') + '-' + layout + '-' + mode + ')"') +
+    const drawing = tag('path', 'd="' + floor + '" fill="url(#' + tileId + ')"') +
       line(walls, '#958777', 8) + line('M110 48h34', '#a39988', 3) +
       line(sides, '#117774', 5) + tag('g', 'transform="' + position + '"', face);
+    const oriented = tag('g', left ? 'transform="translate(270 0) scale(-1 1)"' : '', drawing);
+    if (measure) {
+      const x1 = diagonal ? 67 : 44, x2 = diagonal ? 199 : layout === 'niche' ? 226 : 230;
+      const y1 = diagonal ? 18 : 27, y2 = diagonal ? 150 : 123;
+      const ink = '#245974';
+      const widthArrow = line('M' + x1 + ' ' + y1 + 'V-7 M' + x2 + ' ' + y1 + 'V-7 M' + x1 + ' -3H' + x2 +
+        'm-6 -3 6 3-6 3 M' + x1 + ' -3l6 -3m-6 3 6 3', ink, 1.5);
+      const depthArrow = layout === 'niche' ? '' : line('M' + x1 + ' ' + y1 + 'H18 M' + x1 + ' ' + y2 + 'H18 M22 ' + y1 + 'V' + y2 +
+        'm-3 -6 3 6 3-6 M22 ' + y1 + 'l-3 6m3-6 3 6', ink, 1.5);
+      const arrows = tag('g', left ? 'transform="translate(270 0) scale(-1 1)"' : '', widthArrow + depthArrow);
+      const depthLabel = layout === 'niche' ? '' : tag('text', 'transform="translate(' + mirrorX(12) + ' ' + ((y1+y2)/2) + ') rotate(-90)" text-anchor="middle" font-size="13" fill="' + ink + '"', 'Глубина');
+      return tag('svg', 'viewBox="-5 -26 280 258" aria-hidden="true"', tag('defs','',tiles) + oriented + arrows +
+        label((x1+x2)/2,-10,'Ширина') + depthLabel + (diagonal ? label(193,160,'Вход') : ''));
+    }
     const labels = label(110, diagonal ? 13 : 19, 'Стена') +
       label(diagonal ? 98 : 64, diagonal ? 171 : 146, 'Стекло') +
       label(diagonal ? 218 : 214, diagonal ? 135 : 155, mode === 'fixed' ? 'Вход' : 'Дверь');
     const bounds = live ? '0 0 280 245' : diagonal ? '56 -4 190 184' : '30 0 214 ' + (mode === 'hinged' ? 215 : 166);
     return tag('svg', 'viewBox="' + bounds + '" aria-hidden="true"', tag('defs', '', tiles) +
       (live ? tag('rect', 'width="280" height="245" rx="9" fill="#f5eee3"') : '') +
-      tag('g', left ? 'transform="translate(270 0) scale(-1 1)"' : '', drawing) + labels);
+      oriented + labels);
   }
 
   function refreshGuide() {
@@ -221,6 +236,12 @@
     $('scene').dataset.mode = mode;
     $('plan').innerHTML = planView(layout, mode, $('opening').value === 'left', Number.isFinite(ratio) ? ratio : .5, $('swing').value === 'both', true);
     $('plan-caption').textContent = txt('layout') + '. ' + txt('mode') + '. Вход ' + txt('opening').toLowerCase() + '.';
+    $('measure-plan').innerHTML = planView(layout, mode, $('opening').value === 'left', Number.isFinite(ratio) ? ratio : .5, $('swing').value === 'both', false, true);
+    $('measure-tip').textContent = {
+      niche: 'Измерьте ширину проёма между облицованными стенами внизу, посередине и вверху. Если значения различаются, укажите их в комментарии.',
+      corner: 'По готовой плитке измерьте ширину передней части душевой и глубину от задней стены до передней кромки бокового стекла.',
+      pentagon: 'От внутреннего угла измерьте габариты вдоль обеих стен. Вход расположен по диагонали. Для изготовления понадобится план с размерами скосов.'
+    }[layout];
     $('scene').dataset.layout = layout;
     $('scene').dataset.glassName = m.name;
     $('scene').dataset.finish = $('finish').value;
@@ -300,6 +321,10 @@
     spec = ['ALFAGLASS — запрос на индивидуальный расчёт', 'Душевые перегородки из стекла', 'Форма: ' + txt('layout'), 'Исполнение: ' + txt('mode') + (mode === 'hinged' ? ' · ' + txt('swing') : ''), 'Ширина фронта / проёма: ' + num('width') + ' мм', 'Высота: ' + num('height') + ' мм', layout === 'niche' ? 'Глубина: ниша' : 'Глубина / боковая сторона: ' + num('depth') + ' мм', mode === 'fixed' ? 'Без двери' : 'Желаемая ширина полотна двери: ' + num('door') + ' мм', 'Дверь / вход: ' + txt('opening'), 'Количество: ' + num('quantity'), 'Стекло: ' + g.name, 'Материал: ' + location.origin + g.url, 'Закалённое стекло: ' + txt('thickness'), 'Водоотталкивающая обработка: ' + txt('coating'), 'Фурнитура: ' + txt('system'), 'Отделка: ' + txt('finish'), 'Каталог: ' + link, mode === 'fixed' ? 'Ручка не требуется' : 'Ручка: ' + txt('handle'), 'Порог: ' + txt('threshold'), 'Основание: ' + txt('base'), 'Работы: ' + txt('install'), 'Доставка: ' + txt('delivery'), 'Комментарий: ' + $('comment').value, 'Размеры стекла, проход, монтажные зазоры, отверстия, вырезы, герметизация и полный комплект фурнитуры — по согласованному чертежу.', 'Стоимость: индивидуальный расчёт.'].join('\n');
   }
   const panelButtons = [...$('panels').querySelectorAll('button')];
+  const wideMeasure = matchMedia('(min-width: 801px)');
+  const setMeasureOpen = () => { $('measure').open = wideMeasure.matches; };
+  setMeasureOpen();
+  wideMeasure.addEventListener('change', setMeasureOpen);
   const header = document.querySelector('.aluminium-header');
   const intro = document.getElementById('shower-configurator');
   if (header && window.ResizeObserver) {
