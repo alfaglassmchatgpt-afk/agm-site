@@ -19,7 +19,7 @@
     tag = (name, attrs, inside = '') => lt + name + ' ' + attrs + '>' + inside + lt + '/' + name + '>';
 
   const fixedScreenFraction = .7;
-  function planView(layout, mode, left, doorFraction = .5) {
+  function planView(layout, mode, left, doorFraction = .5, pendulum = false, live = false) {
     const diagonal = layout === 'pentagon';
     const front = diagonal ? Math.SQRT2 * 66 : 190;
     const leaf = front * doorFraction;
@@ -35,14 +35,34 @@
       face += line('M' + split + ' 0H' + front, door, 2, true);
       face += line('M' + split + ' 0a' + leaf + ' ' + leaf + ' 0 0 0 ' + (leaf * .5) + ' ' + (leaf * .866), door, 1.5, true);
       face += line('M' + front + ' 0l-' + (leaf * .5) + ' ' + (leaf * .866), door, 4);
+      face += tag('circle', 'cx="' + front + '" cy="0" r="4" fill="#ba935e"');
+      face += tag('g', 'transform="translate(' + front + ' 0) rotate(120)"',
+        line('M' + (leaf * .83) + ' -4v8', '#554330', 3));
+      if (pendulum) {
+        face += line('M' + split + ' 0a' + leaf + ' ' + leaf + ' 0 0 1 ' + (leaf * .5) + ' ' + (-leaf * .866), door, 1.5, true);
+        face += line('M' + front + ' 0l-' + (leaf * .5) + ' ' + (-leaf * .866), door, 2, true);
+      }
     } else if (mode === 'sliding') {
       face += line('M' + (split - 5) + ' 7H' + front, door, 4);
       face += line('M' + (split + 25) + ' 22h-40l7-5m-7 5 7 5', door, 2.5);
+      face += line('M' + (front - leaf * .12) + ' 3v8', '#554330', 3);
     } else {
       face += line('M' + ((front + split) / 2) + ' 22v-45l-6 8m6-8 6 8', door, 3);
     }
-    const drawing = line(walls, '#627278', 8) + line(sides, '#117774', 5) + tag('g', 'transform="' + position + '"', face);
-    return tag('svg', 'viewBox="0 0 280 245" aria-hidden="true"', tag('g', left ? 'transform="translate(270 0) scale(-1 1)"' : '', drawing));
+    const mirrorX = x => left ? 270 - x : x;
+    const label = (x, y, word) => tag('text', 'x="' + mirrorX(x) + '" y="' + y + '" text-anchor="middle" fill="#354245" stroke="#f5eee3" stroke-width="3" paint-order="stroke" font-size="13"', word);
+    const floor = diagonal ? 'M67 18H199V84L133 150H67Z' : 'M40 27H230V123H40Z';
+    const tiles = tag('pattern', 'id="ags-tile-' + (live ? 'live' : 'guide') + '-' + layout + '-' + mode + '" width="32" height="32" patternUnits="userSpaceOnUse"',
+      tag('rect', 'width="32" height="32" fill="#e8dfcf"') + line('M32 0H0V32', '#c6bba9', 1));
+    const drawing = tag('path', 'd="' + floor + '" fill="url(#ags-tile-' + (live ? 'live' : 'guide') + '-' + layout + '-' + mode + ')"') +
+      line(walls, '#958777', 8) + line('M110 48h34', '#a39988', 3) +
+      line(sides, '#117774', 5) + tag('g', 'transform="' + position + '"', face);
+    const labels = label(110, diagonal ? 13 : 19, 'Стена') +
+      label(diagonal ? 98 : 64, diagonal ? 171 : 146, 'Стекло') +
+      label(diagonal ? 218 : 214, diagonal ? 135 : 155, mode === 'fixed' ? 'Вход' : 'Дверь');
+    return tag('svg', 'viewBox="0 0 280 245" aria-hidden="true"', tag('defs', '', tiles) +
+      tag('rect', 'width="280" height="245" rx="9" fill="#f5eee3"') +
+      tag('g', left ? 'transform="translate(270 0) scale(-1 1)"' : '', drawing) + labels);
   }
 
   function refreshGuide() {
@@ -182,7 +202,7 @@
     svg += tag('text', 'x="220" y="335" text-anchor="middle" fill="#607580" font-size="12"', num('width') + ' × ' + num('height') + ' мм');
     $('svg').innerHTML = tag('svg', 'viewBox="0 0 440 345" aria-hidden="true"', svg);
     $('scene').dataset.mode = mode;
-    $('plan').innerHTML = planView(layout, mode, $('opening').value === 'left', Number.isFinite(ratio) ? ratio : .5);
+    $('plan').innerHTML = planView(layout, mode, $('opening').value === 'left', Number.isFinite(ratio) ? ratio : .5, $('swing').value === 'both', true);
     $('plan-caption').textContent = txt('layout') + '. ' + txt('mode') + '. Вход ' + txt('opening').toLowerCase() + '.';
     $('scene').dataset.layout = layout;
     $('scene').dataset.glassName = m.name;
@@ -191,12 +211,14 @@
   }
 
   function update() {
+    $('swing-field').hidden = $('mode').value !== 'hinged';
+    $('swing').disabled = $('swing-field').hidden;
     syncLayout();
     syncMode();
     const mode = $('mode').value,
       layout = $('layout').value,
       g = glasses[num('glass')],
-      key = mode + '|' + layout;
+      key = mode + '|' + layout + '|' + $('swing').value;
     if (context !== key) {
       const current = $('system').value,
         options = [
@@ -204,7 +226,7 @@
         ];
       if (mode === 'fixed') options.push(['profile', 'Алюминиевый профиль под стекло 8 / 10 мм']);
       if (layout === 'niche') {
-        if (mode === 'hinged') options.push(['FDP20', 'Петля Бета FDP-20 — стена–стекло']);
+        if (mode === 'hinged' && $('swing').value === 'out') options.push(['FDP20', 'Петля Бета FDP-20 — стена–стекло']);
         if (mode === 'sliding') options.push(['FDS8', 'Нимфа FDS-8 — раздвижная система в нишу']);
       }
       $('system').replaceChildren(...options.map(([v, t]) => new Option(t, v)));
@@ -250,7 +272,7 @@
     $('sample-image').src = materials[num('glass')].image;
     $('sample-image').alt = g.name + ' — образец ALFAGLASS';
     const valid = form.checkValidity();
-    $('s-layout').textContent = txt('layout') + ' · ' + txt('mode');
+    $('s-layout').textContent = txt('layout') + ' · ' + txt('mode') + (mode === 'hinged' ? ' · ' + txt('swing') : '');
     $('s-size').textContent = num('width') + ' × ' + num('height') + (layout === 'niche' ? '' : ' × ' + num('depth')) + ' мм';
     $('s-glass').textContent = g.name;
     $('s-thickness').textContent = txt('thickness');
@@ -258,7 +280,7 @@
     $('s-finish').textContent = txt('finish');
     $('validation').textContent = valid ? 'Параметры заполнены. Совместимость комплекта, размеры стёкол и герметизацию подтвердим после замера.' : system === 'FDS8' ? 'Для FDS-8 нужен проём 1100–1650 × 2000 мм и стекло 8 мм. Проверьте размеры или выберите подбор по проекту.' : 'Проверьте размеры. Для FDP-20: полотно до 800 мм и до 40 кг на пару петель.';
     draw();
-    spec = ['ALFAGLASS — запрос на индивидуальный расчёт', 'Душевые перегородки из стекла', 'Форма: ' + txt('layout'), 'Исполнение: ' + txt('mode'), 'Ширина фронта / проёма: ' + num('width') + ' мм', 'Высота: ' + num('height') + ' мм', layout === 'niche' ? 'Глубина: ниша' : 'Глубина / боковая сторона: ' + num('depth') + ' мм', mode === 'fixed' ? 'Без двери' : 'Желаемая ширина полотна двери: ' + num('door') + ' мм', 'Дверь / вход: ' + txt('opening'), 'Количество: ' + num('quantity'), 'Стекло: ' + g.name, 'Материал: ' + location.origin + g.url, 'Закалённое стекло: ' + txt('thickness'), 'Водоотталкивающая обработка: ' + txt('coating'), 'Фурнитура: ' + txt('system'), 'Отделка: ' + txt('finish'), 'Каталог: ' + link, mode === 'fixed' ? 'Ручка не требуется' : 'Ручка: ' + txt('handle'), 'Порог: ' + txt('threshold'), 'Основание: ' + txt('base'), 'Работы: ' + txt('install'), 'Доставка: ' + txt('delivery'), 'Комментарий: ' + $('comment').value, 'Размеры стекла, проход, монтажные зазоры, отверстия, вырезы, герметизация и полный комплект фурнитуры — по согласованному чертежу.', 'Стоимость: индивидуальный расчёт.'].join('\n');
+    spec = ['ALFAGLASS — запрос на индивидуальный расчёт', 'Душевые перегородки из стекла', 'Форма: ' + txt('layout'), 'Исполнение: ' + txt('mode') + (mode === 'hinged' ? ' · ' + txt('swing') : ''), 'Ширина фронта / проёма: ' + num('width') + ' мм', 'Высота: ' + num('height') + ' мм', layout === 'niche' ? 'Глубина: ниша' : 'Глубина / боковая сторона: ' + num('depth') + ' мм', mode === 'fixed' ? 'Без двери' : 'Желаемая ширина полотна двери: ' + num('door') + ' мм', 'Дверь / вход: ' + txt('opening'), 'Количество: ' + num('quantity'), 'Стекло: ' + g.name, 'Материал: ' + location.origin + g.url, 'Закалённое стекло: ' + txt('thickness'), 'Водоотталкивающая обработка: ' + txt('coating'), 'Фурнитура: ' + txt('system'), 'Отделка: ' + txt('finish'), 'Каталог: ' + link, mode === 'fixed' ? 'Ручка не требуется' : 'Ручка: ' + txt('handle'), 'Порог: ' + txt('threshold'), 'Основание: ' + txt('base'), 'Работы: ' + txt('install'), 'Доставка: ' + txt('delivery'), 'Комментарий: ' + $('comment').value, 'Размеры стекла, проход, монтажные зазоры, отверстия, вырезы, герметизация и полный комплект фурнитуры — по согласованному чертежу.', 'Стоимость: индивидуальный расчёт.'].join('\n');
   }
   form.addEventListener('input', () => {
     update();
