@@ -300,6 +300,15 @@
     spec = ['ALFAGLASS — запрос на индивидуальный расчёт', 'Душевые перегородки из стекла', 'Форма: ' + txt('layout'), 'Исполнение: ' + txt('mode') + (mode === 'hinged' ? ' · ' + txt('swing') : ''), 'Ширина фронта / проёма: ' + num('width') + ' мм', 'Высота: ' + num('height') + ' мм', layout === 'niche' ? 'Глубина: ниша' : 'Глубина / боковая сторона: ' + num('depth') + ' мм', mode === 'fixed' ? 'Без двери' : 'Желаемая ширина полотна двери: ' + num('door') + ' мм', 'Дверь / вход: ' + txt('opening'), 'Количество: ' + num('quantity'), 'Стекло: ' + g.name, 'Материал: ' + location.origin + g.url, 'Закалённое стекло: ' + txt('thickness'), 'Водоотталкивающая обработка: ' + txt('coating'), 'Фурнитура: ' + txt('system'), 'Отделка: ' + txt('finish'), 'Каталог: ' + link, mode === 'fixed' ? 'Ручка не требуется' : 'Ручка: ' + txt('handle'), 'Порог: ' + txt('threshold'), 'Основание: ' + txt('base'), 'Работы: ' + txt('install'), 'Доставка: ' + txt('delivery'), 'Комментарий: ' + $('comment').value, 'Размеры стекла, проход, монтажные зазоры, отверстия, вырезы, герметизация и полный комплект фурнитуры — по согласованному чертежу.', 'Стоимость: индивидуальный расчёт.'].join('\n');
   }
   const panelButtons = [...$('panels').querySelectorAll('button')];
+  const header = document.querySelector('.aluminium-header');
+  const intro = document.getElementById('shower-configurator');
+  if (header && window.ResizeObserver) {
+    const alignIntro = () => {
+      intro.style.scrollMarginTop = Math.ceil(header.getBoundingClientRect().height) + 'px';
+    };
+    alignIntro();
+    new ResizeObserver(alignIntro).observe(header);
+  }
   function showPanel(id) {
     for (const button of panelButtons) {
       const panel = document.getElementById(button.getAttribute('aria-controls'));
@@ -332,9 +341,6 @@
     $('layout').value = $('guide-layout').value;
     $('mode').value = link.dataset.agsMode;
     $('mode').dispatchEvent(new Event('change', {bubbles:true}));
-    const selected = form.querySelector('#ags-mode-choices button[aria-pressed="true"]');
-    selected.focus({preventScroll: true});
-    selected.scrollIntoView({block: 'center'});
   }));
   const controls = [...form.querySelectorAll('input[id], select[id], textarea[id]')];
   const buttons = [...document.querySelectorAll('button[type="submit"]')].filter(button => button.form === form);

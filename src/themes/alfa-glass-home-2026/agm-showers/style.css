@@ -14,7 +14,7 @@
 .agd-hero-photo{margin:0;min-width:0}
 .agd-hero-photo img{width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;display:block;border-radius:12px;border:1px solid var(--line);box-shadow:0 10px 30px #1a2c360a}
 .agd-hero-photo figcaption{font-size:10px;line-height:1.5;color:var(--muted);padding-top:9px}
-.agd-config-intro{border-top:1px solid var(--line);padding:32px 0 24px;scroll-margin-top:25px}
+.agd-config-intro{border-top:1px solid var(--line);padding:32px 0 24px}
 .agd-config-intro h2{font-size:29px;margin:12px 0}
 .agd-config-intro p{font-size:14px;line-height:1.7;color:var(--muted);max-width:720px;margin:0}
 @media(max-width:950px){.agd-page-hero{gap:25px;grid-template-columns:1fr 1fr}
