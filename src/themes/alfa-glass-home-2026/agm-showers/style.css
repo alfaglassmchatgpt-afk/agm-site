@@ -136,3 +136,21 @@
 @media (max-width:800px) {
   .agd .agd-layout > .agd-aside {grid-row:auto}
 }
+
+/* Each entrance type occupies a row with its render, plan and description. */
+.ags-types {grid-template-columns:minmax(0,1fr)}
+@media (min-width:761px) {
+  .ags-types article {
+    display:grid;
+    grid-template-columns:minmax(0,1.4fr) minmax(0,.85fr) minmax(0,1fr);
+    grid-template-areas:"photo plan title" "photo plan description" "photo plan action";
+    grid-template-rows:1fr auto 1fr;
+    gap:8px clamp(14px,2vw,28px);
+    align-items:center;
+  }
+  .ags-types .ags-example {grid-area:photo}
+  .ags-types article svg {grid-area:plan;height:auto;aspect-ratio:280/215;margin:0}
+  .ags-types h3 {grid-area:title;align-self:end;margin:0}
+  .ags-types p {grid-area:description;margin:0}
+  .ags-types a {grid-area:action;align-self:start;justify-self:start;margin:0}
+}
