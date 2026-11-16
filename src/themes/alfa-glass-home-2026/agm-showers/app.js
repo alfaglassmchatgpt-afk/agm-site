@@ -60,8 +60,9 @@
     const labels = label(110, diagonal ? 13 : 19, 'Стена') +
       label(diagonal ? 98 : 64, diagonal ? 171 : 146, 'Стекло') +
       label(diagonal ? 218 : 214, diagonal ? 135 : 155, mode === 'fixed' ? 'Вход' : 'Дверь');
-    return tag('svg', 'viewBox="0 0 280 245" aria-hidden="true"', tag('defs', '', tiles) +
-      tag('rect', 'width="280" height="245" rx="9" fill="#f5eee3"') +
+    const bounds = live ? '0 0 280 245' : diagonal ? '56 -4 190 184' : '30 0 214 ' + (mode === 'hinged' ? 215 : 166);
+    return tag('svg', 'viewBox="' + bounds + '" aria-hidden="true"', tag('defs', '', tiles) +
+      (live ? tag('rect', 'width="280" height="245" rx="9" fill="#f5eee3"') : '') +
       tag('g', left ? 'transform="translate(270 0) scale(-1 1)"' : '', drawing) + labels);
   }
 
