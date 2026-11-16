@@ -65,7 +65,16 @@
   function payload(){
    const items=all();if(!items.length)throw Error('Добавьте хотя бы одно изделие.');
    const invalid=items.find(i=>i.errors.length);if(invalid)throw Error(invalid.title+': '+invalid.errors[0]);
-   return groupFacades(items).map(({type,title,summary})=>({type,title,summary}));
+   return groupFacades(items).map(({type,title,summary,data})=>{
+    const item={type,title,summary};
+    if(type==='partition' && data?.shower){
+     item.shower={};
+     for(const key of ['layout','mode','opening','swing','width','height','depth','door']){
+      item.shower[key]=data.shower['ags-'+key];
+     }
+    }
+    return item;
+   });
   }
   return {all,put,remove,sync,migrate,payload};
  }

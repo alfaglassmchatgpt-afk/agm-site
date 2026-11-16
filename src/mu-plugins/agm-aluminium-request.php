@@ -2,6 +2,7 @@
 /** Plugin Name: AGM Aluminium enquiries */
 defined('ABSPATH') || exit;
 require_once __DIR__.'/agm-facade-mail.php';
+require_once __DIR__.'/agm-shower-mail.php';
 
 function agm_al_request_disabled() {
     return (defined('AGM_STAGING') && AGM_STAGING);
@@ -61,6 +62,10 @@ function agm_al_request_send($request) {
     $to=sanitize_email($mail[1]??'');
     $deliver=function($files=[])use($to,$types,$p,$body){return is_email($to)&&wp_mail($to,'ALFAGLASS — Aluminium — '.$types[$p['product']],$body,[],$files);};
     $needs_sheet=isset($p['managerItems'])&&$p['product']==='mixed'&&in_array('facade',array_column($p['items'],'type'),true);
+    if ($p['product']==='mixed' && array_column($p['items'],'shower')) {
+        $send_mail=$deliver;
+        $deliver=static function($files=[])use($p,$send_mail){return agm_with_shower_attachment($p,$files,$send_mail);};
+    }
     $ok=$needs_sheet?agm_with_facade_attachment($p,$deliver):$deliver();
     delete_option($lock);
     if (!$ok) return new WP_Error('mail','Не удалось передать запрос. Позвоните нам или попробуйте позже.',['status'=>503]);
