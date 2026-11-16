@@ -299,12 +299,36 @@
     draw();
     spec = ['ALFAGLASS — запрос на индивидуальный расчёт', 'Душевые перегородки из стекла', 'Форма: ' + txt('layout'), 'Исполнение: ' + txt('mode') + (mode === 'hinged' ? ' · ' + txt('swing') : ''), 'Ширина фронта / проёма: ' + num('width') + ' мм', 'Высота: ' + num('height') + ' мм', layout === 'niche' ? 'Глубина: ниша' : 'Глубина / боковая сторона: ' + num('depth') + ' мм', mode === 'fixed' ? 'Без двери' : 'Желаемая ширина полотна двери: ' + num('door') + ' мм', 'Дверь / вход: ' + txt('opening'), 'Количество: ' + num('quantity'), 'Стекло: ' + g.name, 'Материал: ' + location.origin + g.url, 'Закалённое стекло: ' + txt('thickness'), 'Водоотталкивающая обработка: ' + txt('coating'), 'Фурнитура: ' + txt('system'), 'Отделка: ' + txt('finish'), 'Каталог: ' + link, mode === 'fixed' ? 'Ручка не требуется' : 'Ручка: ' + txt('handle'), 'Порог: ' + txt('threshold'), 'Основание: ' + txt('base'), 'Работы: ' + txt('install'), 'Доставка: ' + txt('delivery'), 'Комментарий: ' + $('comment').value, 'Размеры стекла, проход, монтажные зазоры, отверстия, вырезы, герметизация и полный комплект фурнитуры — по согласованному чертежу.', 'Стоимость: индивидуальный расчёт.'].join('\n');
   }
+  const panelButtons = [...$('panels').querySelectorAll('button')];
+  function showPanel(id) {
+    for (const button of panelButtons) {
+      const panel = document.getElementById(button.getAttribute('aria-controls'));
+      panel.hidden = panel.id !== id;
+      button.setAttribute('aria-pressed', String(!panel.hidden));
+    }
+  }
+  function revealTarget(target) {
+    const panel = target && target.closest('#ags-dimensions, #ags-materials, #ags-services');
+    if (panel) showPanel(panel.id);
+  }
+  $('panels').hidden = false;
+  for (const button of panelButtons) {
+    button.addEventListener('click', () => showPanel(button.getAttribute('aria-controls')));
+  }
+  showPanel('ags-materials');
+  const revealHash = () => revealTarget(document.getElementById(location.hash.slice(1)));
+  revealHash();
+  window.addEventListener('hashchange', revealHash);
+  form.addEventListener('invalid', event => revealTarget(event.target), true);
+  document.querySelectorAll('a[href="#ags-width"]').forEach(link =>
+    link.addEventListener('click', () => showPanel('ags-dimensions')));
   form.addEventListener('input', () => {
     update();
     $('status').textContent = '';
   });
   form.addEventListener('change', update);
   document.querySelectorAll('[data-ags-mode]').forEach(link => link.addEventListener('click', () => {
+    showPanel('ags-dimensions');
     $('layout').value = $('guide-layout').value;
     $('mode').value = link.dataset.agsMode;
     $('mode').dispatchEvent(new Event('change', {bubbles:true}));

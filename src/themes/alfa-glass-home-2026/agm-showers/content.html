@@ -43,6 +43,12 @@
 </section>
 <div class="agd-layout">
 <form id="ags-form">
+<div id="ags-panels" class="ags-choice-row" role="group" aria-label="Настройки душевой" hidden>
+<button type="button" aria-controls="ags-dimensions">Конструкция и размеры</button>
+<button type="button" aria-controls="ags-materials">Стекло и фурнитура</button>
+<button type="button" aria-controls="ags-services">Детали проекта</button>
+</div>
+<div id="ags-dimensions">
 <fieldset>
 <legend>
 <span>01</span>Конструкция и размеры</legend>
@@ -81,7 +87,8 @@
 <p class="agd-help agd-full">Укажите размеры по готовой плитке. Размеры стёкол, ширину прохода, зазоры и вырезы определяем после замера и выбора системы. Для пятиугольной душевой дополнительно потребуется план с размерами скосов.</p>
 </div>
 </fieldset>
-<details class="ags-options"><summary>Выбрать стекло и фурнитуру</summary>
+</div>
+<div id="ags-materials">
 <fieldset>
 <legend>
 <span>02</span>Стекло ALFAGLASS</legend>
@@ -116,10 +123,12 @@
 <option value="yes">Нужна обработка — согласовать</option>
 </select>
 </label>
-<p class="agd-help agd-full">
+<details class="agd-full ags-reference"><summary>Подробнее о стекле</summary>
+<p class="agd-help">
 <a id="ags-material-link" href="/materialy/" target="_blank" rel="noopener">Посмотреть выбранное стекло →</a>
 </p>
 <div class="agd-note agd-full">Безопасное закалённое стекло с обработанной кромкой. Возможность закалки выбранного материала и доступную толщину подтверждает технолог.</div>
+</details>
 </div>
 </fieldset>
 <fieldset>
@@ -152,7 +161,8 @@
 <option value="none">Без порога — согласовать</option>
 </select>
 </label>
-<div class="agd-note agd-full" id="ags-hardware-note">
+<details class="agd-full ags-reference"><summary>Подробнее о комплекте фурнитуры</summary>
+<div class="agd-note" id="ags-hardware-note">
 </div>
 <p class="agd-help agd-full">
 <a id="ags-hardware-link" href="https://khancorp.ru/category/furnitura-dlya-dushevykh-kabin/" target="_blank" rel="noopener">Выбранная фурнитура в каталоге →</a>
@@ -160,9 +170,11 @@
 <a href="https://khancorp.ru/category/furnitura-dlya-dushevykh-kabin/" target="_blank" rel="noopener">Весь каталог Khancorp →</a>
 </p>
 <p class="agd-help agd-full">Петли или ролики, коннекторы, профиль, стабилизаторы, ручка, уплотнители и порог согласуются единым комплектом. Отделка для подбора по проекту — пожелание; наличие подтверждаем перед заказом.</p>
+</details>
 </div>
 </fieldset>
-</details>
+</div>
+<div id="ags-services">
 <fieldset>
 <legend>
 <span>04</span>Детали проекта</legend>
@@ -188,14 +200,15 @@
 <label class="agd-full">Комментарий<textarea id="ags-comment" placeholder="Например, помогите подобрать стекло и фурнитуру" maxlength="3000" placeholder="Размеры стен, сантехника, расположение входа, пожелания и сроки">
 </textarea>
 </label>
+</div>
+</fieldset>
+</div>
 <div class="agd-actions agd-full">
 <button type="submit" class="agd-primary">Добавить в мой расчёт</button>
 <a id="ags-new" href="/dushevye-peregorodki-iz-stekla/#shower-configurator" hidden>Ещё одна душевая</a><button type="button" id="ags-download">Скачать спецификацию</button>
 </div>
 <p id="ags-status" class="agd-status agd-full" role="status">
 </p>
-</div>
-</fieldset>
 </form>
 <aside class="agd-aside" aria-label="Ваш проект душевой">
 <section class="ags-live-plan"><h3>Вид сверху</h3><div id="ags-plan"></div><p id="ags-plan-caption"></p></section>
