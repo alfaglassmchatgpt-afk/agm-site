@@ -72,9 +72,12 @@
       const mode = link.dataset.agsMode;
       const card = link.closest('article');
       const image = card.querySelector('.ags-example');
-      if (!image.dataset.nicheSrc) image.dataset.nicheSrc = image.getAttribute('src');
+      if (!image.dataset.nicheSrc) {
+        image.dataset.nicheSrc = image.getAttribute('src');
+        image.dataset.nicheAlt = image.alt;
+      }
       image.src = layout === 'niche' ? image.dataset.nicheSrc : '/wp-content/uploads/2026/11/shower-guide-' + layout + '-' + mode + '.webp';
-      image.alt = txt('guide-layout') + ' — ' + card.querySelector('h3').textContent;
+      image.alt = layout === 'niche' ? image.dataset.nicheAlt : txt('guide-layout') + ' — ' + card.querySelector('h3').textContent;
       card.querySelector('svg').outerHTML = planView(layout, mode, false);
     });
   }
