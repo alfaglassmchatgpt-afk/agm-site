@@ -53,6 +53,48 @@
   $('guide-layout').addEventListener('change', refreshGuide);
   refreshGuide();
 
+  function showChoices(select, title, captions) {
+    const group = document.createElement('div');
+    group.className = 'ags-choice-row';
+    group.id = select.id + '-choices';
+    group.setAttribute('role', 'group');
+    group.setAttribute('aria-label', title);
+    for (const option of select.options) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.value = option.value;
+      button.textContent = captions[option.value];
+      button.addEventListener('click', () => {
+        select.value = button.value;
+        select.dispatchEvent(new Event('change', {bubbles: true}));
+      });
+      group.append(button);
+    }
+    const label = select.closest('label') || select.previousElementSibling;
+    const container = document.createElement('div');
+    container.className = 'agd-full';
+    const heading = document.createElement('strong');
+    heading.textContent = title;
+    label.before(container);
+    container.append(heading, group);
+    label.hidden = true;
+    select.hidden = true;
+    document.querySelectorAll('a[href="#' + select.id + '"]').forEach(link => link.hash = group.id);
+    return () => {
+      for (const button of group.children) {
+        button.setAttribute('aria-pressed', String(button.value === select.value));
+      }
+    };
+  }
+  const shapes = {niche: 'В нише', corner: 'Угловая', pentagon: 'Пятиугольная'};
+  const syncGuide = showChoices($('guide-layout'), 'Форма душевой', shapes);
+  const syncLayout = showChoices($('layout'), 'Форма душевой', shapes);
+  const syncMode = showChoices($('mode'), 'Исполнение', {
+    fixed: 'Без двери', hinged: 'Распашная дверь', sliding: 'Раздвижная дверь'
+  });
+  syncGuide();
+  $('guide-layout').addEventListener('change', syncGuide);
+
   function draw() {
     const m = materials[num('glass')],
       mode = $('mode').value,
@@ -149,6 +191,8 @@
   }
 
   function update() {
+    syncLayout();
+    syncMode();
     const mode = $('mode').value,
       layout = $('layout').value,
       g = glasses[num('glass')],
@@ -225,7 +269,9 @@
     $('layout').value = $('guide-layout').value;
     $('mode').value = link.dataset.agsMode;
     $('mode').dispatchEvent(new Event('change', {bubbles:true}));
-    $('mode').focus({preventScroll:true});
+    const selected = form.querySelector('#ags-mode-choices button[aria-pressed="true"]');
+    selected.focus({preventScroll: true});
+    selected.scrollIntoView({block: 'center'});
   }));
   const controls = [...form.querySelectorAll('input[id], select[id], textarea[id]')];
   const buttons = [...document.querySelectorAll('button[type="submit"]')].filter(button => button.form === form);

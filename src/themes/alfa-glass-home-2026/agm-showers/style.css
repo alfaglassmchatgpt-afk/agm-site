@@ -62,3 +62,31 @@
 #ags-form fieldset > legend + * {
   clear: both;
 }
+
+.ags-choice-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 8px 0;
+  scroll-margin-top: 8rem;
+}
+.agd .ags-choice-row button {
+  width: auto;
+  min-height: 44px;
+  padding: 8px 14px;
+  font: inherit;
+  color: inherit;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  cursor: pointer;
+}
+.agd .ags-choice-row button[aria-pressed="true"] {
+  background: #086384;
+  border-color: #086384;
+  color: white;
+}
+.ags-choice-row button:focus-visible {
+  outline: 2px solid #39a9d2;
+  outline-offset: 2px;
+}
