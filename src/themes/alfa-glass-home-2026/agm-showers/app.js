@@ -262,6 +262,16 @@
     $('scene').setAttribute('aria-label', 'Визуализация: ' + txt('mode') + ', ' + m.name + ', ' + txt('finish'));
   }
 
+  // The drawing link carries only geometry and opens independently of the customer's basket.
+  const sketchControls = ['layout', 'mode', 'opening', 'swing', 'width', 'height', 'depth', 'door'];
+  function sketchLink() {
+    const url = new URL(location.pathname, location.origin);
+    for (const id of sketchControls) {
+      if (!$(id).disabled) url.searchParams.set(id, $(id).value);
+    }
+    url.hash = 'ags-measure';
+    return url.href;
+  }
   function update() {
     $('swing-field').hidden = $('mode').value !== 'hinged';
     $('swing').disabled = $('swing-field').hidden;
@@ -332,7 +342,11 @@
     $('s-finish').textContent = txt('finish');
     $('validation').textContent = valid ? 'Параметры заполнены. Совместимость комплекта, размеры стёкол и герметизацию подтвердим после замера.' : system === 'FDS8' ? 'Для FDS-8 нужен проём 1100–1650 × 2000 мм и стекло 8 мм. Проверьте размеры или выберите подбор по проекту.' : 'Проверьте размеры. Для FDP-20: полотно до 800 мм и до 40 кг на пару петель.';
     draw();
-    spec = ['ALFAGLASS — запрос на индивидуальный расчёт', 'Душевые перегородки из стекла', 'Форма: ' + txt('layout'), 'Исполнение: ' + txt('mode') + (mode === 'hinged' ? ' · ' + txt('swing') : ''), 'Ширина фронта / проёма: ' + num('width') + ' мм', 'Высота: ' + num('height') + ' мм', layout === 'niche' ? 'Глубина: ниша' : 'Глубина / боковая сторона: ' + num('depth') + ' мм', mode === 'fixed' ? 'Без двери' : 'Желаемая ширина полотна двери: ' + num('door') + ' мм', 'Дверь / вход: ' + txt('opening'), 'Количество: ' + num('quantity'), 'Стекло: ' + g.name, 'Материал: ' + location.origin + g.url, 'Закалённое стекло: ' + txt('thickness'), 'Водоотталкивающая обработка: ' + txt('coating'), 'Фурнитура: ' + txt('system'), 'Отделка: ' + txt('finish'), 'Каталог: ' + link, mode === 'fixed' ? 'Ручка не требуется' : 'Ручка: ' + txt('handle'), 'Порог: ' + txt('threshold'), 'Основание: ' + txt('base'), 'Работы: ' + txt('install'), 'Доставка: ' + txt('delivery'), 'Комментарий: ' + $('comment').value, 'Размеры стекла, проход, монтажные зазоры, отверстия, вырезы, герметизация и полный комплект фурнитуры — по согласованному чертежу.', 'Стоимость: индивидуальный расчёт.'].join('\n');
+    spec = ['ALFAGLASS — запрос на индивидуальный расчёт', 'Душевые перегородки из стекла', 'Форма: ' + txt('layout'), 'Исполнение: ' + txt('mode') + (mode === 'hinged' ? ' · ' + txt('swing') : ''), 'Ширина фронта / проёма: ' + num('width') + ' мм', 'Высота конструкции: ' + num('height') + ' мм', layout === 'niche' ? '' : 'Глубина / боковая сторона: ' + num('depth') + ' мм', mode === 'fixed' ? 'Без двери' : 'Желаемая ширина полотна двери: ' + num('door') + ' мм', 'Дверь / вход: ' + txt('opening'),
+      'Высота проёма по замеру: ' + ($('opening-height').value ? num('opening-height') + ' мм' : 'уточнить'),
+      'Свободный проход: ' + ($('passage').value ? num('passage') + ' мм' : 'уточнить'),
+      'Размеры отдельных стёкол со слов заказчика: ' + ($('pane-sizes').value.trim() || 'не указаны'),
+      'Обмерная схема (вид сверху): ' + sketchLink(), 'Количество: ' + num('quantity'), 'Стекло: ' + g.name, 'Материал: ' + location.origin + g.url, 'Закалённое стекло: ' + txt('thickness'), 'Водоотталкивающая обработка: ' + txt('coating'), 'Фурнитура: ' + txt('system'), 'Отделка: ' + txt('finish'), 'Каталог: ' + link, mode === 'fixed' ? 'Ручка не требуется' : 'Ручка: ' + txt('handle'), 'Порог: ' + txt('threshold'), 'Основание: ' + txt('base'), 'Работы: ' + txt('install'), 'Доставка: ' + txt('delivery'), 'Комментарий: ' + $('comment').value, 'Размеры стекла, проход, монтажные зазоры, отверстия, вырезы, герметизация и полный комплект фурнитуры — по согласованному чертежу.', 'Стоимость: индивидуальный расчёт.'].filter(Boolean).join('\n');
   }
   const panelButtons = [...$('panels').querySelectorAll('button')];
   const wideMeasure = matchMedia('(min-width: 801px)');
@@ -441,6 +455,17 @@
   $('mode').value = 'sliding';
   $('glass').value = '15';
   $('finish').value = 'BTP';
+  const drawingParams = new URLSearchParams(location.search);
+  if (!editing && location.hash === '#ags-measure' && drawingParams.has('layout')) {
+    for (const id of sketchControls) {
+      const value = drawingParams.get(id);
+      const field = $(id);
+      if (field.options ? [...field.options].some(option => option.value === value) : value && /^\d{1,4}$/.test(value)) {
+        field.value = value;
+      }
+    }
+    $('measure').open = true;
+  }
   update();
   if (editing) window.AGMQuoteReady.then(quote => {
     const entry = quote.store.all().find(item => item.id === editing && item.type === 'partition');
