@@ -526,7 +526,7 @@
   "thickness": [8, 10]
 }, {
   "description": "Тонированное стекло Бронза4, 5, 6, 8, 10 мм · 3210 × 2250 ммВыбрать материал →",
-  "name": "Тонированное стекло Бронза",
+  "name": "Гладкое тонированное стекло Бронза",
   "url": "/materialy/moru-bronze/",
   "thickness": [8, 10]
 }, {
@@ -569,6 +569,10 @@
   "name": "Стекло осветлённое Extra Clear, Optiwhite",
   "url": "/materialy/steklo-osvetlyonnoe-clearvision/",
   "thickness": [8, 10]
+}, {
+  "name": "Рифлёное стекло MORU Bronze",
+  "url": "/materialy/moru-bronze-toned/",
+  "thickness": [8]
 }], [{
   "name": "Стекло прозрачное (М1)",
   "tint": "rgba(135,183,164,.19)",
@@ -634,7 +638,7 @@
   "spacing": 8,
   "image": "/wp-content/themes/alfa-glass-home-2026/agm-glass/assets/generated/tinted-grey-v1.png"
 }, {
-  "name": "Тонированное стекло Бронза",
+  "name": "Гладкое тонированное стекло Бронза",
   "tint": "rgba(132,91,48,.47)",
   "edge": "#85633d",
   "type": "tinted",
@@ -705,6 +709,14 @@
   "blur": 0,
   "spacing": 8,
   "image": "/wp-content/themes/alfa-glass-home-2026/agm-glass/assets/generated/clear-extra-clear-4mm-v2.png"
+}, {
+  "name": "Рифлёное стекло MORU Bronze",
+  "tint": "rgba(156,108,52,.43)",
+  "edge": "#85633d",
+  "type": "ribbed",
+  "blur": 0,
+  "spacing": 12,
+  "image": "/wp-content/themes/alfa-glass-home-2026/agm-glass/assets/generated/moru-bronze-toned-sample-8mm-v1.png"
 }], {
   "catalog": "https://khancorp.ru/category/furnitura-dlya-dushevykh-kabin/",
   "hinge": {
