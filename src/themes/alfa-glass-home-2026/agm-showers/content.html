@@ -120,6 +120,9 @@
 <option value="16">Стекло осветлённое Extra Clear, Optiwhite</option>
 </select>
 </label>
+<button type="button" class="agd-full ags-preview-trigger" data-ags-preview aria-haspopup="dialog">
+<img id="ags-glass-thumb" width="72" height="72" alt=""><span>Увеличить образец</span>
+</button>
 <label>Толщина закалённого стекла<select id="ags-thickness">
 <option value="8">8 мм</option>
 <option value="10">10 мм</option>
@@ -132,7 +135,7 @@
 </label>
 <details class="agd-full ags-reference"><summary>Подробнее о стекле</summary>
 <p class="agd-help">
-<a id="ags-material-link" href="/materialy/" target="_blank" rel="noopener">Посмотреть выбранное стекло →</a>
+<a id="ags-material-link" href="/materialy/" target="_blank" rel="noopener">Полная карточка материала →</a>
 </p>
 <div class="agd-note agd-full">Безопасное закалённое стекло с обработанной кромкой. Возможность закалки выбранного материала и доступную толщину подтверждает технолог.</div>
 </details>
@@ -245,12 +248,11 @@
 <p>Дверь показана в закрытом положении. На виде сверху отмечены вход и движение створки. Монтажные размеры — по чертежу.</p>
 </div>
 <div class="ags-sample">
-<a id="ags-sample-link" href="/materialy/" target="_blank" rel="noopener">
+<button type="button" class="ags-preview-trigger" data-ags-preview aria-haspopup="dialog" aria-label="Увеличить выбранный образец">
 <img id="ags-sample-image" width="58" height="66" alt="Образец выбранного стекла">
-</a>
+</button>
 <div>
-<a id="ags-sample-name" href="/materialy/" target="_blank" rel="noopener">
-</a>
+<button type="button" id="ags-sample-name" class="ags-preview-trigger" data-ags-preview aria-haspopup="dialog"></button>
 <small>Образец из каталога ALFAGLASS.<br>Цвет на экране может отличаться.</small>
 </div>
 </div>
@@ -314,4 +316,8 @@
 <details><summary>Какую дверь выбрать, если рядом с душевой стоит раковина?</summary><p>На плане ванной отметьте край раковины и дугу открывания двери с учётом ручки. Если места для поворота мало, подойдёт раздвижная конструкция: створка уходит вдоль неподвижного стекла. Для неё стоит проверить ширину прохода при открытой двери.</p></details>
 <details><summary>Что входит в заказ душевой кабины из стекла?</summary><p>В расчёте указываем стеклянные полотна, обработку кромок и фурнитуру выбранной конструкции. Замер, доставку и монтаж можно включить в заявку. Если поддон или сантехника уже установлены, укажите это в комментарии, чтобы менеджер учёл их при подборе ограждения.</p></details>
 <a href="#shower-configurator">Рассчитать по своим размерам ↑</a></section>
+<dialog id="ags-glass-preview" aria-labelledby="ags-preview-title">
+<header><h2 id="ags-preview-title"></h2><button type="button" id="ags-preview-close" autofocus>Закрыть</button></header>
+<img id="ags-preview-photo" alt="">
+</dialog>
 </main>

@@ -329,9 +329,10 @@
     }
     $('hardware-link').href = link;
     $('hardware-note').textContent = note;
-    for (const id of ['material-link', 'sample-link', 'sample-name']) $(id).href = g.url;
+    $('material-link').href = g.url;
     $('sample-name').textContent = g.name;
     $('sample-image').src = materials[num('glass')].image;
+    $('glass-thumb').src = materials[num('glass')].image;
     $('sample-image').alt = g.name + ' — образец ALFAGLASS';
     const valid = form.checkValidity();
     $('s-layout').textContent = txt('layout') + ' · ' + txt('mode') + (mode === 'hinged' ? ' · ' + txt('swing') : '');
@@ -348,6 +349,16 @@
       'Размеры отдельных стёкол со слов заказчика: ' + ($('pane-sizes').value.trim() || 'не указаны'),
       'Обмерная схема (вид сверху): ' + sketchLink(), 'Количество: ' + num('quantity'), 'Стекло: ' + g.name, 'Материал: ' + location.origin + g.url, 'Закалённое стекло: ' + txt('thickness'), 'Водоотталкивающая обработка: ' + txt('coating'), 'Фурнитура: ' + txt('system'), 'Отделка: ' + txt('finish'), 'Каталог: ' + link, mode === 'fixed' ? 'Ручка не требуется' : 'Ручка: ' + txt('handle'), 'Порог: ' + txt('threshold'), 'Основание: ' + txt('base'), 'Работы: ' + txt('install'), 'Доставка: ' + txt('delivery'), 'Комментарий: ' + $('comment').value, 'Размеры стекла, проход, монтажные зазоры, отверстия, вырезы, герметизация и полный комплект фурнитуры — по согласованному чертежу.', 'Стоимость: индивидуальный расчёт.'].filter(Boolean).join('\n');
   }
+  const preview = $('glass-preview');
+  for (const trigger of document.querySelectorAll('[data-ags-preview]')) {
+    trigger.addEventListener('click', () => {
+      $('preview-title').textContent = $('sample-name').textContent;
+      $('preview-photo').src = $('sample-image').src;
+      $('preview-photo').alt = $('sample-image').alt;
+      preview.showModal();
+    });
+  }
+  $('preview-close').addEventListener('click', () => preview.close());
   const panelButtons = [...$('panels').querySelectorAll('button')];
   const wideMeasure = matchMedia('(min-width: 801px)');
   const setMeasureOpen = () => { $('measure').open = wideMeasure.matches; };
