@@ -136,3 +136,10 @@
 @media (max-width:800px) {
   .agd .agd-layout > .agd-aside {grid-row:auto}
 }
+
+.ags-step {display:block;font-size:.78em;line-height:1.4;font-weight:500}
+#ags-help-toggle {margin-bottom:12px}
+#ags-help-fields {max-width:64ch;margin-bottom:16px}
+#ags-help-fields textarea {width:100%;box-sizing:border-box}
+.ags-help-mode :is(#ags-panels,#ags-dimensions,#ags-materials,#ags-services,#ags-download,#ags-measure,.agd-aside,.ags-step) {display:none!important}
+.agd-layout.ags-help-mode {display:block}

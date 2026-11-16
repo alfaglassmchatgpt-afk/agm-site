@@ -44,10 +44,16 @@
 </section>
 <div class="agd-layout">
 <form id="ags-form">
+<button type="button" id="ags-help-toggle" aria-expanded="false" aria-controls="ags-help-fields">Помогите подобрать душевую</button>
+<div id="ags-help-fields" hidden>
+<label for="ags-help-note">Что вы хотите сделать?</label>
+<p>Опишите идею или приложите фото ванной, эскиз либо пример душевой. Менеджер поможет подобрать конструкцию. Размеры можно уточнить позже.</p>
+<textarea id="ags-help-note" maxlength="3000" rows="3" placeholder="Например, хочу душевую в углу. Рядом раковина — какую дверь выбрать?"></textarea>
+</div>
 <div id="ags-panels" class="ags-choice-row" role="group" aria-label="Настройки душевой" hidden>
-<button type="button" aria-controls="ags-dimensions">Конструкция и размеры</button>
-<button type="button" aria-controls="ags-materials">Стекло и фурнитура</button>
-<button type="button" aria-controls="ags-services">Детали проекта</button>
+<button type="button" aria-controls="ags-dimensions"><small class="ags-step">Шаг 1</small>Конструкция и размеры</button>
+<button type="button" aria-controls="ags-materials"><small class="ags-step">Шаг 2</small>Стекло и фурнитура</button>
+<button type="button" aria-controls="ags-services"><small class="ags-step">Шаг 3</small>Детали проекта</button>
 </div>
 <div id="ags-dimensions">
 <fieldset>
@@ -214,14 +220,14 @@
 </fieldset>
 </div>
 <div class="ags-file">
-<label for="ags-sketch-file">Приложить свою схему</label>
+<label for="ags-sketch-file">Приложить фото или схему</label>
 <small id="ags-file-hint">Чертёж или фото · PDF, JPG, PNG до 1 МБ</small>
 <input id="ags-sketch-file" type="file" accept=".pdf,.jpg,.jpeg,.png" aria-describedby="ags-file-hint ags-file-state">
 <span id="ags-file-state" role="status"></span>
 <button type="button" id="ags-file-remove" hidden>Убрать файл</button>
 </div>
 <div class="agd-actions agd-full">
-<button type="submit" class="agd-primary">Добавить в мой расчёт</button>
+<button type="submit" class="agd-primary"><small class="ags-step">Шаг 4</small><span>Добавить в мой расчёт</span></button>
 <a id="ags-new" href="/dushevye-peregorodki-iz-stekla/#shower-configurator" hidden>Ещё одна душевая</a><button type="button" id="ags-download">Скачать спецификацию</button>
 </div>
 <p id="ags-status" class="agd-status agd-full" role="status">
@@ -296,7 +302,7 @@
 <p class="agd-note" id="ags-validation" aria-live="polite">
 </p>
 <div class="agd-actions">
-<button type="submit" form="ags-form" class="agd-primary">Добавить в мой расчёт</button>
+<button type="submit" form="ags-form" class="agd-primary"><small class="ags-step">Шаг 4</small><span>Добавить в мой расчёт</span></button>
 </div>
 </div>
 </aside>

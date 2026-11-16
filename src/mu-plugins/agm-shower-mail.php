@@ -99,7 +99,12 @@ function agm_shower_report($p) {
         if ($item['type']!=='partition'||!isset($item['shower'])) continue;
         $html.='<section><h1>Заявка на расчёт душевой</h1><p>'.esc_html(implode(' · ',array_filter([$p['name'],$p['phone'],$p['email']]))).'</p>';
         if ($p['comment']!=='') $html.='<p>Комментарий к заказу: '.esc_html($p['comment']).'</p>';
-        $html.='<h2>Позиция '.($index+1).' · '.esc_html($item['title']).'</h2>'.agm_shower_views($item['shower']);
+        $html.='<h2>Позиция '.($index+1).' · '.esc_html($item['title']).'</h2>';
+        if (($item['shower']['assistance']??false)===true) {
+            $html.='<pre>'.esc_html($item['summary']).'</pre></section>';
+            continue;
+        }
+        $html.=agm_shower_views($item['shower']);
         $html.=agm_shower_sample($item['summary']);
         $printSummary=preg_replace('/^(?:Материал|Каталог|Обмерная схема \(вид сверху\)): https?:\/\/[^\s]+\R?/mu','',$item['summary']);
         $html.='<p>Эскиз без масштаба. Геометрию скосов и размеры для изготовления уточнить по замеру.</p><pre>'.esc_html($printSummary).'</pre></section>';

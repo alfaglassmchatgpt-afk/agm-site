@@ -70,6 +70,7 @@
     if(type==='partition' && data?.shower){
      item.shower={};
      if(data.sketch)item.sketch=data.sketch;
+     if(data.shower.assistance){item.shower={assistance:true};return item;}
      for(const key of ['layout','mode','opening','swing','width','height','depth','door','handle']){
       item.shower[key]=data.shower['ags-'+key];
      }

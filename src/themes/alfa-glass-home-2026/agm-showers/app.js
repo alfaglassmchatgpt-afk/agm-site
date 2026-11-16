@@ -359,6 +359,20 @@
     });
   }
   $('preview-close').addEventListener('click', () => preview.close());
+  let assisted = false;
+  function setAssisted(value) {
+    assisted = value;
+    form.noValidate = value;
+    form.parentElement.classList.toggle('ags-help-mode', value);
+    $('help-fields').hidden = !value;
+    $('help-toggle').setAttribute('aria-expanded', String(value));
+    $('help-toggle').textContent = value ? 'Вернуться к конфигуратору' : 'Помогите подобрать душевую';
+    $('status').textContent = '';
+  }
+  $('help-toggle').addEventListener('click', () => {
+    setAssisted(!assisted);
+    if (assisted) $('help-note').focus();
+  });
   const panelButtons = [...$('panels').querySelectorAll('button')];
   const wideMeasure = matchMedia('(min-width: 801px)');
   const setMeasureOpen = () => { $('measure').open = wideMeasure.matches; };
@@ -396,11 +410,12 @@
   document.querySelectorAll('a[href="#ags-width"]').forEach(link =>
     link.addEventListener('click', () => showPanel('ags-dimensions')));
   form.addEventListener('input', () => {
-    update();
+    if (!assisted) update();
     $('status').textContent = '';
   });
-  form.addEventListener('change', update);
+  form.addEventListener('change', () => { if (!assisted) update(); });
   document.querySelectorAll('[data-ags-mode]').forEach(link => link.addEventListener('click', () => {
+    setAssisted(false);
     showPanel('ags-dimensions');
     $('layout').value = $('guide-layout').value;
     $('mode').value = link.dataset.agsMode;
@@ -441,26 +456,37 @@
 
   function setButtonText() {
     document.getElementById('ags-new').hidden = !editing;
-    buttons.forEach(button => button.textContent = editing ? 'Сохранить изменения' : 'Добавить в мой расчёт');
+    buttons.forEach(button => button.querySelector('span').textContent = editing ? 'Сохранить изменения' : 'Добавить в мой расчёт');
   }
   form.addEventListener('submit', async event => {
     event.preventDefault();
-    update();
-    if (!form.reportValidity()) return;
+    const note = $('help-note').value.trim();
+    if (assisted) {
+      if (!fileInput.reportValidity()) return;
+      if (!note && !fileInput.files[0] && !savedFile) {
+        $('status').textContent = 'Опишите задачу или приложите фото либо схему.';
+        $('help-note').focus();
+        return;
+      }
+    } else {
+      update();
+      if (!form.reportValidity()) return;
+    }
     buttons.forEach(button => button.disabled = true);
     try {
       const quote = await window.AGMQuoteReady;
       const id = editing || crypto.randomUUID();
-      const fields = Object.fromEntries(controls.map(control => [control.id, control.value]));
+      const fields = assisted ? {assistance:true, note} : Object.fromEntries(controls.filter(control => control !== $('help-note')).map(control => [control.id, control.value]));
       const sketch = fileInput.files[0] ? await readSketch(fileInput.files[0]) : savedFile;
       const url = new URL(location.pathname, location.origin);
       url.searchParams.set('quote-edit', id);
       url.hash = 'shower-configurator';
+      const summary = assisted ? ['Нужна помощь в подборе душевой.', note].filter(Boolean).join('\n') : spec;
       quote.store.put({
         type: 'partition',
         id,
-        title: 'Душевая перегородка',
-        summary: sketch ? spec + '\nФайл схемы: ' + sketch.name : spec,
+        title: assisted ? 'Подбор душевой по запросу' : 'Душевая перегородка',
+        summary: sketch ? summary + '\nПриложение: ' + sketch.name : summary,
         errors: [],
         data: {
           shower: fields, sketch
@@ -519,6 +545,14 @@
     const fields = entry?.data?.shower;
     if (!fields) {
       editing = null;
+      setButtonText();
+      return;
+    }
+    if (fields.assistance) {
+      setAssisted(true);
+      $('help-note').value = fields.note || '';
+      savedFile = entry.data.sketch || null;
+      displayFile();
       setButtonText();
       return;
     }
