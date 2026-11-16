@@ -13,16 +13,35 @@
  let opener;
  const close=()=>{drawer.hidden=true;opener?.focus({preventScroll:true});};
  top.append(heading,button('Закрыть',close));
- const intro=el('p','Все выбранные изделия — в одной заявке. Можно продолжить выбор на других страницах.'),list=el('div'),status=el('p');status.setAttribute('role','status');
+ const list=el('div'),status=el('p');status.setAttribute('role','status');
  const links=el('nav');links.setAttribute('aria-label','Добавить к заказу');
  for(const [url,title] of [['/materialy/zerkalo-serebro/','Обычное зеркало'],['/aluminium/zerkala/','Зеркало в раме'],['/wp-content/themes/alfa-glass-home-2026/agm-aluminium-configurator/index.html','Фасад'],['/aluminium/peregorodki/','Перегородка'],['/dveri-iz-stekla/','Дверь из стекла'],['/dushevye-peregorodki-iz-stekla/','Душевая перегородка']]){const a=el('a',title);a.href=url;links.append(a);}
  const actions=el('div');actions.className='quote-actions';
- const checkout=button('Оформить общую заявку',prepare),download=button('Скачать весь расчёт',()=>exportText());
+ const checkout=button('Перейти к отправке',prepare),download=button('Скачать весь расчёт',()=>exportText());
  checkout.disabled=download.disabled=true;
- actions.append(checkout,download);drawer.append(top,intro,links,list,actions,status);document.body.append(drawer);
+ const more=el('details');more.append(el('summary','Добавить другое изделие'),links);
+ actions.append(checkout,download);drawer.append(top,list,actions,status,more);document.body.append(drawer);
  const launcher=button('Мой расчёт',()=>open());launcher.id='quote-launcher';document.body.append(launcher);
  const dialog=el('dialog');dialog.id='quote-checkout';dialog.setAttribute('aria-labelledby','quote-title');
- dialog.innerHTML='<div class="quote-top"><h2 id="quote-title">Одна заявка на весь заказ</h2><button type="button" data-close>Закрыть</button></div><p data-count></p><details><summary>Состав заявки</summary><pre></pre></details><form><label>Ваше имя<input name="name" required maxlength="100" autocomplete="name"></label><label>Телефон<input name="phone" type="tel" required maxlength="40" autocomplete="tel"></label><label>Email — по желанию<input name="email" type="email" maxlength="160" autocomplete="email"></label><label>Пожелания, доставка и монтаж<textarea name="comment" rows="3" maxlength="3000"></textarea></label><div class="quote-trap" aria-hidden="true"><label>Сайт<input name="website" tabindex="-1" autocomplete="off"></label></div><label class="quote-consent"><input type="checkbox" name="consent" value="1" required><span>Даю согласие на обработку персональных данных на условиях <a href="/privacy-policy/" target="_blank" rel="noopener">политики конфиденциальности</a>.</span></label><p>Если нужен чертёж, укажите это в пожеланиях. Передачу файлов согласуем с менеджером.</p><button type="submit">Отправить заявку</button><p role="status" data-status></p></form>';
+ dialog.innerHTML=`
+   <div class="quote-top"><h2 id="quote-title">Заявка на расчёт</h2><button type="button" data-close>Закрыть</button></div>
+   <section class="quote-order" aria-label="Ваш заказ">
+     <strong data-count></strong><ul data-order></ul>
+     <details><summary>Посмотреть параметры</summary><pre></pre></details>
+   </section>
+   <form>
+     <div class="quote-contacts">
+       <label>Ваше имя<input name="name" required maxlength="100" autocomplete="name"></label>
+       <label>Телефон<input name="phone" type="tel" required maxlength="40" autocomplete="tel" placeholder="+7 (___) ___-__-__"></label>
+     </div>
+     <details class="quote-extras"><summary>Добавить почту или комментарий</summary>
+       <label>Электронная почта<input name="email" type="email" maxlength="160" autocomplete="email"></label>
+       <label>Комментарий<textarea name="comment" rows="2" maxlength="3000" placeholder="Например, удобное время для звонка"></textarea></label>
+     </details>
+     <div class="quote-trap" aria-hidden="true"><label>Сайт<input name="website" tabindex="-1" autocomplete="off"></label></div>
+     <label class="quote-consent"><input type="checkbox" name="consent" value="1" required><span>Даю согласие на обработку персональных данных на условиях <a href="/privacy-policy/" target="_blank" rel="noopener">политики конфиденциальности</a>.</span></label>
+     <button type="submit">Отправить заявку</button><p role="status" data-status></p>
+   </form>`;
  document.body.append(dialog);dialog.querySelector('[data-close]').onclick=()=>dialog.close();dialog.addEventListener('close',()=>checkout.focus());
  const form=dialog.querySelector('form'),send=form.querySelector('[type=submit]'),feedback=form.querySelector('[data-status]');
  if(local){send.textContent='Проверить состав заявки';feedback.textContent='Локальная проверка: письмо не отправляется.';}
@@ -50,7 +69,9 @@
  function open(){opener=document.activeElement;document.dispatchEvent(new CustomEvent('agm:quote-flush'));drawer.hidden=false;render();if(loadError)report(loadError);top.querySelector('button').focus({preventScroll:true});}
  function text(items){return items.map((i,n)=>(n+1)+'. '+i.title+'\n'+i.summary).join('\n\n');}
  function prepare(){
-  try{if(loadError)throw loadError;const items=store.payload();status.textContent='';dialog.querySelector('pre').textContent=text(items);dialog.querySelector('[data-count]').textContent='Позиций: '+items.length+'. Контакты указываются один раз для всего заказа.';dialog.showModal();if(!local)credentialsReady().catch(e=>feedback.textContent=e.message);}catch(e){report(e);}
+  try{if(loadError)throw loadError;const items=store.payload();status.textContent='';dialog.querySelector('pre').textContent=text(items);dialog.querySelector('[data-count]').textContent='Ваш заказ · позиций: '+items.length;
+   dialog.querySelector('[data-order]').replaceChildren(...items.map(item=>el('li',item.title)));
+   dialog.showModal();if(!local)credentialsReady().catch(e=>feedback.textContent=e.message);}catch(e){report(e);}
  }
  function exportText(items=store.all()){try{if(!items.length)return;const url=URL.createObjectURL(new Blob(['\ufeffALFAGLASS — Мой расчёт\n\n'+text(AGMQuoteStore.groupFacades(items).map(i=>i.type==='facade'?{...i,summary:i.summary.split('\n').filter(line=>/^(?:\d+ × |Профиль:|Цвет:|Заполнение:|Петли:|Направление рифления:|Маскировка зоны вклейки:|Количество:)/.test(line)).map(line=>line.split('; координаты от верха')[0]).join('\n')}:i))+'\nСтоимость и комплектация согласуются.'],{type:'text/plain;charset=utf-8'}));const a=el('a');a.href=url;a.download='ALFAGLASS-my-calculation.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}catch(e){report(e);}}
  async function credentialsReady(){
@@ -58,13 +79,18 @@
   if(!pending)pending=(async()=>{const r=await fetch(endpoint,{cache:'no-store',credentials:'same-origin'}),data=await r.json();if(!r.ok||!data.enabled)throw Error('Отправка недоступна. Расчёт сохранён — его можно скачать.');credentials=data;})().finally(()=>pending=null);
   return pending;
  }
+ form.addEventListener('invalid',event=>{
+  const section=event.target.closest('details');
+  if(section)section.open=true;
+ },true);
+ form.addEventListener('input',event=>event.target.setCustomValidity?.(''));
  form.addEventListener('submit',async e=>{
   e.preventDefault();if(busy||!form.reportValidity())return;
   let timer;busy=true;send.disabled=true;
   try{
    const items=store.payload(),contact=Object.fromEntries(new FormData(form)),phone=contact.phone.replace(/\D/g,'');
-   if(!contact.name.trim())throw Error('Укажите ваше имя.');
-   if(!/^[78]\d{10}$/.test(phone))throw Error('Укажите полный российский телефон, начиная с +7 или 8.');
+   if(!contact.name.trim()){form.elements.name.setCustomValidity('Укажите ваше имя.');form.elements.name.reportValidity();return;}
+   if(!/^[78]\d{10}$/.test(phone)){form.elements.phone.setCustomValidity('Введите 11 цифр, начиная с +7 или 8.');form.elements.phone.reportValidity();return;}
    const data={...contact,product:'mixed',dimensions:'Позиций: '+items.length,items,...(items.some(i=>i.type==='facade')?{managerItems:store.all().map(({type,title,summary,data})=>({type,title,summary,...(type==='facade'?{config:data.config}:{})}))}:{})},current=JSON.stringify(data);
    if(current===sentFingerprint){feedback.textContent='Эта заявка уже передана.';return;}
    if(fingerprint&&fingerprint!==current)credentials=null;fingerprint=current;

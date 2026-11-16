@@ -30,6 +30,15 @@
 #quote-checkout .quote-trap{position:absolute;left:-10000px}
 #quote-checkout p{margin:6px 0}
 #quote-checkout details{margin:16px 0}
+#quote-checkout .quote-order{margin-top:18px;padding:12px 16px;background:#edf3f4;border-radius:10px}
+#quote-checkout .quote-order ul{margin:4px 0;padding-inline-start:20px;overflow-wrap:anywhere}
+#quote-checkout .quote-order details,#quote-checkout .quote-extras{margin:0}
+#quote-checkout summary,#quote-drawer summary{cursor:pointer}
+#quote-checkout .quote-extras label{margin-top:10px}
+#quote-checkout .quote-contacts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+#quote-checkout .quote-order pre{margin-top:10px}
+#quote-checkout .quote-contacts input{min-width:0}
+@media(max-width:520px){#quote-checkout .quote-contacts{grid-template-columns:1fr}}
 #quote-drawer button:focus-visible,#quote-checkout button:focus-visible,#quote-launcher:focus-visible{outline:2px solid #1586a1;outline-offset:3px}
 #mp-reopen{display:none!important}
 .agm-quote-ready .cart-mobile[data-open-cart]{display:none!important}
