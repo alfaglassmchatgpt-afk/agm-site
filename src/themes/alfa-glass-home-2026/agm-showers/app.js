@@ -68,7 +68,14 @@
 
   function refreshGuide() {
     document.querySelectorAll('[data-ags-mode]').forEach(link => {
-      link.closest('article').querySelector('svg').outerHTML = planView($('guide-layout').value, link.dataset.agsMode, false);
+      const layout = $('guide-layout').value;
+      const mode = link.dataset.agsMode;
+      const card = link.closest('article');
+      const image = card.querySelector('.ags-example');
+      if (!image.dataset.nicheSrc) image.dataset.nicheSrc = image.getAttribute('src');
+      image.src = layout === 'niche' ? image.dataset.nicheSrc : '/wp-content/uploads/2026/11/shower-guide-' + layout + '-' + mode + '.webp';
+      image.alt = txt('guide-layout') + ' — ' + card.querySelector('h3').textContent;
+      card.querySelector('svg').outerHTML = planView(layout, mode, false);
     });
   }
   $('guide-layout').addEventListener('change', refreshGuide);
