@@ -160,7 +160,7 @@
       'ALFAGLASS — запрос на комплексную поставку зеркал',
       'Получатель: contact@example.invalid | +70000000000', '',
       '1. Компания и контактное лицо:', '2. Телефон и email:',
-      '3. Название объекта и адрес поставки:', '4. Общее количество (от 100 изделий):', '',
+      '3. Название объекта и адрес поставки:', '4. Примерное количество в партии:', '',
       'ПОЗИЦИИ СПЕЦИФИКАЦИИ', 'Для каждой позиции укажите:',
       '— Наименование и количество;', '— Форма и размеры, мм;',
       '— Вид зеркала, профиль и цвет рамы;', '— Наличие и вид подсветки;',
@@ -221,7 +221,7 @@
     return ['ALFAGLASS — запрос на комплексную поставку', '',
       'Компания: ' + value('company'), 'Контакт: ' + value('name'),
       'Email: ' + value('email'), 'Телефон: ' + value('phone'),
-      'Изделия: ' + title, 'Количество: ' + value('quantity') + ' шт.', '',
+      'Изделия: ' + title, 'Количество: ' + (form.elements.quantity.value ? value('quantity') + ' шт.' : 'уточняется'), '',
       'Объект / адрес: ' + value('site_name'), 'Модели / типоразмеры: ' + value('model_count'),
       'Порядок поставки: ' + value('delivery_plan'), 'Желаемый график: ' + value('delivery_dates'), '',
       'Описание проекта:', value('message'), '',
@@ -236,7 +236,7 @@
   }));
   $$('[data-mail-request]').forEach(b => b.addEventListener('click', () => {
     if (!form.reportValidity()) return;
-    const subject = 'Запрос на поставку зеркал — ' + $('#quantity').value + ' шт.';
+    const subject = 'Запрос на партию: ' + productSelect.selectedOptions[0].textContent;
     const body = requestText();
     // Very long projects are better attached as the downloadable TXT file.
     const shortBody = body.length > 2200 ? body.slice(0, 2100) + '\r\n\r\nПродолжение — в отдельном файле запроса.' : body;
@@ -281,7 +281,6 @@
   form.addEventListener('submit', async e => {
     e.preventDefault();
     if (state.busy || !form.reportValidity()) return;
-    if ($('#quantity').valueAsNumber < 100) { $('#quantity').focus(); return; }
     if (!state.enabled) {
       setStatus('Запрос подготовлен, но не отправлен. Скачайте заполненный запрос или откройте письмо кнопками ниже. При отправке через почту приложения нужно добавить вручную.');
       previews.hidden = false;
