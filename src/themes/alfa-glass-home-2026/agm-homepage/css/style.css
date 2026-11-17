@@ -573,3 +573,13 @@ html[data-theme="dark"] .hero-caption #slide-label{color:#9fddfc}
 @media (max-width: 420px) {
   .hero-buttons { grid-template-columns: 1fr; max-width: 290px; }
 }
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-material-order .button:not(:hover):not(:focus-visible) {
+    animation: material-order-glow 4s ease-in-out 2;
+  }
+  @keyframes material-order-glow {
+    0%, 100% { border-color: var(--strong-line); box-shadow: none; }
+    45% { border-color: var(--blue); box-shadow: 0 0 10px 1px color-mix(in srgb, var(--blue) 27%, transparent); }
+  }
+}
