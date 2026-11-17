@@ -1,7 +1,7 @@
 <?php
 /** Template Name: ALFAGLASS — Рифлёное стекло / Триплекс */
 defined('ABSPATH') || exit;
-require_once __DIR__ . '/inc/agm-aluminium-header.php';
+require_once __DIR__ . '/inc/agm-navigation.php';
 require_once __DIR__ . '/inc/agm-configurator.php';
 require_once __DIR__ . '/inc/agm-quote.php';
 require_once __DIR__ . '/inc/agm-material-groups.php';
@@ -24,12 +24,9 @@ add_action('wp_footer', $cleanup, 0);
 ob_start();
 ?><!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <?php wp_head(); ?>
-<link rel="stylesheet" href="<?php echo $asset($triplex ? 'agm-homepage/css/style.css' : 'agm-doors/style.css'); ?>">
+<link rel="stylesheet" href="<?php echo $asset('agm-homepage/css/style.css'); ?>">
 <link rel="stylesheet" href="<?php echo $asset('agm-landings/style.css?v=20261109-cards'); ?>">
-<?php if (!$triplex): ?>
-<link rel="stylesheet" href="<?php echo $asset('agm-aluminium-catalog/shared-header.css'); ?>">
-<script src="<?php echo $asset('agm-aluminium-catalog/shared-header.js'); ?>" defer></script>
-<?php else: ?>
+<?php if ($triplex): ?>
 <style>
 .triplex-hero .hero-art .aml-slide{opacity:0;transition:opacity .9s ease}
 .triplex-hero .hero-art .aml-slide.is-active{opacity:1}
@@ -59,6 +56,7 @@ ob_start();
     transform-origin: left center;
 }
 </style>
+<?php endif; ?>
 <script>document.addEventListener('DOMContentLoaded',()=>{
   const $=(s,p=document)=>p.querySelector(s), $$=(s,p=document)=>Array.from(p.querySelectorAll(s));
   $('.search-toggle').addEventListener('click', () => location.assign('/#site-search'));
@@ -117,24 +115,21 @@ ob_start();
   }
 
 });</script>
-<?php endif; ?>
 </head><body id="top">
-<?php if ($triplex):
+<?php
     $home = agm_navigation_render(file_get_contents(__DIR__ . '/agm-homepage/index.html'));
     preg_match('~<svg[^>]*class="svg-library".*?</svg>~s', $home, $icons);
     preg_match('~<header class="site-header">.*?</header>~s', $home, $header);
     echo $icons[0];
-    $page_header = preg_replace_callback('~(<a\b[^>]*?\shref=")#([^"]*)"~', static function ($match) {
-        if ($match[2] === 'request') return $match[1] . '#triplex-builder" data-open-quote';
+    $page_header = preg_replace_callback('~(<a\b[^>]*?\shref=")#([^"]*)"~', static function ($match) use ($triplex) {
+        if ($match[2] === 'request') return $match[1] . ($triplex ? '#triplex-builder' : '#material-request') . '" data-open-quote';
         return $match[1] . esc_url(home_url('/')) . ($match[2] === 'top' ? '' : '#' . $match[2]) . '"';
     }, $header[0]);
     echo strtr($page_header, [
         '__AGM_ASSETS__' => $asset('agm-homepage'),
         '__AGM_HOME__' => esc_url(home_url('/')),
     ]);
-else:
-    echo agm_aluminium_header($slug, ['/materialy/' => 'Все материалы', '/riflenoe-steklo/' => 'Рифлёное стекло', '/triplex/' => 'Триплекс', '/aluminium/peregorodki/' => 'Перегородки', '/#contacts' => 'Контакты'], '/' . $slug . '/#material-request');
-endif; ?>
+?>
 <main id="main"<?php if (!$triplex) echo ' class="aml"'; ?>>
 <?php if (!$triplex): ?>
 <nav class="aml-crumbs" aria-label="Хлебные крошки"><a href="/">Главная</a> / <a href="/materialy/">Материалы</a> / <span><?php echo esc_html($title); ?></span></nav>
