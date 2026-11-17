@@ -203,27 +203,15 @@
   $$('[data-product-filter]').forEach(b => b.addEventListener('click', () => filterCards('product', b.dataset.productFilter)));
 
   const slides = [
-["hero-smart-mirror","Умные зеркала Smart Mirror"],
-["hero-tinted-panel","Панно из тонированных зеркал"],
-["hero-reeded-facades","Фасады с рифлёным стеклом"],
-["hero-lighted-mirrors","Зеркала с подсветкой"],
-  [
-    "hero-partitions-hq",
-    "Стеклянные перегородки"
-  ],
-  [
-    "hero-interior-hq",
-    "Зеркала для ванной"
-  ],
-  [
-    "hero-facades-hq",
-    "Алюминиевые фасады со стеклом"
-  ],
-  [
-    "hero-round-hq",
-    "Зеркала в алюминиевых рамах"
-  ]
-];
+    ["hero-smart-mirror", "Умные зеркала Smart Mirror", "/smart-mirror/"],
+    ["hero-tinted-panel", "Панно из тонированных зеркал", "/izdeliya/zerkalnye-panno/"],
+    ["hero-reeded-facades", "Фасады с рифлёным стеклом", "/aluminium/fasady/"],
+    ["hero-lighted-mirrors", "Зеркала с подсветкой", "/zerkala-s-podsvetkoj/"],
+    ["hero-partitions-hq", "Стеклянные перегородки", "/aluminium/peregorodki/"],
+    ["hero-interior-hq", "Зеркала для ванной", "/materialy/zerkalo-serebro/"],
+    ["hero-facades-hq", "Алюминиевые фасады со стеклом", "/aluminium/fasady/"],
+    ["hero-round-hq", "Зеркала в алюминиевых рамах", "/aluminium/zerkala/"]
+  ];
   const phrases=["ДЛЯ ДОМА И БИЗНЕСА","ДЛЯ ИНТЕРЬЕРОВ","ДЛЯ МЕБЕЛИ","ДЛЯ СМЕЛЫХ РЕШЕНИЙ","ДЛЯ АРХИТЕКТУРЫ"];
   const hero=$('.hero'), typed=$('#hero-typed'), photo=$('#hero-photo'), pause=$('#hero-pause');
   const nextSlide=document.createElement('button');nextSlide.type='button';nextSlide.id='hero-next-slide';
@@ -328,17 +316,17 @@
     function tick(){typed.textContent=text.slice(0,++n);if(n<text.length)typing=setTimeout(tick,65);}
     tick();
   }
-  function fadeCaption(text){
+  function fadeCaption([, text, url]){
     clearTimeout(captionTimer);
     const label=$('#slide-label');
-    label.parentElement.setAttribute('aria-label',text);
-    label.setAttribute('aria-hidden','true');
-    if(reduce.matches||paused||document.hidden){label.textContent=text;label.classList.remove('caption-hidden');return;}
-    label.classList.add('caption-hidden');
-    captionTimer=setTimeout(()=>{
+    function updateLabel(){
       label.textContent=text;
+      label.href=new URL(url, 'https://alfaglass.ru/').href;
       label.classList.remove('caption-hidden');
-    },350);
+    }
+    if(reduce.matches||paused||document.hidden){updateLabel();return;}
+    label.classList.add('caption-hidden');
+    captionTimer=setTimeout(updateLabel,350);
   }
   function slideDuration(){return 6000;}
   function schedule(){clearTimeout(timer);if(!paused&&!reduce.matches&&!document.hidden)timer=setTimeout(()=>showSlide((slide+1)%slides.length),slideDuration());}
@@ -349,15 +337,15 @@
     back.onload=()=>{if(token!==version)return;front.classList.add('hero-next');back.classList.remove('hero-next');[front,back]=[back,front];startSketch();};
     fitMirror(back,slides[n][0]);
     back.src=src;
-    fadeCaption(slides[n][1]);
+    fadeCaption(slides[n]);
     $$('[data-slide]').forEach(b=>{const active=Number(b.dataset.slide)===n;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});
     typePhrase(phrases[phraseIndex]);schedule();
   }
   $$('[data-slide]').forEach(b=>b.addEventListener('click',()=>showSlide(Number(b.dataset.slide))));
-  pause.addEventListener('click',()=>{paused=!paused;pause.setAttribute('aria-pressed',String(paused));pause.setAttribute('aria-label',paused?'Продолжить слайды':'Приостановить слайды');pause.textContent=paused?'▶':'Ⅱ';hero.classList.toggle('hero-paused',paused);stop();typed.textContent=phrases[phraseIndex];fadeCaption(slides[slide][1]);schedule();});
-  document.addEventListener('visibilitychange',()=>{stop();typed.textContent=phrases[phraseIndex];fadeCaption(slides[slide][1]);schedule();});
-  reduce.addEventListener('change',()=>{stop();typed.textContent=phrases[phraseIndex];fadeCaption(slides[slide][1]);schedule();});
-  typePhrase(phrases[0]);fadeCaption(slides[0][1]);schedule();
+  pause.addEventListener('click',()=>{paused=!paused;pause.setAttribute('aria-pressed',String(paused));pause.setAttribute('aria-label',paused?'Продолжить слайды':'Приостановить слайды');pause.textContent=paused?'▶':'Ⅱ';hero.classList.toggle('hero-paused',paused);stop();typed.textContent=phrases[phraseIndex];fadeCaption(slides[slide]);schedule();});
+  document.addEventListener('visibilitychange',()=>{stop();typed.textContent=phrases[phraseIndex];fadeCaption(slides[slide]);schedule();});
+  reduce.addEventListener('change',()=>{stop();typed.textContent=phrases[phraseIndex];fadeCaption(slides[slide]);schedule();});
+  typePhrase(phrases[0]);fadeCaption(slides[0]);schedule();
 
 
   const norm = s => s.toLowerCase().replace(/ё/g, 'е').trim();

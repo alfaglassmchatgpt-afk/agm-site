@@ -583,3 +583,6 @@ html[data-theme="dark"] .hero-caption #slide-label{color:#9fddfc}
     45% { border-color: var(--blue); box-shadow: 0 0 10px 1px color-mix(in srgb, var(--blue) 27%, transparent); }
   }
 }
+
+.hero-caption a#slide-label { pointer-events: auto; }
+.hero-caption a#slide-label:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
