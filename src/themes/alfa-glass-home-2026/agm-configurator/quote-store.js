@@ -67,6 +67,10 @@
    const invalid=items.find(i=>i.errors.length);if(invalid)throw Error(invalid.title+': '+invalid.errors[0]);
    return groupFacades(items).map(({type,title,summary,data})=>{
     const item={type,title,summary};
+    if(type==='material' && data?.shelf){
+     item.shelf={};
+     for(const key of ['shape','width','height','diameter','topWidth','radii','thickness','quantity'])item.shelf[key]=clone(data.shelf[key]);
+    }
     if(type==='partition' && data?.shower){
      item.shower={};
      if(data.sketch)item.sketch=data.sketch;

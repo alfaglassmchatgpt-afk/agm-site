@@ -136,11 +136,22 @@
    const items=store.payload(),contact=Object.fromEntries(new FormData(form)),phone=contact.phone.replace(/\D/g,'');
    if(!contact.name.trim()){form.elements.name.setCustomValidity('Укажите ваше имя.');form.elements.name.reportValidity();return;}
    if(!/^[78]\d{10}$/.test(phone)){form.elements.phone.setCustomValidity('Введите 11 цифр, начиная с +7 или 8.');form.elements.phone.reportValidity();return;}
+   items.forEach(item=>{item.summary=readableSummary(item.summary);});
+   if(items.some(i=>i.shelf)){const report=await import(new URL('shelf-report.js',asset));await report.prepare(items);}
    const data={...contact,product:'mixed',dimensions:'Позиций: '+items.length,items,...(items.some(i=>i.type==='facade')?{managerItems:store.all().map(({type,title,summary,data})=>({type,title,summary,...(type==='facade'?{config:data.config}:{})}))}:{})},current=JSON.stringify(data);
    if(current===sentFingerprint){feedback.textContent='Эта заявка уже передана.';return;}
    if(fingerprint&&fingerprint!==current)credentials=null;fingerprint=current;
    dialog.querySelector('pre').textContent=text(items);
-   if(local){feedback.textContent='Проверка пройдена: '+items.length+' позиций в одной заявке. Письмо не отправлено.';return;}
+   if(local){feedback.textContent='Проверка пройдена: '+items.length+' позиций. Письмо не отправлено.';
+    if(items.some(i=>i.shelfImage)){
+     const report=await import(new URL('shelf-report.js',asset));
+     const link=button('Посмотреть лист менеджера со схемами',()=>{
+      const preview=el('dialog');preview.style.cssText='width:min(900px,94vw);max-height:90vh;overflow:auto';
+      const closePreview=button('Закрыть просмотр',()=>{preview.close();preview.remove();});
+      const frame=el('iframe');frame.title='Лист менеджера со схемами';frame.setAttribute('sandbox','');frame.style.cssText='width:100%;height:72vh;border:0';frame.srcdoc=report.documentHtml(items);
+      preview.append(closePreview,frame);document.body.append(preview);preview.showModal();
+     });feedback.append(document.createElement('br'),link);
+    }return;}
    await credentialsReady();const age=Date.now()-Number(credentials.time)*1000;if(age<2200)await new Promise(r=>setTimeout(r,2200-age));
    const controller=new AbortController();timer=setTimeout(()=>controller.abort(),30000);
    const {id,time,token}=credentials;

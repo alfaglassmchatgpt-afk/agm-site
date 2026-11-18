@@ -3,6 +3,7 @@
 defined('ABSPATH') || exit;
 require_once __DIR__.'/agm-facade-mail.php';
 require_once __DIR__.'/agm-shower-mail.php';
+require_once __DIR__.'/agm-shelf-mail.php';
 
 function agm_al_request_disabled() {
     return (defined('AGM_STAGING') && AGM_STAGING);
@@ -36,10 +37,16 @@ function agm_al_request_send($request) {
     if ($origin && wp_parse_url($origin,PHP_URL_HOST)!==wp_parse_url(home_url(),PHP_URL_HOST)) return new WP_Error('origin','Запрос отклонён.',['status'=>403]);
     $types=['facades'=>'Фасады в алюминиевом профиле','partitions'=>'Перегородки в алюминиевом профиле','mirrors'=>'Зеркала в алюминиевой раме','mixed'=>'Мой расчёт — общий заказ'];
     $mixed='';
-    $sketches=[];
+    $sketches=[]; $shelf_images=[];
     if ($p['product']==='mixed') {
         if (is_array($p['items']??null)) {
             foreach ($p['items'] as $index=>$item) {
+                if (isset($item['shelfImage'])) {
+                    $image=agm_shelf_image($item);
+                    if (!$image || count($shelf_images)>=20) return new WP_Error('shelf','Проверьте схемы полок: до 20 PNG, размер каждой до 1 МБ.',['status'=>400]);
+                    $shelf_images[$index]=$image;
+                    unset($p['items'][$index]['shelfImage']);
+                }
                 if (!isset($item['sketch'])) continue;
                 $sketch=agm_shower_decode_sketch($item);
                 if (!$sketch || count($sketches)>=4) return new WP_Error('sketch','Проверьте схемы: PDF, JPG или PNG до 1 МБ, до четырёх файлов в заявке.',['status'=>400]);
@@ -75,6 +82,10 @@ function agm_al_request_send($request) {
     if ($p['product']==='mixed' && array_column($p['items'],'shower')) {
         $send_mail=$deliver;
         $deliver=static function($files=[])use($p,$send_mail,$sketches){return agm_with_shower_attachment($p,$files,$send_mail,$sketches);};
+    }
+    if ($shelf_images) {
+        $send_mail=$deliver;
+        $deliver=static function($files=[])use($p,$shelf_images,$send_mail){return agm_with_shelf_attachment($p,$shelf_images,$files,$send_mail);};
     }
     $ok=$needs_sheet?agm_with_facade_attachment($p,$deliver):$deliver();
     delete_option($lock);
