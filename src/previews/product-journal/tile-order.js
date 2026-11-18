@@ -10,7 +10,7 @@
  form.addEventListener('input',update);selectKind('rectangle');update();
  form.addEventListener('submit',e=>{e.preventDefault();try{
  const v=values();const entryId=id||crypto.randomUUID();
- const note='Зеркальная плитка с полированным фацетом по периметру. Ширину фацета согласовать.\nУпаковка: '+v.packs+' пач. по 20 шт.\nОбщая площадь без швов: '+area(v.area)+' м².';
+ const note='Зеркальная плитка с полированным фацетом по периметру ≈ 5 мм.\nУпаковка: '+v.packs+' пач. по 20 шт.\nОбщая площадь без швов: '+area(v.area)+' м².';
  const data=AGMOrderModel.normalize({id:entryId,material:'zerkalo-serebro',base:'standard',thickness:'4',width:v.width,height:v.height,quantity:v.quantity,ops:['cut'],note},quote.materials,()=>entryId);
  if(!data)throw Error('Материал или толщина недоступны в каталоге.');
  const entry=AGMQuoteModel.material(data,quote.materials,quote.operations);if(entry.errors.length)throw Error(entry.errors.join(' '));
