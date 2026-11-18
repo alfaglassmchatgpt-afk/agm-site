@@ -22,3 +22,5 @@
 `mirrors.html` использует `mirror-catalog.js` и общий редактор полок/изделий. Медиа локально: `assets/mirrors-grid-1.png` (2×5), `mirrors-grid-2.png` и `mirrors-grid-3.png` (2×4), `mirrors-hero.png` (панорама). Не входят в публичный Git. Минимальные габариты 800×600 с поворотом, круг Ø800. Как у полок, партия от 3 шт. Толщины по варианту из общего materials.json; зеркала не закаляются.
 
 Обновление зеркал: сетки больше не используются. Для каждого ID карточки нужны два самостоятельных файла `assets/mirror-v2-{id}.png` и `assets/mirror-v2-{id}-room.png`. 12 карточек, 24 локальных PNG, `img` с сохранением пропорций без кропа. Состаренные убраны; серебро — rectangle/circle/ellipse/arch. Проверка: `node scripts/test-product-journal-mirrors.cjs`.
+
+Серебряные образцы обновлены на mirror-v3-{silver-rect,silver-circle,silver-oval,silver-arch,crystal}.png: отражение окна и зелени. Интерьерные кадры справа используют прежние mirror-v2-*-room.png.

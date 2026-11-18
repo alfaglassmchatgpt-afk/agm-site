@@ -11,7 +11,7 @@ window.AGMCatalogProduct = {
       "caption": "Серебро · прямоугольник — полированная кромка без рамы.",
       "interior": "В гардеробную, прихожую, на дверь шкафа. Зеркало без рамы.",
       "preview": {
-        "url": "/assets/mirror-v2-silver-rect.png",
+        "url": "/assets/mirror-v3-silver-rect.png",
         "position": "center",
         "size": "contain",
         "alt": "Серебро · прямоугольник",
@@ -34,7 +34,7 @@ window.AGMCatalogProduct = {
           0
         ],
         "preview": {
-          "url": "/assets/mirror-v2-silver-rect.png",
+          "url": "/assets/mirror-v3-silver-rect.png",
           "position": "center",
           "size": "contain",
           "alt": "Серебро · прямоугольник",
@@ -57,7 +57,7 @@ window.AGMCatalogProduct = {
       "caption": "Серебро · круг — полированная кромка без рамы.",
       "interior": "В ванную, над умывальником. Зеркало без рамы.",
       "preview": {
-        "url": "/assets/mirror-v2-silver-circle.png",
+        "url": "/assets/mirror-v3-silver-circle.png",
         "position": "center",
         "size": "contain",
         "alt": "Серебро · круг",
@@ -80,7 +80,7 @@ window.AGMCatalogProduct = {
           0
         ],
         "preview": {
-          "url": "/assets/mirror-v2-silver-circle.png",
+          "url": "/assets/mirror-v3-silver-circle.png",
           "position": "center",
           "size": "contain",
           "alt": "Серебро · круг",
@@ -103,7 +103,7 @@ window.AGMCatalogProduct = {
       "caption": "Серебро · овал — полированная кромка без рамы.",
       "interior": "В прихожую, спальню. Зеркало без рамы.",
       "preview": {
-        "url": "/assets/mirror-v2-silver-oval.png",
+        "url": "/assets/mirror-v3-silver-oval.png",
         "position": "center",
         "size": "contain",
         "alt": "Серебро · овал",
@@ -126,7 +126,7 @@ window.AGMCatalogProduct = {
           0
         ],
         "preview": {
-          "url": "/assets/mirror-v2-silver-oval.png",
+          "url": "/assets/mirror-v3-silver-oval.png",
           "position": "center",
           "size": "contain",
           "alt": "Серебро · овал",
@@ -149,7 +149,7 @@ window.AGMCatalogProduct = {
       "caption": "Серебро · арка — полированная кромка без рамы.",
       "interior": "В спальню, гардеробную. Зеркало без рамы.",
       "preview": {
-        "url": "/assets/mirror-v2-silver-arch.png",
+        "url": "/assets/mirror-v3-silver-arch.png",
         "position": "center",
         "size": "contain",
         "alt": "Серебро · арка",
@@ -172,7 +172,7 @@ window.AGMCatalogProduct = {
           0
         ],
         "preview": {
-          "url": "/assets/mirror-v2-silver-arch.png",
+          "url": "/assets/mirror-v3-silver-arch.png",
           "position": "center",
           "size": "contain",
           "alt": "Серебро · арка",
@@ -195,7 +195,7 @@ window.AGMCatalogProduct = {
       "caption": "Осветлённое Crystalvision — вариант формы без рамы.",
       "interior": "В ванную, над умывальником. Без подсветки и профиля.",
       "preview": {
-        "url": "/assets/mirror-v2-crystal.png",
+        "url": "/assets/mirror-v3-crystal.png",
         "position": "center",
         "size": "contain",
         "alt": "Осветлённое Crystalvision",
@@ -218,7 +218,7 @@ window.AGMCatalogProduct = {
           30
         ],
         "preview": {
-          "url": "/assets/mirror-v2-crystal.png",
+          "url": "/assets/mirror-v3-crystal.png",
           "position": "center",
           "size": "contain",
           "alt": "Осветлённое Crystalvision",
