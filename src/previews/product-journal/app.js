@@ -62,7 +62,16 @@ shelves.forEach((item, index) => {
   const description = document.createElement('p');
   description.textContent = item.description;
   const specs = document.createElement('dl');
-  [['Форма', item.shape], ['Кромка', item.edge], ['Куда', item.use]].forEach(([label, value]) => {
+  const characteristics = [
+    ['Толщина', '4, 6, 8, 10, 12 мм'],
+    ['Кромка', 'Полированная — по умолчанию'],
+    ['Мин. размер', '180 × 400 мм'],
+    ['Круглая полка', 'Минимальный диаметр — 300 мм'],
+    ['Отверстия и тех. вырезы', 'По запросу'],
+    ['Форма на фото', item.shape],
+    ['Применение', item.use]
+  ];
+  characteristics.forEach(([label, value]) => {
     const row = document.createElement('div');
     const term = document.createElement('dt');
     const detail = document.createElement('dd');
@@ -71,7 +80,10 @@ shelves.forEach((item, index) => {
     row.append(term, detail);
     specs.append(row);
   });
-  copy.append(heading, description, specs);
+  const shapeNote = document.createElement('p');
+  shapeNote.className = 'shape-note';
+  shapeNote.textContent = 'Форма на изображении условная. Изготовим полку другой формы по вашему эскизу.';
+  copy.append(heading, description, specs, shapeNote);
   article.append(specimen, copy, application);
   list.append(article);
 });
