@@ -42,7 +42,7 @@
      <label class="quote-consent"><input type="checkbox" name="consent" value="1" required><span>Даю согласие на обработку персональных данных на условиях <a href="/privacy-policy/" target="_blank" rel="noopener">политики конфиденциальности</a>.</span></label>
      <button type="submit">Отправить заявку</button>
      <button type="button" data-send-max>Отправить в MAX</button>
-     <p class="quote-max-note">Скопируем заявку и откроем чат ALFAGLASS. Вставьте текст в сообщение и отправьте. Файлы прикрепите отдельно.</p>
+     <p class="quote-max-note">В чате MAX вставьте скопированную заявку и отправьте её. При необходимости приложите файлы.</p>
      <div data-max-fallback hidden><label>Текст для MAX<textarea readonly rows="6" data-max-text></textarea></label><a href="https://max.ru/u/f9LHodD0cOJU_mzxnZFM89uKk2SxzncqmFTLwouS7FkvmwtdY23bOzzBQEw" target="_blank" rel="noopener noreferrer">Открыть чат ALFAGLASS в MAX →</a></div>
      <p role="status" data-status></p>
    </form>`;
@@ -142,7 +142,7 @@
    if(current===sentFingerprint){feedback.textContent='Эта заявка уже передана.';return;}
    if(fingerprint&&fingerprint!==current)credentials=null;fingerprint=current;
    dialog.querySelector('pre').textContent=text(items);
-   if(local){feedback.textContent='Проверка пройдена: '+items.length+' позиций. Письмо не отправлено.';
+   if(local){const count=items.length,mod=count%100;const noun=mod>=11&&mod<=14?'позиций':count%10===1?'позиция':count%10>=2&&count%10<=4?'позиции':'позиций';feedback.textContent='Заявка подготовлена: '+count+' '+noun+'. Это локальный макет — письмо не отправляется.';
     if(items.some(i=>i.shelfImage)){
      const report=await import(new URL('shelf-report.js',asset));
      const link=button('Посмотреть лист менеджера со схемами',()=>{
