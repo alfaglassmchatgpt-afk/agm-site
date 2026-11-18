@@ -102,7 +102,8 @@
    const items=store.payload(),contact=Object.fromEntries(new FormData(form));
    if(!contact.name.trim())throw Error('Укажите ваше имя.');
    if(!/^[78]\d{10}$/.test(contact.phone.replace(/\D/g,'')))throw Error('Введите телефон из 11 цифр, начиная с +7 или 8.');
-   const message=['ALFAGLASS — Заявка на расчёт','Имя: '+contact.name.trim(),'Телефон: '+contact.phone,contact.email?'Email: '+contact.email:'','',text(items),contact.comment?'Комментарий: '+contact.comment:''].filter(v=>v!=='').join('\n\n');
+   const sources=[...new Set(items.map(item=>/^Полка(?: ·|$)/.test(item.title)?'Полка из стекла':item.title.split(' · ')[0]))];
+   const message=[sources.join(', ')+' — Заявка на расчёт','Имя: '+contact.name.trim(),'Телефон: '+contact.phone,contact.email?'Email: '+contact.email:'','',text(items),contact.comment?'Комментарий: '+contact.comment:''].filter(v=>v!=='').join('\n\n');
    const fallback=form.querySelector('[data-max-fallback]');
    form.querySelector('[data-max-text]').value=message;
    fallback.hidden=false;
