@@ -44,7 +44,7 @@
      <button type="button" data-copy-request>Скопировать заявку</button>
      <button type="button" data-send-max>Отправить в MAX</button>
      <p class="quote-max-note">Нажмите «Скопировать заявку», затем откройте чат MAX, вставьте текст и отправьте. При необходимости приложите файлы.</p>
-     <div data-max-fallback hidden><label>Текст для MAX<textarea readonly rows="6" data-max-text></textarea></label><a href="https://max.ru/u/f9LHodD0cOJU_mzxnZFM89uKk2SxzncqmFTLwouS7FkvmwtdY23bOzzBQEw" target="_blank" rel="noopener noreferrer">Открыть чат ALFAGLASS в MAX →</a></div>
+     <div data-max-fallback hidden><label>Текст для MAX<textarea readonly rows="6" data-max-text></textarea></label></div>
      <p role="status" data-status></p>
    </form>`;
  document.body.append(dialog);dialog.querySelector('[data-close]').onclick=()=>dialog.close();dialog.addEventListener('close',()=>checkout.focus());
@@ -125,8 +125,8 @@
    maxButton.disabled=true;
    try{
     await navigator.clipboard.writeText(message);
-    feedback.textContent='Заявка скопирована. Вставьте её в чат MAX и нажмите отправку. Если чат не открылся, используйте ссылку ниже.';
-    window.open(fallback.querySelector('a').href,'_blank','noopener,noreferrer');
+    feedback.textContent='Заявка скопирована. Вставьте её в чат MAX и нажмите отправку.';
+    window.open('https://max.ru/u/f9LHodD0cOJU_mzxnZFM89uKk2SxzncqmFTLwouS7FkvmwtdY23bOzzBQEw','_blank','noopener,noreferrer');
    }catch(error){feedback.textContent='Скопируйте текст заявки из поля ниже, откройте чат MAX и отправьте сообщение.';}
   }catch(error){feedback.textContent=error.message;}
   finally{maxButton.disabled=false;}
