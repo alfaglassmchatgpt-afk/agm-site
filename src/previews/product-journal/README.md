@@ -16,3 +16,7 @@
 Фирменное оформление: brand.css использует токены главной; brand.js сохраняет тему в alfaglass-home-theme. Для локального запуска скопировать logo-light.svg и logo-dark.svg из agm-homepage/assets в assets макета. Шапка макета упрощена; перед публикацией использовать общий шаблон шапки WordPress. Локальный сервер отдаёт brand.css, brand.js, SVG-логотипы и общие shelf-geometry.js/shelf-report.js.
 
 Фон hero-v2: .local/product-journal/assets/shelf-hero-v2.png, 2172×724, встроенный imagegen. Промпт: panoramic photorealistic light limestone bathroom, clear polished glass shelf on compact chrome clamps, round illuminated mirror, stone soap dispenser, clear tumbler and white hydrangeas, quiet left area for text, crisp glass edges, no text, no collage. Фон отображается через cover в блоке высотой 450 px; исходник сохраняется отдельно от старой сетки.
+
+
+## Страница зеркал
+`mirrors.html` использует `mirror-catalog.js` и общий редактор полок/изделий. Медиа локально: `assets/mirrors-grid-1.png` (2×5), `mirrors-grid-2.png` и `mirrors-grid-3.png` (2×4), `mirrors-hero.png` (панорама). Не входят в публичный Git. Минимальные габариты 800×600 с поворотом, круг Ø800. Как у полок, партия от 3 шт. Толщины по варианту из общего materials.json; зеркала не закаляются.

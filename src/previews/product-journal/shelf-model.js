@@ -3,7 +3,7 @@
   if (typeof module === 'object' && module.exports) module.exports = model;
   else root.AGMShelfModel = model;
 })(typeof globalThis !== 'undefined' ? globalThis : this, function () {
-  const presets = {
+  const presets = globalThis.AGMCatalogProduct ? Object.fromEntries(globalThis.AGMCatalogProduct.items.map(i=>[i.id,i.preset])) : {
     clear: {material: 'float-steklo-clear-m1', shape: 'rectangle'},
     ultra: {material: 'steklo-osvetlyonnoe-clearvision', shape: 'rectangle', radii: [20,20,20,20]},
     bronze: {material: 'moru-bronze', shape: 'quarter', diameter: 800},
@@ -43,13 +43,15 @@
     if (!shapes[s.shape]) return ['Выберите форму полки.'];
     const [w,h] = dimensions(s);
     if (![w,h].every(v=>Number.isInteger(v)&&v>0)) errors.push('Размеры должны быть целыми положительными миллиметрами. Для полукруга и четверти круга задайте чётный диаметр.');
-    if (s.shape === 'circle') {
+    if(s.productKind==='mirror'){
+      if(Math.min(w,h)<600 || Math.max(w,h)<800) errors.push('Минимальные габариты зеркала — 800 × 600 мм. Для круга диаметр от 800 мм.');
+    } else if (s.shape === 'circle') {
       if (s.diameter<300) errors.push('Минимальный диаметр круглой полки — 300 мм.');
     } else if (Math.min(w,h)<180 || Math.max(w,h)<400) errors.push('Минимальные габариты полки — 180 × 400 мм, с поворотом.');
     const max = material.maxSize || {width:10000,height:10000};
     if (Math.min(w,h)>Math.min(max.width,max.height)||Math.max(w,h)>Math.max(max.width,max.height)) errors.push('Размер превышает формат материала.');
     if (!Number.isInteger(s.quantity)||s.quantity<3||s.quantity>9999) errors.push('Количество — от 3 до 9999 штук.');
-    if (!orderModel.thicknesses(material,'standard').includes(s.thickness)) errors.push('Толщина недоступна в каталоге материала.');
+    if (!orderModel.thicknesses(material,s.base||'standard').includes(s.thickness)) errors.push('Толщина недоступна в каталоге материала.');
     if (cornerIndices(s).length && (s.radii.length!==4 || cornerIndices(s).some(i=>!Number.isInteger(s.radii[i])||s.radii[i]<0||s.radii[i]>radiusLimit(s)))) errors.push('Радиусы углов — от 0 до '+radiusLimit(s)+' мм. 0 означает угол без скругления.');
     if (s.shape==='trapezoid' && (!Number.isInteger(s.topWidth)||s.topWidth<1||s.topWidth>s.width)) errors.push('Верхнее основание трапеции должно быть от 1 мм до ширины нижнего.');
     const straight = s.shape==='rectangle'&&s.radii.every(r=>r===0);

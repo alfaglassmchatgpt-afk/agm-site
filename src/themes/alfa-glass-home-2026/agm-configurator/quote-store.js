@@ -68,7 +68,7 @@
    return groupFacades(items).map(({type,title,summary,data})=>{
     const item={type,title,summary};
     if(type==='material' && data?.shelf){
-     item.shelf={};
+     item.shelf={productKind:data.shelf.productKind==='mirror'?'mirror':'shelf'};
      for(const key of ['shape','width','height','diameter','topWidth','radii','thickness','quantity'])item.shelf[key]=clone(data.shelf[key]);
     }
     if(type==='partition' && data?.shower){

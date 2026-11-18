@@ -1,4 +1,4 @@
-const shelves = [
+const shelves = window.AGMCatalogProduct?.items || [
   {
     id: 'clear', name: 'Обычное прозрачное', heading: 'Прозрачная. Для шкафа.',
     description: 'Привычное прозрачное стекло с лёгким зеленоватым оттенком кромки. Открывает обзор содержимого и сочетается с деревянной мебелью.',
@@ -52,8 +52,8 @@ shelves.forEach((item, index) => {
   const article = document.createElement('article');
   article.className = 'shelf';
   article.id = item.id;
-  const specimen = makeFigure(item.caption, 0, index);
-  const application = makeFigure(item.interior, 100, index);
+  const specimen = makeFigure(item.caption, 0, index, item.preview);
+  const application = makeFigure(item.interior, 100, index, item.preview);
   application.className = 'application';
   const copy = document.createElement('section');
   copy.className = 'copy';
@@ -66,8 +66,8 @@ shelves.forEach((item, index) => {
     ['Толщина', 'Загружается из каталога'],
     ['Мин. партия', 'От 3 штук'],
     ['Кромка', 'Полированная — по умолчанию'],
-    ['Мин. размер', '180 × 400 мм'],
-    ['Круглая полка', 'Минимальный диаметр — 300 мм'],
+    ['Мин. размер', window.AGMCatalogProduct ? '800 × 600 мм' : '180 × 400 мм'],
+    [window.AGMCatalogProduct ? 'Круглое зеркало' : 'Круглая полка', window.AGMCatalogProduct ? 'Минимальный диаметр — 800 мм' : 'Минимальный диаметр — 300 мм'],
     ['Отверстия и тех. вырезы', 'По запросу'],
     ['Форма на фото', item.shape],
     ['Применение', item.use]
@@ -83,16 +83,17 @@ shelves.forEach((item, index) => {
   });
   const shapeNote = document.createElement('p');
   shapeNote.className = 'shape-note';
-  shapeNote.textContent = 'Форма на изображении условная. Изготовим полку другой формы по вашему эскизу.';
+  shapeNote.textContent = (window.AGMCatalogProduct ? 'Форма условная. Изготовим зеркало по вашим размерам. Оттенок и рисунок согласуем по образцу.' : 'Форма на изображении условная. Изготовим полку другой формы по вашему эскизу.');
   copy.append(heading, description, specs, shapeNote);
   article.append(specimen, copy, application);
   list.append(article);
 });
-function makeFigure(caption, x, row) {
+function makeFigure(caption, x, row, preview) {
   const figure = document.createElement('figure');
   const scene = document.createElement('div');
   scene.className = 'scene';
   scene.style.backgroundPosition = x + '% ' + row * 20 + '%';
+  if(preview){scene.style.backgroundImage=`url(${preview.url})`;scene.style.backgroundSize=preview.size;scene.style.backgroundPosition=x+'% '+preview.position.split(' ')[1];}
   scene.setAttribute('role', 'img');
   scene.setAttribute('aria-label', caption);
   const label = document.createElement('figcaption');

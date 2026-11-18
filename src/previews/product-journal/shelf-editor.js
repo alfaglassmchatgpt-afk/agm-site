@@ -1,28 +1,30 @@
 (async () => {
   let shelfOutline;
+  const mirror=window.AGMCatalogProduct?.kind==='mirror';
+  const noun=mirror?'Зеркало':'Полка';
   const dialog = document.createElement('dialog');
   dialog.id = 'shelf-editor';
   dialog.innerHTML = `
     <form>
-      <div class="shelf-dialog-top"><h2>Параметры полки</h2><button type="button" data-close aria-label="Закрыть параметры">×</button></div>
+      <div class="shelf-dialog-top"><h2>Параметры ${mirror?'зеркала':'полки'}</h2><button type="button" data-close aria-label="Закрыть параметры">×</button></div>
       <div class="shelf-material-heading"><p data-material></p><div data-material-image role="img"></div></div>
       <div class="shelf-fields">
         <label>Форма<select name="shape"></select></label>
         <label>Толщина, мм<select name="thickness"></select></label>
         <label data-linear>Ширина / нижнее основание, мм<input name="width" type="number" min="1" step="1" required></label>
-        <label data-linear>Глубина, мм<input name="height" type="number" min="1" step="1" required></label>
+        <label data-linear>${mirror?'Высота':'Глубина'}, мм<input name="height" type="number" min="1" step="1" required></label>
         <label data-round hidden>Диаметр исходного круга, мм<input name="diameter" type="number" min="300" step="1"></label>
         <label data-trapezoid hidden>Верхнее основание, мм<input name="topWidth" type="number" min="1" step="1"></label>
         <label>Количество, шт.<input name="quantity" type="number" min="3" max="9999" step="1" required></label>
       </div>
-      <fieldset class="shelf-diagram"><legend>Схема полки — вид сверху</legend><button type="button" data-corner-lock aria-pressed="true"></button><p data-corners>0 — без скругления. Радиус от 1 мм.</p><div class="corner-layout"><svg viewBox="0 0 400 240" role="img" aria-label="Схема полки"><path data-outline></path></svg>
+      <fieldset class="shelf-diagram"><legend>${mirror?'Схема зеркала — вид спереди':'Схема полки — вид сверху'}</legend><button type="button" data-corner-lock aria-pressed="true"></button><p data-corners>0 — без скругления. Радиус от 1 мм.</p><div class="corner-layout"><svg viewBox="0 0 400 240" role="img" aria-label="Схема изделия"><path data-outline></path></svg>
         <label data-corners class="corner tl"><span>Левый верхний, мм</span><input aria-label="Левый верхний, мм" name="r0" type="number" min="0" step="1"></label>
         <label data-corners class="corner tr"><span>Правый верхний, мм</span><input aria-label="Правый верхний, мм" name="r1" type="number" min="0" step="1"></label>
         <label data-corners class="corner bl"><span>Левый нижний, мм</span><input aria-label="Левый нижний, мм" name="r3" type="number" min="0" step="1"></label>
         <label data-corners class="corner br"><span>Правый нижний, мм</span><input aria-label="Правый нижний, мм" name="r2" type="number" min="0" step="1"></label>
       </div><p data-corners data-radius-limit></p></fieldset>
       <p data-dimensions></p>
-      <p>Кромка — полированная. Минимальные габариты — 180 × 400 мм, для круга — Ø 300 мм.</p>
+      <p>Кромка — полированная. ${mirror?'Минимальные габариты — 800 × 600 мм, для круга — Ø 800 мм.':'Минимальные габариты — 180 × 400 мм, для круга — Ø 300 мм.'}</p>
       <label>Отверстия, технические вырезы и пожелания<textarea name="note" maxlength="1200" rows="2"></textarea></label>
       <p data-error role="alert"></p>
       <button type="submit">Добавить в мой расчёт</button>
@@ -42,7 +44,7 @@
     renderCornerLock();
   };
   const model = AGMShelfModel;
-  Object.entries(model.shapes).forEach(([value,label]) => form.elements.shape.add(new Option(label,value)));
+  Object.entries(model.shapes).filter(([k])=>!mirror||['rectangle','circle'].includes(k)).forEach(([value,label]) => form.elements.shape.add(new Option(label,value)));
   dialog.querySelector('[data-close]').onclick = () => dialog.close();
   dialog.addEventListener('close',()=>opener?.focus());
   function read() {
@@ -75,14 +77,14 @@
       form.elements['r'+i].max=model.radiusLimit(s);
     }
     dialog.querySelector('[data-radius-limit]').textContent='При этих размерах максимальный радиус каждого угла — '+model.radiusLimit(s)+' мм.';
-    dialog.querySelector('[data-dimensions]').textContent='Габариты полки: '+model.dimensions(s).join(' × ')+' мм.';
+    dialog.querySelector('[data-dimensions]').textContent='Габариты: '+model.dimensions(s).join(' × ')+' мм.';
 
     const max=quote.materials[s.material].maxSize || {width:10000,height:10000};
-    form.elements.width.min=s.height>=400?180:400;
-    form.elements.height.min=s.width>=400?180:400;
+    form.elements.width.min=mirror?(s.height>=800?600:800):(s.height>=400?180:400);
+    form.elements.height.min=mirror?(s.width>=800?600:800):(s.width>=400?180:400);
     form.elements.width.max=max.width;
     form.elements.height.max=max.height;
-    form.elements.diameter.min={circle:300,semicircle:400,quarter:800}[s.shape]||300;
+    form.elements.diameter.min=mirror?800:({circle:300,semicircle:400,quarter:800}[s.shape]||300);
     form.elements.diameter.max=s.shape==='quarter'?2*Math.min(max.width,max.height):Math.min(max.width,max.height);
     form.elements.topWidth.max=s.width;
     for(let i=0;i<4;i++) form.elements['r'+i].value=Math.min(Number(form.elements['r'+i].value)||0,model.radiusLimit(s));
@@ -96,11 +98,12 @@
     shelf=existing?.data?.shelf || {preset:id,...model.presets[id],width:400,height:180,diameter:400,topWidth:320,quantity:3,thickness:'4',note:'',radii:[0,0,0,0],...model.presets[id]};
     const material=quote.materials[shelf.material];
     if(!material) throw Error('Материал отсутствует в каталоге.');
-    dialog.querySelector('[data-material]').textContent=material.title;
+    dialog.querySelector('[data-material]').textContent=material.title+(shelf.base&&shelf.base!=='standard'?' · '+material.variants[shelf.base]:'');
     const materialImage=dialog.querySelector('[data-material-image]');
     materialImage.style.backgroundPosition='0% '+Object.keys(model.presets).indexOf(shelf.preset)*20+'%';
-    materialImage.setAttribute('aria-label','Полка из карточки: '+material.title);
-    form.elements.thickness.replaceChildren(...AGMOrderModel.thicknesses(material,'standard').filter(t=>t!=='unknown').map(t=>new Option(t,t)));
+    if(shelf.preview){materialImage.style.backgroundImage=`url(${shelf.preview.url})`;materialImage.style.backgroundPosition=shelf.preview.position;materialImage.style.backgroundSize=shelf.preview.size;}
+    materialImage.setAttribute('aria-label',noun+' из карточки: '+material.title);
+    form.elements.thickness.replaceChildren(...AGMOrderModel.thicknesses(material,shelf.base||'standard').filter(t=>t!=='unknown').map(t=>new Option(t,t)));
     for(const key of ['shape','thickness','width','height','diameter','topWidth','quantity','note']) form.elements[key].value=shelf[key];
     shelf.radii.forEach((r,i)=>form.elements['r'+i].value=r);
     cornersLocked = shelf.cornersLocked ?? shelf.radii.every(r=>r===shelf.radii[0]);
@@ -149,21 +152,21 @@
       if(errors.length) throw Error(errors.join(' '));
       const [width,height]=model.dimensions(s);
       const shapeText = [
-        'Полка: '+model.shapes[s.shape],
+        noun+': '+model.shapes[s.shape],
         ['circle','semicircle','quarter'].includes(s.shape)?'Диаметр исходного круга: '+s.diameter+' мм':'',
-        model.cornerIndices(s).length?(model.cornerIndices(s).every(i=>s.radii[i]===0)?'Углы без скругления.':'Углы (вид сверху): '+model.cornerIndices(s).map(i=>['левый верхний','правый верхний','правый нижний','левый нижний'][i]+' — '+(s.radii[i]===0?'без скругления':'скругление R '+s.radii[i]+' мм')).join('; ')):'',
+        model.cornerIndices(s).length?(model.cornerIndices(s).every(i=>s.radii[i]===0)?'Углы без скругления.':(mirror?'Углы (вид спереди): ':'Углы (вид сверху): ')+model.cornerIndices(s).map(i=>['левый верхний','правый верхний','правый нижний','левый нижний'][i]+' — '+(s.radii[i]===0?'без скругления':'скругление R '+s.radii[i]+' мм')).join('; ')):'',
         s.shape==='trapezoid'?'Верхнее основание: '+s.topWidth+' мм; нижнее: '+s.width+' мм. Трапеция симметричная.':'',
         s.note
       ].filter(Boolean).join('\n');
       const straight=s.shape==='rectangle'&&s.radii.every(r=>r===0);
-      const data=AGMOrderModel.normalize({id:entryId,material:s.material,base:'standard',thickness:s.thickness,width,height,quantity:s.quantity,ops:[straight?'cut':'shape','polish'],note:shapeText},quote.materials,()=>entryId);
+      const data=AGMOrderModel.normalize({id:entryId,material:s.material,base:s.base||'standard',thickness:s.thickness,width,height,quantity:s.quantity,ops:[straight?'cut':'shape','polish'],note:shapeText},quote.materials,()=>entryId);
       const entry=AGMQuoteModel.material(data,quote.materials,quote.operations);
       if(entry.errors.length) throw Error(entry.errors.join(' '));
-      entry.title='Полка · '+material.title;
+      entry.title=noun+' · '+material.title+(s.base&&s.base!=='standard'?' · '+material.variants[s.base]:'');
       entry.data.shelf=s;
-      entry.preview={url:'/assets/editorial-grid.png',position:'0% '+Object.keys(model.presets).indexOf(s.preset)*20+'%',size:'200% 600%',alt:material.title};
+      entry.preview=s.preview||{url:'/assets/editorial-grid.png',position:'0% '+Object.keys(model.presets).indexOf(s.preset)*20+'%',size:'200% 600%',alt:material.title};
 
-      entry.editUrl='/?shelf-edit='+encodeURIComponent(entryId);
+      entry.editUrl=(mirror?'/mirrors.html':'/')+'?shelf-edit='+encodeURIComponent(entryId);
       quote.store.put(entry);
       dialog.close();
       quote.open();
@@ -175,7 +178,7 @@
     for(const [id,preset] of Object.entries(model.presets)) {
       const article=document.getElementById(id);
       const thicknessRow=[...article.querySelectorAll('dl div')].find(row=>row.querySelector('dt').textContent==='Толщина');
-      thicknessRow.querySelector('dd').textContent=AGMOrderModel.thicknesses(quote.materials[preset.material],'standard').join(', ')+' мм';
+      thicknessRow.querySelector('dd').textContent=AGMOrderModel.thicknesses(quote.materials[preset.material],preset.base||'standard').join(', ')+' мм';
       const add=document.createElement('button');
       add.className='shelf-add';
       add.textContent='Добавить в мой расчёт';

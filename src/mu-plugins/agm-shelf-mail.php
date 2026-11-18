@@ -16,13 +16,13 @@ function agm_with_shelf_attachment($p,$images,$files,$deliver) {
     if (!mkdir($dir,0700)) return false;
     $temporary=[];
     try {
-        $html='<!doctype html><html lang="ru"><meta charset="utf-8"><title>Полки — заявка на расчёт</title><style>body{max-width:850px;margin:30px auto;padding:20px;font:16px/1.5 Arial;color:#20363b}img{width:100%;max-width:650px}pre{white-space:pre-wrap;font:inherit}article{break-inside:avoid;margin-bottom:40px}@media print{article+article{break-before:page}}</style><h1>Полки — заявка на расчёт</h1><p>Согласовательные схемы клиента. Проверить размеры, обработку и крепления перед изготовлением.</p>';
+        $html='<!doctype html><html lang="ru"><meta charset="utf-8"><title>Изделия — заявка на расчёт</title><style>body{max-width:850px;margin:30px auto;padding:20px;font:16px/1.5 Arial;color:#20363b}img{width:100%;max-width:650px}pre{white-space:pre-wrap;font:inherit}article{break-inside:avoid;margin-bottom:40px}@media print{article+article{break-before:page}}</style><h1>Изделия — заявка на расчёт</h1><p>Согласовательные схемы клиента. Проверить размеры, обработку и крепления перед изготовлением.</p>';
         foreach (['name'=>'Имя','phone'=>'Телефон','email'=>'Email','comment'=>'Комментарий'] as $key=>$label) {
             if (!empty($p[$key])) $html.='<p>'.esc_html($label.': '.$p[$key]).'</p>';
         }
         foreach ($images as $index=>$bytes) {
             $item=$p['items'][$index];
-            $html.='<article><h2>'.esc_html(($index+1).'. '.$item['title']).'</h2><img alt="Схема полки с размерами" src="data:image/png;base64,'.base64_encode($bytes).'"><pre>'.esc_html($item['summary']).'</pre></article>';
+            $html.='<article><h2>'.esc_html(($index+1).'. '.$item['title']).'</h2><img alt="Схема изделия с размерами" src="data:image/png;base64,'.base64_encode($bytes).'"><pre>'.esc_html($item['summary']).'</pre></article>';
             $png=$dir.'/shelf-'.($index+1).'.png';$temporary[]=$png;
             if (file_put_contents($png,$bytes)!==strlen($bytes)) return false;
             $files[]=$png;
