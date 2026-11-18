@@ -70,3 +70,42 @@ a:focus-visible { outline: 2px solid #39796e; outline-offset: 5px; }
   footer { flex-direction: column; }
 }
 @media(prefers-reduced-motion:reduce) { html { scroll-behavior: auto; } }
+
+.shelf-add, #shelf-editor button[type=submit] {
+  background: #365e55;
+  color: white;
+  border: 0;
+  padding: 14px 18px;
+  margin-top: 16px;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+#shelf-editor {
+  width: min(700px, 95vw);
+  max-height: 90vh;
+  overflow: auto;
+  border: 1px solid var(--line);
+  padding: 28px;
+  background: var(--paper);
+  color: var(--ink);
+}
+#shelf-editor::backdrop { background: #17292399; }
+.shelf-dialog-top { display: flex; justify-content: space-between; align-items: start; gap: 20px; }
+.shelf-dialog-top button { font-size: 25px; background: none; border: 0; cursor: pointer; }
+.shelf-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+#shelf-editor label { display: grid; gap: 6px; font-size: 12px; }
+#shelf-editor input, #shelf-editor select, #shelf-editor textarea {
+  width: 100%;
+  min-width: 0;
+  font: inherit;
+  padding: 10px;
+  border: 1px solid #abb9af;
+  background: white;
+  color: #243a36;
+}
+#shelf-editor p { font-size: 12px; line-height: 1.6; }
+#shelf-editor fieldset { margin: 18px 0; border: 1px solid var(--line); }
+#shelf-editor [hidden] { display: none; }
+#shelf-editor [data-error] { color: #a42828; }
+@media(max-width:520px) { #shelf-editor { padding: 18px; } }

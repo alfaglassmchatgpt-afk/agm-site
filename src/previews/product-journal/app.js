@@ -63,7 +63,7 @@ shelves.forEach((item, index) => {
   description.textContent = item.description;
   const specs = document.createElement('dl');
   const characteristics = [
-    ['Толщина', '4, 6, 8, 10, 12 мм'],
+    ['Толщина', 'Загружается из каталога'],
     ['Мин. партия', 'От 3 штук'],
     ['Кромка', 'Полированная — по умолчанию'],
     ['Мин. размер', '180 × 400 мм'],
