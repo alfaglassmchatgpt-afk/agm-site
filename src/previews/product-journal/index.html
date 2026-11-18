@@ -1,30 +1,27 @@
 <!doctype html>
 <html lang="ru">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="robots" content="noindex,nofollow"><title>Журнал изделий — ALFAGLASS · Макет</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Стеклянные полки — Журнал изделий ALFAGLASS</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header><a class="brand" href="https://alfaglass.ru/">ALFA<span>GLASS</span></a><span>Стекло в вашем интерьере</span><small>Локальный макет</small></header>
+<header class="masthead"><a href="https://alfaglass.ru/" class="brand">ALFA<span>GLASS</span></a><span>Журнал изделий</span><small>Макет первой страницы</small></header>
 <main>
-<div class="heading"><div><p class="eyebrow">Идеи · Материалы · Применение</p><h1>Журнал изделий</h1></div><p>От красивой идеи<br>к вашему размеру.</p></div>
-<nav aria-label="Разделы журнала" id="contents"></nav>
-<div class="book" id="book" aria-label="Разворот журнала">
-<section class="visual-page">
-<div class="photo" id="photo" role="img"></div>
-<div class="photo-label"><span id="imageLabel"></span><small>Визуализация применения</small></div>
-<div class="visual-bottom"><p id="caption"></p><span id="leftNumber"></span></div>
+<section class="introduction">
+<p class="eyebrow">Для дома · Мебели · Интерьера</p>
+<h1>Стеклянные полки</h1>
+<p class="lead">Под ваш размер. Под ваше пространство.</p>
+<p class="description">От прозрачной полки в шкаф до бронзовой в душевой.<br>Выберите оттенок, найдите свою форму и посмотрите, как она выглядит в интерьере.</p>
 </section>
-<article class="text-page">
-<p class="eyebrow" id="kicker"></p><h2 id="title"></h2><p class="intro" id="intro"></p>
-<div class="details"><section><h3>Где использовать</h3><p id="uses"></p></section><section><h3>Варианты поставки</h3><p id="supply"></p></section></div>
-<section class="spec"><h3>Характеристики и выбор</h3><dl id="specs"></dl></section>
-<a class="cta" id="cta">Выбрать материал для расчёта <span aria-hidden="true">↗</span></a>
-<p class="note">Размеры и обработки — в «Моём расчёте» на странице материала.</p>
-<div class="folio"><span>ALFAGLASS / Журнал изделий</span><span id="rightNumber"></span></div>
-</article>
-</div>
-<footer class="controls"><button id="prev" aria-label="Предыдущий разворот">← <span>Назад</span></button><div role="status" aria-live="polite" id="status"></div><button id="next" aria-label="Следующий разворот"><span>Листать</span> →</button></footer>
-<p class="hint">Листайте кнопками, стрелками клавиатуры или свайпом.</p>
-</main><script src="app.js"></script></body></html>
+<nav aria-label="Виды стекла" id="materials"></nav>
+<div class="column-labels"><span>Форма и оттенок</span><span>О полке</span><span>Идея применения</span></div>
+<div id="shelves"></div>
+<section class="ordering"><h2>Полка под ваши размеры</h2><p>Поставляем одну полку или комплект. Размеры, толщину, обработку кромки, отверстия и вырезы согласуем по вашей мебели и креплениям. Нагрузку оцениваем с учётом размеров и расположения опор.</p><a href="https://alfaglass.ru/materialy/">Выбрать стекло и открыть «Мой расчёт» ↗</a></section>
+</main>
+<footer>ALFAGLASS · Журнал изделий <span>Иллюстрации показывают варианты применения. Оттенок согласуется по образцу.</span></footer>
+<script src="app.js"></script>
+</body>
+</html>
