@@ -59,7 +59,7 @@ h2{font:500 clamp(25px,2.7vw,42px)/1.08 'Cormorant Garamond',Georgia,serif;lette
 
 /* Interior photo behind the editorial title. */
 .introduction-visual{position:relative;isolation:isolate;overflow:hidden;display:flex;align-items:center;min-height:450px;padding:50px 4vw;text-align:left;background:#ecede9;border-radius:14px}
-.introduction-visual:before{content:'';position:absolute;left:0;top:50%;width:max(100%,1060px);aspect-ratio:2/1;transform:translateY(-50%);z-index:-2;background:url('assets/editorial-grid.png') 100% 20% / 200% 600% no-repeat}
+.introduction-visual:before{content:'';position:absolute;inset:0;z-index:-2;background:url('assets/shelf-hero-v2.png') center center / cover no-repeat}
 .introduction-visual:after{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(247,250,252,.97) 0%,rgba(247,250,252,.91) 32%,rgba(247,250,252,.35) 65%,rgba(247,250,252,.05) 100%)}
 html[data-theme=dark] .introduction-visual:after{background:linear-gradient(90deg,rgba(9,25,37,.97) 0%,rgba(9,25,37,.91) 32%,rgba(9,25,37,.38) 65%,rgba(9,25,37,.12) 100%)}
 .introduction-visual .hero-copy{max-width:650px;width:55%}.introduction-visual h1{font-size:clamp(44px,4.8vw,76px)}
