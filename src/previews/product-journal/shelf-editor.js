@@ -4,7 +4,7 @@
   dialog.innerHTML = `
     <form>
       <div class="shelf-dialog-top"><h2>Параметры полки</h2><button type="button" data-close aria-label="Закрыть параметры">×</button></div>
-      <p data-material></p>
+      <div class="shelf-material-heading"><p data-material></p><div data-material-image role="img"></div></div>
       <div class="shelf-fields">
         <label>Форма<select name="shape"></select></label>
         <label>Толщина, мм<select name="thickness"></select></label>
@@ -91,6 +91,9 @@
     const material=quote.materials[shelf.material];
     if(!material) throw Error('Материал отсутствует в каталоге.');
     dialog.querySelector('[data-material]').textContent=material.title;
+    const materialImage=dialog.querySelector('[data-material-image]');
+    materialImage.style.backgroundPosition='0% '+Object.keys(model.presets).indexOf(shelf.preset)*20+'%';
+    materialImage.setAttribute('aria-label','Полка из карточки: '+material.title);
     form.elements.thickness.replaceChildren(...AGMOrderModel.thicknesses(material,'standard').filter(t=>t!=='unknown').map(t=>new Option(t,t)));
     for(const key of ['shape','thickness','width','height','diameter','topWidth','quantity','note']) form.elements[key].value=shelf[key];
     shelf.radii.forEach((r,i)=>form.elements['r'+i].value=r);
