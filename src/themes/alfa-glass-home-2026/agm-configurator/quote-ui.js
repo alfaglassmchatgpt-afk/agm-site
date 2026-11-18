@@ -40,7 +40,11 @@
      </details>
      <div class="quote-trap" aria-hidden="true"><label>Сайт<input name="website" tabindex="-1" autocomplete="off"></label></div>
      <label class="quote-consent"><input type="checkbox" name="consent" value="1" required><span>Даю согласие на обработку персональных данных на условиях <a href="/privacy-policy/" target="_blank" rel="noopener">политики конфиденциальности</a>.</span></label>
-     <button type="submit">Отправить заявку</button><p role="status" data-status></p>
+     <button type="submit">Отправить заявку</button>
+     <button type="button" data-send-max>Отправить в MAX</button>
+     <p class="quote-max-note">Скопируем заявку и откроем чат ALFAGLASS. Вставьте текст в сообщение и отправьте. Файлы прикрепите отдельно.</p>
+     <div data-max-fallback hidden><label>Текст для MAX<textarea readonly rows="6" data-max-text></textarea></label><a href="https://max.ru/u/f9LHodD0cOJU_mzxnZFM89uKk2SxzncqmFTLwouS7FkvmwtdY23bOzzBQEw" target="_blank" rel="noopener noreferrer">Открыть чат ALFAGLASS в MAX →</a></div>
+     <p role="status" data-status></p>
    </form>`;
  document.body.append(dialog);dialog.querySelector('[data-close]').onclick=()=>dialog.close();dialog.addEventListener('close',()=>checkout.focus());
  const form=dialog.querySelector('form'),send=form.querySelector('[type=submit]'),feedback=form.querySelector('[data-status]');
@@ -91,6 +95,27 @@
   if(!pending)pending=(async()=>{const r=await fetch(endpoint,{cache:'no-store',credentials:'same-origin'}),data=await r.json();if(!r.ok||!data.enabled)throw Error('Отправка недоступна. Расчёт сохранён — его можно скачать.');credentials=data;})().finally(()=>pending=null);
   return pending;
  }
+ const maxButton=form.querySelector('[data-send-max]');
+ maxButton.addEventListener('click',async()=>{
+  if(busy||!form.reportValidity())return;
+  try{
+   const items=store.payload(),contact=Object.fromEntries(new FormData(form));
+   if(!contact.name.trim())throw Error('Укажите ваше имя.');
+   if(!/^[78]\d{10}$/.test(contact.phone.replace(/\D/g,'')))throw Error('Введите телефон из 11 цифр, начиная с +7 или 8.');
+   const message=['ALFAGLASS — Заявка на расчёт','Имя: '+contact.name.trim(),'Телефон: '+contact.phone,contact.email?'Email: '+contact.email:'','',text(items),contact.comment?'Комментарий: '+contact.comment:''].filter(v=>v!=='').join('\n\n');
+   const fallback=form.querySelector('[data-max-fallback]');
+   form.querySelector('[data-max-text]').value=message;
+   fallback.hidden=false;
+   if(local){feedback.textContent='Локальный макет: текст подготовлен ниже. Чат не открыт, заявка не отправлена.';return;}
+   maxButton.disabled=true;
+   try{
+    await navigator.clipboard.writeText(message);
+    feedback.textContent='Заявка скопирована. Вставьте её в чат MAX и нажмите отправку. Если чат не открылся, используйте ссылку ниже.';
+    window.open(fallback.querySelector('a').href,'_blank','noopener,noreferrer');
+   }catch(error){feedback.textContent='Скопируйте текст заявки из поля ниже, откройте чат MAX и отправьте сообщение.';}
+  }catch(error){feedback.textContent=error.message;}
+  finally{maxButton.disabled=false;}
+ });
  form.addEventListener('invalid',event=>{
   const section=event.target.closest('details');
   if(section)section.open=true;
