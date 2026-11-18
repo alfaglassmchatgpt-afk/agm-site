@@ -241,7 +241,7 @@ window.AGMCatalogProduct = {
       "caption": "Бронза — зеркало для декоративных вставок.",
       "interior": "Бронзовое зеркало в отделке ниши.",
       "preview": {
-        "url": "/assets/mirror-v2-bronze.png",
+        "url": "/assets/mirror-v3-bronze.png",
         "position": "center",
         "size": "contain",
         "alt": "Бронза",
@@ -264,7 +264,7 @@ window.AGMCatalogProduct = {
           0
         ],
         "preview": {
-          "url": "/assets/mirror-v2-bronze.png",
+          "url": "/assets/mirror-v3-bronze.png",
           "position": "center",
           "size": "contain",
           "alt": "Бронза",
@@ -287,7 +287,7 @@ window.AGMCatalogProduct = {
       "caption": "Графит — серое зеркало для декоративных вставок.",
       "interior": "Серые зеркальные вставки между стеновыми панелями.",
       "preview": {
-        "url": "/assets/mirror-v2-grey.png",
+        "url": "/assets/mirror-v3-grey.png",
         "position": "center",
         "size": "contain",
         "alt": "Серое зеркало Графит",
@@ -310,7 +310,7 @@ window.AGMCatalogProduct = {
           0
         ],
         "preview": {
-          "url": "/assets/mirror-v2-grey.png",
+          "url": "/assets/mirror-v3-grey.png",
           "position": "center",
           "size": "contain",
           "alt": "Серое зеркало Графит",
