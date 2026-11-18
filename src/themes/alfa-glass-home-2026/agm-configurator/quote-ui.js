@@ -41,8 +41,9 @@
      <div class="quote-trap" aria-hidden="true"><label>Сайт<input name="website" tabindex="-1" autocomplete="off"></label></div>
      <label class="quote-consent"><input type="checkbox" name="consent" value="1" required><span>Даю согласие на обработку персональных данных на условиях <a href="/privacy-policy/" target="_blank" rel="noopener">политики конфиденциальности</a>.</span></label>
      <button type="submit">Отправить заявку</button>
+     <button type="button" data-copy-request>Скопировать заявку</button>
      <button type="button" data-send-max>Отправить в MAX</button>
-     <p class="quote-max-note">В чате MAX вставьте скопированную заявку и отправьте её. При необходимости приложите файлы.</p>
+     <p class="quote-max-note">Нажмите «Скопировать заявку», затем откройте чат MAX, вставьте текст и отправьте. При необходимости приложите файлы.</p>
      <div data-max-fallback hidden><label>Текст для MAX<textarea readonly rows="6" data-max-text></textarea></label><a href="https://max.ru/u/f9LHodD0cOJU_mzxnZFM89uKk2SxzncqmFTLwouS7FkvmwtdY23bOzzBQEw" target="_blank" rel="noopener noreferrer">Открыть чат ALFAGLASS в MAX →</a></div>
      <p role="status" data-status></p>
    </form>`;
@@ -103,7 +104,8 @@
   return pending;
  }
  const maxButton=form.querySelector('[data-send-max]');
- maxButton.addEventListener('click',async()=>{
+ const copyButton=form.querySelector('[data-copy-request]');
+ async function prepareMax(copyOnly=false){
   if(busy||!form.reportValidity())return;
   try{
    const items=store.payload(),contact=Object.fromEntries(new FormData(form));
@@ -114,7 +116,12 @@
    const fallback=form.querySelector('[data-max-fallback]');
    form.querySelector('[data-max-text]').value=message;
    fallback.hidden=false;
-   if(local){feedback.textContent='Локальный макет: текст подготовлен ниже. Чат не открыт, заявка не отправлена.';return;}
+   if(copyOnly){
+    try{await navigator.clipboard.writeText(message);feedback.textContent='Заявка скопирована. Откройте чат MAX и вставьте текст в сообщение.';}
+    catch(error){const field=form.querySelector('[data-max-text]');field.focus();field.select();feedback.textContent='Не удалось скопировать автоматически. Текст выделен — нажмите Ctrl+C или выберите «Копировать».';}
+    return;
+   }
+   if(local){feedback.textContent='Локальный макет: текст подготовлен ниже. Чтобы скопировать его, нажмите «Скопировать заявку».';return;}
    maxButton.disabled=true;
    try{
     await navigator.clipboard.writeText(message);
@@ -123,7 +130,9 @@
    }catch(error){feedback.textContent='Скопируйте текст заявки из поля ниже, откройте чат MAX и отправьте сообщение.';}
   }catch(error){feedback.textContent=error.message;}
   finally{maxButton.disabled=false;}
- });
+ }
+ maxButton.addEventListener('click',()=>prepareMax());
+ copyButton.addEventListener('click',()=>prepareMax(true));
  form.addEventListener('invalid',event=>{
   const section=event.target.closest('details');
   if(section)section.open=true;
