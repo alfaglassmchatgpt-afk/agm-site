@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Cormorant+Garamond:wght@400;500&display=swap');
 /* ALFAGLASS — responsive homepage. All theme values live in these tokens. */
 :root {
   color-scheme: light;
@@ -24,7 +25,7 @@ html[data-theme="dark"] {
 }
 
 :root{--paper:var(--bg)}
-body{font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+body{font-family:Manrope,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
 button,input,select,textarea{font-family:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible{outline:3px solid var(--focus);outline-offset:4px}
 .catalog-header{background:var(--header);border-bottom:1px solid var(--line)}
 .catalog-header-main{max-width:1440px;margin:auto;padding:18px 3vw;display:flex;gap:24px;align-items:center;min-height:108px}
@@ -40,15 +41,18 @@ html[data-theme=dark] .catalog-brand .logo-light{display:none}html[data-theme=da
 main{padding:0 3vw}.catalog-breadcrumb{display:flex;gap:10px;flex-wrap:wrap;font-size:12px;color:var(--muted);padding:20px 0}.catalog-breadcrumb a{color:var(--blue);text-decoration:none}
 .introduction{background:radial-gradient(ellipse at 50% 0,var(--soft-blue),transparent 75%);padding:36px 20px 30px;border-radius:16px}
 .eyebrow{color:var(--blue);font:700 11px/1.5 Arial;letter-spacing:1.7px}
-h1{font:700 clamp(36px,4vw,60px)/1.12 Arial;color:var(--blue);letter-spacing:-.035em}
+h1{font:500 clamp(46px,5.5vw,86px)/1.05 'Cormorant Garamond',Georgia,serif;color:var(--blue);letter-spacing:normal}
 .lead{font-size:clamp(17px,1.5vw,23px);margin:16px 0 10px}.description{font-size:14px;line-height:1.7;max-width:730px;margin:auto}
 .catalog-benefits{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:25px}.catalog-benefits span{font-size:12px;padding:6px 13px;border:1px solid var(--line);border-radius:30px;background:var(--surface);color:var(--muted)}
 #materials{gap:9px;padding:25px 0 22px}#materials a{font-size:13px;border:1px solid var(--line);padding:9px 17px;border-radius:7px;background:var(--soft);color:var(--ink)}#materials a:hover{color:var(--blue);border-color:var(--blue)}
 .column-labels{font-size:11px;padding:15px 0;color:var(--blue);font-weight:700}
 .shelf{padding:38px 0;gap:2.5vw;grid-template-columns:32fr 30fr 38fr;align-items:start}.scene{border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}
-h2{font:700 clamp(23px,2vw,32px)/1.2 Arial;letter-spacing:-.025em}.copy p{font-size:14px;line-height:1.65;color:var(--muted)}dl div{font-size:12px;grid-template-columns:112px 1fr;padding:7px 0}.copy .shape-note{font-size:12px}.shelf-add{width:100%;margin-top:14px}figcaption{font-size:12px}
+h2{font:500 clamp(25px,2.7vw,42px)/1.08 'Cormorant Garamond',Georgia,serif;letter-spacing:normal}.copy p{font-size:14px;line-height:1.65;color:var(--muted)}dl div{font-size:12px;grid-template-columns:112px 1fr;padding:7px 0}.copy .shape-note{font-size:12px}.shelf-add{width:100%;margin-top:14px}figcaption{font-size:12px}
 .ordering{background:var(--soft-blue);border:1px solid var(--line);border-radius:14px;padding:35px 4vw}.ordering p,.ordering a{font-size:14px}.ordering a{color:var(--blue);font-weight:700}footer{border-top:1px solid var(--line);font-size:12px;background:var(--soft)}
 #shelf-editor{border-radius:16px;box-shadow:var(--shadow-hover)}#shelf-editor h2{font-size:28px}.shelf-dialog-top button{color:var(--ink)}#shelf-editor input,#shelf-editor select,#shelf-editor textarea{border:1px solid var(--strong-line);border-radius:6px;background:var(--input);color:var(--ink)}#shelf-editor [data-corner-lock]{border-color:var(--strong-line);background:var(--soft-blue);border-radius:6px}#shelf-editor fieldset{border-radius:10px}.corner-layout path{fill:var(--soft-blue);stroke:var(--blue)}#shelf-editor [data-error]{color:var(--error)}
 #quote-drawer,#quote-checkout{background:var(--surface);color:var(--ink);border-color:var(--line)}#quote-drawer a,#quote-checkout a{color:var(--blue)}#quote-drawer button,#quote-checkout button{background:var(--soft-blue);color:var(--blue);border-color:var(--strong-line)}#quote-checkout button[type=submit],#quote-drawer .quote-actions button:first-child{background:var(--button);color:white}#quote-checkout input,#quote-checkout textarea{background:var(--input);color:var(--ink);border-color:var(--strong-line)}#quote-checkout .quote-order,#quote-drawer nav a{background:var(--soft)}#quote-launcher{background:var(--button);border-color:var(--strong-line)}.quote-item{border-color:var(--line)}#quote-checkout .quote-max-note{font-size:13px;color:var(--muted)}
 @media(max-width:1100px){.catalog-address{display:none}.catalog-phone{margin-left:auto}.catalog-header-main{gap:15px}.catalog-nav{flex-wrap:wrap;justify-content:center}.shelf{grid-template-columns:1fr 1fr}.copy{grid-column:2;grid-row:span 2}.application{grid-column:1}.column-labels{display:none}}
 @media(max-width:700px){.catalog-header-main{padding:12px 18px;gap:9px;flex-wrap:wrap;min-height:80px}.catalog-brand{width:190px;margin-right:auto}.catalog-phone{display:none}.catalog-quote{order:5;width:100%;min-height:40px;padding:9px}.catalog-menu-toggle{display:block}.catalog-theme,.catalog-menu-toggle{width:38px;height:38px}.catalog-nav{display:none;grid-template-columns:1fr 1fr;padding:15px 20px}.catalog-nav.is-open{display:grid}.catalog-nav a{padding:10px}.catalog-breadcrumb{font-size:11px}main{padding:0 18px}.introduction{padding:25px 6px}.description br{display:none}.catalog-benefits{gap:6px}.catalog-benefits span{font-size:11px;padding:5px 9px}#materials{justify-content:flex-start;flex-wrap:nowrap;overflow:auto;padding:20px 0}#materials a{white-space:nowrap;flex:none}.shelf{grid-template-columns:1fr;gap:22px;padding:26px 0}.copy,.application{grid-column:auto;grid-row:auto}.copy h2{font-size:27px}.ordering{display:block;padding:25px}.ordering h2{margin-bottom:15px}footer{flex-direction:column}.shelf-fields{gap:10px}#shelf-editor{padding:18px}.catalog-header{position:static}}
+
+.catalog-header{font-family:Arial,Helvetica,sans-serif}
+@media(max-width:700px){.copy h2{font-size:31px}}
