@@ -109,3 +109,5 @@ a:focus-visible { outline: 2px solid #39796e; outline-offset: 5px; }
 #shelf-editor [hidden] { display: none; }
 #shelf-editor [data-error] { color: #a42828; }
 @media(max-width:520px) { #shelf-editor { padding: 18px; } }
+
+#shelf-editor [data-corner-lock] { padding: 8px 12px; border: 1px solid #abb9af; background: #e9eee7; color: var(--ink); font: inherit; font-size: 12px; cursor: pointer; }

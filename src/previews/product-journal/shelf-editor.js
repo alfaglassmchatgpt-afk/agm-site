@@ -14,7 +14,7 @@
         <label data-trapezoid hidden>Верхнее основание, мм<input name="topWidth" type="number" min="1" step="1"></label>
         <label>Количество, шт.<input name="quantity" type="number" min="3" max="9999" step="1" required></label>
       </div>
-      <fieldset data-corners><legend>Углы — вид сверху</legend><p>0 — угол 90°. Скругление от 1 мм. Каждый угол можно настроить отдельно.</p><div class="shelf-fields">
+      <fieldset data-corners><legend>Углы — вид сверху</legend><button type="button" data-corner-lock aria-pressed="true"></button><p>0 — угол 90°. Скругление от 1 мм.</p><div class="shelf-fields">
         <label>Левый верхний, мм<input name="r0" type="number" min="0" step="1"></label>
         <label>Правый верхний, мм<input name="r1" type="number" min="0" step="1"></label>
         <label>Левый нижний, мм<input name="r3" type="number" min="0" step="1"></label>
@@ -29,6 +29,17 @@
   document.body.append(dialog);
   const form = dialog.querySelector('form');
   let quote, shelf, entryId, opener;
+  let cornersLocked = true;
+  const cornerLock = dialog.querySelector('[data-corner-lock]');
+  function renderCornerLock() {
+    cornerLock.textContent = cornersLocked ? '🔒 Углы связаны' : '🔓 Углы отдельно';
+    cornerLock.setAttribute('aria-pressed', String(cornersLocked));
+    cornerLock.title = cornersLocked ? 'Открыть замок: настраивать углы отдельно' : 'Закрыть замок: изменение любого угла применится ко всем';
+  }
+  cornerLock.onclick = () => {
+    cornersLocked = !cornersLocked;
+    renderCornerLock();
+  };
   const model = AGMShelfModel;
   Object.entries(model.shapes).forEach(([value,label]) => form.elements.shape.add(new Option(label,value)));
   dialog.querySelector('[data-close]').onclick = () => dialog.close();
@@ -37,7 +48,7 @@
     return {...shelf,shape:form.elements.shape.value,thickness:form.elements.thickness.value,
       width:Number(form.elements.width.value),height:Number(form.elements.height.value),
       diameter:Number(form.elements.diameter.value),topWidth:Number(form.elements.topWidth.value),
-      quantity:Number(form.elements.quantity.value),note:form.elements.note.value.trim(),
+      quantity:Number(form.elements.quantity.value),note:form.elements.note.value.trim(),cornersLocked,
       radii:[0,1,2,3].map(i=>Number(form.elements['r'+i].value))};
   }
   function update() {
@@ -71,11 +82,18 @@
     form.elements.thickness.replaceChildren(...AGMOrderModel.thicknesses(material,'standard').filter(t=>t!=='unknown').map(t=>new Option(t,t)));
     for(const key of ['shape','thickness','width','height','diameter','topWidth','quantity','note']) form.elements[key].value=shelf[key];
     shelf.radii.forEach((r,i)=>form.elements['r'+i].value=r);
+    cornersLocked = shelf.cornersLocked ?? shelf.radii.every(r=>r===shelf.radii[0]);
+    renderCornerLock();
     dialog.querySelector('[type=submit]').textContent=existing?'Сохранить изменения':'Добавить в мой расчёт';
     update();
     dialog.showModal();
   }
-  form.addEventListener('input',update);
+  form.addEventListener('input',event=>{
+    if(cornersLocked && /^r[0-3]$/.test(event.target.name)) {
+      for(let i=0;i<4;i++) form.elements['r'+i].value=event.target.value;
+    }
+    update();
+  });
   form.addEventListener('change',update);
   form.addEventListener('submit',event=>{
     event.preventDefault();
