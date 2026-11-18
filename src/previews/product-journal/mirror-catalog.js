@@ -423,9 +423,9 @@ window.AGMCatalogProduct = {
       "use": "Акцентные стены, интерьер кафе и общественных зон",
       "shape": "Прямоугольная",
       "caption": "Радужное — зеркало для декоративных вставок.",
-      "interior": "Радужная зеркальная плоскость в интерьерной композиции.",
+      "interior": "Панно из радужного зеркала в интерьере кафе.",
       "preview": {
-        "url": "/assets/mirror-v2-rainbow.png",
+        "url": "/assets/mirror-v3-rainbow.png",
         "position": "center",
         "size": "contain",
         "alt": "Радужное",
@@ -448,7 +448,7 @@ window.AGMCatalogProduct = {
           0
         ],
         "preview": {
-          "url": "/assets/mirror-v2-rainbow.png",
+          "url": "/assets/mirror-v3-rainbow.png",
           "position": "center",
           "size": "contain",
           "alt": "Радужное",
@@ -456,8 +456,8 @@ window.AGMCatalogProduct = {
         }
       },
       "applicationPreview": {
-        "url": "/assets/mirror-v2-rainbow-room.png",
-        "alt": "Радужная зеркальная плоскость в интерьерной композиции.",
+        "url": "/assets/mirror-v3-rainbow-room.png",
+        "alt": "Панно из радужного зеркала в интерьере кафе.",
         "standalone": true
       }
     },
