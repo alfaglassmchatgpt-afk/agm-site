@@ -471,7 +471,7 @@ window.AGMCatalogProduct = {
       "caption": "Синее — зеркало для декоративных вставок.",
       "interior": "Синее зеркало за полками с предметами декора.",
       "preview": {
-        "url": "/assets/mirror-v2-blue.png",
+        "url": "/assets/mirror-v3-blue.png",
         "position": "center",
         "size": "contain",
         "alt": "Синее",
@@ -494,7 +494,7 @@ window.AGMCatalogProduct = {
           0
         ],
         "preview": {
-          "url": "/assets/mirror-v2-blue.png",
+          "url": "/assets/mirror-v3-blue.png",
           "position": "center",
           "size": "contain",
           "alt": "Синее",
@@ -517,7 +517,7 @@ window.AGMCatalogProduct = {
       "caption": "Чёрное — зеркало для декоративных вставок.",
       "interior": "Чёрные зеркальные панели над низкой тумбой.",
       "preview": {
-        "url": "/assets/mirror-v2-black.png",
+        "url": "/assets/mirror-v3-black.png",
         "position": "center",
         "size": "contain",
         "alt": "Чёрное",
@@ -540,7 +540,7 @@ window.AGMCatalogProduct = {
           0
         ],
         "preview": {
-          "url": "/assets/mirror-v2-black.png",
+          "url": "/assets/mirror-v3-black.png",
           "position": "center",
           "size": "contain",
           "alt": "Чёрное",
