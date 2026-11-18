@@ -18,7 +18,25 @@
     if (s.shape === 'quarter') return [s.diameter/2,s.diameter/2];
     return [s.width,s.height];
   }
-  function radiusLimit(s) { return Math.max(0,Math.floor((Math.min(s.width,s.height)-1)/2)); }
+
+  function cornerIndices(s) {
+    if(s.shape==='circle') return [];
+    if(s.shape==='semicircle') return [0,1];
+    if(s.shape==='quarter') return [0,1,3];
+    return [0,1,2,3];
+  }
+  function radiusLimit(s) {
+    const [w,h]=dimensions(s);
+    if(s.shape==='circle') return 0;
+    if(s.shape==='quarter'||s.shape==='semicircle') return Math.max(0,Math.floor(h/5));
+    if(s.shape==='trapezoid'){
+      const inset=(w-s.topWidth)/2, side=Math.hypot(inset,h);
+      const cot=(side+inset)/Math.max(1,h);
+      return Math.max(0,Math.floor(Math.min(s.topWidth/(2*cot),h/2,side/(cot+1/cot))-1));
+    }
+    return Math.max(0,Math.floor((Math.min(w,h)-1)/2));
+  }
+
   function validate(s, material, orderModel) {
     const errors = [];
     if (!material) return ['Материал отсутствует в каталоге.'];
@@ -32,11 +50,11 @@
     if (Math.min(w,h)>Math.min(max.width,max.height)||Math.max(w,h)>Math.max(max.width,max.height)) errors.push('Размер превышает формат материала.');
     if (!Number.isInteger(s.quantity)||s.quantity<3||s.quantity>9999) errors.push('Количество — от 3 до 9999 штук.');
     if (!orderModel.thicknesses(material,'standard').includes(s.thickness)) errors.push('Толщина недоступна в каталоге материала.');
-    if (s.shape==='rectangle' && (s.radii.length!==4 || s.radii.some(r=>!Number.isInteger(r)||r<0||r>radiusLimit(s)))) errors.push('Радиусы углов — от 0 до '+radiusLimit(s)+' мм. 0 означает угол 90°.');
+    if (cornerIndices(s).length && (s.radii.length!==4 || cornerIndices(s).some(i=>!Number.isInteger(s.radii[i])||s.radii[i]<0||s.radii[i]>radiusLimit(s)))) errors.push('Радиусы углов — от 0 до '+radiusLimit(s)+' мм. 0 означает угол без скругления.');
     if (s.shape==='trapezoid' && (!Number.isInteger(s.topWidth)||s.topWidth<1||s.topWidth>s.width)) errors.push('Верхнее основание трапеции должно быть от 1 мм до ширины нижнего.');
     const straight = s.shape==='rectangle'&&s.radii.every(r=>r===0);
     if (![straight?'cut':'shape','polish'].every(op=>orderModel.operations(material,s.thickness).includes(op))) errors.push('Обработка недоступна для выбранного материала.');
     return errors;
   }
-  return {presets,shapes,dimensions,radiusLimit,validate};
+  return {presets,shapes,dimensions,cornerIndices,radiusLimit,validate};
 });

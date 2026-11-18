@@ -14,7 +14,7 @@
         <label data-trapezoid hidden>Верхнее основание, мм<input name="topWidth" type="number" min="1" step="1"></label>
         <label>Количество, шт.<input name="quantity" type="number" min="3" max="9999" step="1" required></label>
       </div>
-      <fieldset class="shelf-diagram"><legend>Схема полки — вид сверху</legend><button type="button" data-corner-lock aria-pressed="true"></button><p data-corners>0 — угол 90°. Скругление от 1 мм.</p><div class="corner-layout"><svg viewBox="0 0 400 240" role="img" aria-label="Схема полки"><path data-outline></path></svg>
+      <fieldset class="shelf-diagram"><legend>Схема полки — вид сверху</legend><button type="button" data-corner-lock aria-pressed="true"></button><p data-corners>0 — без скругления. Радиус от 1 мм.</p><div class="corner-layout"><svg viewBox="0 0 400 240" role="img" aria-label="Схема полки"><path data-outline></path></svg>
         <label data-corners class="corner tl"><span>Левый верхний, мм</span><input aria-label="Левый верхний, мм" name="r0" type="number" min="0" step="1"></label>
         <label data-corners class="corner tr"><span>Правый верхний, мм</span><input aria-label="Правый верхний, мм" name="r1" type="number" min="0" step="1"></label>
         <label data-corners class="corner bl"><span>Левый нижний, мм</span><input aria-label="Левый нижний, мм" name="r3" type="number" min="0" step="1"></label>
@@ -63,14 +63,19 @@
     form.elements.diameter.step=s.shape==='circle'?'1':'2';
     dialog.querySelector('[data-trapezoid]').hidden=s.shape!=='trapezoid';
     form.elements.topWidth.disabled=s.shape!=='trapezoid';
-    dialog.querySelectorAll('[data-corners]').forEach(node=>node.hidden=s.shape!=='rectangle'); cornerLock.hidden=s.shape!=='rectangle';
+
+    const corners=model.cornerIndices(s);
+    dialog.querySelectorAll('[data-corners]').forEach(node=>node.hidden=!corners.length);
+    cornerLock.hidden=!corners.length;
+    dialog.querySelectorAll('label[data-corners]').forEach(label=>label.hidden=!corners.includes(Number(label.querySelector('input').name.slice(1))));
+
     for(let i=0;i<4;i++) {
-      form.elements['r'+i].disabled=s.shape!=='rectangle';
+      form.elements['r'+i].disabled=!corners.includes(i);
       form.elements['r'+i].max=model.radiusLimit(s);
     }
     dialog.querySelector('[data-radius-limit]').textContent='При этих размерах максимальный радиус каждого угла — '+model.radiusLimit(s)+' мм.';
     dialog.querySelector('[data-dimensions]').textContent='Габариты полки: '+model.dimensions(s).join(' × ')+' мм.';
-    
+
     const max=quote.materials[s.material].maxSize || {width:10000,height:10000};
     form.elements.width.min=s.height>=400?180:400;
     form.elements.height.min=s.width>=400?180:400;
@@ -109,9 +114,16 @@
     }
     update();
   });
-  
+
   function constrainInput(event) {
     const input=event.target;
+    if(input.name==='shape'){
+      update();
+      for(const field of ['width','height','diameter','topWidth']){
+        const n=form.elements[field];
+        if(!n.disabled) n.value=Math.min(Number(n.max)||10000,Math.max(Number(n.min)||1,Number(n.value)||0));
+      }
+    }
     if(input.type==='number'){
       const step=Number(input.step)||1, min=Number(input.min)||0;
       const max=Number(input.max)||10000;
@@ -131,16 +143,44 @@
     let d;
     if(s.shape==='circle') {
       d='M '+x+' 120 a '+W/2+' '+H/2+' 0 1 0 '+W+' 0 a '+W/2+' '+H/2+' 0 1 0 '+(-W)+' 0';
-    } else if(s.shape==='semicircle'){
-      d='M '+x+' '+y+' L '+(x+W)+' '+y+' A '+W/2+' '+H+' 0 0 1 '+x+' '+y+' Z';
-    } else if(s.shape==='quarter'){
-      d='M '+x+' '+y+' L '+(x+W)+' '+y+' A '+W+' '+H+' 0 0 1 '+x+' '+(y+H)+' Z';
-    } else if(s.shape==='trapezoid'){
-      const inset=(W-s.topWidth*scale)/2;
-      d='M '+(x+inset)+' '+y+' L '+(x+W-inset)+' '+y+' L '+(x+W)+' '+(y+H)+' L '+x+' '+(y+H)+' Z';
+
+    } else if(s.shape==='semicircle'||s.shape==='quarter'){
+      const R=s.shape==='semicircle'?W/2:W;
+      const cx=s.shape==='semicircle'?x+R:x;
+      const right=s.radii[1]*scale;
+      const left=s.radii[s.shape==='semicircle'?0:3]*scale;
+      const tangent=r=>{
+        const c=Math.sqrt(Math.max(0,R*R-2*R*r));
+        return {c,u:c*R/(R-r),v:r*R/(R-r)};
+      };
+      const a=tangent(right),b=tangent(left);
+      const arc=(r,px,py)=>r>0?' A '+r+' '+r+' 0 0 1 '+px+' '+py:' L '+px+' '+py;
+      if(s.shape==='semicircle'){
+        d='M '+(cx-b.c)+' '+y+' L '+(cx+a.c)+' '+y+arc(right,cx+a.u,y+a.v)
+          +' A '+R+' '+R+' 0 0 1 '+(cx-b.u)+' '+(y+b.v)+arc(left,cx-b.c,y)+' Z';
+      } else {
+        const corner=s.radii[0]*scale;
+        d='M '+(x+corner)+' '+y+' L '+(x+a.c)+' '+y+arc(right,x+a.u,y+a.v)
+          +' A '+R+' '+R+' 0 0 1 '+(x+b.v)+' '+(y+b.u)+arc(left,x,y+b.c)
+          +' L '+x+' '+(y+corner)+arc(corner,x+corner,y)+' Z';
+      }
     } else {
-      const [a,b,c,e]=s.radii.map(r=>r*scale);
-      d='M '+(x+a)+' '+y+' H '+(x+W-b)+' Q '+(x+W)+' '+y+' '+(x+W)+' '+(y+b)+' V '+(y+H-c)+' Q '+(x+W)+' '+(y+H)+' '+(x+W-c)+' '+(y+H)+' H '+(x+e)+' Q '+x+' '+(y+H)+' '+x+' '+(y+H-e)+' V '+(y+a)+' Q '+x+' '+y+' '+(x+a)+' '+y+' Z';
+      const inset=s.shape==='trapezoid'?(W-s.topWidth*scale)/2:0;
+      const points=[[x+inset,y],[x+W-inset,y],[x+W,y+H],[x,y+H]];
+      const rounded=points.map((p,i)=>{
+        const prev=points[(i+3)%4],next=points[(i+1)%4];
+        const u=[prev[0]-p[0],prev[1]-p[1]],v=[next[0]-p[0],next[1]-p[1]];
+        const ul=Math.hypot(...u),vl=Math.hypot(...v);
+        const angle=Math.acos(Math.max(-1,Math.min(1,(u[0]*v[0]+u[1]*v[1])/(ul*vl))));
+        const radius=s.radii[i]*scale,distance=radius/Math.tan(angle/2);
+        return {radius,a:[p[0]+u[0]*distance/ul,p[1]+u[1]*distance/ul],b:[p[0]+v[0]*distance/vl,p[1]+v[1]*distance/vl]};
+      });
+      d='M '+rounded[0].a.join(' ');
+      rounded.forEach((p,i)=>{
+        if(i) d+=' L '+p.a.join(' ');
+        d+=p.radius>0?' A '+p.radius+' '+p.radius+' 0 0 1 '+p.b.join(' '):' L '+p.b.join(' ');
+      });
+      d+=' Z';
     }
     dialog.querySelector('[data-outline]').setAttribute('d',d);
   }
@@ -155,7 +195,7 @@
       const shapeText = [
         'Полка: '+model.shapes[s.shape],
         ['circle','semicircle','quarter'].includes(s.shape)?'Диаметр исходного круга: '+s.diameter+' мм':'',
-        s.shape==='rectangle'?'Радиусы углов (левый верхний, правый верхний, правый нижний, левый нижний): '+s.radii.join(' / ')+' мм; 0 = 90°':'',
+        model.cornerIndices(s).length?'Радиусы углов: '+model.cornerIndices(s).map(i=>['левый верхний','правый верхний','правый нижний','левый нижний'][i]+' '+s.radii[i]+' мм').join('; ')+'; 0 = без скругления':'',
         s.shape==='trapezoid'?'Верхнее основание: '+s.topWidth+' мм; нижнее: '+s.width+' мм. Трапеция симметричная.':'',
         s.note
       ].filter(Boolean).join('\n');
