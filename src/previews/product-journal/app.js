@@ -53,7 +53,7 @@ shelves.forEach((item, index) => {
   article.className = 'shelf';
   article.id = item.id;
   const specimen = makeFigure(item.caption, 0, index, item.preview);
-  const application = makeFigure(item.interior, 100, index, item.preview);
+  const application = makeFigure(item.interior, 100, index, item.applicationPreview || item.preview);
   application.className = 'application';
   const copy = document.createElement('section');
   copy.className = 'copy';
@@ -90,10 +90,11 @@ shelves.forEach((item, index) => {
 });
 function makeFigure(caption, x, row, preview) {
   const figure = document.createElement('figure');
-  const scene = document.createElement('div');
+  const scene = document.createElement(preview?.standalone?'img':'div');
   scene.className = 'scene';
   scene.style.backgroundPosition = x + '% ' + row * 20 + '%';
-  if(preview){scene.style.backgroundImage=`url(${preview.url})`;scene.style.backgroundSize=preview.size;scene.style.backgroundPosition=x+'% '+preview.position.split(' ')[1];}
+  if(preview?.standalone){scene.src=preview.url;scene.alt=caption;scene.loading='lazy';scene.className='scene standalone-scene';}
+  else if(preview){scene.style.backgroundImage=`url(${preview.url})`;scene.style.backgroundSize=preview.size;scene.style.backgroundPosition=x+'% '+preview.position.split(' ')[1];}
   scene.setAttribute('role', 'img');
   scene.setAttribute('aria-label', caption);
   const label = document.createElement('figcaption');

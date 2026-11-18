@@ -11,7 +11,7 @@
       <div class="shelf-fields">
         <label>Форма<select name="shape"></select></label>
         <label>Толщина, мм<select name="thickness"></select></label>
-        <label data-linear>Ширина / нижнее основание, мм<input name="width" type="number" min="1" step="1" required></label>
+        <label data-linear>${mirror?'Ширина':'Ширина / нижнее основание'}, мм<input name="width" type="number" min="1" step="1" required></label>
         <label data-linear>${mirror?'Высота':'Глубина'}, мм<input name="height" type="number" min="1" step="1" required></label>
         <label data-round hidden>Диаметр исходного круга, мм<input name="diameter" type="number" min="300" step="1"></label>
         <label data-trapezoid hidden>Верхнее основание, мм<input name="topWidth" type="number" min="1" step="1"></label>
@@ -44,7 +44,7 @@
     renderCornerLock();
   };
   const model = AGMShelfModel;
-  Object.entries(model.shapes).filter(([k])=>!mirror||['rectangle','circle'].includes(k)).forEach(([value,label]) => form.elements.shape.add(new Option(label,value)));
+  Object.entries(model.shapes).filter(([k])=>mirror?['rectangle','circle','ellipse','arch'].includes(k):!['ellipse','arch'].includes(k)).forEach(([value,label]) => form.elements.shape.add(new Option(label,value)));
   dialog.querySelector('[data-close]').onclick = () => dialog.close();
   dialog.addEventListener('close',()=>opener?.focus());
   function read() {
@@ -81,7 +81,7 @@
 
     const max=quote.materials[s.material].maxSize || {width:10000,height:10000};
     form.elements.width.min=mirror?(s.height>=800?600:800):(s.height>=400?180:400);
-    form.elements.height.min=mirror?(s.width>=800?600:800):(s.width>=400?180:400);
+    form.elements.height.min=mirror?Math.max(s.width>=800?600:800,s.shape==='arch'?Math.ceil(s.width/2):0):(s.width>=400?180:400);
     form.elements.width.max=max.width;
     form.elements.height.max=max.height;
     form.elements.diameter.min=mirror?800:({circle:300,semicircle:400,quarter:800}[s.shape]||300);

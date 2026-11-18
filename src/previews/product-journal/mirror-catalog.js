@@ -2,27 +2,28 @@ window.AGMCatalogProduct = {
   "kind": "mirror",
   "items": [
     {
-      "id": "silver",
-      "name": "Обычное зеркало",
-      "heading": "В полный рост. Для гардеробной.",
-      "description": "Нейтральное серебряное отражение для ежедневного использования. Прямоугольное полотно удобно разместить на стене или двери шкафа.",
+      "id": "silver-rect",
+      "name": "Серебро · прямоугольник",
+      "heading": "Прямоугольное. В полный рост.",
+      "description": "Привычное серебряное зеркало для гардеробной и прихожей. Вытянутая форма помогает увидеть себя в полный рост; полотно можно установить на стене или двери шкафа.",
       "use": "В гардеробную, прихожую, на дверь шкафа",
       "shape": "Прямоугольная",
-      "caption": "Обычное зеркало — вариант формы без рамы.",
-      "interior": "В гардеробную, прихожую, на дверь шкафа. Без подсветки и профиля.",
+      "caption": "Серебро · прямоугольник — полированная кромка без рамы.",
+      "interior": "В гардеробную, прихожую, на дверь шкафа. Зеркало без рамы.",
       "preview": {
-        "url": "/assets/mirrors-grid-1.png",
-        "position": "0% 0.0%",
-        "size": "200% 500%",
-        "alt": "Обычное зеркало"
+        "url": "/assets/mirror-v2-silver-rect.png",
+        "position": "center",
+        "size": "contain",
+        "alt": "Серебро · прямоугольник",
+        "standalone": true
       },
       "preset": {
         "material": "zerkalo-serebro",
         "base": "standard",
         "shape": "rectangle",
         "productKind": "mirror",
-        "width": 800,
-        "height": 600,
+        "width": 600,
+        "height": 1600,
         "diameter": 800,
         "topWidth": 700,
         "quantity": 3,
@@ -33,11 +34,155 @@ window.AGMCatalogProduct = {
           0
         ],
         "preview": {
-          "url": "/assets/mirrors-grid-1.png",
-          "position": "0% 0.0%",
-          "size": "200% 500%",
-          "alt": "Обычное зеркало"
+          "url": "/assets/mirror-v2-silver-rect.png",
+          "position": "center",
+          "size": "contain",
+          "alt": "Серебро · прямоугольник",
+          "standalone": true
         }
+      },
+      "applicationPreview": {
+        "url": "/assets/mirror-v2-silver-rect-room.png",
+        "alt": "В гардеробную, прихожую, на дверь шкафа. Зеркало без рамы.",
+        "standalone": true
+      }
+    },
+    {
+      "id": "silver-circle",
+      "name": "Серебро · круг",
+      "heading": "Круглое. Над умывальником.",
+      "description": "Круглое зеркало без рамы смягчает строгую геометрию ванной. Изготовим нужный диаметр, сохранив чистую зеркальную поверхность до самого края.",
+      "use": "В ванную, над умывальником",
+      "shape": "Круглая",
+      "caption": "Серебро · круг — полированная кромка без рамы.",
+      "interior": "В ванную, над умывальником. Зеркало без рамы.",
+      "preview": {
+        "url": "/assets/mirror-v2-silver-circle.png",
+        "position": "center",
+        "size": "contain",
+        "alt": "Серебро · круг",
+        "standalone": true
+      },
+      "preset": {
+        "material": "zerkalo-serebro",
+        "base": "standard",
+        "shape": "circle",
+        "productKind": "mirror",
+        "width": 800,
+        "height": 800,
+        "diameter": 800,
+        "topWidth": 700,
+        "quantity": 3,
+        "radii": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "preview": {
+          "url": "/assets/mirror-v2-silver-circle.png",
+          "position": "center",
+          "size": "contain",
+          "alt": "Серебро · круг",
+          "standalone": true
+        }
+      },
+      "applicationPreview": {
+        "url": "/assets/mirror-v2-silver-circle-room.png",
+        "alt": "В ванную, над умывальником. Зеркало без рамы.",
+        "standalone": true
+      }
+    },
+    {
+      "id": "silver-oval",
+      "name": "Серебро · овал",
+      "heading": "Овальное. Для узкой стены.",
+      "description": "Вытянутый овал удобно разместить на узкой стене в прихожей или спальне. Плавный контур без острых углов делает зеркало самостоятельным акцентом.",
+      "use": "В прихожую, спальню",
+      "shape": "Овальная",
+      "caption": "Серебро · овал — полированная кромка без рамы.",
+      "interior": "В прихожую, спальню. Зеркало без рамы.",
+      "preview": {
+        "url": "/assets/mirror-v2-silver-oval.png",
+        "position": "center",
+        "size": "contain",
+        "alt": "Серебро · овал",
+        "standalone": true
+      },
+      "preset": {
+        "material": "zerkalo-serebro",
+        "base": "standard",
+        "shape": "ellipse",
+        "productKind": "mirror",
+        "width": 600,
+        "height": 1000,
+        "diameter": 800,
+        "topWidth": 700,
+        "quantity": 3,
+        "radii": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "preview": {
+          "url": "/assets/mirror-v2-silver-oval.png",
+          "position": "center",
+          "size": "contain",
+          "alt": "Серебро · овал",
+          "standalone": true
+        }
+      },
+      "applicationPreview": {
+        "url": "/assets/mirror-v2-silver-oval-room.png",
+        "alt": "В прихожую, спальню. Зеркало без рамы.",
+        "standalone": true
+      }
+    },
+    {
+      "id": "silver-arch",
+      "name": "Серебро · арка",
+      "heading": "Арочное. Для мягкого силуэта.",
+      "description": "Полукруглый верх и прямые стороны создают спокойную архитектурную форму. Арочное зеркало подходит для гардеробной, спальни и пространства над консолью.",
+      "use": "В спальню, гардеробную",
+      "shape": "Арочная",
+      "caption": "Серебро · арка — полированная кромка без рамы.",
+      "interior": "В спальню, гардеробную. Зеркало без рамы.",
+      "preview": {
+        "url": "/assets/mirror-v2-silver-arch.png",
+        "position": "center",
+        "size": "contain",
+        "alt": "Серебро · арка",
+        "standalone": true
+      },
+      "preset": {
+        "material": "zerkalo-serebro",
+        "base": "standard",
+        "shape": "arch",
+        "productKind": "mirror",
+        "width": 600,
+        "height": 1000,
+        "diameter": 800,
+        "topWidth": 700,
+        "quantity": 3,
+        "radii": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "preview": {
+          "url": "/assets/mirror-v2-silver-arch.png",
+          "position": "center",
+          "size": "contain",
+          "alt": "Серебро · арка",
+          "standalone": true
+        }
+      },
+      "applicationPreview": {
+        "url": "/assets/mirror-v2-silver-arch-room.png",
+        "alt": "В спальню, гардеробную. Зеркало без рамы.",
+        "standalone": true
       }
     },
     {
@@ -50,10 +195,11 @@ window.AGMCatalogProduct = {
       "caption": "Осветлённое Crystalvision — вариант формы без рамы.",
       "interior": "В ванную, над умывальником. Без подсветки и профиля.",
       "preview": {
-        "url": "/assets/mirrors-grid-1.png",
-        "position": "0% 25.0%",
-        "size": "200% 500%",
-        "alt": "Осветлённое Crystalvision"
+        "url": "/assets/mirror-v2-crystal.png",
+        "position": "center",
+        "size": "contain",
+        "alt": "Осветлённое Crystalvision",
+        "standalone": true
       },
       "preset": {
         "material": "zerkalo-osvetlyonnoe",
@@ -72,32 +218,39 @@ window.AGMCatalogProduct = {
           30
         ],
         "preview": {
-          "url": "/assets/mirrors-grid-1.png",
-          "position": "0% 25.0%",
-          "size": "200% 500%",
-          "alt": "Осветлённое Crystalvision"
+          "url": "/assets/mirror-v2-crystal.png",
+          "position": "center",
+          "size": "contain",
+          "alt": "Осветлённое Crystalvision",
+          "standalone": true
         }
+      },
+      "applicationPreview": {
+        "url": "/assets/mirror-v2-crystal-room.png",
+        "alt": "В ванную, над умывальником. Без подсветки и профиля.",
+        "standalone": true
       }
     },
     {
       "id": "bronze",
       "name": "Бронза",
-      "heading": "Тёплая бронза. Для прихожей.",
-      "description": "Бронзовый оттенок отражения сочетается с деревом и бежевым камнем. Круглое зеркало создаёт спокойный акцент над консолью.",
-      "use": "На стену в прихожей",
-      "shape": "Круглая",
-      "caption": "Бронза — вариант формы без рамы.",
-      "interior": "На стену в прихожей. Без подсветки и профиля.",
+      "heading": "Бронза. Глубина мебельной ниши.",
+      "description": "Бронзовое зеркало на задней стенке стеллажа отражает интерьер между полками и создаёт ощущение глубины. Тёплый оттенок сочетается с деревом и камнем.",
+      "use": "Задние стенки стеллажей, декоративные ниши",
+      "shape": "Прямоугольная",
+      "caption": "Бронза — зеркало для декоративных вставок.",
+      "interior": "Бронзовое зеркало в отделке ниши.",
       "preview": {
-        "url": "/assets/mirrors-grid-1.png",
-        "position": "0% 50.0%",
-        "size": "200% 500%",
-        "alt": "Бронза"
+        "url": "/assets/mirror-v2-bronze.png",
+        "position": "center",
+        "size": "contain",
+        "alt": "Бронза",
+        "standalone": true
       },
       "preset": {
         "material": "tonirovannye-zerkala",
         "base": "tint_bronze",
-        "shape": "circle",
+        "shape": "rectangle",
         "productKind": "mirror",
         "width": 800,
         "height": 600,
@@ -111,27 +264,34 @@ window.AGMCatalogProduct = {
           0
         ],
         "preview": {
-          "url": "/assets/mirrors-grid-1.png",
-          "position": "0% 50.0%",
-          "size": "200% 500%",
-          "alt": "Бронза"
+          "url": "/assets/mirror-v2-bronze.png",
+          "position": "center",
+          "size": "contain",
+          "alt": "Бронза",
+          "standalone": true
         }
+      },
+      "applicationPreview": {
+        "url": "/assets/mirror-v2-bronze-room.png",
+        "alt": "Бронзовое зеркало в отделке ниши.",
+        "standalone": true
       }
     },
     {
       "id": "grey",
       "name": "Серое",
-      "heading": "Дымчатое отражение. Для гостиной.",
-      "description": "Серое зеркало делает отражение темнее и спокойнее. Подходит для декоративного оформления стены и сочетания с графитовыми деталями.",
-      "use": "В гостиную, над комодом",
+      "heading": "Серое. Ритм стеновых вставок.",
+      "description": "Дымчатые зеркальные вставки между деревянными панелями добавляют стене глубину. Отражение становится спокойнее и темнее, сохраняя связь с окружающим пространством.",
+      "use": "Стеновые вставки, отделка гостиной и столовой",
       "shape": "Прямоугольная",
-      "caption": "Серое — вариант формы без рамы.",
-      "interior": "В гостиную, над комодом. Без подсветки и профиля.",
+      "caption": "Серое — зеркало для декоративных вставок.",
+      "interior": "Серые зеркальные вставки между стеновыми панелями.",
       "preview": {
-        "url": "/assets/mirrors-grid-1.png",
-        "position": "0% 75.0%",
-        "size": "200% 500%",
-        "alt": "Серое"
+        "url": "/assets/mirror-v2-grey.png",
+        "position": "center",
+        "size": "contain",
+        "alt": "Серое",
+        "standalone": true
       },
       "preset": {
         "material": "tonirovannye-zerkala",
@@ -150,32 +310,39 @@ window.AGMCatalogProduct = {
           0
         ],
         "preview": {
-          "url": "/assets/mirrors-grid-1.png",
-          "position": "0% 75.0%",
-          "size": "200% 500%",
-          "alt": "Серое"
+          "url": "/assets/mirror-v2-grey.png",
+          "position": "center",
+          "size": "contain",
+          "alt": "Серое",
+          "standalone": true
         }
+      },
+      "applicationPreview": {
+        "url": "/assets/mirror-v2-grey-room.png",
+        "alt": "Серые зеркальные вставки между стеновыми панелями.",
+        "standalone": true
       }
     },
     {
       "id": "gold",
       "name": "Золото",
-      "heading": "Золотой оттенок. Для выразительной стены.",
-      "description": "Тёплое цветное отражение помогает связать зеркало с отделкой интерьера. Круглая форма работает как самостоятельный декоративный элемент.",
-      "use": "В холл, гостиную, зону ресепшн",
-      "shape": "Круглая",
-      "caption": "Золото — вариант формы без рамы.",
-      "interior": "В холл, гостиную, зону ресепшн. Без подсветки и профиля.",
+      "heading": "Золото. Акцент в отделке.",
+      "description": "Золотистое зеркало работает как декоративная плоскость: отражает свет и поддерживает тёплую палитру. Его можно использовать в нише или за стойкой ресепшн.",
+      "use": "Декоративные ниши, отделка холла и ресепшн",
+      "shape": "Прямоугольная",
+      "caption": "Золото — зеркало для декоративных вставок.",
+      "interior": "Золотое зеркало в нише за стойкой ресепшн.",
       "preview": {
-        "url": "/assets/mirrors-grid-1.png",
-        "position": "0% 100.0%",
-        "size": "200% 500%",
-        "alt": "Золото"
+        "url": "/assets/mirror-v2-gold.png",
+        "position": "center",
+        "size": "contain",
+        "alt": "Золото",
+        "standalone": true
       },
       "preset": {
         "material": "tonirovannye-zerkala",
         "base": "tint_gold",
-        "shape": "circle",
+        "shape": "rectangle",
         "productKind": "mirror",
         "width": 800,
         "height": 600,
@@ -189,27 +356,34 @@ window.AGMCatalogProduct = {
           0
         ],
         "preview": {
-          "url": "/assets/mirrors-grid-1.png",
-          "position": "0% 100.0%",
-          "size": "200% 500%",
-          "alt": "Золото"
+          "url": "/assets/mirror-v2-gold.png",
+          "position": "center",
+          "size": "contain",
+          "alt": "Золото",
+          "standalone": true
         }
+      },
+      "applicationPreview": {
+        "url": "/assets/mirror-v2-gold-room.png",
+        "alt": "Золотое зеркало в нише за стойкой ресепшн.",
+        "standalone": true
       }
     },
     {
       "id": "pink",
       "name": "Розовое",
-      "heading": "Розовое. Для мягкого акцента.",
-      "description": "Зеркало с розовым оттенком поддерживает тёплую палитру спальни. Цветное отражение отличается от обычного серебряного зеркала.",
-      "use": "В спальню, над туалетным столиком",
-      "shape": "Прямоугольная со скруглениями",
-      "caption": "Розовое — вариант формы без рамы.",
-      "interior": "В спальню, над туалетным столиком. Без подсветки и профиля.",
+      "heading": "Розовое. Зеркальная деталь мебели.",
+      "description": "Розовое зеркало можно использовать для вставок в мебель и декоративных плоскостей. Оно отражает пространство с мягким цветным оттенком. Основание и крепление согласуются под конкретную мебель.",
+      "use": "Декоративные мебельные вставки, облицовка",
+      "shape": "Прямоугольная",
+      "caption": "Розовое — зеркало для декоративных вставок.",
+      "interior": "Розовые зеркальные вставки на фасадах тумбы.",
       "preview": {
-        "url": "/assets/mirrors-grid-2.png",
-        "position": "0% 0.0%",
-        "size": "200% 400%",
-        "alt": "Розовое"
+        "url": "/assets/mirror-v2-pink.png",
+        "position": "center",
+        "size": "contain",
+        "alt": "Розовое",
+        "standalone": true
       },
       "preset": {
         "material": "tonirovannye-zerkala",
@@ -222,38 +396,45 @@ window.AGMCatalogProduct = {
         "topWidth": 700,
         "quantity": 3,
         "radii": [
-          30,
-          30,
-          30,
-          30
+          0,
+          0,
+          0,
+          0
         ],
         "preview": {
-          "url": "/assets/mirrors-grid-2.png",
-          "position": "0% 0.0%",
-          "size": "200% 400%",
-          "alt": "Розовое"
+          "url": "/assets/mirror-v2-pink.png",
+          "position": "center",
+          "size": "contain",
+          "alt": "Розовое",
+          "standalone": true
         }
+      },
+      "applicationPreview": {
+        "url": "/assets/mirror-v2-pink-room.png",
+        "alt": "Розовые зеркальные вставки на фасадах тумбы.",
+        "standalone": true
       }
     },
     {
       "id": "rainbow",
       "name": "Радужное",
-      "heading": "Радужное. Для необычного интерьера.",
-      "description": "Переливы оттенков превращают привычное зеркало в декоративный акцент. Конкретный цветовой эффект согласуем по образцу материала.",
-      "use": "На акцентную стену в прихожей",
-      "shape": "Круглая",
-      "caption": "Радужное — вариант формы без рамы.",
-      "interior": "На акцентную стену в прихожей. Без подсветки и профиля.",
+      "heading": "Радужное. Цвет в отражении.",
+      "description": "Переливы зеркальной поверхности создают необычный акцент в отделке стены. Эффект и оттенок согласуем по образцу: иллюстрация показывает идею применения.",
+      "use": "Акцентные стены, интерьер кафе и общественных зон",
+      "shape": "Прямоугольная",
+      "caption": "Радужное — зеркало для декоративных вставок.",
+      "interior": "Радужная зеркальная плоскость в интерьерной композиции.",
       "preview": {
-        "url": "/assets/mirrors-grid-2.png",
-        "position": "0% 33.333333333333336%",
-        "size": "200% 400%",
-        "alt": "Радужное"
+        "url": "/assets/mirror-v2-rainbow.png",
+        "position": "center",
+        "size": "contain",
+        "alt": "Радужное",
+        "standalone": true
       },
       "preset": {
         "material": "tonirovannye-zerkala",
         "base": "tint_rainbow",
-        "shape": "circle",
+        "shape": "rectangle",
         "productKind": "mirror",
         "width": 800,
         "height": 600,
@@ -267,27 +448,34 @@ window.AGMCatalogProduct = {
           0
         ],
         "preview": {
-          "url": "/assets/mirrors-grid-2.png",
-          "position": "0% 33.333333333333336%",
-          "size": "200% 400%",
-          "alt": "Радужное"
+          "url": "/assets/mirror-v2-rainbow.png",
+          "position": "center",
+          "size": "contain",
+          "alt": "Радужное",
+          "standalone": true
         }
+      },
+      "applicationPreview": {
+        "url": "/assets/mirror-v2-rainbow-room.png",
+        "alt": "Радужная зеркальная плоскость в интерьерной композиции.",
+        "standalone": true
       }
     },
     {
       "id": "blue",
       "name": "Синее",
-      "heading": "Синее. Для прохладной палитры.",
-      "description": "Синий оттенок отражения сочетается со светлыми стенами и современными интерьерами. Форму и пропорции подбираем под пространство.",
-      "use": "В столовую, гостиную",
+      "heading": "Синее. Фон для композиции.",
+      "description": "Синий зеркальный фон подчёркивает керамику и предметы декора в нише. Отражение добавляет глубину, а цвет объединяет композицию с палитрой интерьера.",
+      "use": "Декоративные ниши, задние стенки витрин",
       "shape": "Прямоугольная",
-      "caption": "Синее — вариант формы без рамы.",
-      "interior": "В столовую, гостиную. Без подсветки и профиля.",
+      "caption": "Синее — зеркало для декоративных вставок.",
+      "interior": "Синее зеркало за полками с предметами декора.",
       "preview": {
-        "url": "/assets/mirrors-grid-2.png",
-        "position": "0% 66.66666666666667%",
-        "size": "200% 400%",
-        "alt": "Синее"
+        "url": "/assets/mirror-v2-blue.png",
+        "position": "center",
+        "size": "contain",
+        "alt": "Синее",
+        "standalone": true
       },
       "preset": {
         "material": "tonirovannye-zerkala",
@@ -306,70 +494,38 @@ window.AGMCatalogProduct = {
           0
         ],
         "preview": {
-          "url": "/assets/mirrors-grid-2.png",
-          "position": "0% 66.66666666666667%",
-          "size": "200% 400%",
-          "alt": "Синее"
+          "url": "/assets/mirror-v2-blue.png",
+          "position": "center",
+          "size": "contain",
+          "alt": "Синее",
+          "standalone": true
         }
+      },
+      "applicationPreview": {
+        "url": "/assets/mirror-v2-blue-room.png",
+        "alt": "Синее зеркало за полками с предметами декора.",
+        "standalone": true
       }
     },
     {
       "id": "black",
       "name": "Чёрное",
-      "heading": "Тёмное зеркало. Для контраста.",
-      "description": "Глубокое тёмное отражение создаёт выразительный акцент. Такое зеркало выбирают прежде всего для декоративного оформления.",
-      "use": "На стену над консолью",
-      "shape": "Круглая",
-      "caption": "Чёрное — вариант формы без рамы.",
-      "interior": "На стену над консолью. Без подсветки и профиля.",
+      "heading": "Чёрное. Отражающая отделка.",
+      "description": "Тёмное зеркало подходит для декоративной облицовки и акцентных вставок. При подходящем освещении на его поверхности читаются отражения предметов и отделки.",
+      "use": "Акцентные стены, декоративные панели",
+      "shape": "Прямоугольная",
+      "caption": "Чёрное — зеркало для декоративных вставок.",
+      "interior": "Чёрные зеркальные панели над низкой тумбой.",
       "preview": {
-        "url": "/assets/mirrors-grid-2.png",
-        "position": "0% 100.0%",
-        "size": "200% 400%",
-        "alt": "Чёрное"
+        "url": "/assets/mirror-v2-black.png",
+        "position": "center",
+        "size": "contain",
+        "alt": "Чёрное",
+        "standalone": true
       },
       "preset": {
         "material": "tonirovannye-zerkala",
         "base": "tint_black",
-        "shape": "circle",
-        "productKind": "mirror",
-        "width": 800,
-        "height": 600,
-        "diameter": 800,
-        "topWidth": 700,
-        "quantity": 3,
-        "radii": [
-          0,
-          0,
-          0,
-          0
-        ],
-        "preview": {
-          "url": "/assets/mirrors-grid-2.png",
-          "position": "0% 100.0%",
-          "size": "200% 400%",
-          "alt": "Чёрное"
-        }
-      }
-    },
-    {
-      "id": "k1",
-      "name": "Состаренное K1",
-      "heading": "Состаренное. Для фактурного интерьера.",
-      "description": "Декоративная патина добавляет рисунок зеркальной поверхности. Изображение показывает идею применения; фактуру K1 выбираем по каталожному образцу.",
-      "use": "Над комодом, в декоративную нишу",
-      "shape": "Прямоугольная",
-      "caption": "Состаренное K1 — вариант формы без рамы.",
-      "interior": "Над комодом, в декоративную нишу. Без подсветки и профиля.",
-      "preview": {
-        "url": "/assets/mirrors-grid-3.png",
-        "position": "0% 0.0%",
-        "size": "200% 400%",
-        "alt": "Состаренное K1"
-      },
-      "preset": {
-        "material": "sostarennye-zerkala-k1",
-        "base": "standard",
         "shape": "rectangle",
         "productKind": "mirror",
         "width": 800,
@@ -384,128 +540,17 @@ window.AGMCatalogProduct = {
           0
         ],
         "preview": {
-          "url": "/assets/mirrors-grid-3.png",
-          "position": "0% 0.0%",
-          "size": "200% 400%",
-          "alt": "Состаренное K1"
+          "url": "/assets/mirror-v2-black.png",
+          "position": "center",
+          "size": "contain",
+          "alt": "Чёрное",
+          "standalone": true
         }
-      }
-    },
-    {
-      "id": "k1gold",
-      "name": "Состаренное K1 Gold",
-      "heading": "Золотая патина. Для тёплого интерьера.",
-      "description": "Состаренная поверхность сочетается с деревом и природным камнем. Рисунок и оттенок материала согласуем по образцу K1 Gold.",
-      "use": "В прихожую, гостиную",
-      "shape": "Круглая",
-      "caption": "Состаренное K1 Gold — вариант формы без рамы.",
-      "interior": "В прихожую, гостиную. Без подсветки и профиля.",
-      "preview": {
-        "url": "/assets/mirrors-grid-3.png",
-        "position": "0% 33.333333333333336%",
-        "size": "200% 400%",
-        "alt": "Состаренное K1 Gold"
       },
-      "preset": {
-        "material": "sostarennye-zerkala-k1-gold",
-        "base": "standard",
-        "shape": "circle",
-        "productKind": "mirror",
-        "width": 800,
-        "height": 600,
-        "diameter": 800,
-        "topWidth": 700,
-        "quantity": 3,
-        "radii": [
-          0,
-          0,
-          0,
-          0
-        ],
-        "preview": {
-          "url": "/assets/mirrors-grid-3.png",
-          "position": "0% 33.333333333333336%",
-          "size": "200% 400%",
-          "alt": "Состаренное K1 Gold"
-        }
-      }
-    },
-    {
-      "id": "morena",
-      "name": "Состаренное Morena",
-      "heading": "Morena. Для декоративной стены.",
-      "description": "Состаренное зеркало делает отражение частью отделки. Выберите форму и размер, а характер рисунка уточним по образцу Morena.",
-      "use": "В столовую, декоративное панно",
-      "shape": "Прямоугольная",
-      "caption": "Состаренное Morena — вариант формы без рамы.",
-      "interior": "В столовую, декоративное панно. Без подсветки и профиля.",
-      "preview": {
-        "url": "/assets/mirrors-grid-3.png",
-        "position": "0% 66.66666666666667%",
-        "size": "200% 400%",
-        "alt": "Состаренное Morena"
-      },
-      "preset": {
-        "material": "sostarennye-zerkala",
-        "base": "standard",
-        "shape": "rectangle",
-        "productKind": "mirror",
-        "width": 800,
-        "height": 600,
-        "diameter": 800,
-        "topWidth": 700,
-        "quantity": 3,
-        "radii": [
-          0,
-          0,
-          0,
-          0
-        ],
-        "preview": {
-          "url": "/assets/mirrors-grid-3.png",
-          "position": "0% 66.66666666666667%",
-          "size": "200% 400%",
-          "alt": "Состаренное Morena"
-        }
-      }
-    },
-    {
-      "id": "a1",
-      "name": "Состаренное А-1",
-      "heading": "А-1. Для интерьера с характером.",
-      "description": "Зеркальная поверхность с декоративной патиной для акцента над мебелью. Иллюстрация условная: фактический рисунок А-1 согласуется по образцу.",
-      "use": "В спальню, над комодом",
-      "shape": "Круглая",
-      "caption": "Состаренное А-1 — вариант формы без рамы.",
-      "interior": "В спальню, над комодом. Без подсветки и профиля.",
-      "preview": {
-        "url": "/assets/mirrors-grid-3.png",
-        "position": "0% 100.0%",
-        "size": "200% 400%",
-        "alt": "Состаренное А-1"
-      },
-      "preset": {
-        "material": "sostarennye-zerkala-a1",
-        "base": "standard",
-        "shape": "circle",
-        "productKind": "mirror",
-        "width": 800,
-        "height": 600,
-        "diameter": 800,
-        "topWidth": 700,
-        "quantity": 3,
-        "radii": [
-          0,
-          0,
-          0,
-          0
-        ],
-        "preview": {
-          "url": "/assets/mirrors-grid-3.png",
-          "position": "0% 100.0%",
-          "size": "200% 400%",
-          "alt": "Состаренное А-1"
-        }
+      "applicationPreview": {
+        "url": "/assets/mirror-v2-black-room.png",
+        "alt": "Чёрные зеркальные панели над низкой тумбой.",
+        "standalone": true
       }
     }
   ]

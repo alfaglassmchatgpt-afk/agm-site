@@ -3,7 +3,11 @@ export function outline(s){
     const scale=Math.min(250/Math.max(1,w),130/Math.max(1,h));
     const W=w*scale,H=h*scale,x=(400-W)/2,y=(240-H)/2;
     let d;
-    if(s.shape==='circle') {
+    if(s.shape==='ellipse') {
+      d=`M ${x} ${y+H/2} a ${W/2} ${H/2} 0 1 0 ${W} 0 a ${W/2} ${H/2} 0 1 0 ${-W} 0`;
+    } else if(s.shape==='arch') {
+      d=`M ${x} ${y+H} L ${x} ${y+W/2} A ${W/2} ${W/2} 0 0 1 ${x+W} ${y+W/2} L ${x+W} ${y+H} Z`;
+    } else if(s.shape==='circle') {
       d='M '+x+' 120 a '+W/2+' '+H/2+' 0 1 0 '+W+' 0 a '+W/2+' '+H/2+' 0 1 0 '+(-W)+' 0';
 
     } else if(s.shape==='semicircle'||s.shape==='quarter'){

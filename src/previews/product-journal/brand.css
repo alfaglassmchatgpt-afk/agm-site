@@ -69,3 +69,5 @@ html[data-theme=dark] .introduction-visual:after{background:linear-gradient(90de
 @media(max-width:520px){.introduction-visual{padding:30px 20px;min-height:530px;text-align:center}.introduction-visual .hero-copy{width:100%}.introduction-visual:after{background:rgba(247,250,252,.88)}html[data-theme=dark] .introduction-visual:after{background:rgba(9,25,37,.84)}.introduction-visual .catalog-benefits{justify-content:center}}
 
 .catalog-pages{display:flex;justify-content:center;gap:18px;padding:24px;flex-wrap:wrap}.catalog-pages a{padding:12px 22px;border:1px solid var(--line,#b3c8cd);border-radius:30px;color:inherit;text-decoration:none}.catalog-pages a[aria-current]{background:#167ba2;color:white}.mirrors-page .introduction-visual::before{background-image:url("assets/mirrors-hero.png")}
+
+.mirrors-page .standalone-scene{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:contain;background:#eeeae4}.mirrors-page #shelf-editor [data-material-image]{background-repeat:no-repeat}

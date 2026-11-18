@@ -11,7 +11,7 @@
     black: {material: 'tonirovannoe-steklo-black', shape: 'semicircle', diameter: 400},
     satin: {material: 'steklo-matovoe-matelux', shape: 'rectangle', radii: [0,0,20,20]}
   };
-  const shapes = {rectangle:'Прямоугольник', circle:'Круг', semicircle:'Полукруг', quarter:'Четверть круга', trapezoid:'Трапеция'};
+  const shapes = {rectangle:'Прямоугольник', ellipse:'Овал', arch:'Арка', circle:'Круг', semicircle:'Полукруг', quarter:'Четверть круга', trapezoid:'Трапеция'};
   function dimensions(s) {
     if (s.shape === 'circle') return [s.diameter,s.diameter];
     if (s.shape === 'semicircle') return [s.diameter,s.diameter/2];
@@ -20,7 +20,7 @@
   }
 
   function cornerIndices(s) {
-    if(s.shape==='circle') return [];
+    if(['circle','ellipse','arch'].includes(s.shape)) return [];
     if(s.shape==='semicircle') return [0,1];
     if(s.shape==='quarter') return [0,1,3];
     return [0,1,2,3];
@@ -40,7 +40,8 @@
   function validate(s, material, orderModel) {
     const errors = [];
     if (!material) return ['Материал отсутствует в каталоге.'];
-    if (!shapes[s.shape]) return ['Выберите форму полки.'];
+    if (!shapes[s.shape]) return ['Выберите форму изделия.'];
+    if(s.shape==='arch' && s.height<s.width/2) errors.push('Для арки высота должна быть не меньше половины ширины.');
     const [w,h] = dimensions(s);
     if (![w,h].every(v=>Number.isInteger(v)&&v>0)) errors.push('Размеры должны быть целыми положительными миллиметрами. Для полукруга и четверти круга задайте чётный диаметр.');
     if(s.productKind==='mirror'){
