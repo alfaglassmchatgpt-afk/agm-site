@@ -333,7 +333,7 @@ window.AGMCatalogProduct = {
       "caption": "Золото — зеркало для декоративных вставок.",
       "interior": "Золотое зеркало в нише за стойкой ресепшн.",
       "preview": {
-        "url": "/assets/mirror-v2-gold.png",
+        "url": "/assets/mirror-v3-gold.png",
         "position": "center",
         "size": "contain",
         "alt": "Золото",
@@ -356,7 +356,7 @@ window.AGMCatalogProduct = {
           0
         ],
         "preview": {
-          "url": "/assets/mirror-v2-gold.png",
+          "url": "/assets/mirror-v3-gold.png",
           "position": "center",
           "size": "contain",
           "alt": "Золото",
@@ -379,7 +379,7 @@ window.AGMCatalogProduct = {
       "caption": "Розовое — зеркало для декоративных вставок.",
       "interior": "Розовые зеркальные вставки на фасадах тумбы.",
       "preview": {
-        "url": "/assets/mirror-v2-pink.png",
+        "url": "/assets/mirror-v3-pink.png",
         "position": "center",
         "size": "contain",
         "alt": "Розовое",
@@ -402,7 +402,7 @@ window.AGMCatalogProduct = {
           0
         ],
         "preview": {
-          "url": "/assets/mirror-v2-pink.png",
+          "url": "/assets/mirror-v3-pink.png",
           "position": "center",
           "size": "contain",
           "alt": "Розовое",
