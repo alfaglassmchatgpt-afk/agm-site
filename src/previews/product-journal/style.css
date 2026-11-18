@@ -25,6 +25,7 @@ nav a { font-size: 12px; text-decoration: none; border-bottom: 1px solid transpa
 nav a:hover { border-color: var(--ink); }
 .column-labels, .shelf { display: grid; grid-template-columns: 32fr 30fr 38fr; gap: 3vw; }
 .column-labels { border-bottom: 1px solid var(--line); padding: 18px 0; font-size: 10px; text-transform: uppercase; letter-spacing: .13em; color: var(--muted); }
+.column-labels > span { text-align: center; }
 .shelf { padding: 32px 0; border-bottom: 1px solid var(--line); align-items: center; scroll-margin-top: 20px; }
 figure { margin: 0; min-width: 0; }
 .scene { aspect-ratio: 2 / 1; background-image: url('assets/editorial-grid.png'); background-size: 200% 600%; background-repeat: no-repeat; background-color: #eeece5; }
