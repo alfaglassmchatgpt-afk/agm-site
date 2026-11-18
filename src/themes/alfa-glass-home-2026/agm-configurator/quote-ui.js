@@ -48,7 +48,7 @@
    </form>`;
  document.body.append(dialog);dialog.querySelector('[data-close]').onclick=()=>dialog.close();dialog.addEventListener('close',()=>checkout.focus());
  const form=dialog.querySelector('form'),send=form.querySelector('[type=submit]'),feedback=form.querySelector('[data-status]');
- if(local){send.textContent='Проверить состав заявки';feedback.textContent='Локальная проверка: письмо не отправляется.';}
+ if(local){send.textContent='Отправить заявку (тест)';feedback.textContent='Локальная проверка: письмо не отправляется.';}
  let store,materials,operations,loadError,credentials,pending,fingerprint,sentFingerprint,busy=false;
  function report(e){status.textContent=e.message||String(e);}
  function render(){
@@ -83,7 +83,14 @@
   }catch(e){loadError=e;report(e);}
  }
  function open(){opener=document.activeElement;document.dispatchEvent(new CustomEvent('agm:quote-flush'));drawer.hidden=false;render();if(loadError)report(loadError);top.querySelector('button').focus({preventScroll:true});}
- function text(items){return items.map((i,n)=>(n+1)+'. '+i.title+'\n'+i.summary).join('\n\n');}
+ function readableSummary(summary){
+  return summary.replace(/Радиусы углов: ([^\n]+); 0 = без скругления/g,(_,values)=>{
+   const corners=values.split('; ');
+   if(corners.every(v=>/ 0 мм$/.test(v)))return 'Углы без скругления.';
+   return 'Углы (вид сверху): '+corners.map(v=>v.replace(/ (\d+) мм$/,(_,r)=>Number(r)===0?' — без скругления':' — скругление R '+r+' мм')).join('; ');
+  });
+ }
+ function text(items){return items.map((i,n)=>(n+1)+'. '+i.title+'\n'+readableSummary(i.summary)).join('\n\n');}
  function prepare(){
   try{if(loadError)throw loadError;const items=store.payload();status.textContent='';dialog.querySelector('pre').textContent=text(items);dialog.querySelector('[data-count]').textContent='Ваш заказ · позиций: '+items.length;
    dialog.querySelector('[data-order]').replaceChildren(...items.map(item=>el('li',item.title)));

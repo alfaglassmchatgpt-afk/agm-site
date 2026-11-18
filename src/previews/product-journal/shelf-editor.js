@@ -195,7 +195,7 @@
       const shapeText = [
         'Полка: '+model.shapes[s.shape],
         ['circle','semicircle','quarter'].includes(s.shape)?'Диаметр исходного круга: '+s.diameter+' мм':'',
-        model.cornerIndices(s).length?'Радиусы углов: '+model.cornerIndices(s).map(i=>['левый верхний','правый верхний','правый нижний','левый нижний'][i]+' '+s.radii[i]+' мм').join('; ')+'; 0 = без скругления':'',
+        model.cornerIndices(s).length?(model.cornerIndices(s).every(i=>s.radii[i]===0)?'Углы без скругления.':'Углы (вид сверху): '+model.cornerIndices(s).map(i=>['левый верхний','правый верхний','правый нижний','левый нижний'][i]+' — '+(s.radii[i]===0?'без скругления':'скругление R '+s.radii[i]+' мм')).join('; ')):'',
         s.shape==='trapezoid'?'Верхнее основание: '+s.topWidth+' мм; нижнее: '+s.width+' мм. Трапеция симметричная.':'',
         s.note
       ].filter(Boolean).join('\n');
