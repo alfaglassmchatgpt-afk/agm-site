@@ -45,13 +45,14 @@
     const [w,h] = dimensions(s);
     if (![w,h].every(v=>Number.isInteger(v)&&v>0)) errors.push('Размеры должны быть целыми положительными миллиметрами. Для полукруга и четверти круга задайте чётный диаметр.');
     if(s.productKind==='mirror'){
-      if(Math.min(w,h)<600 || Math.max(w,h)<800) errors.push('Минимальные габариты зеркала — 800 × 600 мм. Для круга диаметр от 800 мм.');
+      if(s.shape==='rectangle'?(w<300||h<300):(Math.min(w,h)<600 || Math.max(w,h)<800)) errors.push('Прямоугольное зеркало — от 300 × 300 мм; овал и арка — от 800 × 600 мм, круг — от Ø 800 мм.');
     } else if (s.shape === 'circle') {
       if (s.diameter<300) errors.push('Минимальный диаметр круглой полки — 300 мм.');
     } else if (Math.min(w,h)<180 || Math.max(w,h)<400) errors.push('Минимальные габариты полки — 180 × 400 мм, с поворотом.');
     const max = material.maxSize || {width:10000,height:10000};
     if (Math.min(w,h)>Math.min(max.width,max.height)||Math.max(w,h)>Math.max(max.width,max.height)) errors.push('Размер превышает формат материала.');
-    if (!Number.isInteger(s.quantity)||s.quantity<3||s.quantity>9999) errors.push('Количество — от 3 до 9999 штук.');
+    const minQuantity=s.productKind==='mirror'?1:3;
+    if (!Number.isInteger(s.quantity)||s.quantity<minQuantity||s.quantity>9999) errors.push('Количество — от '+minQuantity+' до 9999 штук.');
     if (!orderModel.thicknesses(material,s.base||'standard').includes(s.thickness)) errors.push('Толщина недоступна в каталоге материала.');
     if (cornerIndices(s).length && (s.radii.length!==4 || cornerIndices(s).some(i=>!Number.isInteger(s.radii[i])||s.radii[i]<0||s.radii[i]>radiusLimit(s)))) errors.push('Радиусы углов — от 0 до '+radiusLimit(s)+' мм. 0 означает угол без скругления.');
     if (s.shape==='trapezoid' && (!Number.isInteger(s.topWidth)||s.topWidth<1||s.topWidth>s.width)) errors.push('Верхнее основание трапеции должно быть от 1 мм до ширины нижнего.');

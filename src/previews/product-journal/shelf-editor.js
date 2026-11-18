@@ -15,7 +15,7 @@
         <label data-linear>${mirror?'Высота':'Глубина'}, мм<input name="height" type="number" min="1" step="1" required></label>
         <label data-round hidden>Диаметр исходного круга, мм<input name="diameter" type="number" min="300" step="1"></label>
         <label data-trapezoid hidden>Верхнее основание, мм<input name="topWidth" type="number" min="1" step="1"></label>
-        <label>Количество, шт.<input name="quantity" type="number" min="3" max="9999" step="1" required></label>
+        <label>Количество, шт.<input name="quantity" type="number" min="${mirror?1:3}" max="9999" step="1" required></label>
       </div>
       <fieldset class="shelf-diagram"><legend>${mirror?'Схема зеркала — вид спереди':'Схема полки — вид сверху'}</legend><button type="button" data-corner-lock aria-pressed="true"></button><p data-corners>0 — без скругления. Радиус от 1 мм.</p><div class="corner-layout"><svg viewBox="0 0 400 240" role="img" aria-label="Схема изделия"><path data-outline></path></svg>
         <label data-corners class="corner tl"><span>Левый верхний, мм</span><input aria-label="Левый верхний, мм" name="r0" type="number" min="0" step="1"></label>
@@ -24,7 +24,7 @@
         <label data-corners class="corner br"><span>Правый нижний, мм</span><input aria-label="Правый нижний, мм" name="r2" type="number" min="0" step="1"></label>
       </div><p data-corners data-radius-limit></p></fieldset>
       <p data-dimensions></p>
-      <p>Кромка — полированная. ${mirror?'Минимальные габариты — 800 × 600 мм, для круга — Ø 800 мм.':'Минимальные габариты — 180 × 400 мм, для круга — Ø 300 мм.'}</p>
+      <p>Кромка — полированная. ${mirror?'Прямоугольное зеркало — от 300 × 300 мм; овал и арка — от 800 × 600 мм, круг — от Ø 800 мм.':'Минимальные габариты — 180 × 400 мм, для круга — Ø 300 мм.'}</p>
       <label>Отверстия, технические вырезы и пожелания<textarea name="note" maxlength="1200" rows="2"></textarea></label>
       <p data-error role="alert"></p>
       <button type="submit">Добавить в мой расчёт</button>
@@ -80,8 +80,8 @@
     dialog.querySelector('[data-dimensions]').textContent='Габариты: '+model.dimensions(s).join(' × ')+' мм.';
 
     const max=quote.materials[s.material].maxSize || {width:10000,height:10000};
-    form.elements.width.min=mirror?(s.height>=800?600:800):(s.height>=400?180:400);
-    form.elements.height.min=mirror?Math.max(s.width>=800?600:800,s.shape==='arch'?Math.ceil(s.width/2):0):(s.width>=400?180:400);
+    form.elements.width.min=mirror?(s.shape==='rectangle'?300:(s.height>=800?600:800)):(s.height>=400?180:400);
+    form.elements.height.min=mirror?(s.shape==='rectangle'?300:Math.max(s.width>=800?600:800,s.shape==='arch'?Math.ceil(s.width/2):0)):(s.width>=400?180:400);
     form.elements.width.max=max.width;
     form.elements.height.max=max.height;
     form.elements.diameter.min=mirror?800:({circle:300,semicircle:400,quarter:800}[s.shape]||300);

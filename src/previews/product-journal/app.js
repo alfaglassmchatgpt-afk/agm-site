@@ -64,9 +64,9 @@ shelves.forEach((item, index) => {
   const specs = document.createElement('dl');
   const characteristics = [
     ['Толщина', 'Загружается из каталога'],
-    ['Мин. партия', 'От 3 штук'],
+    ['Мин. партия', window.AGMCatalogProduct ? 'От 1 штуки' : 'От 3 штук'],
     ['Кромка', 'Полированная — по умолчанию'],
-    ['Мин. размер', window.AGMCatalogProduct ? '800 × 600 мм' : '180 × 400 мм'],
+    ['Мин. размер', window.AGMCatalogProduct ? (item.preset.shape==='rectangle'?'300 × 300 мм':'800 × 600 мм') : '180 × 400 мм'],
     [window.AGMCatalogProduct ? 'Круглое зеркало' : 'Круглая полка', window.AGMCatalogProduct ? 'Минимальный диаметр — 800 мм' : 'Минимальный диаметр — 300 мм'],
     ['Отверстия и тех. вырезы', 'По запросу'],
     ['Форма на фото', item.shape],

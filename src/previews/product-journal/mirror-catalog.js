@@ -26,7 +26,7 @@ window.AGMCatalogProduct = {
         "height": 1600,
         "diameter": 800,
         "topWidth": 700,
-        "quantity": 3,
+        "quantity": 1,
         "radii": [
           0,
           0,
@@ -72,7 +72,7 @@ window.AGMCatalogProduct = {
         "height": 800,
         "diameter": 800,
         "topWidth": 700,
-        "quantity": 3,
+        "quantity": 1,
         "radii": [
           0,
           0,
@@ -118,7 +118,7 @@ window.AGMCatalogProduct = {
         "height": 1000,
         "diameter": 800,
         "topWidth": 700,
-        "quantity": 3,
+        "quantity": 1,
         "radii": [
           0,
           0,
@@ -164,7 +164,7 @@ window.AGMCatalogProduct = {
         "height": 1000,
         "diameter": 800,
         "topWidth": 700,
-        "quantity": 3,
+        "quantity": 1,
         "radii": [
           0,
           0,
@@ -210,7 +210,7 @@ window.AGMCatalogProduct = {
         "height": 600,
         "diameter": 800,
         "topWidth": 700,
-        "quantity": 3,
+        "quantity": 1,
         "radii": [
           30,
           30,
@@ -256,7 +256,7 @@ window.AGMCatalogProduct = {
         "height": 600,
         "diameter": 800,
         "topWidth": 700,
-        "quantity": 3,
+        "quantity": 1,
         "radii": [
           0,
           0,
@@ -302,7 +302,7 @@ window.AGMCatalogProduct = {
         "height": 600,
         "diameter": 800,
         "topWidth": 700,
-        "quantity": 3,
+        "quantity": 1,
         "radii": [
           0,
           0,
@@ -348,7 +348,7 @@ window.AGMCatalogProduct = {
         "height": 600,
         "diameter": 800,
         "topWidth": 700,
-        "quantity": 3,
+        "quantity": 1,
         "radii": [
           0,
           0,
@@ -394,7 +394,7 @@ window.AGMCatalogProduct = {
         "height": 600,
         "diameter": 800,
         "topWidth": 700,
-        "quantity": 3,
+        "quantity": 1,
         "radii": [
           0,
           0,
@@ -440,7 +440,7 @@ window.AGMCatalogProduct = {
         "height": 600,
         "diameter": 800,
         "topWidth": 700,
-        "quantity": 3,
+        "quantity": 1,
         "radii": [
           0,
           0,
@@ -486,7 +486,7 @@ window.AGMCatalogProduct = {
         "height": 600,
         "diameter": 800,
         "topWidth": 700,
-        "quantity": 3,
+        "quantity": 1,
         "radii": [
           0,
           0,
@@ -532,7 +532,7 @@ window.AGMCatalogProduct = {
         "height": 600,
         "diameter": 800,
         "topWidth": 700,
-        "quantity": 3,
+        "quantity": 1,
         "radii": [
           0,
           0,
