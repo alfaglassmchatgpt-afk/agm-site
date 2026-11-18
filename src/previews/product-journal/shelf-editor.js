@@ -14,12 +14,12 @@
         <label data-trapezoid hidden>Верхнее основание, мм<input name="topWidth" type="number" min="1" step="1"></label>
         <label>Количество, шт.<input name="quantity" type="number" min="3" max="9999" step="1" required></label>
       </div>
-      <fieldset data-corners><legend>Углы — вид сверху</legend><button type="button" data-corner-lock aria-pressed="true"></button><p>0 — угол 90°. Скругление от 1 мм.</p><div class="shelf-fields">
-        <label>Левый верхний, мм<input name="r0" type="number" min="0" step="1"></label>
-        <label>Правый верхний, мм<input name="r1" type="number" min="0" step="1"></label>
-        <label>Левый нижний, мм<input name="r3" type="number" min="0" step="1"></label>
-        <label>Правый нижний, мм<input name="r2" type="number" min="0" step="1"></label>
-      </div><p data-radius-limit></p></fieldset>
+      <fieldset class="shelf-diagram"><legend>Схема полки — вид сверху</legend><button type="button" data-corner-lock aria-pressed="true"></button><p data-corners>0 — угол 90°. Скругление от 1 мм.</p><div class="corner-layout"><svg viewBox="0 0 400 240" role="img" aria-label="Схема полки"><path data-outline></path></svg>
+        <label data-corners class="corner tl"><span>Левый верхний, мм</span><input aria-label="Левый верхний, мм" name="r0" type="number" min="0" step="1"></label>
+        <label data-corners class="corner tr"><span>Правый верхний, мм</span><input aria-label="Правый верхний, мм" name="r1" type="number" min="0" step="1"></label>
+        <label data-corners class="corner bl"><span>Левый нижний, мм</span><input aria-label="Левый нижний, мм" name="r3" type="number" min="0" step="1"></label>
+        <label data-corners class="corner br"><span>Правый нижний, мм</span><input aria-label="Правый нижний, мм" name="r2" type="number" min="0" step="1"></label>
+      </div><p data-corners data-radius-limit></p></fieldset>
       <p data-dimensions></p>
       <p>Кромка — полированная. Минимальные габариты — 180 × 400 мм, для круга — Ø 300 мм.</p>
       <label>Отверстия, технические вырезы и пожелания<textarea name="note" maxlength="1200" rows="2"></textarea></label>
@@ -63,14 +63,26 @@
     form.elements.diameter.step=s.shape==='circle'?'1':'2';
     dialog.querySelector('[data-trapezoid]').hidden=s.shape!=='trapezoid';
     form.elements.topWidth.disabled=s.shape!=='trapezoid';
-    dialog.querySelector('[data-corners]').hidden=s.shape!=='rectangle';
+    dialog.querySelectorAll('[data-corners]').forEach(node=>node.hidden=s.shape!=='rectangle'); cornerLock.hidden=s.shape!=='rectangle';
     for(let i=0;i<4;i++) {
       form.elements['r'+i].disabled=s.shape!=='rectangle';
       form.elements['r'+i].max=model.radiusLimit(s);
     }
     dialog.querySelector('[data-radius-limit]').textContent='При этих размерах максимальный радиус каждого угла — '+model.radiusLimit(s)+' мм.';
     dialog.querySelector('[data-dimensions]').textContent='Габариты полки: '+model.dimensions(s).join(' × ')+' мм.';
+    
+    const max=quote.materials[s.material].maxSize || {width:10000,height:10000};
+    form.elements.width.min=s.height>=400?180:400;
+    form.elements.height.min=s.width>=400?180:400;
+    form.elements.width.max=max.width;
+    form.elements.height.max=max.height;
+    form.elements.diameter.min={circle:300,semicircle:400,quarter:800}[s.shape]||300;
+    form.elements.diameter.max=s.shape==='quarter'?2*Math.min(max.width,max.height):Math.min(max.width,max.height);
+    form.elements.topWidth.max=s.width;
+    for(let i=0;i<4;i++) form.elements['r'+i].value=Math.min(Number(form.elements['r'+i].value)||0,model.radiusLimit(s));
+    drawScheme(read());
     dialog.querySelector('[data-error]').textContent='';
+
   }
   function open(id, existing) {
     opener=document.activeElement;
@@ -94,7 +106,42 @@
     }
     update();
   });
-  form.addEventListener('change',update);
+  
+  function constrainInput(event) {
+    const input=event.target;
+    if(input.type==='number'){
+      const step=Number(input.step)||1, min=Number(input.min)||0;
+      const max=Number(input.max)||10000;
+      input.value=Math.min(max,Math.max(min,Math.round(Number(input.value)/step)*step));
+      if(cornersLocked && /^r[0-3]$/.test(input.name)) {
+        for(let i=0;i<4;i++) form.elements['r'+i].value=input.value;
+      }
+    }
+    update();
+  }
+  form.addEventListener('change',constrainInput);
+  form.addEventListener('focusout',constrainInput);
+  function drawScheme(s) {
+    const [w,h]=model.dimensions(s);
+    const scale=Math.min(250/Math.max(1,w),130/Math.max(1,h));
+    const W=w*scale,H=h*scale,x=(400-W)/2,y=(240-H)/2;
+    let d;
+    if(s.shape==='circle') {
+      d='M '+x+' 120 a '+W/2+' '+H/2+' 0 1 0 '+W+' 0 a '+W/2+' '+H/2+' 0 1 0 '+(-W)+' 0';
+    } else if(s.shape==='semicircle'){
+      d='M '+x+' '+y+' L '+(x+W)+' '+y+' A '+W/2+' '+H+' 0 0 1 '+x+' '+y+' Z';
+    } else if(s.shape==='quarter'){
+      d='M '+x+' '+y+' L '+(x+W)+' '+y+' A '+W+' '+H+' 0 0 1 '+x+' '+(y+H)+' Z';
+    } else if(s.shape==='trapezoid'){
+      const inset=(W-s.topWidth*scale)/2;
+      d='M '+(x+inset)+' '+y+' L '+(x+W-inset)+' '+y+' L '+(x+W)+' '+(y+H)+' L '+x+' '+(y+H)+' Z';
+    } else {
+      const [a,b,c,e]=s.radii.map(r=>r*scale);
+      d='M '+(x+a)+' '+y+' H '+(x+W-b)+' Q '+(x+W)+' '+y+' '+(x+W)+' '+(y+b)+' V '+(y+H-c)+' Q '+(x+W)+' '+(y+H)+' '+(x+W-c)+' '+(y+H)+' H '+(x+e)+' Q '+x+' '+(y+H)+' '+x+' '+(y+H-e)+' V '+(y+a)+' Q '+x+' '+y+' '+(x+a)+' '+y+' Z';
+    }
+    dialog.querySelector('[data-outline]').setAttribute('d',d);
+  }
+
   form.addEventListener('submit',event=>{
     event.preventDefault();
     try {
@@ -115,6 +162,8 @@
       if(entry.errors.length) throw Error(entry.errors.join(' '));
       entry.title='Полка · '+material.title;
       entry.data.shelf=s;
+      entry.preview={url:'/assets/editorial-grid.png',position:'0% '+Object.keys(model.presets).indexOf(s.preset)*20+'%',size:'200% 600%',alt:material.title};
+
       entry.editUrl='/?shelf-edit='+encodeURIComponent(entryId);
       quote.store.put(entry);
       dialog.close();
@@ -145,3 +194,4 @@
     document.querySelector('#shelves').before(feedback);
   }
 })();
+

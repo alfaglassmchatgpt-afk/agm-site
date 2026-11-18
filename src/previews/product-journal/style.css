@@ -111,3 +111,15 @@ a:focus-visible { outline: 2px solid #39796e; outline-offset: 5px; }
 @media(max-width:520px) { #shelf-editor { padding: 18px; } }
 
 #shelf-editor [data-corner-lock] { padding: 8px 12px; border: 1px solid #abb9af; background: #e9eee7; color: var(--ink); font: inherit; font-size: 12px; cursor: pointer; }
+
+#shelf-editor .shelf-diagram { text-align: center; }
+#shelf-editor .corner-layout { position: relative; width: 100%; max-width: 450px; margin: auto; }
+.corner-layout svg { width: 100%; display: block; }
+.corner-layout path { fill: #cee1dc; stroke: #3e756a; stroke-width: 2; }
+#shelf-editor .corner { position: absolute; width: 76px; }
+#shelf-editor .corner span { font-size: 9px; line-height: 1.2; }
+#shelf-editor .corner input { text-align: center; padding: 5px; }
+.corner.tl { left: 0; top: 0; }
+.corner.tr { right: 0; top: 0; }
+.corner.bl { left: 0; bottom: 0; }
+.corner.br { right: 0; bottom: 0; }

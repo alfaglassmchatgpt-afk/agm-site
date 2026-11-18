@@ -55,6 +55,18 @@
    list.replaceChildren();if(!items.length)list.append(el('p','Пока нет изделий. Выберите их в каталоге.'));
    for(const [n,item] of AGMQuoteStore.groupFacades(items).entries()){
     const row=el('article');row.className='quote-item';row.append(el('h3',(n+1)+'. '+item.title));
+    if(item.preview && item.data?.shelf){
+      const previewUrl=new URL(item.preview.url,location.origin);
+      if(previewUrl.origin===location.origin && /^https?:$/.test(previewUrl.protocol)){
+        const sample=el('div');sample.className='quote-material-preview';
+        sample.setAttribute('role','img');sample.setAttribute('aria-label',item.preview.alt||item.title);
+        sample.style.backgroundImage='url('+JSON.stringify(previewUrl.href)+')';
+        sample.style.backgroundSize=item.preview.size;
+        sample.style.backgroundPosition=item.preview.position;
+        sample.style.width='180px';sample.style.height='90px';sample.style.backgroundRepeat='no-repeat';
+        row.append(sample);
+      }
+    }
     row.append(el('p',item.summary.split('\n').slice(0,2).join(' · ')));
     const details=el('details');details.append(el('summary','Все параметры'),el('pre',item.summary));row.append(details);
     if(item.errors.length){const message=el('p',item.errors.join(' '));message.className='quote-error';row.append(message);}
