@@ -78,8 +78,8 @@ html[data-theme=dark] .introduction-visual:after{background:linear-gradient(90de
 
 /* Close crop of the approved mosaic; blur fades away beyond the title. */
 .tiles-page .tile-introduction{min-height:460px;margin-top:24px}
-.tiles-page .tile-introduction::before{inset:-35% -24%;background-image:url("assets/tile-blue-square-colour-drips.png");background-position:center 44%;background-size:cover}
+.tiles-page .tile-introduction::before{inset:0;background-image:url("assets/tile-panel-cutout.png");background-position:91% 8%;background-size:258% auto}
 .tiles-page .tile-introduction::after{background:linear-gradient(90deg,rgba(247,250,252,.91),rgba(247,250,252,.72) 48%,rgba(247,250,252,0) 78%);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);mask-image:linear-gradient(90deg,#000 0%,#000 42%,transparent 78%);-webkit-mask-image:linear-gradient(90deg,#000 0%,#000 42%,transparent 78%)}
 html[data-theme=dark] .tiles-page .tile-introduction::after{background:linear-gradient(90deg,rgba(9,25,37,.94),rgba(9,25,37,.8) 48%,rgba(9,25,37,0) 78%)}
 @media(max-width:900px){.tiles-page .tile-introduction .hero-copy{width:72%}.tiles-page .tile-introduction h1{font-size:clamp(40px,6vw,65px)}}
-@media(max-width:520px){.tiles-page .tile-introduction{min-height:490px}.tiles-page .tile-introduction .hero-copy{width:100%}.tiles-page .tile-introduction::before{inset:-18% -65%}.tiles-page .tile-introduction::after{mask-image:none;-webkit-mask-image:none;background:rgba(247,250,252,.84);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px)}html[data-theme=dark] .tiles-page .tile-introduction::after{background:rgba(9,25,37,.85)}}
+@media(max-width:520px){.tiles-page .tile-introduction{min-height:490px}.tiles-page .tile-introduction .hero-copy{width:100%}.tiles-page .tile-introduction::before{inset:0;background-size:auto 185%;background-position:91% 8%}.tiles-page .tile-introduction::after{mask-image:none;-webkit-mask-image:none;background:rgba(247,250,252,.84);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px)}html[data-theme=dark] .tiles-page .tile-introduction::after{background:rgba(9,25,37,.85)}}
