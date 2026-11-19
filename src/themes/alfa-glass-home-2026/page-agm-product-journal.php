@@ -5,6 +5,13 @@ $files = ['steklyannye-polki'=>'index.html', 'zerkala-na-zakaz'=>'mirrors.html',
 $slug = get_post_field('post_name', get_queried_object_id());
 if (!isset($files[$slug])) { status_header(404); return; }
 $html = file_get_contents(get_template_directory().'/agm-product-journal/'.$files[$slug]);
+// Tell the site's aluminium navigation injector that this header already has the link.
+$html = str_replace('<header ', '<header data-agm-aluminium-link="existing" ', $html);
+// Keep dependent catalogue scripts in authored order under the host optimizer.
+// The theme switch needs the rendered header, even if an optimizer inlines it.
+$html = str_replace('<script src="brand.js" defer></script>', '', $html);
+$html = str_replace('</body>', '<script src="brand.js"></script></body>', $html);
+$html = str_replace('<script ', '<script data-pagespeed-no-defer data-pagespeed-no-transform ', $html);
 // Let WordPress/Yoast own SEO output without duplicating the preview description.
 if (preg_match('~<meta name="description" content="([^"]*)">~', $html, $match)) {
     $description = html_entity_decode($match[1], ENT_QUOTES, 'UTF-8');

@@ -27,6 +27,7 @@ for(const file of ['index.html','mirrors.html','mirror-tiles.html','app.js','mir
  if(file==='tile-order.js')text=text.replaceAll('/mirror-tiles.html?',routes['mirror-tiles.html']+'?');
  if(file==='app.js')text=text.replace("link.href='#'+item.id","link.href=location.pathname+'#'+item.id");
  text=text.replaceAll("'/assets/","'"+asset+'assets/');
+ text=text.replaceAll('"/assets/','"'+asset+'assets/');
  write(theme+'agm-product-journal/'+file,text);
 }
 // Copy only media actually referenced by the prepared catalogue, including CSS backgrounds.
