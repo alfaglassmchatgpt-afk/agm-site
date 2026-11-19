@@ -1,7 +1,7 @@
 (async()=>{
  const form=document.querySelector('#tile-order'),error=document.querySelector('#tile-error'),button=form.querySelector('[type=submit]'),dialog=document.querySelector('#tile-dialog');
  const sizes=['100x50','50x50','250x65','65x65'];let quote,id,color='silver';
- const finishes={silver:{title:'Серебро',material:'zerkalo-serebro',base:'standard'},bronze:{title:'Бронза',material:'tonirovannye-zerkala',base:'tint_bronze'},graphite:{title:'Графит',material:'tonirovannye-zerkala',base:'tint_grey'}};
+ const finishes={silver:{title:'Серебро',material:'zerkalo-serebro',base:'standard'},bronze:{title:'Бронза',material:'tonirovannye-zerkala',base:'tint_bronze'},graphite:{title:'Графит',material:'tonirovannye-zerkala',base:'tint_grey'},rainbow:{title:'Радужное',material:'tonirovannye-zerkala',base:'tint_rainbow'},gold:{title:'Золото',material:'tonirovannye-zerkala',base:'tint_gold'},black:{title:'Чёрное',material:'tonirovannye-zerkala',base:'tint_black'},blue:{title:'Синее',material:'tonirovannye-zerkala',base:'tint_blue'}};
  function selectColor(value){if(!Object.hasOwn(finishes,value))throw Error('Неизвестный оттенок плитки.');color=value;document.querySelector('#tile-dialog-title').textContent='Ваш комплект · '+finishes[color].title;}
  function values(){const size=form.elements.size.value,packs=Number(form.elements.packs.value);if(!sizes.includes(size)||!Number.isInteger(packs)||packs<1||packs>499)throw Error('Выберите размер и целое количество пачек от 1 до 499.');const [width,height]=size.split('x').map(Number);return {size,packs,width,height,quantity:packs*20,area:width*height*packs*20/1000000};}
  const area=n=>n.toLocaleString('ru-RU',{maximumFractionDigits:4});
