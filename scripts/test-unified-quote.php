@@ -10,6 +10,8 @@ function home_url(){return 'https://example.invalid/';}
 function wp_parse_url(...$args){return parse_url(...$args);}
 function wp_json_encode($v){return json_encode($v);}
 function sanitize_text_field($v){return strip_tags($v);}
+function esc_html($v){return htmlspecialchars((string)$v,ENT_QUOTES,'UTF-8');}
+function esc_attr($v){return esc_html($v);}
 function sanitize_textarea_field($v){return strip_tags($v);}
 function sanitize_email($v){return $v;}
 function is_email($v){return filter_var($v,FILTER_VALIDATE_EMAIL);}
@@ -34,7 +36,7 @@ $result=agm_al_request_send(new Request($data));
 if(defined('AGM_STAGING')){check(is_wp_error($result)&&$result->code==='disabled','staging blocked');check(!$mails,'No staging mail');echo "PASS staging remains disabled\n";exit;}
 check(!is_wp_error($result)&&$result['ok'],'Mixed handler succeeds');check(count($mails)===1,'Exactly one mail');
 check(!file_exists($saved),'Private attachment cleaned up');
-foreach(['Ведомость материалов','Карта раскроя','Лист присадки','Эскиз фасада','Маятниковая дверь'] as $section)check(strpos($sheet,$section)!==false,'Missing manager section');
+foreach(['Ведомость материалов','Карта раскроя','Лист присадки','Размерный эскиз','Маятниковая дверь'] as $section)check(strpos($sheet,$section)!==false,'Missing manager section');
 foreach($items as $item){check(strpos($mails[0],$item['title'])!==false,'All titles included');check(strpos($mails[0],$item['summary'])!==false,'All details included');}
 agm_al_request_send(new Request($data));check(count($mails)===1,'Retry deduplicated');
 check(is_wp_error(agm_quote_items_text([])),'Empty rejected');check(is_wp_error(agm_quote_items_text([['type'=>'bogus','title'=>'x','summary'=>'x']])),'Unknown type rejected');
