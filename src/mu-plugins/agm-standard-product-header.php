@@ -83,9 +83,11 @@ function agm_standard_product_html($html, $replace) {
 
 function agm_standard_facade_hero_link($html) {
     return preg_replace_callback('~<section\b[^>]*class="[^"]*\bhero\b[^"]*"[^>]*>.*?</section>~s', static function ($section) {
-        return preg_replace_callback('~<a\b[^>]*href="#request"[^>]*>Получить расчёт\s*(.*?)</a>~s', static function ($a) {
+        $content = preg_replace_callback('~<a\b[^>]*href="#request"[^>]*>Получить расчёт\s*(.*?)</a>~s', static function ($a) {
             return '<a class="button" href="'.esc_url(get_template_directory_uri().'/agm-aluminium-configurator/index.html').'">3D конфигуратор фасадов '.$a[1].'</a>';
         }, $section[0], 1);
+        $content = preg_replace('~<a\b[^>]*>Смотреть изделия</a>~u', '', $content);
+        return $content.'<style id="agm-hero-compact-buttons">.hero-buttons{grid-template-columns:1fr;grid-auto-rows:auto}.hero-buttons .button{height:48px;min-height:48px;box-sizing:border-box}.hero-buttons .icon{flex-shrink:0}@media(max-width:700px){.hero-buttons .button{height:44px;min-height:44px}}</style>';
     }, $html, 1);
 }
 
