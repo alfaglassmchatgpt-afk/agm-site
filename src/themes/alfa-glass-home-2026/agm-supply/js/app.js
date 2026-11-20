@@ -20,6 +20,7 @@
   const MAX_BYTES = 10 * 1024 * 1024;
   const EXTENSIONS = new Set(['pdf', 'docx', 'xlsx', 'jpg', 'jpeg', 'png', 'webp']);
 
+  if (!document.querySelector('.agm-standard-header')) {
   const themeButton = $('.theme-toggle');
   function syncTheme() {
     const dark = root.dataset.theme === 'dark';
@@ -54,6 +55,7 @@
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape' && !mobileNav.hidden) { closeMenu(); menuButton.focus(); }
   });
+  }
   $$('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
       if (a.hasAttribute('data-privacy-link') || a.hasAttribute('data-consent-link')) return;

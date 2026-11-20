@@ -96,11 +96,12 @@ function agm_standard_facade_hero_link($html) {
 add_action('template_redirect', static function () {
     if (is_admin() || is_feed() || (defined('REST_REQUEST') && REST_REQUEST)) return;
     $path = trim(wp_parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH), '/');
-    $targets = ['dveri-iz-stekla','dushevye-peregorodki-iz-stekla','lestnichnye-ograzhdeniya-iz-stekla','stenovye-paneli-iz-stekla','aluminium','aluminium/fasady','aluminium/peregorodki','aluminium/zerkala','izdeliya/steklyannye-polki','izdeliya/zerkala-na-zakaz','izdeliya/zerkalnaya-plitka'];
+    $targets = ['kompleksnye-postavki','dveri-iz-stekla','dushevye-peregorodki-iz-stekla','lestnichnye-ograzhdeniya-iz-stekla','stenovye-paneli-iz-stekla','aluminium','aluminium/fasady','aluminium/peregorodki','aluminium/zerkala','izdeliya/steklyannye-polki','izdeliya/zerkala-na-zakaz','izdeliya/zerkalnaya-plitka'];
     $replace = in_array($path, $targets, true);
     $front = is_front_page();
     ob_start(static function ($html) use ($replace, $front, $path) {
         $html = agm_standard_product_html($html, $replace);
+        if ($path === 'kompleksnye-postavki') $html = preg_replace('~(agm-supply/js/app\.js)(?:\?[^"\s]*)?~', '$1?v=20261120-shared-menu', $html);
         $journals = ['izdeliya/steklyannye-polki'=>'Стеклянные полки', 'izdeliya/zerkala-na-zakaz'=>'Зеркала на заказ', 'izdeliya/zerkalnaya-plitka'=>'Зеркальная плитка'];
         if (isset($journals[$path])) {
             $nav = '<nav class="catalog-pages" aria-label="Страницы каталога">';
