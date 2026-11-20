@@ -1,0 +1,102 @@
+<?php
+/** Plugin Name: AGM standard product headers and direct product routes */
+defined('ABSPATH') || exit;
+
+function agm_standard_product_routes() {
+    return [
+        'product-partitions' => 'aluminium/peregorodki/',
+        'product-railings' => 'lestnichnye-ograzhdeniya-iz-stekla/',
+        'product-doors' => 'dveri-iz-stekla/',
+        'product-shower' => 'dushevye-peregorodki-iz-stekla/',
+        'product-facades' => 'aluminium/fasady/',
+        'product-panels' => 'stenovye-paneli-iz-stekla/',
+        'product-frame' => 'aluminium/zerkala/',
+        'product-led' => 'zerkala-s-podsvetkoj/',
+    ];
+}
+
+function agm_standard_direct_header($header) {
+    $routes = agm_standard_product_routes();
+    $header = preg_replace_callback('~<a\b[^>]*href="([^"]*)"[^>]*>.*?</a>~s', static function ($m) use ($routes) {
+        $fragment = wp_parse_url(html_entity_decode($m[1], ENT_QUOTES, 'UTF-8'), PHP_URL_FRAGMENT);
+        if (!isset($routes[$fragment ?? ''])) return $m[0];
+        $link = str_replace('href="'.$m[1].'"', 'href="'.esc_url(home_url('/'.$routes[$fragment])).'"', $m[0]);
+        return str_replace(' data-nav-product', '', $link);
+    }, $header);
+    // Keep the current dropdown design; only remove duplicate destinations.
+    return preg_replace_callback('~(<div class="nav-panel" id="(?:desktop|mobile)-products"[^>]*>)(.*?)(</div>)~s', static function ($m) {
+        $seen = [];
+        $links = preg_replace_callback('~<a\b[^>]*href="([^"]+)"[^>]*>.*?</a>~s', static function ($link) use (&$seen) {
+            if (isset($seen[$link[1]])) return '';
+            $seen[$link[1]] = true;
+            return $link[0];
+        }, $m[2]);
+        return $m[1].$links.$m[3];
+    }, $header);
+}
+
+function agm_standard_header_markup($html) {
+    $path = get_template_directory().'/agm-homepage/index.html';
+    if (!is_readable($path) || !function_exists('agm_navigation_render')) return '';
+    $source = file_get_contents($path);
+    $home = agm_navigation_render($source);
+    if (!preg_match('~<header class="site-header">.*?</header>~s', $home, $match)) return '';
+    $header = agm_standard_direct_header($match[0]);
+    // Resolve icon fragments locally, including pages with a <base> element.
+    preg_match_all('~<symbol[^>]*id="([^"]+)"[^>]*viewBox="([^"]+)"[^>]*>(.*?)</symbol>~s', $source, $symbols, PREG_SET_ORDER);
+    $icons = [];
+    foreach ($symbols as $symbol) $icons[$symbol[1]] = '<svg width="100%" height="100%" viewBox="'.esc_attr($symbol[2]).'">'.$symbol[3].'</svg>';
+    $header = preg_replace_callback('~<use[^>]*href="#([^"]+)"[^>]*(?:/>|></use>)~', static function ($m) use ($icons) { return $icons[$m[1]] ?? ''; }, $header);
+    $header = strtr($header, ['__AGM_HOME__'=>esc_url(home_url('/')), '__AGM_ASSETS__'=>esc_url(get_template_directory_uri().'/agm-homepage')]);
+    $header = preg_replace('~(<div class="header-location"><span>)(.*?)(</span>)~s', '$1<svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M12 21s7-7 7-13a7 7 0 0 0-14 0c0 6 7 13 7 13Z"/><circle cx="12" cy="8" r="2"/></svg> Московская область, г. Видное, Белокаменное ш. вл. 10/2$3', $header);
+    $quote = strpos($html, 'quote-ui.js') !== false;
+    $header = str_replace('href="#request"', $quote ? 'href="#request" data-open-quote' : 'href="'.esc_url(home_url('/#request')).'"', $header);
+    if ($quote) $header = str_replace('Получить расчёт', 'Мой расчёт', $header);
+    $header = preg_replace('~href="#(clients|products|about|contacts|top)"~', 'href="'.esc_url(home_url('/')).'#$1"', $header);
+    $header = str_replace('href="'.esc_url(home_url('/#about')).'"', 'href="'.esc_url(home_url('/about/')).'"', $header);
+    $al = '<a class="agm-aluminium-link" href="'.esc_url(home_url('/aluminium/')).'"><span>ALUM</span><span>INIUM</span></a>';
+    if (strpos($header, 'agm-aluminium-link') === false) $header = preg_replace('~(<a[^>]+href="[^"]*/kompleksnye-postavki/"[^>]*>)~', $al.'$1', $header);
+    // Distinct event selectors prevent older page scripts binding a second handler.
+    $header = str_replace('class="site-header"', 'class="site-header agm-standard-header" data-agm-aluminium-link="existing"', $header);
+    return strtr($header, ['nav-dropdown'=>'agm-nav-dropdown', 'nav-parent'=>'agm-nav-parent', 'nav-expand'=>'agm-nav-expand', 'nav-panel'=>'agm-nav-panel', 'menu-toggle'=>'agm-menu-toggle', 'mobile-nav'=>'agm-mobile-nav', 'desktop-materials'=>'agm-desktop-materials', 'desktop-products'=>'agm-desktop-products', 'mobile-materials'=>'agm-mobile-materials', 'mobile-products'=>'agm-mobile-products', 'search-toggle'=>'agm-search-toggle']);
+}
+
+function agm_standard_product_html($html, $replace) {
+    if (stripos($html, '</head>') === false || strpos($html, '<header') === false) return $html;
+    if ($replace) {
+        $header = agm_standard_header_markup($html);
+        if (!$header) return $html;
+        $html = preg_replace_callback('~<header\b[^>]*>.*?</header>~s', static function () use ($header) { return $header; }, $html, 1);
+        // These scripts only control the old header. All product editors remain intact.
+        $html = preg_replace('~<script\b[^>]*src="[^"]*(?:shared-header|brand)\.js(?:\?[^"]*)?"[^>]*>\s*</script>~s', '', $html);
+        $assets = '<style id="agm-standard-header-css">'.file_get_contents(__DIR__.'/agm-standard-product-header.css').'</style>';
+        // Old standalone pages do not call wp_head; reuse the existing theme preference implementation.
+        if (strpos($html, 'id="agm-system-theme"') === false && is_readable(__DIR__.'/agm-system-theme.js')) {
+            $assets .= '<script id="agm-system-theme" data-pagespeed-no-defer>'.file_get_contents(__DIR__.'/agm-system-theme.js').'</script>';
+        }
+        $html = str_replace('</head>', $assets.'</head>', $html);
+        $script = '<script data-pagespeed-no-defer data-pagespeed-no-transform>'.file_get_contents(__DIR__.'/agm-standard-product-header.js').'</script>';
+        $html = str_replace('</body>', $script.'</body>', $html);
+    }
+    return preg_replace_callback('~<header\b[^>]*>.*?</header>~s', static function ($m) { return agm_standard_direct_header($m[0]); }, $html);
+}
+
+function agm_standard_facade_hero_link($html) {
+    return preg_replace_callback('~<section\b[^>]*class="[^"]*\bhero\b[^"]*"[^>]*>.*?</section>~s', static function ($section) {
+        return preg_replace_callback('~<a\b[^>]*href="#request"[^>]*>Получить расчёт\s*(.*?)</a>~s', static function ($a) {
+            return '<a class="button" href="'.esc_url(get_template_directory_uri().'/agm-aluminium-configurator/index.html').'">3D конфигуратор фасадов '.$a[1].'</a>';
+        }, $section[0], 1);
+    }, $html, 1);
+}
+
+add_action('template_redirect', static function () {
+    if (is_admin() || is_feed() || (defined('REST_REQUEST') && REST_REQUEST)) return;
+    $path = trim(wp_parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH), '/');
+    $targets = ['dveri-iz-stekla','dushevye-peregorodki-iz-stekla','lestnichnye-ograzhdeniya-iz-stekla','stenovye-paneli-iz-stekla','aluminium','aluminium/fasady','aluminium/peregorodki','aluminium/zerkala','izdeliya/steklyannye-polki','izdeliya/zerkala-na-zakaz','izdeliya/zerkalnaya-plitka'];
+    $replace = in_array($path, $targets, true);
+    $front = is_front_page();
+    ob_start(static function ($html) use ($replace, $front) {
+        $html = agm_standard_product_html($html, $replace);
+        return $front ? agm_standard_facade_hero_link($html) : $html;
+    });
+}, -100);

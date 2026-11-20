@@ -1,4 +1,5 @@
 {
+  "standardProductHeader": {"status":"deployed","deployedOn":"2026-11-20","plugin":"agm-standard-product-header.php","assets":["agm-standard-product-header.css","agm-standard-product-header.js"],"newMegaMenuDeployed":false,"homepageHeroCTA":"3D конфигуратор фасадов"},
   "productJournal": {"status":"deployed","deployedOn":"2026-11-19","pageIds":[5517,5519,5520],"routes":["/izdeliya/steklyannye-polki/","/izdeliya/zerkala-na-zakaz/","/izdeliya/zerkalnaya-plitka/"],"template":"page-agm-product-journal.php","module":"agm-product-journal","mailDeliveryVerified":false},
   "localFacadeManager": {"previewPort":8798,"route":"/?agm_facade_manager=1","status":"local-only","plugin":"agm-facade-manager.php"},
   "localMaterialLandings": {"updatedOn":"2026-11-02","status":"deployed","previewPort":8794,"routes":["/triplex/","/riflenoe-steklo/","/iz-chego-delayut-zerkalo/#mirror-choice"],"template":"page-agm-material-landing.php","productionChanged":true,"deployedOn":"2026-11-02","pageIds":[5511,5513]},
