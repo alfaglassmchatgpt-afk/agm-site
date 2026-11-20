@@ -1,0 +1,2 @@
+/* Keep sticky summary and anchor targets below the actual common header. */
+(()=>{function init(){const header=document.querySelector('.agm-standard-header');if(!header)return;const sync=()=>document.documentElement.style.setProperty('--railing-header-height',Math.ceil(header.getBoundingClientRect().height)+'px');new ResizeObserver(sync).observe(header);sync();}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();})();

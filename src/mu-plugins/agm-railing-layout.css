@@ -1,0 +1,50 @@
+/* Railing page: common dimensions, theme and form surfaces. */
+body.agm-railing-standard{--r-bg:#f5f8fb;--r-card:#fff;--r-input:#fff;--r-ink:#142332;--r-muted:#526575;--r-line:#d7e4ed;--r-accent:#08699f;--r-button:#086ca6;--r-note:#edf5fa;background:var(--r-bg)!important;color:var(--r-ink)!important}
+html[data-theme=dark] body.agm-railing-standard{--r-bg:#0a1721;--r-card:#102331;--r-input:#0c1d29;--r-ink:#f1f7fb;--r-muted:#b5c7d5;--r-line:#294553;--r-accent:#6acafa;--r-button:#1677ae;--r-note:#152e3d;color-scheme:dark}
+.agm-railing-standard .agd{box-sizing:border-box;width:calc(100% - 80px);max-width:1344px;padding:0;margin-inline:auto;color:var(--r-ink)}
+#railing-project *,#railing-project *::before,#railing-project *::after{box-sizing:border-box}
+#railing-project a{color:var(--r-accent)}
+#railing-project .agd-hero{padding:24px 0 40px}
+#railing-project .agd-crumb{color:var(--r-muted);margin-bottom:24px;line-height:1.6}
+#railing-project .agd-page-hero{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;min-height:450px;padding:0;align-items:center}
+#railing-project .agd-title{font-size:clamp(30px,3vw,44px);line-height:1.12;margin:16px 0 22px;color:var(--r-ink)}
+#railing-project .agd-title span,#railing-project .agd-tag,#railing-project .agd-price,#railing-project .agd-status{color:var(--r-accent)}
+#railing-project .agd-lead{font-size:18px;line-height:1.6}
+#railing-project .agd-lead,#railing-project .agd-hero-description,#railing-project .agd-hero-facts,#railing-project .agd-help,#railing-project .agd-config-intro p,#railing-project dt,#railing-project .agr-sample small,#railing-project figcaption{color:var(--r-muted)}
+#railing-project .agd-hero-description{font-size:15px;line-height:1.7}
+#railing-project .agd-hero-photo img{height:auto;max-height:420px;aspect-ratio:3/2;object-fit:cover;border:1px solid var(--r-line);border-radius:16px;box-shadow:none}
+#railing-project .agd-config-intro{text-align:center;padding:40px 0 30px;border-color:var(--r-line)}
+#railing-project .agd-config-intro p{margin-inline:auto;max-width:740px;font-size:16px}
+#railing-project .agd-config-intro h2{font-size:clamp(26px,2.5vw,34px);color:var(--r-ink)}
+#railing-project .agd-layout{grid-template-columns:minmax(0,1fr) minmax(340px,410px);gap:28px;padding-bottom:64px}
+#railing-project fieldset{background:var(--r-card);border:1px solid var(--r-line);border-radius:16px;padding:24px;margin-bottom:20px}
+#railing-project legend{color:var(--r-ink);font-size:21px;line-height:1.35;margin:0 0 20px;padding:0}
+#railing-project legend span{display:none}
+#railing-project .agd-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+#railing-project label{font-size:14px;color:var(--r-ink);min-width:0}
+#railing-project input,#railing-project select,#railing-project textarea{font-family:inherit;font-size:15px;min-height:48px;max-width:100%;border:1px solid var(--r-line);border-radius:8px;background:var(--r-input);color:var(--r-ink);padding:12px;margin-top:8px}
+#railing-project textarea{min-height:110px}
+#railing-project input:disabled,#railing-project select:disabled{opacity:.55}
+#railing-project .agd-note{background:var(--r-note);border-color:var(--r-accent);color:var(--r-muted);font-size:13px;border-radius:0 8px 8px 0;margin-top:0}
+#railing-project .agd-help{font-size:13px;line-height:1.65;margin-top:0}
+#railing-project .agd-help a{text-underline-offset:4px;text-decoration:underline}
+#railing-project .agd-aside{background:var(--r-card);border-color:var(--r-line);border-radius:16px;position:sticky;top:calc(var(--railing-header-height,190px) + 20px);max-height:calc(100dvh - var(--railing-header-height,190px) - 40px);overflow:auto;scrollbar-width:thin}
+#railing-project .agr-visual{height:auto;background:linear-gradient(120deg,#edf1ef,#dfe9ee);border-color:var(--r-line);padding-bottom:12px}
+#railing-project .agr-visual svg{height:auto;max-height:290px;width:100%}
+#railing-project .agr-visual p{color:#455c69;font-size:11px;line-height:1.5}
+#railing-project .agr-sample{border-color:var(--r-line);padding:16px 22px}
+#railing-project .agr-sample img{width:64px;height:72px;border-color:var(--r-line)}
+#railing-project .agd-summary{padding:24px}
+#railing-project .agd-summary h2{color:var(--r-ink);font-size:24px}
+#railing-project dl>div{border-color:var(--r-line);font-size:14px;padding:12px 0}
+#railing-project dd{overflow-wrap:anywhere}
+#railing-project button,#railing-project a.agr-mail,#railing-project .agd-hero-cta{min-height:48px;border-radius:8px;font-family:inherit;font-size:14px;font-weight:700;border:1px solid var(--r-line);background:var(--r-card);color:var(--r-accent);padding:13px 20px;box-shadow:none}
+#railing-project .agd-primary,#railing-project .agd-hero-cta{background:var(--r-button);border-color:var(--r-button);color:#fff}
+#railing-project button:hover,#railing-project .agd-hero-cta:hover{filter:brightness(1.1)}
+#railing-project .agd-actions{gap:12px;margin-top:6px}
+#railing-project .agd-result{background:var(--r-input);border-color:var(--r-line);color:var(--r-ink);white-space:pre-wrap;overflow-wrap:anywhere;font-family:inherit}
+#railing-configurator,#agr-result-section{scroll-margin-top:calc(var(--railing-header-height,190px) + 20px)}
+.agm-railing-standard .agd-foot{background:var(--r-card);color:var(--r-muted);border-color:var(--r-line)}
+@media(max-width:1000px){#railing-project .agd-page-hero{gap:28px}#railing-project .agd-layout{grid-template-columns:minmax(0,1fr) 340px;gap:20px}#railing-project .agd-grid{grid-template-columns:1fr}#railing-project fieldset{padding:20px}}
+@media(max-width:850px){.agm-railing-standard .agd{width:calc(100% - 40px)}#railing-project .agd-page-hero,#railing-project .agd-layout{grid-template-columns:1fr}#railing-project .agd-page-hero{min-height:0;gap:28px}#railing-project .agd-hero-photo img{max-height:420px}#railing-project .agd-aside{grid-row:auto;position:static;max-height:none;overflow:visible}#railing-project .agd-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.agm-railing-standard .agd{width:calc(100% - 32px)}#railing-project .agd-grid{grid-template-columns:1fr}#railing-project .agd-title{font-size:30px}#railing-project .agd-hero{padding-top:20px}#railing-project .agd-actions{flex-direction:column}#railing-project .agd-actions button{width:100%}#railing-project .agd-config-intro{padding-top:28px}#railing-project fieldset{padding:20px 16px}#railing-project .agd-summary{padding:20px}#railing-project .agd-lead{font-size:16px}}

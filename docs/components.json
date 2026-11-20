@@ -1,4 +1,5 @@
 {
+  "railingStandardLayout": {"status":"deployed","deployedOn":"2026-11-20","plugin":"agm-railing-layout.php","assets":["agm-railing-layout.css","agm-railing-layout.js"],"requestMode":"existing-specification-mail-client"},
   "editorialNumbers": {"status":"deployed","deployedOn":"2026-11-20","plugin":"agm-clean-editorial-numbers.php","auditedPages":123},
   "productCatalogueMenu": {"status":"deployed","deployedOn":"2026-11-20","plugin":"agm-catalog-menu.php","assets":["agm-catalog-menu.css","agm-catalog-menu.js"],"groups":3,"productLinks":14,"unifiedMaterialAndProductDropdowns":true,"auditedPages":123},
   "standardProductHeader": {"status":"deployed","deployedOn":"2026-11-20","plugin":"agm-standard-product-header.php","assets":["agm-standard-product-header.css","agm-standard-product-header.js","agm-journal-layout.css"],"newMegaMenuDeployed":true,"supplyHeaderStandardized":true,"homepageHeroCTA":"3D конфигуратор фасадов"},
