@@ -1,0 +1,17 @@
+/* Wall-panel-specific previews; dimensions and themes come from railing layout. */
+#wall-panel-project .agp-gallery{display:grid;grid-template-columns:1fr;gap:16px;margin:0}
+#wall-panel-project .agp-gallery figure{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);align-items:center;min-width:0;background:var(--r-card);border:1px solid var(--r-line);border-radius:16px;overflow:hidden}
+#wall-panel-project .agp-gallery figure>a{display:block;min-width:0;height:190px}
+#wall-panel-project .agp-gallery img{width:100%;height:100%;object-fit:cover}
+#wall-panel-project .agp-gallery figcaption{padding:18px;font-size:16px;line-height:1.4;color:var(--r-ink)}
+#wall-panel-project .agp-gallery span{font-size:13px;color:var(--r-muted);margin-top:8px}
+#wall-panel-project .agp-hero-media>.agd-help{font-size:11px;margin-top:12px}
+#wall-panel-project .agp-material-preview,#wall-panel-project .agp-ral-preview{background:var(--r-note);border-color:var(--r-line);border-radius:10px;min-width:0}
+#wall-panel-project .agp-material-preview>div{min-width:0}
+#wall-panel-project .agp-material-preview p,#wall-panel-project .agp-material-preview small,#wall-panel-project .agp-ral-preview small{color:var(--r-muted);font-size:12px}
+#wall-panel-project .agp-material-preview img{border-color:var(--r-line)}
+#wall-panel-project .ags-scene{height:auto;min-height:0;background:#e6ecee;border-color:var(--r-line)}
+#wall-panel-project .ags-scene svg{display:block;width:100%;height:auto;max-height:320px}
+#wall-panel-project .ags-scene p{font-size:11px;line-height:1.5;color:#455c69;padding:0 14px 12px}
+@media(max-width:850px){#wall-panel-project .agp-gallery{grid-template-columns:1fr 1fr}#wall-panel-project .agp-gallery figure{display:block}#wall-panel-project .agp-gallery figure>a{height:auto;aspect-ratio:3/2}}
+@media(max-width:520px){#wall-panel-project .agp-gallery{grid-template-columns:1fr}#wall-panel-project .agp-gallery figure>a{height:auto;aspect-ratio:3/2}#wall-panel-project .agp-material-preview{gap:12px;padding:12px}#wall-panel-project .agp-material-preview img{width:64px;height:76px}}

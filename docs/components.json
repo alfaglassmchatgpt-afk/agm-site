@@ -1,4 +1,5 @@
 {
+  "panelsStandardLayout": {"status":"deployed","deployedOn":"2026-11-20","plugin":"agm-panels-layout.php","assets":["agm-panels-layout.css","agm-railing-layout.css","agm-railing-layout.js"],"requestMode":"existing-specification-mail-client"},
   "railingStandardLayout": {"status":"deployed","deployedOn":"2026-11-20","plugin":"agm-railing-layout.php","assets":["agm-railing-layout.css","agm-railing-layout.js"],"requestMode":"existing-specification-mail-client"},
   "editorialNumbers": {"status":"deployed","deployedOn":"2026-11-20","plugin":"agm-clean-editorial-numbers.php","auditedPages":123},
   "productCatalogueMenu": {"status":"deployed","deployedOn":"2026-11-20","plugin":"agm-catalog-menu.php","assets":["agm-catalog-menu.css","agm-catalog-menu.js"],"groups":3,"productLinks":14,"unifiedMaterialAndProductDropdowns":true,"auditedPages":123},
