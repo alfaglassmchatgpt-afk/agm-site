@@ -101,6 +101,18 @@ add_action('template_redirect', static function () {
     $front = is_front_page();
     ob_start(static function ($html) use ($replace, $front, $path) {
         $html = agm_standard_product_html($html, $replace);
+        $journals = ['izdeliya/steklyannye-polki'=>'Стеклянные полки', 'izdeliya/zerkala-na-zakaz'=>'Зеркала на заказ', 'izdeliya/zerkalnaya-plitka'=>'Зеркальная плитка'];
+        if (isset($journals[$path])) {
+            $nav = '<nav class="catalog-pages" aria-label="Страницы каталога">';
+            foreach ($journals as $route => $label) $nav .= '<a href="'.esc_url(home_url('/'.$route.'/')).'"'.($route === $path ? ' aria-current="page"' : '').'>'.$label.'</a>';
+            $nav .= '</nav>';
+            $html = preg_replace('~<nav class="catalog-pages"[^>]*>.*?</nav>~s', $nav, $html, 1);
+            if (strpos($html, 'class="catalog-breadcrumb"') === false) {
+                $crumb = '<div class="catalog-breadcrumb"><a href="'.esc_url(home_url('/')).'">Главная</a><span>/</span>Изделия на заказ<span>/</span>'.$journals[$path].'</div>';
+                $html = str_replace('<main id="top">', '<main id="top">'.$crumb, $html);
+            }
+            $html = str_replace('</head>', '<style id="agm-journal-layout">'.file_get_contents(__DIR__.'/agm-journal-layout.css').'</style></head>', $html);
+        }
         if ($path === 'aluminium' && strpos($html, 'id="agm-al-home-back"') === false) {
             $back = '<nav id="agm-al-home-back" aria-label="Возврат на главную"><a href="'.esc_url(home_url('/')).'">← Назад на главную</a></nav>';
             $html = preg_replace('~</header>~', '</header>'.$back, $html, 1);
