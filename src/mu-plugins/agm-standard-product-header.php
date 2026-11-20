@@ -97,8 +97,13 @@ add_action('template_redirect', static function () {
     $targets = ['dveri-iz-stekla','dushevye-peregorodki-iz-stekla','lestnichnye-ograzhdeniya-iz-stekla','stenovye-paneli-iz-stekla','aluminium','aluminium/fasady','aluminium/peregorodki','aluminium/zerkala','izdeliya/steklyannye-polki','izdeliya/zerkala-na-zakaz','izdeliya/zerkalnaya-plitka'];
     $replace = in_array($path, $targets, true);
     $front = is_front_page();
-    ob_start(static function ($html) use ($replace, $front) {
+    ob_start(static function ($html) use ($replace, $front, $path) {
         $html = agm_standard_product_html($html, $replace);
+        if ($path === 'aluminium' && strpos($html, 'id="agm-al-home-back"') === false) {
+            $back = '<nav id="agm-al-home-back" aria-label="Возврат на главную"><a href="'.esc_url(home_url('/')).'">← Назад на главную</a></nav>';
+            $html = preg_replace('~</header>~', '</header>'.$back, $html, 1);
+            $html = str_replace('</head>', '<style>#agm-al-home-back{width:calc(100% - 48px);max-width:1344px;margin:16px auto}#agm-al-home-back a{display:inline-flex;align-items:center;min-height:42px;padding:9px 16px;box-sizing:border-box;border:1px solid var(--line,#365260);border-radius:8px;background:var(--surface,#132b38);color:var(--blue,#6acafa);font:600 13px/1.5 Arial,sans-serif;text-decoration:none}#agm-al-home-back a:hover{border-color:currentColor}#agm-al-home-back a:focus-visible{outline:2px solid currentColor;outline-offset:3px}</style></head>', $html);
+        }
         return $front ? agm_standard_facade_hero_link($html) : $html;
     });
 }, -100);
