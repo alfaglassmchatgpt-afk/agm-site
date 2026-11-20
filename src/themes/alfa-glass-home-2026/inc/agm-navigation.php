@@ -15,6 +15,44 @@ function agm_navigation_pages($section) {
             || ($root && in_array((int) $root->ID, array_map('intval', get_post_ancestors($page)), true));
     }));
 }
+/** Direct destinations verified against the published catalogue; no card-anchor duplicates. */
+function agm_product_navigation_groups() {
+    return [
+        'Зеркала и декор' => [
+            'izdeliya/zerkala-na-zakaz' => 'Зеркала на заказ',
+            'zerkala-s-podsvetkoj' => 'Зеркала с подсветкой',
+            'aluminium/zerkala' => 'Зеркала в раме',
+            'izdeliya/zerkalnaya-plitka' => 'Зеркальная плитка',
+            'izdeliya/zerkalnye-panno' => 'Зеркальные панно',
+            'smart-mirror' => 'Smart Mirror',
+        ],
+        'Изделия из стекла' => [
+            'izdeliya/steklyannye-polki' => 'Стеклянные полки',
+            'dushevye-peregorodki-iz-stekla' => 'Душевые кабины и перегородки',
+            'dveri-iz-stekla' => 'Стеклянные двери',
+            'aluminium/peregorodki' => 'Стеклянные перегородки',
+            'lestnichnye-ograzhdeniya-iz-stekla' => 'Лестничные ограждения',
+        ],
+        'Мебель и отделка' => [
+            'aluminium/fasady' => 'Алюминиевые фасады',
+            'stenovye-paneli-iz-stekla' => 'Стеновые панели',
+            'izdeliya/kuhonnye-fartuki' => 'Кухонные фартуки',
+        ],
+    ];
+}
+function agm_product_navigation_links() {
+    $links = '';
+    foreach (agm_product_navigation_groups() as $title => $pages) {
+        $children = '';
+        foreach ($pages as $path => $label) {
+            $page = get_page_by_path($path);
+            if (!$page || $page->post_status !== 'publish') continue;
+            $children .= '<a href="' . esc_url(get_permalink($page)) . '">' . esc_html($label) . '</a>';
+        }
+        if ($children) $links .= '<section class="product-nav-group"><h2>' . esc_html($title) . '</h2>' . $children . '</section>';
+    }
+    return $links . '<a class="nav-view-all" href="' . esc_url(home_url('/#products')) . '">Все изделия →</a>';
+}
 function agm_navigation_render($html) {
     $catalog = [];
     if (preg_match('/<script[^>]*id="catalog-data"[^>]*>(.*?)<\/script>/s', $html, $match)) {
@@ -53,8 +91,11 @@ function agm_navigation_render($html) {
         }
         $all = $section === 'materials' ? home_url('/materialy/') : '#products';
         $links .= '<a class="nav-view-all" href="' . esc_url($all) . '">' . ($section === 'materials' ? 'Все материалы' : 'Все изделия') . ' →</a>';
+        if ($section === 'products') $links = agm_product_navigation_links();
         $html = preg_replace_callback('/(<div class="nav-panel" id="(?:desktop|mobile)-' . $section . '" hidden>).*?(<\/div>)/s', function ($m) use ($links) { return $m[1] . $links . $m[2]; }, $html);
     }
+    $html = preg_replace('~(<div class="nav-parent"><a href="[^"]*">)Изделия(</a>)~u', '$1Каталог изделий$2', $html);
+    $html = str_replace('Раздел Изделия: показать список', 'Раздел Каталог изделий: показать список', $html);
     return $html;
 }
 add_action('add_meta_boxes_page', function () {

@@ -41,15 +41,23 @@
   }
   disclosures.forEach(item => {
     const button = $('.nav-expand', item);
+    const isProductMenu = /-products$/.test(button.getAttribute('aria-controls') || '');
     button.addEventListener('click', () => {
       if (button.getAttribute('aria-expanded') === 'true') toggleDisclosure(item, false);
       else openDisclosure(item);
     });
+    if (isProductMenu) {
+      $('.nav-parent > a', item).addEventListener('click', e => {
+        e.preventDefault();
+        if (button.getAttribute('aria-expanded') === 'true') toggleDisclosure(item, false);
+        else openDisclosure(item);
+      });
+    }
     item.addEventListener('pointerenter', e => {
-      if (e.pointerType === 'mouse' && item.closest('.desktop-nav')) openDisclosure(item);
+      if (!isProductMenu && e.pointerType === 'mouse' && item.closest('.desktop-nav')) openDisclosure(item);
     });
     item.addEventListener('pointerleave', e => {
-      if (e.pointerType === 'mouse' && item.closest('.desktop-nav') && !item.contains(document.activeElement)) toggleDisclosure(item, false);
+      if (!isProductMenu && e.pointerType === 'mouse' && item.closest('.desktop-nav') && !item.contains(document.activeElement)) toggleDisclosure(item, false);
     });
     item.addEventListener('focusout', e => { if (!item.contains(e.relatedTarget)) toggleDisclosure(item, false); });
     item.addEventListener('keydown', e => {
@@ -77,7 +85,7 @@
     menuButton.setAttribute('aria-expanded', String(opening));
     menuButton.setAttribute('aria-label', opening ? 'Закрыть меню' : 'Открыть меню');
   });
-  $$('#mobile-nav a').forEach(a => a.addEventListener('click', () => closeMenu()));
+  $$('#mobile-nav a').forEach(a => a.addEventListener('click', e => { if (!e.defaultPrevented) closeMenu(); }));
   document.addEventListener('click', e => { if (!menu.hidden && !e.target.closest('.site-header')) closeMenu(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && !menu.hidden) closeMenu(true); });
   window.addEventListener('resize', () => { if (innerWidth > 1000) closeMenu(); }, { passive: true });
