@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import {glassMaterial,studioEnvironment} from './glass-render.js';
 import {buildApartment} from './t911-room.js';
 import {OrbitControls} from './vendor/OrbitControls.js';
-import {dimensions,partitionMaterialAllowed,checkGlassSize} from './t911-rules.mjs';
+import {dimensions,partitionMaterialAllowed,checkGlassSize} from './t911-rules.mjs?v=20261120-catalog';
 const $=id=>document.getElementById(id),view=$('partition-view');
 let scene,camera,renderer,controls,assembly,room,studioFloor,studioGrid,movers=[],d,materials=[],limits={},progress=0,target=0,animating=false,last=0;
 function box(w,h,z,color,x,y,depth,opacity=1){const material=new THREE.MeshStandardMaterial({color,roughness:.62,metalness:opacity===1?.18:0,transparent:opacity<1,opacity,depthWrite:opacity===1});const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,z),material);m.position.set(x,y,depth);return m;}

@@ -4,7 +4,7 @@ export function dimensions(b,h){
  return {b,h,door,height,passage,travel:b/2-door,glassWidth:door-27,glassHeight:height-52,ratio:height/door};
 }
 
-export function partitionMaterialAllowed(m){return !m.mirror && m.thickness===4 && !/lacobel|matelac|matelak|лакобель|мателак/i.test([m.id,m.slug,m.title].join(' '));}
+export function partitionMaterialAllowed(m){return !['flutes-moru-ultra','flutes-moru-grey','flutes-moru-bronze'].includes(m.slug) && !m.mirror && m.thickness===4 && !/lacobel|matelac|matelak|лакобель|мателак/i.test([m.id,m.slug,m.title].join(' '));}
 export function checkGlassSize(w,h,record){
  if(!record?.formats?.length)return {status:'unknown',message:'Размер листа не указан в карточке. Допустимый размер заполнения нужно уточнить.'};
  const matching=record.formats.filter(([a,b])=>(w<=a&&h<=b)||(w<=b&&h<=a));

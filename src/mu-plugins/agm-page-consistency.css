@@ -1,0 +1,18 @@
+/* Limited refinements; product typography and editorial fonts are retained. */
+.agm-refine-supply>.topbar{display:none}
+.agm-refine-supply .hero{padding-block:32px 40px}
+.agm-refine-supply .hero-grid{min-height:450px;gap:40px;align-items:center}
+.agm-refine-supply .hero h1{font-size:clamp(30px,3.2vw,44px);line-height:1.13}
+.agm-refine-supply .hero-picture{min-height:0;height:420px;max-height:420px;border-radius:16px}
+.agm-refine-supply .hero-picture img{height:100%;width:100%;object-fit:cover}
+.agm-refine-doors main.agd{box-sizing:border-box;width:calc(100% - 80px);max-width:1344px;padding-inline:0;margin-inline:auto}
+.agm-refine-doors main.agd input,.agm-refine-doors main.agd select,.agm-refine-doors main.agd button,.agm-refine-doors main.agd .agd-hero-cta{box-sizing:border-box;min-height:48px;border-radius:8px}
+.agm-refine-doors main.agd fieldset{border-radius:16px}
+.agm-refine-doors main.agd legend span{display:none}
+.agm-refine-contacts #agm-contacts .wrap{box-sizing:border-box;width:calc(100% - 80px);max-width:1344px;padding-inline:0;margin-inline:auto}
+.agm-refine-contacts #agm-contacts .hero{padding:36px 0 28px}
+.agm-refine-contacts #agm-contacts h1{font-size:clamp(32px,3.3vw,44px);line-height:1.15;letter-spacing:-.5px;max-width:800px}
+.agm-refine-contacts #agm-contacts .btn{min-height:48px}
+.agm-refine-tinted main>.asr-material-cta{grid-column:1/-1;width:100%;box-sizing:border-box;margin:32px 0}
+@media(max-width:850px){.agm-refine-doors main.agd,.agm-refine-contacts #agm-contacts .wrap{width:calc(100% - 40px)}.agm-refine-supply .hero-grid{min-height:0}.agm-refine-supply .hero-picture{height:auto;aspect-ratio:3/2;max-height:380px}}
+@media(max-width:520px){.agm-refine-doors main.agd,.agm-refine-contacts #agm-contacts .wrap{width:calc(100% - 32px)}.agm-refine-supply .hero{padding-top:24px}.agm-refine-supply .hero-grid{gap:24px}.agm-refine-contacts #agm-contacts h1{font-size:32px}}

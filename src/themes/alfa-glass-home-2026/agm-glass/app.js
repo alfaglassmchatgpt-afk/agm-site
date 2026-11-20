@@ -1,6 +1,7 @@
 /* Designer prototype: local brief export only, no network submissions. */
 (() => {
   'use strict';
+  if (document.querySelector('.agm-standard-header')) return;
   const $ = s => document.querySelector(s);
   const root = document.documentElement;
   const theme = $('.theme-toggle');
