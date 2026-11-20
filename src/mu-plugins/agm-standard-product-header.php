@@ -82,6 +82,8 @@ function agm_standard_product_html($html, $replace) {
 }
 
 function agm_standard_facade_hero_link($html) {
+    // Version the homepage slider after adding the mirror-tile slide.
+    $html = preg_replace('~(agm-homepage/js/app\.js)(?:\?[^"\s]*)?~', '$1?v=20261120-mirror-tiles', $html);
     return preg_replace_callback('~<section\b[^>]*class="[^"]*\bhero\b[^"]*"[^>]*>.*?</section>~s', static function ($section) {
         $content = preg_replace_callback('~<a\b[^>]*href="#request"[^>]*>Получить расчёт\s*(.*?)</a>~s', static function ($a) {
             return '<a class="button" href="'.esc_url(get_template_directory_uri().'/agm-aluminium-configurator/index.html').'">3D конфигуратор фасадов '.$a[1].'</a>';

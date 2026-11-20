@@ -210,8 +210,10 @@
   $$('[data-material-filter]').forEach(b => b.addEventListener('click', () => filterCards('material', b.dataset.materialFilter)));
   $$('[data-product-filter]').forEach(b => b.addEventListener('click', () => filterCards('product', b.dataset.productFilter)));
 
+  assets["hero-mirror-tiles"] = "https://alfaglass.ru/wp-content/themes/alfa-glass-home-2026/agm-product-journal/assets/tile-panel-cutout.png";
   const slides = [
     ["hero-smart-mirror", "Умные зеркала Smart Mirror", "/smart-mirror/"],
+    ["hero-mirror-tiles", "Зеркальная плитка", "/izdeliya/zerkalnaya-plitka/"],
     ["hero-tinted-panel", "Панно из тонированных зеркал", "/izdeliya/zerkalnye-panno/"],
     ["hero-reeded-facades", "Фасады с рифлёным стеклом", "/aluminium/fasady/"],
     ["hero-lighted-mirrors", "Зеркала с подсветкой", "/zerkala-s-podsvetkoj/"],
