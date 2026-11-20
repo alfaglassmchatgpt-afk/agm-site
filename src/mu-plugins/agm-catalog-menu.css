@@ -1,12 +1,12 @@
 /* Shared by the homepage header and the isolated product header. */
 header .desktop-nav{position:relative}
 header .desktop-nav :is(.nav-dropdown,.agm-nav-dropdown):has([id$="desktop-products"]){position:static}
-header :is(#desktop-products,#agm-desktop-products){left:0;right:0;width:100%;max-width:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px 24px;padding:24px;box-sizing:border-box;max-height:calc(100dvh - 220px);overflow:auto}
+header :is(#desktop-products,#agm-desktop-products){left:50%;right:auto;transform:translateX(-50%);width:min(100%,940px);max-width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 12px;padding:18px;box-sizing:border-box;max-height:calc(100dvh - 220px);overflow:auto}
 header :is(#desktop-products,#agm-desktop-products)[hidden]{display:none!important}
-header .agm-catalog-group{margin:0;padding:0;min-width:0;background:transparent;text-align:left}
-header .agm-catalog-group h2{margin:0 0 12px;padding:0 12px;color:var(--blue);font-family:inherit;font-size:12px;line-height:1.5;letter-spacing:.08em;text-transform:uppercase}
-header .agm-catalog-group a{display:block;white-space:normal;font-size:13px;line-height:1.5;text-align:left}
-header :is(#desktop-products,#agm-desktop-products) .agm-catalog-group+.agm-catalog-group{border-left:1px solid var(--line);padding-left:20px}
-header :is(#desktop-products,#agm-desktop-products)>.nav-view-all{grid-column:1/-1}
-header :is(#mobile-products,#agm-mobile-products) .agm-catalog-group{padding:14px 0;border-bottom:1px solid var(--line)}
+header .agm-catalog-group{margin:0;padding:0;min-width:0;background:transparent;text-align:center}
+header .agm-catalog-group h2{margin:0 0 8px;padding:0 6px;color:var(--blue);font-family:inherit;font-size:12px;line-height:1.5;letter-spacing:.08em;text-transform:uppercase}
+header .agm-catalog-group a{display:block;white-space:normal;font-size:13px;line-height:1.5;text-align:center;padding:7px 6px}
+header :is(#desktop-products,#agm-desktop-products) .agm-catalog-group+.agm-catalog-group{border-left:1px solid var(--line);padding-left:12px}
+header :is(#desktop-products,#agm-desktop-products)>.nav-view-all{grid-column:1/-1;text-align:center;padding:8px 6px}
+header :is(#mobile-products,#agm-mobile-products) .agm-catalog-group{padding:10px 0;border-bottom:1px solid var(--line)}
 header :is(#mobile-products,#agm-mobile-products)[hidden]{display:none!important}
