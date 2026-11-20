@@ -1,4 +1,5 @@
 {
+  "editorialNumbers": {"status":"deployed","deployedOn":"2026-11-20","plugin":"agm-clean-editorial-numbers.php","auditedPages":123},
   "productCatalogueMenu": {"status":"deployed","deployedOn":"2026-11-20","plugin":"agm-catalog-menu.php","assets":["agm-catalog-menu.css","agm-catalog-menu.js"],"groups":3,"productLinks":14},
   "standardProductHeader": {"status":"deployed","deployedOn":"2026-11-20","plugin":"agm-standard-product-header.php","assets":["agm-standard-product-header.css","agm-standard-product-header.js","agm-journal-layout.css"],"newMegaMenuDeployed":true,"homepageHeroCTA":"3D конфигуратор фасадов"},
   "productJournal": {"status":"deployed","deployedOn":"2026-11-19","pageIds":[5517,5519,5520],"routes":["/izdeliya/steklyannye-polki/","/izdeliya/zerkala-na-zakaz/","/izdeliya/zerkalnaya-plitka/"],"template":"page-agm-product-journal.php","module":"agm-product-journal","mailDeliveryVerified":false},
