@@ -1,12 +1,9 @@
 User-agent: *
-
 Disallow: /wp-admin/
 Disallow: /wp-login.php
 Disallow: /xmlrpc.php
 Allow: /wp-admin/admin-ajax.php
 Allow: /wp-content/uploads/
-
 Clean-param: utm_source&utm_medium&utm_campaign&utm_term&utm_content&etext
-
 Sitemap: https://alfaglass.ru/sitemap_index.xml
 Host: alfaglass.ru
