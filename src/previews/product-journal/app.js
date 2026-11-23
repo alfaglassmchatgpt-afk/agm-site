@@ -55,6 +55,13 @@ shelves.forEach((item, index) => {
   const specimen = makeFigure(item.caption, 0, index, item.preview);
   const application = makeFigure(item.interior, 100, index, item.applicationPreview || item.preview);
   application.className = 'application';
+  if (window.AGMCatalogProduct?.kind === 'mirror') {
+    const frameLink = document.createElement('a');
+    frameLink.className = 'mirror-frame-link';
+    frameLink.href = 'https://alfaglass.ru/aluminium/zerkala/';
+    frameLink.textContent = 'Нужно зеркало в раме?';
+    application.querySelector('figcaption').append(frameLink);
+  }
   const copy = document.createElement('section');
   copy.className = 'copy';
   const heading = document.createElement('h2');

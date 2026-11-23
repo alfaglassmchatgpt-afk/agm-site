@@ -29,6 +29,8 @@ nav a:hover { border-color: var(--ink); }
 figure { margin: 0; min-width: 0; }
 .scene { aspect-ratio: 2 / 1; background-image: url('assets/editorial-grid.png'); background-size: 200% 600%; background-repeat: no-repeat; background-color: #eeece5; }
 figcaption { font-size: 11px; color: var(--muted); padding: 11px 0 0; line-height: 1.5; }
+.mirror-frame-link { display: block; width: fit-content; margin-top: 7px; font: inherit; color: inherit; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.mirror-frame-link:hover { color: var(--ink); }
 h2 { font: 500 clamp(25px,2.7vw,42px)/1.08 'Cormorant Garamond',Georgia,serif; margin: 0 0 13px; }
 .copy p { font-size: 12px; line-height: 1.8; margin: 0 0 14px; }
 dl { margin: 0; }
