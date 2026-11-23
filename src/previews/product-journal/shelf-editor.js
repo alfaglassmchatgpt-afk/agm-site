@@ -24,7 +24,12 @@
         <label data-corners class="corner br"><span>Правый нижний, мм</span><input aria-label="Правый нижний, мм" name="r2" type="number" min="0" step="1"></label>
       </div><p data-corners data-radius-limit></p></fieldset>
       <p data-dimensions></p>
-      <p>Кромка — полированная. ${mirror?'Прямоугольное зеркало — от 300 × 300 мм; овал и арка — от 800 × 600 мм, круг — от Ø 800 мм.':'Минимальные габариты — 180 × 400 мм, для круга — Ø 300 мм.'}</p>
+      <p>${mirror?'':'Кромка — полированная. '}${mirror?'Прямоугольное зеркало — от 300 × 300 мм; овал и арка — от 800 × 600 мм, круг — от Ø 300 мм.':'Минимальные габариты — 180 × 400 мм, для круга — Ø 300 мм.'}</p>
+      ${mirror?`<fieldset data-processing><legend>Обработка зеркала</legend><div class="mirror-operations"></div><p data-processing-hint role="status"></p>
+      <label data-bevel hidden>Ширина фацета, мм<select name="bevelWidth"><option value="">Выберите</option>${[5,10,15,20,25,30,35].map(n=>`<option>${n}</option>`).join('')}</select></label>
+      <p data-bevel hidden>Фацет по всему периметру. Другие стороны укажите в пожеланиях.</p>
+      <div data-drill hidden class="shelf-fields"><label>Диаметр отверстий, мм<input name="holeDiameter" type="number" min="1" step="1"></label><label>Отверстий на изделие<input name="holeCount" type="number" min="1" max="9999" step="1" value="1"></label><label><input name="holeUnknown" type="checkbox"> Диаметр уточнить</label></div>
+      <label><input name="packaging" type="checkbox"> Упаковка в картон</label><label><input name="delivery" type="checkbox"> Доставка</label><label data-address hidden>Адрес доставки<input name="deliveryAddress" maxlength="500"></label></fieldset>`:''}
       <label>Отверстия, технические вырезы и пожелания<textarea name="note" maxlength="1200" rows="2"></textarea></label>
       <p data-error role="alert"></p>
       <button type="submit">Добавить в мой расчёт</button>
@@ -51,7 +56,7 @@
     return {...shelf,shape:form.elements.shape.value,thickness:form.elements.thickness.value,
       width:Number(form.elements.width.value),height:Number(form.elements.height.value),
       diameter:Number(form.elements.diameter.value),topWidth:Number(form.elements.topWidth.value),
-      quantity:Number(form.elements.quantity.value),note:form.elements.note.value.trim(),cornersLocked,
+      quantity:Number(form.elements.quantity.value),...(mirror?{ops:[...dialog.querySelectorAll('[data-operation]:checked')].map(n=>n.value),bevel:{width:form.elements.bevelWidth.value,scope:'all'},drill:{rows:[{diameter:form.elements.holeDiameter.value,count:form.elements.holeCount.value,unknown:form.elements.holeUnknown.checked}],location:form.elements.note.value.trim()},packaging:form.elements.packaging.checked,delivery:form.elements.delivery.checked,deliveryAddress:form.elements.deliveryAddress.value}:{}),note:form.elements.note.value.trim(),cornersLocked,
       radii:[0,1,2,3].map(i=>Number(form.elements['r'+i].value))};
   }
   function update() {
@@ -84,10 +89,26 @@
     form.elements.height.min=mirror?(s.shape==='rectangle'?300:Math.max(s.width>=800?600:800,s.shape==='arch'?Math.ceil(s.width/2):0)):(s.width>=400?180:400);
     form.elements.width.max=max.width;
     form.elements.height.max=max.height;
-    form.elements.diameter.min=mirror?800:({circle:300,semicircle:400,quarter:800}[s.shape]||300);
+    form.elements.diameter.min=mirror?300:({circle:300,semicircle:400,quarter:800}[s.shape]||300);
     form.elements.diameter.max=s.shape==='quarter'?2*Math.min(max.width,max.height):Math.min(max.width,max.height);
     form.elements.topWidth.max=s.width;
     for(let i=0;i<4;i++) form.elements['r'+i].value=Math.min(Number(form.elements['r'+i].value)||0,model.radiusLimit(s));
+    if(mirror){
+      const allowed=model.availableOperations(s,quote.materials[s.material],AGMOrderModel);
+      let removedEdge=false;
+      dialog.querySelectorAll('[data-operation]').forEach(input=>{input.disabled=!allowed.includes(input.value);input.closest('label').hidden=input.disabled;if(input.disabled&&input.checked){if(input.value==='bevel')removedEdge=true;input.checked=false;}});
+      if(removedEdge)dialog.querySelector('[data-operation="polish"]').checked=true;
+      const ops=read().ops;
+      dialog.querySelectorAll('[data-bevel]').forEach(n=>n.hidden=!ops.includes('bevel'));
+      form.elements.bevelWidth.required=ops.includes('bevel');
+      dialog.querySelector('[data-drill]').hidden=!ops.includes('drill');
+      form.elements.holeDiameter.required=ops.includes('drill')&&!form.elements.holeUnknown.checked;
+      form.elements.holeDiameter.disabled=!ops.includes('drill')||form.elements.holeUnknown.checked;
+      form.elements.holeCount.disabled=!ops.includes('drill');
+      dialog.querySelector('[data-address]').hidden=!s.delivery;
+      form.elements.deliveryAddress.required=s.delivery;
+      dialog.querySelector('[data-processing-hint]').textContent=model.straight(s)?'Фацет доступен только без скруглений.':'Кромка этой формы: полированная или шлифованная. Фацет недоступен.';
+    }
     drawScheme(read());
     dialog.querySelector('[data-error]').textContent='';
 
@@ -105,6 +126,15 @@
     materialImage.setAttribute('aria-label',noun+' из карточки: '+material.title);
     form.elements.thickness.replaceChildren(...AGMOrderModel.thicknesses(material,shelf.base||'standard').filter(t=>t!=='unknown').map(t=>new Option(t,t)));
     for(const key of ['shape','thickness','width','height','diameter','topWidth','quantity','note']) form.elements[key].value=shelf[key];
+    if(mirror){
+      const box=dialog.querySelector('.mirror-operations');box.replaceChildren();
+      const all=AGMOrderModel.operations(material,shelf.thickness).filter(id=>!['cut','shape','facade','frame','temper','triplex'].includes(id));
+      for(const id of all){const label=document.createElement('label'),input=document.createElement('input');input.type='checkbox';input.value=id;input.dataset.operation=id;input.checked=(shelf.ops||['polish']).includes(id);label.append(input,document.createTextNode(quote.operations.find(op=>op.id===id)?.title||id));box.append(label);}
+      form.elements.bevelWidth.value=shelf.bevel?.width||'';
+      const hole=shelf.drill?.rows?.[0]||{};
+      form.elements.holeDiameter.value=hole.diameter||'';form.elements.holeCount.value=hole.count||'1';form.elements.holeUnknown.checked=!!hole.unknown;
+      form.elements.packaging.checked=!!shelf.packaging;form.elements.delivery.checked=!!shelf.delivery;form.elements.deliveryAddress.value=shelf.deliveryAddress||'';
+    }
     shelf.radii.forEach((r,i)=>form.elements['r'+i].value=r);
     cornersLocked = shelf.cornersLocked ?? shelf.radii.every(r=>r===shelf.radii[0]);
     renderCornerLock();
@@ -113,6 +143,7 @@
     dialog.showModal();
   }
   form.addEventListener('input',event=>{
+    if(event.target.matches('[data-operation]')&&event.target.checked&&['polish','grind','bevel'].includes(event.target.value))dialog.querySelectorAll('[data-operation]').forEach(n=>{if(n!==event.target&&['polish','grind','bevel'].includes(n.value))n.checked=false;});
     if(cornersLocked && /^r[0-3]$/.test(event.target.name)) {
       for(let i=0;i<4;i++) form.elements['r'+i].value=event.target.value;
     }
@@ -159,7 +190,7 @@
         s.note
       ].filter(Boolean).join('\n');
       const straight=s.shape==='rectangle'&&s.radii.every(r=>r===0);
-      const data=AGMOrderModel.normalize({id:entryId,material:s.material,base:s.base||'standard',thickness:s.thickness,width,height,quantity:s.quantity,ops:[straight?'cut':'shape','polish'],note:shapeText},quote.materials,()=>entryId);
+      const data=AGMOrderModel.normalize({id:entryId,material:s.material,base:s.base||'standard',thickness:s.thickness,width,height,quantity:s.quantity,ops:[straight?'cut':'shape',...(s.ops||['polish'])],bevel:s.bevel,drill:s.drill,packaging:s.packaging,delivery:s.delivery,deliveryAddress:s.deliveryAddress,note:shapeText},quote.materials,()=>entryId);
       const entry=AGMQuoteModel.material(data,quote.materials,quote.operations);
       if(entry.errors.length) throw Error(entry.errors.join(' '));
       entry.title=noun+' · '+material.title+(s.base&&s.base!=='standard'?' · '+material.variants[s.base]:'');

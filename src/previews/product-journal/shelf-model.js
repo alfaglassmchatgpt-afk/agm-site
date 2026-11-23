@@ -37,6 +37,10 @@
     return Math.max(0,Math.floor((Math.min(w,h)-1)/2));
   }
 
+  function straight(s) { return s.shape==='rectangle' && (s.radii||[]).every(r=>Number(r)===0); }
+  function availableOperations(s, material, orderModel) {
+    return orderModel.operations(material,s.thickness).filter(op=>!['cut','shape','facade','frame','temper','triplex'].includes(op) && (op!=='bevel'||straight(s)));
+  }
   function validate(s, material, orderModel) {
     const errors = [];
     if (!material) return ['Материал отсутствует в каталоге.'];
@@ -45,7 +49,7 @@
     const [w,h] = dimensions(s);
     if (![w,h].every(v=>Number.isInteger(v)&&v>0)) errors.push('Размеры должны быть целыми положительными миллиметрами. Для полукруга и четверти круга задайте чётный диаметр.');
     if(s.productKind==='mirror'){
-      if(s.shape==='rectangle'?(w<300||h<300):(Math.min(w,h)<600 || Math.max(w,h)<800)) errors.push('Прямоугольное зеркало — от 300 × 300 мм; овал и арка — от 800 × 600 мм, круг — от Ø 800 мм.');
+      if(['rectangle','circle'].includes(s.shape)?(w<300||h<300):(Math.min(w,h)<600 || Math.max(w,h)<800)) errors.push('Прямоугольное зеркало — от 300 × 300 мм; овал и арка — от 800 × 600 мм, круг — от Ø 300 мм.');
     } else if (s.shape === 'circle') {
       if (s.diameter<300) errors.push('Минимальный диаметр круглой полки — 300 мм.');
     } else if (Math.min(w,h)<180 || Math.max(w,h)<400) errors.push('Минимальные габариты полки — 180 × 400 мм, с поворотом.');
@@ -56,9 +60,9 @@
     if (!orderModel.thicknesses(material,s.base||'standard').includes(s.thickness)) errors.push('Толщина недоступна в каталоге материала.');
     if (cornerIndices(s).length && (s.radii.length!==4 || cornerIndices(s).some(i=>!Number.isInteger(s.radii[i])||s.radii[i]<0||s.radii[i]>radiusLimit(s)))) errors.push('Радиусы углов — от 0 до '+radiusLimit(s)+' мм. 0 означает угол без скругления.');
     if (s.shape==='trapezoid' && (!Number.isInteger(s.topWidth)||s.topWidth<1||s.topWidth>s.width)) errors.push('Верхнее основание трапеции должно быть от 1 мм до ширины нижнего.');
-    const straight = s.shape==='rectangle'&&s.radii.every(r=>r===0);
-    if (![straight?'cut':'shape','polish'].every(op=>orderModel.operations(material,s.thickness).includes(op))) errors.push('Обработка недоступна для выбранного материала.');
+    if(s.productKind==='mirror' && (s.ops||[]).some(op=>!availableOperations(s,material,orderModel).includes(op))) errors.push('Обработка недоступна для формы или материала.');
+    if (![straight(s)?'cut':'shape',...(s.ops||['polish'])].every(op=>orderModel.operations(material,s.thickness).includes(op))) errors.push('Обработка недоступна для выбранного материала.');
     return errors;
   }
-  return {presets,shapes,dimensions,cornerIndices,radiusLimit,validate};
+  return {presets,shapes,dimensions,cornerIndices,radiusLimit,straight,availableOperations,validate};
 });

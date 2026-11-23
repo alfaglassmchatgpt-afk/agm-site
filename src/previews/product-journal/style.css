@@ -127,3 +127,8 @@ a:focus-visible { outline: 2px solid #39796e; outline-offset: 5px; }
 #shelf-editor .shelf-material-heading p { margin: 0; font-size: 14px; }
 [data-material-image] { flex: 0 0 160px; height: 80px; background-image: url('assets/editorial-grid.png'); background-size: 200% 600%; background-repeat: no-repeat; border-radius: 3px; }
 @media(max-width:520px) { [data-material-image] { flex-basis: 120px; height: 60px; } }
+
+.mirror-operations { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+#shelf-editor [data-processing] input[type=checkbox] { width:auto; margin-right:8px; }
+#shelf-editor [data-processing] { margin:16px 0; padding:16px; border:1px solid currentColor; }
+@media(max-width:520px){.mirror-operations{grid-template-columns:1fr;}}
