@@ -138,3 +138,5 @@ a:focus-visible { outline: 2px solid #39796e; outline-offset: 5px; }
 #shelf-editor [data-processing] label:has(input[type="checkbox"]){display:flex;align-items:center;gap:8px;}
 #shelf-editor [data-processing] input[type="checkbox"]{width:16px;min-height:16px;height:16px;padding:0;flex:0 0 16px;margin:0;}
 #shelf-editor [data-drill] input[type="file"]{max-width:100%;font-size:12px;}
+
+#shelf-editor [hidden] { display: none !important; }

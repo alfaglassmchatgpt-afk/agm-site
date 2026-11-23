@@ -46,7 +46,7 @@ const nav = document.querySelector('#materials');
 const list = document.querySelector('#shelves');
 shelves.forEach((item, index) => {
   const link = document.createElement('a');
-  link.href = '#' + item.id;
+  link.href = location.pathname + '#' + item.id;
   link.textContent = item.name;
   nav.append(link);
   const article = document.createElement('article');
