@@ -49,7 +49,7 @@
     const [w,h] = dimensions(s);
     if (![w,h].every(v=>Number.isInteger(v)&&v>0)) errors.push('Размеры должны быть целыми положительными миллиметрами. Для полукруга и четверти круга задайте чётный диаметр.');
     if(s.productKind==='mirror'){
-      if(['rectangle','circle'].includes(s.shape)?(w<300||h<300):(Math.min(w,h)<600 || Math.max(w,h)<800)) errors.push('Прямоугольное зеркало — от 300 × 300 мм; овал и арка — от 800 × 600 мм, круг — от Ø 300 мм.');
+      if(['rectangle','circle'].includes(s.shape)?(w<300||h<300):(Math.min(w,h)<(s.shape==='arch'?400:500) || Math.max(w,h)<800)) errors.push('Прямоугольное зеркало — от 300 × 300 мм; овал — от 500 × 800 мм, арка — от 400 × 800 мм, круг — от Ø 300 мм.');
     } else if (s.shape === 'circle') {
       if (s.diameter<300) errors.push('Минимальный диаметр круглой полки — 300 мм.');
     } else if (Math.min(w,h)<180 || Math.max(w,h)<400) errors.push('Минимальные габариты полки — 180 × 400 мм, с поворотом.');

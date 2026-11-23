@@ -24,7 +24,7 @@
         <label data-corners class="corner br"><span>Правый нижний, мм</span><input aria-label="Правый нижний, мм" name="r2" type="number" min="0" step="1"></label>
       </div><p data-corners data-radius-limit></p></fieldset>
       <p data-dimensions></p>
-      <p>${mirror?'':'Кромка — полированная. '}${mirror?'Прямоугольное зеркало — от 300 × 300 мм; овал и арка — от 800 × 600 мм, круг — от Ø 300 мм.':'Минимальные габариты — 180 × 400 мм, для круга — Ø 300 мм.'}</p>
+      <p>${mirror?'':'Кромка — полированная. '}${mirror?'Прямоугольное зеркало — от 300 × 300 мм; овал — от 500 × 800 мм, арка — от 400 × 800 мм, круг — от Ø 300 мм.':'Минимальные габариты — 180 × 400 мм, для круга — Ø 300 мм.'}</p>
       ${mirror?`<fieldset data-processing><legend>Обработка зеркала</legend><div class="mirror-operations"></div><p data-processing-hint role="status"></p>
       <label data-bevel hidden>Ширина фацета, мм<select name="bevelWidth"><option value="">Выберите</option>${[5,10,15,20,25,30,35].map(n=>`<option>${n}</option>`).join('')}</select></label>
       <p data-bevel hidden>Фацет по всему периметру. Другие стороны укажите в пожеланиях.</p>
@@ -99,8 +99,8 @@
     dialog.querySelector('[data-dimensions]').textContent='Габариты: '+model.dimensions(s).join(' × ')+' мм.';
 
     const max=quote.materials[s.material].maxSize || {width:10000,height:10000};
-    form.elements.width.min=mirror?(s.shape==='rectangle'?300:(s.height>=800?600:800)):(s.height>=400?180:400);
-    form.elements.height.min=mirror?(s.shape==='rectangle'?300:Math.max(s.width>=800?600:800,s.shape==='arch'?Math.ceil(s.width/2):0)):(s.width>=400?180:400);
+    form.elements.width.min=mirror?(s.shape==='rectangle'?300:(s.height>=800?(s.shape==='arch'?400:500):800)):(s.height>=400?180:400);
+    form.elements.height.min=mirror?(s.shape==='rectangle'?300:Math.max(s.width>=800?(s.shape==='arch'?400:500):800,s.shape==='arch'?Math.ceil(s.width/2):0)):(s.width>=400?180:400);
     form.elements.width.max=max.width;
     form.elements.height.max=max.height;
     form.elements.diameter.min=mirror?300:({circle:300,semicircle:400,quarter:800}[s.shape]||300);

@@ -31,3 +31,12 @@ assert.deepEqual(result.errors,[]);assert(result.summary.includes('Фацет: 1
 console.log('Mirror processing, curved bevel rejection, 300 mm circle and shared order summary: PASS');
 
 for(const op of ["film","sandblast"])assert(!model.availableOperations(rect,materials[rect.material],order).includes(op));
+
+for(const [shape,min] of [['ellipse',500],['arch',400]]){
+ const sample={...rect,shape,width:min,height:800,ops:['polish']};
+ assert.deepEqual(model.validate(sample,materials[rect.material],order),[]);
+ assert(model.validate({...sample,width:min-1},materials[rect.material],order).length);
+ assert(model.validate({...sample,height:799},materials[rect.material],order).length);
+ assert.deepEqual(model.validate({...sample,width:800,height:min},materials[rect.material],order),[]);
+}
+console.log('Oval 500x800 and arch 400x800 minimum bounds: PASS');
