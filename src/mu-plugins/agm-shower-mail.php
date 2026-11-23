@@ -114,7 +114,8 @@ function agm_shower_report($p) {
 
 function agm_shower_decode_sketch($item) {
     $file=$item['sketch'];
-    if (($item['type']??'')!=='partition' || !is_array($item['shower']??null) || !is_array($file)
+    $allowed=(($item['type']??'')==='partition' && is_array($item['shower']??null)) || (($item['type']??'')==='material' && ($item['shelf']['productKind']??'')==='mirror');
+    if (!$allowed || !is_array($file)
         || !is_string($file['name']??null) || !is_string($file['base64']??null)
         || strlen($file['name'])>1024 || strlen($file['base64'])>1398104) return null;
     $ext=strtolower(pathinfo($file['name'],PATHINFO_EXTENSION));
@@ -135,11 +136,13 @@ function agm_with_shower_attachment($p,$files,$deliver,$sketches=[]) {
     $file=$dir.'/ALFAGLASS-showers.html';
     $temporary=[$file];
     try {
-        $html=agm_shower_report($p);
-        if (file_put_contents($file,$html)!==strlen($html)) return false;
-        $files[]=$file;
+        if(array_column($p['items'],'shower')){
+            $html=agm_shower_report($p);
+            if (file_put_contents($file,$html)!==strlen($html)) return false;
+            $files[]=$file;
+        }
         foreach ($sketches as $index=>$sketch) {
-            $path=$dir.'/shower-'.($index+1).'-client.'.$sketch['ext'];
+            $path=$dir.'/item-'.($index+1).'-client.'.$sketch['ext'];
             $temporary[]=$path;
             if (file_put_contents($path,$sketch['bytes'])!==strlen($sketch['bytes'])) return false;
             $files[]=$path;

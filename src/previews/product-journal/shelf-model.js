@@ -39,7 +39,7 @@
 
   function straight(s) { return s.shape==='rectangle' && (s.radii||[]).every(r=>Number(r)===0); }
   function availableOperations(s, material, orderModel) {
-    return orderModel.operations(material,s.thickness).filter(op=>!['cut','shape','facade','frame','temper','triplex'].includes(op) && (op!=='bevel'||straight(s)));
+    return orderModel.operations(material,s.thickness).filter(op=>['polish','grind','bevel','drill'].includes(op) && (op!=='bevel'||straight(s)));
   }
   function validate(s, material, orderModel) {
     const errors = [];

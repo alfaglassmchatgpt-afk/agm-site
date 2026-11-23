@@ -79,7 +79,7 @@ function agm_al_request_send($request) {
     $to=sanitize_email($mail[1]??'');
     $deliver=function($files=[])use($to,$types,$p,$body){return is_email($to)&&wp_mail($to,'ALFAGLASS — Aluminium — '.$types[$p['product']],$body,[],$files);};
     $needs_sheet=isset($p['managerItems'])&&$p['product']==='mixed'&&in_array('facade',array_column($p['items'],'type'),true);
-    if ($p['product']==='mixed' && array_column($p['items'],'shower')) {
+    if ($p['product']==='mixed' && ($sketches || array_column($p['items'],'shower'))) {
         $send_mail=$deliver;
         $deliver=static function($files=[])use($p,$send_mail,$sketches){return agm_with_shower_attachment($p,$files,$send_mail,$sketches);};
     }

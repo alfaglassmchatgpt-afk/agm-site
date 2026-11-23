@@ -44,3 +44,16 @@ check(is_wp_error(agm_quote_items_text([['type'=>'mirror','title'=>'x','summary'
 $bad=$data;$bad['consent']='0';check(is_wp_error(agm_al_request_send(new Request($bad))),'Consent required');
 foreach(['facades','mirrors','partitions'] as $kind){$d=$data;$d['id']=md5($kind);$d['token']=agm_al_request_token($d['id'],$time);$d['product']=$kind;unset($d['items']);check(!is_wp_error(agm_al_request_send(new Request($d))),'Legacy request preserved');}
 echo "PASS mixed payload/mail composition, retry deduplication, validation and legacy types; wp_mail stub only\n";
+
+// Mirror hole sketches use the same validated private attachments as showers.
+$mirrorSketch=['type'=>'material','title'=>'Mirror test','summary'=>'Holes: 2','shelf'=>['productKind'=>'mirror'],'sketch'=>['name'=>'holes.pdf','base64'=>base64_encode("%PDF-1.4\n%%EOF")]];
+$decoded=agm_shower_decode_sketch($mirrorSketch);
+check($decoded && $decoded['ext']==='pdf','Mirror PDF accepted');
+$invalid=$mirrorSketch;$invalid['sketch']['base64']=base64_encode('not PDF');
+check(agm_shower_decode_sketch($invalid)===null,'Fake PDF rejected');
+$invalid=$mirrorSketch;$invalid['sketch']['name']='holes.exe';
+check(agm_shower_decode_sketch($invalid)===null,'Executable rejected');
+$paths=[];
+check(agm_with_shower_attachment(['items'=>[$mirrorSketch]],[],function($files)use(&$paths,$decoded){$paths=$files;return count($files)===1 && file_get_contents($files[0])===$decoded['bytes'];},[0=>$decoded]),'Mirror attachment bytes delivered');
+check(!file_exists($paths[0]),'Mirror attachment removed after delivery');
+echo "PASS mirror PDF validation, attachment delivery and private cleanup\n";

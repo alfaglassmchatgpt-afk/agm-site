@@ -68,6 +68,7 @@
    return groupFacades(items).map(({type,title,summary,data})=>{
     const item={type,title,summary};
     if(type==='material' && data?.shelf){
+     if(data.shelf.productKind==='mirror' && data.sketch)item.sketch=clone(data.sketch);
      item.shelf={productKind:data.shelf.productKind==='mirror'?'mirror':'shelf'};
      for(const key of ['shape','width','height','diameter','topWidth','radii','thickness','quantity'])item.shelf[key]=clone(data.shelf[key]);
     }

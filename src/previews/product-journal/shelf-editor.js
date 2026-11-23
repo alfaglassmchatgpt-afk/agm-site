@@ -28,7 +28,7 @@
       ${mirror?`<fieldset data-processing><legend>Обработка зеркала</legend><div class="mirror-operations"></div><p data-processing-hint role="status"></p>
       <label data-bevel hidden>Ширина фацета, мм<select name="bevelWidth"><option value="">Выберите</option>${[5,10,15,20,25,30,35].map(n=>`<option>${n}</option>`).join('')}</select></label>
       <p data-bevel hidden>Фацет по всему периметру. Другие стороны укажите в пожеланиях.</p>
-      <div data-drill hidden class="shelf-fields"><label>Диаметр отверстий, мм<input name="holeDiameter" type="number" min="1" step="1"></label><label>Отверстий на изделие<input name="holeCount" type="number" min="1" max="9999" step="1" value="1"></label><label><input name="holeUnknown" type="checkbox"> Диаметр уточнить</label></div>
+      <div data-drill hidden class="shelf-fields"><label>Диаметр отверстий, мм<input name="holeDiameter" type="number" min="1" step="1"></label><label>Отверстий на изделие<input name="holeCount" type="number" min="1" max="9999" step="1" value="1"></label><label><input name="holeUnknown" type="checkbox"> Диаметр уточнить</label><label>Фото или схема отверстий<input name="holeFile" type="file" accept=".pdf,.jpg,.jpeg,.png"><small>PDF, JPG или PNG, до 1 МБ. Файл получит менеджер вместе с заявкой.</small></label><div><span data-file-name></span> <button type="button" data-file-remove hidden>Удалить файл</button></div></div>
       <label><input name="packaging" type="checkbox"> Упаковка в картон</label><label><input name="delivery" type="checkbox"> Доставка</label><label data-address hidden>Адрес доставки<input name="deliveryAddress" maxlength="500"></label></fieldset>`:''}
       <label>Отверстия, технические вырезы и пожелания<textarea name="note" maxlength="1200" rows="2"></textarea></label>
       <p data-error role="alert"></p>
@@ -38,6 +38,20 @@
   const form = dialog.querySelector('form');
   let quote, shelf, entryId, opener;
   let cornersLocked = true;
+  let savedSketch=null;
+  function showSketch(){
+    dialog.querySelector('[data-file-name]').textContent=savedSketch?.name||'';
+    dialog.querySelector('[data-file-remove]').hidden=!savedSketch;
+  }
+  if(mirror){
+    dialog.querySelector('[data-file-remove]').onclick=()=>{savedSketch=null;form.elements.holeFile.value='';form.elements.holeFile.setCustomValidity('');showSketch();};
+    form.elements.holeFile.onchange=()=>{
+      const file=form.elements.holeFile.files[0];
+      const invalid=file && (!/\.(pdf|jpe?g|png)$/i.test(file.name)||file.size>1048576||!file.size);
+      form.elements.holeFile.setCustomValidity(invalid?'Выберите PDF, JPG или PNG до 1 МБ.':'');
+      if(invalid)form.elements.holeFile.reportValidity();
+    };
+  }
   const cornerLock = dialog.querySelector('[data-corner-lock]');
   function renderCornerLock() {
     cornerLock.textContent = cornersLocked ? '🔒 Углы связаны' : '🔓 Углы отдельно';
@@ -105,6 +119,7 @@
       form.elements.holeDiameter.required=ops.includes('drill')&&!form.elements.holeUnknown.checked;
       form.elements.holeDiameter.disabled=!ops.includes('drill')||form.elements.holeUnknown.checked;
       form.elements.holeCount.disabled=!ops.includes('drill');
+      form.elements.holeFile.disabled=!ops.includes('drill');
       dialog.querySelector('[data-address]').hidden=!s.delivery;
       form.elements.deliveryAddress.required=s.delivery;
       dialog.querySelector('[data-processing-hint]').textContent=model.straight(s)?'Фацет доступен только без скруглений.':'Кромка этой формы: полированная или шлифованная. Фацет недоступен.';
@@ -128,7 +143,8 @@
     for(const key of ['shape','thickness','width','height','diameter','topWidth','quantity','note']) form.elements[key].value=shelf[key];
     if(mirror){
       const box=dialog.querySelector('.mirror-operations');box.replaceChildren();
-      const all=AGMOrderModel.operations(material,shelf.thickness).filter(id=>!['cut','shape','facade','frame','temper','triplex'].includes(id));
+      const all=AGMOrderModel.operations(material,shelf.thickness).filter(id=>['polish','grind','bevel','drill'].includes(id));
+      savedSketch=existing?.data?.sketch||null;form.elements.holeFile.value='';form.elements.holeFile.setCustomValidity('');showSketch();
       for(const id of all){const label=document.createElement('label'),input=document.createElement('input');input.type='checkbox';input.value=id;input.dataset.operation=id;input.checked=(shelf.ops||['polish']).includes(id);label.append(input,document.createTextNode(quote.operations.find(op=>op.id===id)?.title||id));box.append(label);}
       form.elements.bevelWidth.value=shelf.bevel?.width||'';
       const hole=shelf.drill?.rows?.[0]||{};
@@ -175,7 +191,7 @@
     dialog.querySelector('[data-outline]').setAttribute('d',shelfOutline(s));
   }
 
-  form.addEventListener('submit',event=>{
+  form.addEventListener('submit',async event=>{
     event.preventDefault();
     try {
       const s=read(), material=quote.materials[s.material];
@@ -195,13 +211,22 @@
       if(entry.errors.length) throw Error(entry.errors.join(' '));
       entry.title=noun+' · '+material.title+(s.base&&s.base!=='standard'?' · '+material.variants[s.base]:'');
       entry.data.shelf=s;
+      if(mirror && s.ops.includes('drill')){
+        const file=form.elements.holeFile.files[0];
+        if(file){
+          if(!form.elements.holeFile.reportValidity())return;
+          const contents=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=()=>reject(Error('Не удалось прочитать файл.'));reader.readAsDataURL(file);});
+          savedSketch={name:file.name,base64:contents.slice(contents.indexOf(',')+1)};
+        }
+        if(savedSketch){entry.data.sketch=savedSketch;entry.summary+='\nСхема отверстий: '+savedSketch.name;}
+      }
       entry.preview=s.preview||{url:'/assets/editorial-grid.png',position:'0% '+Object.keys(model.presets).indexOf(s.preset)*20+'%',size:'200% 600%',alt:material.title};
 
       entry.editUrl=(mirror?'/mirrors.html':'/')+'?shelf-edit='+encodeURIComponent(entryId);
       quote.store.put(entry);
       dialog.close();
       quote.open();
-    } catch(error) { dialog.querySelector('[data-error]').textContent=error.message; }
+    } catch(error) { dialog.querySelector('[data-error]').textContent=error.name==='QuotaExceededError'?'Недостаточно места в браузере. Уменьшите размер файла или удалите ненужные позиции расчёта.':error.message; }
   });
   try {
     quote=await window.AGMQuoteReady;

@@ -29,3 +29,5 @@ const data=order.normalize({...rect,base:'standard',ops:['cut','bevel','drill','
 const result=quote.material(data,materials,operations);
 assert.deepEqual(result.errors,[]);assert(result.summary.includes('Фацет: 10 мм'));assert(result.summary.includes('Ø 8 мм'));
 console.log('Mirror processing, curved bevel rejection, 300 mm circle and shared order summary: PASS');
+
+for(const op of ["film","sandblast"])assert(!model.availableOperations(rect,materials[rect.material],order).includes(op));
