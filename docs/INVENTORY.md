@@ -162,3 +162,5 @@ SHA-1: `6B9A87D9A603A89708B4F5B55D55610B5DA5D561`.
 2026-11-24 — Отображаемое имя программы «РФ АГМ», версия 0.1.2. Стабильный appId ru.alfaglass.facades, EXE ALFAGLASS Facades.exe, данные в прежних ALFAGLASS Facades / ALFAGLASS Prices. Установщик RF-AGM-Setup-0.1.2.exe.
 
 2026-11-24 — РФ АГМ 0.1.3, установщик RF-AGM-Setup-0.1.3.exe; desktop-only layout.mjs/layout-ui.js, изолированный тестовый профиль для проверки UI. Канал автообновлений не подключён.
+
+2026-11-24 — РФ АГМ 0.1.4: RF-AGM-Setup-0.1.4.exe, ограничения расстановки; формат проектов прежний.

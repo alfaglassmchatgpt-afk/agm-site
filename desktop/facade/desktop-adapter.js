@@ -12,7 +12,7 @@ export function installDesktop({project,state,activate,update,validate,facadeEnt
  function sync(){const c=project.current().config;$('#seal-color').value=c.sealColor||'Уточнить';$('#seal-extra').value=c.sealExtra||0;$('#extra-work').value=c.extraWork||'';}
  components.oninput=()=>{const extra=Number($('#seal-extra').value);if(!Number.isInteger(extra)||extra<0||extra>10000){status('Запас: целое число от 0 до 10000 мм');return;}Object.assign(state,{sealColor:$('#seal-color').value,sealExtra:extra,extraWork:$('#extra-work').value});update();};
  $('#facade-select').addEventListener('change',sync);for(const id of ['add-new','add-copy','add-mirror','remove-facade','undo-remove'])$('#'+id).addEventListener('click',sync);sync();
- const payload=()=>({format:'alfaglass-facade-project',schemaVersion:1,appVersion:'0.1.3',catalogRevision:'MODUS-63-72',pricing:{enabled:false,currency:'RUB',rateRevision:null,categories:['glass','mirror','profile','hinge','machining','seal','corner','screw','assembly']},meta,items:structuredClone(project.items),activeId:project.activeId,nextId:project.nextId});
+ const payload=()=>({format:'alfaglass-facade-project',schemaVersion:1,appVersion:'0.1.4',catalogRevision:'MODUS-63-72',pricing:{enabled:false,currency:'RUB',rateRevision:null,categories:['glass','mirror','profile','hinge','machining','seal','corner','screw','assembly']},meta,items:structuredClone(project.items),activeId:project.activeId,nextId:project.nextId});
  async function run(fn){try{status('');await fn();}catch(e){status(e.message);}}
  $('#desktop-save').onclick=()=>run(async()=>{project.update(state);const r=await api.save(payload());status(r?'Проект сохранён: '+r:'Сохранение отменено.');});
  $('#export').onclick=$('#desktop-save').onclick;
@@ -21,5 +21,5 @@ export function installDesktop({project,state,activate,update,validate,facadeEnt
  async function report(kind){project.update(state);const errors=project.items.flatMap(i=>validate(i.config).errors.map(e=>i.name+': '+e));if(errors.length)throw Error(errors.join('\n'));await api.report(payload(),kind);status('Документ открыт. Доступны печать и сохранение PDF.');}
  $('#desktop-client').onclick=()=>run(()=>report('client'));$('#desktop-production').onclick=()=>run(()=>report('production'));$('#send-project').onclick=$('#desktop-client').onclick;
  $('#desktop-update').onclick=()=>api.updates();$('#desktop-catalog').onclick=()=>api.catalog();
- status('Офлайн-версия 0.1.3 · проекты сохраняются на вашем компьютере · цены не подключены');
+ status('Офлайн-версия 0.1.4 · проекты сохраняются на вашем компьютере · цены не подключены');
 }

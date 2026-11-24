@@ -29,3 +29,16 @@ export function attach(items,item,anchor,direction,gap=3){
 
 }
 export function overlaps(items){const p=placements(items),out=[];for(let i=0;i<items.length;i++)for(let j=i+1;j<items.length;j++){const a=p.get(items[i].id),b=p.get(items[j].id);if(a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y)out.push([i+1,j+1]);}return out;}
+
+// Count non-overlapping panels along each axis; differing widths/heights do not create extra rows.
+export function layoutLimit(items){
+ const rects=[...placements(items).values()];
+ const count=(axis,size)=>{let edge=-Infinity,n=0;for(const r of [...rects].sort((a,b)=>(a[axis]+a[size])-(b[axis]+b[size]))){if(r[axis]>=edge){n++;edge=r[axis]+r[size];}}return n;};
+ const columns=count('x','w'),rows=count('y','h');
+ return columns>8?'Не более 8 фасадов в ширину. Добавьте фасад во второй ряд.':rows>2?'Не более 2 фасадов в высоту. Добавьте фасад слева или справа.':items.length>16?'В проекте не более 16 фасадов: 8 в ширину и 2 в высоту.':'';
+}
+export function addChecked(project,add,kind,direction='right',gap=3){
+ const snapshot={items:structuredClone(project.items),activeId:project.activeId,nextId:project.nextId};
+ try{const anchor=project.current(),item=add(kind);attach(project.items,item,anchor,direction,gap);const error=layoutLimit(project.items);if(error)throw Error(error);return item;}
+ catch(error){Object.assign(project,snapshot);throw error;}
+}
