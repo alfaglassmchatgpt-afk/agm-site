@@ -1,8 +1,12 @@
-import {placements,bounds,bake,attach,overlaps,layoutLimit,addChecked,facadeNumber} from './layout.mjs';
+import {placements,bounds,bake,attach,overlaps,layoutLimit,addChecked,facadeNumber,setFacadeNumber} from './layout.mjs';
 export {placements,bounds,facadeNumber};
-export function badge(T,number,active){const canvas=document.createElement('canvas');canvas.width=128;canvas.height=128;const c=canvas.getContext('2d');c.fillStyle=active?'#007eaf':'#183746';c.beginPath();c.arc(64,64,56,0,Math.PI*2);c.fill();c.strokeStyle='white';c.lineWidth=5;c.stroke();c.fillStyle='white';c.font='bold 65px Arial';c.textAlign='center';c.textBaseline='middle';c.fillText(String(number),64,67);const sprite=new T.Sprite(new T.SpriteMaterial({map:new T.CanvasTexture(canvas),depthTest:false,depthWrite:false}));sprite.scale.set(95,95,1);sprite.renderOrder=1000;return sprite;}
+export function badge(T,number,active){const canvas=document.createElement('canvas');canvas.width=128;canvas.height=128;const c=canvas.getContext('2d');c.fillStyle=active?'#007eaf':'#183746';c.beginPath();c.arc(64,64,56,0,Math.PI*2);c.fill();c.strokeStyle='white';c.lineWidth=5;c.stroke();c.fillStyle='white';c.font='bold '+Math.min(65,140/String(number).length)+'px Arial';c.textAlign='center';c.textBaseline='middle';c.fillText(String(number),64,67);const sprite=new T.Sprite(new T.SpriteMaterial({map:new T.CanvasTexture(canvas),depthTest:false,depthWrite:false}));sprite.scale.set(95,95,1);sprite.renderOrder=1000;return sprite;}
 export function installLayout({project,state,activate,update,fit,saveProject,T,camera,surface,getProduct,selectInScene}){
  const $=s=>document.querySelector(s),bar=$('.project-bar'),preview=$('.preview-card');preview.prepend(bar);
+ const numberLabel=document.createElement('label');numberLabel.className='facade-number-field';numberLabel.innerHTML='№ фасада<input id="facade-number" type="number" min="1" max="999999" step="1" required>';$('.project-fields').prepend(numberLabel);const numberInput=$('#facade-number');
+ const numberError=document.createElement('p');numberError.id='facade-number-error';numberError.setAttribute('role','alert');bar.append(numberError);
+ numberInput.onchange=()=>{try{setFacadeNumber(project,project.current(),Number(numberInput.value));numberInput.setCustomValidity('');numberError.textContent='';update();saveProject();}catch(error){numberInput.setCustomValidity(error.message);numberError.textContent=error.message;numberInput.reportValidity();}};
+ numberInput.oninput=()=>numberInput.setCustomValidity('');
  const toolbar=$('.desktop-tools');new ResizeObserver(()=>document.documentElement.style.setProperty('--desktop-toolbar-height',toolbar.getBoundingClientRect().height+'px')).observe(toolbar);
  const panel=document.createElement('div');panel.className='layout-controls compact';panel.innerHTML='<label><input id="layout-numbers" type="checkbox" checked> Номера фасадов</label><span>Нажмите на фасад или номер, чтобы выбрать его.</span><p id="layout-warning" role="status"></p>';bar.append(panel);
  const toggle=$('#layout-numbers');toggle.checked=localStorage.getItem('rf-layout-numbers')!=='false';toggle.onchange=()=>{localStorage.setItem('rf-layout-numbers',String(toggle.checked));update();};
@@ -13,12 +17,13 @@ export function installLayout({project,state,activate,update,fit,saveProject,T,c
  anchor.onchange=kind.onchange=hint;
  $('#add-facade').onclick=()=>{anchor.replaceChildren(...project.items.map((item,i)=>new Option('№ '+facadeNumber(item)+' · '+item.name,item.id)));anchor.value=project.activeId;$('#layout-add-error').textContent='';hint();dialog.showModal();};
  if(project.items.some(i=>!i.layout))bake(project.items);
- const originalAdd=project.add.bind(project),originalRemove=project.remove.bind(project);
+ const originalAdd=project.add.bind(project),originalRemove=project.remove.bind(project),originalUndo=project.undoRemove.bind(project);
+ project.undoRemove=()=>{const saved=project.removals.at(-1);if(saved&&project.items.some(i=>facadeNumber(i)===facadeNumber(saved.item))){$('#layout-warning').textContent='Номер '+facadeNumber(saved.item)+' уже занят. Измените его у текущего фасада перед восстановлением.';return false;}return originalUndo();};
  project.add=type=>addChecked(project,originalAdd,type);
  project.remove=()=>{bake(project.items);return originalRemove();};
  form.onsubmit=event=>{event.preventDefault();if(!form.reportValidity())return;project.update(state);const previous=project.activeId;project.activeId=anchor.value;try{const item=addChecked(project,originalAdd,kind.value,$('#layout-direction').value,Number($('#layout-gap').value));dialog.close();activate(item.id);document.dispatchEvent(new Event('rf-facade-activated'));fit();}catch(error){project.activeId=previous;$('#layout-add-error').textContent=error.message;}};
  project.groups=()=>project.items.map(item=>({id:item.id,pairId:item.pairId,members:[item]}));
- const originalUpdate=project.update.bind(project);project.update=config=>{originalUpdate(config);const conflicts=overlaps(project.items);$('#layout-warning').textContent=layoutLimit(project.items)||(conflicts.length?'Пересекаются фасады: '+conflicts.map(p=>p.join(' и ')).join(', ')+'. Проверьте размеры и расположение.':'');};
+ const originalUpdate=project.update.bind(project);project.update=config=>{originalUpdate(config);numberInput.value=facadeNumber(project.current());numberInput.setCustomValidity('');numberError.textContent='';const conflicts=overlaps(project.items);$('#layout-warning').textContent=layoutLimit(project.items)||(conflicts.length?'Пересекаются фасады: '+conflicts.map(p=>p.join(' и ')).join(', ')+'. Проверьте размеры и расположение.':'');};
  const raycaster=new T.Raycaster();let press=null;
  surface.addEventListener('pointerdown',event=>{press=event.button===0&&!event.shiftKey&&!event.ctrlKey&&!event.metaKey?{id:event.pointerId,x:event.clientX,y:event.clientY,moved:false}:null;},true);
  surface.addEventListener('pointermove',event=>{if(press&&Math.hypot(event.clientX-press.x,event.clientY-press.y)>5)press.moved=true;},true);

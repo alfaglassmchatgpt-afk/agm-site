@@ -1,4 +1,4 @@
-export function facadeNumber(item){return /^facade-(\d+)$/.exec(item.id)?.[1]||item.id;}
+export function facadeNumber(item){return String(item.number??(/^facade-(\d+)$/.exec(item.id)?.[1]||item.id));}
 // Positions are in millimetres, independent of manufacturing parameters.
 export function placements(items){
  const found=new Map(),visiting=new Set();
@@ -40,6 +40,13 @@ export function layoutLimit(items){
 }
 export function addChecked(project,add,kind,direction='right',gap=3){
  const snapshot={items:structuredClone(project.items),activeId:project.activeId,nextId:project.nextId};
- try{const anchor=project.current(),item=add(kind);attach(project.items,item,anchor,direction,gap);const error=layoutLimit(project.items);if(error)throw Error(error);return item;}
+ try{while(project.items.some(i=>facadeNumber(i)===String(project.nextId)))project.nextId++;if(project.nextId>999999)throw Error('Достигнут максимальный номер фасада.');const anchor=project.current(),item=add(kind);attach(project.items,item,anchor,direction,gap);const error=layoutLimit(project.items);if(error)throw Error(error);return item;}
  catch(error){Object.assign(project,snapshot);throw error;}
+}
+
+export function setFacadeNumber(project,item,value){
+ if(!Number.isSafeInteger(value)||value<1||value>999999)throw Error('Номер — целое число от 1 до 999999.');
+ if(project.items.some(other=>other.id!==item.id&&facadeNumber(other)===String(value)))throw Error('Фасад с номером '+value+' уже есть. Укажите другой номер.');
+ item.number=value;if(/^Фасад \d+$/.test(item.name))item.name='Фасад '+value;
+ project.nextId=Math.max(project.nextId,value+1);
 }
