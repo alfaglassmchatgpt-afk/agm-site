@@ -41,18 +41,18 @@ export function hingeOptions(s,count=s.hinges.length||2){
  const glassKg=cut?cut.width*cut.height*0.00001:0; // 4 mm: approx. 10 kg/m²
  if(p.maxWeight&&glassKg>=p.maxWeight)return [];
  if(p.series==='MF-20')return count===2?['mf20']:[];
- if(p.id==='07'&&s.glass!=='none'&&!(s.glassOpaque??['opaque','mirror'].includes(s.glass)))return ['blum'];
+ if(p.id==='07'&&s.glass!=='none'&&!(s.glassOpaque??['opaque','mirror'].includes(s.glass)))return ['blum','custom'];
  const options=[defaultHinge(p)];
  if(['01','02','07','MF30'].includes(base.id)&&base.b>=19&&base.b<=22&&base.d>=20&&base.d<=25&&glassKg<4*count)options.push('mzf');
  if(p.id==='07')options.push('blum');
- return options;
+ return [...options,'custom'];
 }
 export const colors={'00':['Серебро','#b6bec1'],'04':['Инокс','#91948d'],'06':['Шампань','#bfac8e'],'07':['Коньяк','#79503a'],'11':['Белый матовый','#eeeae4'],'16':['Белый глянец','#faf8f2'],'18':['Титан','#7d7b74'],'21':['Латунь','#b49b64'],'25':['Чёрный браш','#323331'],'26':['Чёрный матовый','#242729'],'29':['Серебро браш','#bfc5c4'],'28':['Кофе','#67594f']};
 export const glasses={clear:['Прозрачное М1','#c4e0dc'],bronze:['Тонированное — бронза','#b29676'],grey:['Тонированное — серое','#819096'],satin:['Матовое','#d6dfdc'],reeded:['Рифлёное — демонстрация','#c2d7cf'],opaque:['Окрашенное непрозрачное','#b9ad9b'],mirror:['Зеркало — серебро','#b7c5cb']};
 export function validate(s){const p=profiles.find(p=>p.id===s.profile), errors=[],warnings=[];
  if(!Number.isInteger(s.w)||!Number.isInteger(s.h)||s.w<200||s.h<200||s.w>6000||s.h>6000)errors.push('Введите целые размеры от 200 до 6000 мм. Значения выше 6000 мм в прототипе не поддерживаются.');
  if(s.h>p.h||s.w>p.w)warnings.push(`За пределами рекомендации MODUS: ${p.h} × ${p.w} мм (высота × ширина). Требуется согласование.`);
- if(s.glass!=='none'&&s.hinges.length&&p.id==='07'&&!(s.glassOpaque??['opaque','mirror'].includes(s.glass))&&s.hinge!=='blum')errors.push('Для прозрачного наполнения MZ 07 каталог указывает BLUM 71B950A. Выберите эту петлю либо непрозрачное стекло.');
+ if(s.glass!=='none'&&s.hinges.length&&p.id==='07'&&!(s.glassOpaque??['opaque','mirror'].includes(s.glass))&&!['blum','custom'].includes(s.hinge))errors.push('Для прозрачного наполнения MZ 07 каталог указывает BLUM 71B950A. Выберите эту петлю либо непрозрачное стекло.');
  if(s.glass!=='none'&&['07','17'].includes(p.id)&&!(s.glassOpaque??['opaque','mirror'].includes(s.glass))&&!s.mask)errors.push('Для MZ 07/17 область приклейки стекла к профилю должна быть непрозрачной. Подтвердите непрозрачную зону.');
  if(p.series==='MF-20'&&s.hinges.length&&(s.hinge!=='mf20'||s.hinges.length!==2))errors.push('MF-20: используются только две скрытые петли серии MF 20.');
  if((s.hinge!=='none'||s.hinges.length)&&(![2,3,4,5,6].includes(s.hinges.length)||!hingeOptions(s).includes(s.hinge)))errors.push('Выбранные петли не подходят для этих параметров. Измените выбор или укажите «Без петель и присадок».');
@@ -64,5 +64,6 @@ export function validate(s){const p=profiles.find(p=>p.id===s.profile), errors=[
  if(s.hinges.some((v,i)=>s.hinges.some((q,j)=>j!==i&&Math.abs(v-q)<60)))warnings.push('Петли расположены близко. Порог 60 мм используется только как демонстрационная проверка, не норма MODUS.');
  if(p.series!=='MF-20'&&s.hinges.some(v=>v<80||s.h-v<80))warnings.push('Петля близко к углу. Допустимый отступ зависит от присадки и сборочного уголка; нужна проверка технолога.');
  if(s.hinges.length)warnings.push('Количество и координаты петель — пожелание к заказу. Несущая способность и производственная присадка пока не рассчитаны.');
+ if(s.hinge==='custom'){if(typeof s.customHinge!=='string'||!s.customHinge.trim()||s.customHinge.length>120)errors.push('Укажите модель или название петли (до 120 символов).');warnings.push('Петля по запросу: совместимость и присадку необходимо согласовать с менеджером.');}
  return {errors,warnings};
 }

@@ -5,7 +5,7 @@ import {profiles,colors,profileLabel,handleProfileLabel,orderProfileLabel,glassC
 const catalog=JSON.parse(readFileSync(new URL('./glass-catalog.json',import.meta.url))).items;
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const title='Ведомость материалов для изготовления фасада';
-const hinges={none:'Без петель',mf20:'Скрытые MF 20',mzf:'MZF 63',blum:'BLUM 71B950A',cup:'Чашка 35 мм · модель уточнить',narrow:'Для узкого рамочного профиля'};
+const hinges={custom:'Другая петля',none:'Без петель',mf20:'Скрытые MF 20',mzf:'MZF 63',blum:'BLUM 71B950A',cup:'Чашка 35 мм · модель уточнить',narrow:'Для узкого рамочного профиля'};
 function table(headers,rows){return '<div class="scroll"><table><thead><tr>'+headers.map(h=>'<th>'+esc(h)+'</th>').join('')+'</tr></thead><tbody>'+rows.map(r=>'<tr>'+r.map(c=>'<td>'+esc(c)+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>';}
 function sketch(c,p,g){
  const scale=Math.min(205/c.w,208/c.h),w=c.w*scale,h=c.h*scale,x=(320-w)/2,y=(278-h)/2;
@@ -72,7 +72,7 @@ function hingeSheet(item, profile, base, color, quantity){
  }else{
    detail='<p>'+ (c.hinge==='cup'?'Чашка Ø35 мм. ':'')+'Перед обработкой сверить артикул петли и монтажный чертёж. По нему определить форму выборки, отступ от кромки, отверстия крепежа и глубину.</p>';
  }
- return '<section class="hinge-page"><h2>Лист присадки под петли</h2><h3>'+esc(item.title)+' · '+c.w+' × '+c.h+' мм</h3><div class="hinge-head">'+diagram+'<div><p>Петлевая стойка — '+side+' при виде спереди.</p><p>'+esc(member)+' · '+esc(color)+' · '+c.h+' мм · '+quantity+' шт.</p><p>'+esc(hinges[c.hinge])+' · '+positions.length+' шт. на фасад</p></div></div>'+table(header,rows)+detail+'<small>Эскиз условный. Положение петель из заявки подлежит согласованию перед присадкой.</small></section>';
+ return '<section class="hinge-page"><h2>Лист присадки под петли</h2><h3>'+esc(item.title)+' · '+c.w+' × '+c.h+' мм</h3><div class="hinge-head">'+diagram+'<div><p>Петлевая стойка — '+side+' при виде спереди.</p><p>'+esc(member)+' · '+esc(color)+' · '+c.h+' мм · '+quantity+' шт.</p><p>'+esc(c.hinge==='custom'?c.customHinge+' — совместимость и присадку согласовать':hinges[c.hinge])+' · '+positions.length+' шт. на фасад</p></div></div>'+table(header,rows)+detail+'<small>Эскиз условный. Положение петель из заявки подлежит согласованию перед присадкой.</small></section>';
 }
 export function render(order){
  const glass=new Map(),rails=new Map(),cards=[],hingeSheets=[];
@@ -97,7 +97,7 @@ export function render(order){
      add(rail,baseStock,[horizontal,horizontal,c.h]);
      add(handleProfileLabel(profileLabel(p)),p.gripLength?2850:5500,[c.h],true,Boolean(p.gripLength));
    }else add(rail,baseStock,[c.w,c.w,c.h,c.h]);
-   cards.push('<article>'+sketch(c,p,g)+'<div><h3>'+esc(item.title)+'</h3><p>'+esc(orderProfileLabel(p,c.handle))+' · '+esc(color)+'</p><p>Петли: '+esc(hinges[c.hinge])+' · '+c.hinges.length+' шт.'+(c.hinges.length?' · '+(c.side==='left'?'слева':'справа'):'')+'</p><p>Стекло: '+esc(name)+'</p><p>Количество: '+quantity+' шт.</p></div></article>');
+   cards.push('<article>'+sketch(c,p,g)+'<div><h3>'+esc(item.title)+'</h3><p>'+esc(orderProfileLabel(p,c.handle))+' · '+esc(color)+'</p><p>Петли: '+esc(c.hinge==='custom'?c.customHinge+' — совместимость и присадку согласовать':hinges[c.hinge])+' · '+c.hinges.length+' шт.'+(c.hinges.length?' · '+(c.side==='left'?'слева':'справа'):'')+'</p><p>Стекло: '+esc(name)+'</p><p>Количество: '+quantity+' шт.</p></div></article>');
  }
  const groups=[...rails.values()].sort((a,b)=>Number(a.handle)-Number(b.handle)).map(group=>({group,bars:planCuts(group)}));
  const profileRows=groups.map(({group:g,bars})=>[g.label,g.color,g.stock+' мм',bars?bars.length+' шт.':'Уточнить раскрой']);

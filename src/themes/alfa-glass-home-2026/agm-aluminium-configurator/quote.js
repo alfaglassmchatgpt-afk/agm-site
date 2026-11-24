@@ -10,7 +10,7 @@ export function facadeEntry(item,confirmed){
   errors:[...validate(c).errors,...(confirmed?[]:['Подтвердите изменённую конфигурацию фасадов.'])],
   summary:[c.w+' × '+c.h+' мм; количество: 1','Профиль: MODUS '+orderProfileLabel(p,c.handle),'Цвет: '+colors[c.color][0],'Заполнение: '+glasses[c.glass][0],
    cut?'Стекло: '+cut.width+' × '+cut.height+' × 4 мм':'Без наполнения',
-   'Петли: '+({none:'Без петель',mf20:'Скрытые MF 20',narrow:'Для узкого профиля',mzf:'MZF 63',blum:'BLUM 71B950A',cup:'Чашка 35 мм — модель уточнить'}[c.hinge]||c.hinge)+'; сторона: '+(c.side==='left'?'слева':'справа')+'; координаты от верха, мм: '+c.hinges.join(', '),
+   'Петли: '+(c.hinge==='custom'?'Другая петля: '+c.customHinge+' — согласовать совместимость и присадку':({none:'Без петель',mf20:'Скрытые MF 20',narrow:'Для узкого профиля',mzf:'MZF 63',blum:'BLUM 71B950A',cup:'Чашка 35 мм — модель уточнить'}[c.hinge]||c.hinge))+'; сторона: '+(c.side==='left'?'слева':'справа')+'; координаты от верха, мм: '+c.hinges.join(', '),
    ...(reedSlugs.includes(c.glass.split('__')[0])?['Направление рифления: '+(c.reed==='vertical'?'вертикальное':'горизонтальное')]:[]),
    'Маскировка зоны вклейки: '+(c.mask?'да':'нет'),...validate(c).warnings,'Параметры предварительные; производственный чертёж согласовать.'].join('\n')};
 }

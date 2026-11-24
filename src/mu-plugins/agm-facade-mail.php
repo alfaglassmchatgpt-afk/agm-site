@@ -56,7 +56,7 @@ function agm_facade_report($p) {
     $catalog=json_decode(file_get_contents($dir.'glass-catalog.json'),true);
     $profiles=array_column($db['profiles'],null,'id');
     $glasses=array_column($catalog['items'],null,'id');
-    $hinges=['none'=>'Без петель','mf20'=>'Скрытые MF 20','mzf'=>'MZF 63','blum'=>'BLUM 71B950A','cup'=>'Чашка 35 мм','narrow'=>'Для узкого рамочного профиля'];
+    $hinges=['custom'=>'Другая петля','none'=>'Без петель','mf20'=>'Скрытые MF 20','mzf'=>'MZF 63','blum'=>'BLUM 71B950A','cup'=>'Чашка 35 мм','narrow'=>'Для узкого рамочного профиля'];
     $groups=[]; $items=$p['managerItems'];
     if (!is_array($items) || count($items)>1000 || strlen(wp_json_encode($items))>1048576) throw new InvalidArgumentException();
     foreach ($items as $i=>$item) {
@@ -86,6 +86,7 @@ function agm_facade_report($p) {
         $total+=$qty;
         $c=$item['config']; $w=$c['w']; $h=$c['h'];
         $profile=$profiles[$c['profile']]??null; $color=$db['colors'][$c['color']]??null;
+        if (($c['hinge']??'')==='custom' && (!is_string($c['customHinge']??null) || !trim($c['customHinge']) || !preg_match('/^.{1,120}$/us', $c['customHinge']))) throw new InvalidArgumentException();
         $glass=$glasses[$c['glass']]??null; $pins=$c['hinges']; sort($pins,SORT_NUMERIC);
         if (!$profile || !$color || (!isset($glass) && $c['glass']!=='none') || !isset($hinges[$c['hinge']]) || !in_array($c['side'],['left','right'],true) || !is_int($w) || !is_int($h) || min($w,$h)<200 || max($w,$h)>6000) throw new InvalidArgumentException();
         foreach ($pins as $pos) if (!is_int($pos)||$pos<=0||$pos>=$h) throw new InvalidArgumentException();
@@ -118,12 +119,12 @@ function agm_facade_report($p) {
             $glassRows[$key][2]+=$qty;
         }
         $sketch=agm_facade_sketch($c,$color[1],$glass['color']??'white',$ribbed);
-        $cards.='<article>'.$sketch.'<div><h3>'.$title.' · '.$qty.' шт.</h3><p>'.esc_html($base.($handle?' + '.$handle:'').' · '.$color[0]).'</p><p>Стекло: '.esc_html($name).'</p><p>Петли: '.$hinges[$c['hinge']].($pins?' · '.count($pins).' шт. на фасад, '.$side.' стойка':'').'</p></div></article>';
+        $cards.='<article>'.$sketch.'<div><h3>'.$title.' · '.$qty.' шт.</h3><p>'.esc_html($base.($handle?' + '.$handle:'').' · '.$color[0]).'</p><p>Стекло: '.esc_html($name).'</p><p>Петли: '.esc_html($c['hinge']==='custom'?$c['customHinge'].' — совместимость и присадку согласовать':$hinges[$c['hinge']]).($pins?' · '.count($pins).' шт. на фасад, '.$side.' стойка':'').'</p></div></article>';
         if ($pins) {
             $hidden=$c['hinge']==='mf20';
             $detail=$hidden?'Обработать верхний и нижний углы: поперечины и петлевая стойка. Чертежи MODUS, стр. 68–69.':($c['hinge']==='mzf'?'Паз 41 × 10 мм, R5. Окно 19 × 16 мм. Два отверстия Ø4,3 мм с зенковкой Ø8 мм, межцентровое расстояние 28 мм. Ориентацию и привязки сверить с чертежом MODUS, стр. 66.':'Размеры выборки и креплений согласовать по монтажному чертежу выбранной петли.');
             $rows=[]; foreach ($pins as $n=>$pos) $rows[]=[$n+1,$pos,$h-$pos];
-            $drilling[]='<h2>Лист присадки под петли</h2><h3>'.$title.'</h3>'.$sketch.'<p>'.esc_html($base.' · '.$color[0]).', '.$side.' стойка · '.$h.' мм · '.$qty.' шт.</p><p>'.$hinges[$c['hinge']].'</p>'.($hidden?'':agm_facade_cells(['Петля','От верха, мм','От низа, мм'],$rows)).'<p>'.$detail.'</p>';
+            $drilling[]='<h2>Лист присадки под петли</h2><h3>'.$title.'</h3>'.$sketch.'<p>'.esc_html($base.' · '.$color[0]).', '.$side.' стойка · '.$h.' мм · '.$qty.' шт.</p><p>'.esc_html($c['hinge']==='custom'?$c['customHinge'].' — совместимость и присадку согласовать':$hinges[$c['hinge']]).'</p>'.($hidden?'':agm_facade_cells(['Петля','От верха, мм','От низа, мм'],$rows)).'<p>'.$detail.'</p>';
         }
     }
     $cuts='<h2>Карта раскроя рамочного профиля</h2><p>Длина по наружной стороне. Пропил 4 мм. При длине 5500 и 6000 мм торцовка по 50 мм с каждого конца. Профиль 2850 мм без торцовки.</p>';
