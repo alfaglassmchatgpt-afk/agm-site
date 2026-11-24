@@ -21,7 +21,8 @@ html=html.replace('Добавить в мой расчёт','Документ д
 html=html.replace(/<dialog id="al-request"[\s\S]*?<\/dialog>/,'');
 fs.writeFileSync(path.join(dest,'index.html'),html);
 const app=path.join(dest,'app.js');fs.appendFileSync(app,"\nconst {installDesktop}=await import('./desktop-adapter.js');installDesktop({project,state:s,activate,update,validate,facadeEntry});\n");
-for(const f of ['desktop-boot.js','desktop-adapter.js','desktop.css'])fs.copyFileSync(path.join(__dirname,f),path.join(dest,f));
+require('./prepare-layout.cjs')(app);
+for(const f of ['desktop-boot.js','desktop-adapter.js','desktop.css','layout.mjs','layout-ui.js'])fs.copyFileSync(path.join(__dirname,f),path.join(dest,f));
 fs.copyFileSync(path.join(root,'.local/modus-mz/fasadnye-profili.pdf'),path.join(out,'modus.pdf'));
 fs.copyFileSync(path.join(__dirname,'reports.mjs'),path.join(dest,'desktop-reports.mjs'));
 console.log('Prepared offline bundle from shared source');

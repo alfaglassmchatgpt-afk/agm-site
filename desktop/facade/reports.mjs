@@ -26,7 +26,7 @@ export function render(data,kind){check(data);const entries=data.items.map(i=>{c
  if(kind==='production'){
  let html=production({items:entries});
  const sheet=String((html.match(/data-sheet=/g)||[]).length);
- const extra='<section class="print-form" data-sheet="'+sheet+'"><h1>Комплектующие и дополнительные работы</h1>'+meta+'<p>Версия 0.1.2 · MODUS стр. 63–72. Строки «Уточнить» требуют согласования до передачи в цех. Раскрой использует пропил 4 мм и торцовку 50 мм с двух сторон палок 5,5/6 м; профиль-ручка 2850 мм — без торцовки.</p>'+groups.map(g=>'<h2>'+esc(g.title)+' · '+g.members.length+' шт.</h2>'+table(components(g.config).map(r=>({...r,quantity:r.quantity==null?null:r.quantity*g.members.length})))+'<p>Дополнительные работы: '+esc(g.config.extraWork||'Не указаны')+'</p>').join('')+'</section>';
+ const extra='<section class="print-form" data-sheet="'+sheet+'"><h1>Комплектующие и дополнительные работы</h1>'+meta+'<p>Версия 0.1.3 · MODUS стр. 63–72. Строки «Уточнить» требуют согласования до передачи в цех. Раскрой использует пропил 4 мм и торцовку 50 мм с двух сторон палок 5,5/6 м; профиль-ручка 2850 мм — без торцовки.</p>'+groups.map(g=>'<h2>'+esc(g.title)+' · '+g.members.length+' шт.</h2>'+table(components(g.config).map(r=>({...r,quantity:r.quantity==null?null:r.quantity*g.members.length})))+'<p>Дополнительные работы: '+esc(g.config.extraWork||'Не указаны')+'</p>').join('')+'</section>';
  html=html.replace('</style>','html,body{background:#fff;color:#183039;color-scheme:light}.print-tools select,.print-tools button{background:#fff;color:#183039;border:1px solid #70838c}</style>');
  return html.replace('</select>','<option value="'+sheet+'">Комплектующие и работы</option></select>').replace('</main>',extra+'</main>');
  }

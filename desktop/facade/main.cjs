@@ -2,7 +2,7 @@ const {app,BrowserWindow,Menu,dialog,ipcMain,protocol,net,shell,session}=require
 const fs=require('node:fs/promises'),path=require('node:path'),{pathToFileURL}=require('node:url'),{validateProject,MAX}=require('./domain.cjs');
 const bundle=path.join(__dirname,'bundle');let main,reportModule;const reports=new Map();
 protocol.registerSchemesAsPrivileged([{scheme:'alfa',privileges:{standard:true,secure:true,supportFetchAPI:true,corsEnabled:true}}]);
-app.setPath('userData',path.join(app.getPath('appData'),'ALFAGLASS Facades'));
+app.setPath('userData',!app.isPackaged&&process.env.RF_AGM_TEST_DATA?path.resolve(process.env.RF_AGM_TEST_DATA):path.join(app.getPath('appData'),'ALFAGLASS Facades'));
 app.setName('РФ АГМ');
 const entry='alfa://app/agm-aluminium-configurator/index.html';
 function options(){return {width:1450,height:950,backgroundColor:'#102c3b',webPreferences:{preload:path.join(__dirname,'preload.cjs'),contextIsolation:true,nodeIntegration:false,sandbox:true}};}
