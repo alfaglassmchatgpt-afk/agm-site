@@ -1,0 +1,2 @@
+const {contextBridge,ipcRenderer}=require('electron');
+contextBridge.exposeInMainWorld('alfaDesktop',Object.freeze({save:d=>ipcRenderer.invoke('project:save',d),open:()=>ipcRenderer.invoke('project:open'),report:(d,k)=>ipcRenderer.invoke('project:report',d,k),updates:()=>ipcRenderer.invoke('updates:info'),catalog:()=>ipcRenderer.invoke('catalog:open')}));

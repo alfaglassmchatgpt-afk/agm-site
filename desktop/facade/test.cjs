@@ -1,0 +1,8 @@
+const assert=require('node:assert/strict');const {validateProject}=require('./domain.cjs');
+(async()=>{const {render,components,check}=await import('./bundle/agm-aluminium-configurator/desktop-reports.mjs');
+const c={profile:'01',w:400,h:1600,color:'00',glass:'none',hinge:'none',hinges:[],side:'left',reed:'vertical'};
+const d={format:'alfaglass-facade-project',schemaVersion:1,meta:{customer:'Проверка <script>'},items:[{id:'facade-1',name:'Фасад 1',config:c}]};
+const normalized=validateProject(d);assert.equal(normalized.activeId,'facade-1');assert.equal(normalized.nextId,2);assert.throws(()=>validateProject(JSON.parse(JSON.stringify(d).replace('\"meta\":','\"__proto__\":{},\"meta\":'))));check(d);assert.throws(()=>validateProject({...d,schemaVersion:99}));assert.throws(()=>check({...d,items:[{...d.items[0],config:{...c,profile:'bogus'}}]}));
+assert.equal(components(c).find(r=>r.name==='Винты сборочных углов').quantity,8);assert.equal(components({...c,profile:'MF30'}).find(r=>r.name==='Винты сборочных углов').quantity,16);
+assert(!components({...c,profile:'10',glass:'clear'}).some(r=>r.name.startsWith('Уплотнитель')));
+const client=render(d,'client'),prod=render(d,'production');assert(client.includes('&lt;script&gt;'));assert(!client.includes('Винты сборочных'));assert(prod.includes('Винты сборочных'));assert(prod.includes('Карта раскроя'));require('node:fs').writeFileSync(require('node:path').resolve(__dirname,'../../.local/facade-desktop-client-test.html'),client);require('node:fs').writeFileSync(require('node:path').resolve(__dirname,'../../.local/facade-desktop-production-test.html'),prod);console.log('PASS project validation, client/production separation, MZ/MF30 components');})();

@@ -22,3 +22,6 @@ vendor/
 .DS_Store
 Thumbs.db
 src/themes/alfa-glass-home-2026/agm-contacts/content.html
+
+/desktop/facade/bundle/
+/desktop/facade/dist/

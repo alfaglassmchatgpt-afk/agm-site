@@ -1,0 +1,1 @@
+window.AGMQuoteReady=Promise.resolve({store:AGMQuoteStore.create(localStorage),open(){document.getElementById('desktop-client').click();},exportText(){document.getElementById('desktop-save').click();}});

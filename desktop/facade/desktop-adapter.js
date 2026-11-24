@@ -1,0 +1,24 @@
+export function installDesktop({project,state,activate,update,validate,facadeEntry}){
+ const extras={sealColor:'Уточнить',sealExtra:0,extraWork:''};Object.assign(project.defaults,extras);for(const item of project.items)item.config={...extras,...item.config};Object.assign(state,project.current().config);
+ document.addEventListener('click',e=>{const a=e.target.closest('a');if(a){e.preventDefault();if(/modus|pdf/i.test(a.href))window.alfaDesktop.catalog();}});
+ const api=window.alfaDesktop,$=s=>document.querySelector(s),status=t=>$('#desktop-status').textContent=t;
+ const metadata=document.createElement('div');metadata.className='desktop-client-meta';metadata.innerHTML='<label>Заказ / клиент<input id="desktop-customer" maxlength="180"></label><label>Комментарий к проекту<input id="desktop-comment" maxlength="1000"></label>';
+ $('.desktop-tools').after(metadata);
+ let meta=JSON.parse(localStorage.getItem('alfa-desktop-meta')||'{}');$('#desktop-customer').value=meta.customer||'';$('#desktop-comment').value=meta.comment||'';
+ metadata.oninput=()=>{meta={customer:$('#desktop-customer').value,comment:$('#desktop-comment').value};localStorage.setItem('alfa-desktop-meta',JSON.stringify(meta));};
+ const components=document.createElement('section');components.className='desktop-components';components.innerHTML='<h2>Комплектующие и обработка</h2><label>Цвет уплотнителя<select id="seal-color"><option>Уточнить</option><option>Чёрный</option><option>Серый</option><option>Прозрачный</option></select></label><label>Запас уплотнителя, мм на фасад<input id="seal-extra" type="number" min="0" max="10000" step="1" value="0"></label><label>Дополнительные работы / присадки<textarea id="extra-work" maxlength="1000" rows="3"></textarea></label><small>Типы уголков, уплотнителя и крепежа определяются по серии MODUS. Расход уплотнителя — по периметру стекла плюс указанный запас. Артикулы винтов и расход клея требуют проверки по комплектации поставщика. Цены будут подключены отдельным прайсом.</small>';
+ $('aside').append(components);
+ function sync(){const c=project.current().config;$('#seal-color').value=c.sealColor||'Уточнить';$('#seal-extra').value=c.sealExtra||0;$('#extra-work').value=c.extraWork||'';}
+ components.oninput=()=>{const extra=Number($('#seal-extra').value);if(!Number.isInteger(extra)||extra<0||extra>10000){status('Запас: целое число от 0 до 10000 мм');return;}Object.assign(state,{sealColor:$('#seal-color').value,sealExtra:extra,extraWork:$('#extra-work').value});update();};
+ $('#facade-select').addEventListener('change',sync);for(const id of ['add-new','add-copy','add-mirror','remove-facade','undo-remove'])$('#'+id).addEventListener('click',sync);sync();
+ const payload=()=>({format:'alfaglass-facade-project',schemaVersion:1,appVersion:'0.1.0',catalogRevision:'MODUS-63-72',pricing:{enabled:false,currency:'RUB',rateRevision:null,categories:['glass','mirror','profile','hinge','machining','seal','corner','screw','assembly']},meta,items:structuredClone(project.items),activeId:project.activeId,nextId:project.nextId});
+ async function run(fn){try{status('');await fn();}catch(e){status(e.message);}}
+ $('#desktop-save').onclick=()=>run(async()=>{project.update(state);const r=await api.save(payload());status(r?'Проект сохранён: '+r:'Сохранение отменено.');});
+ $('#export').onclick=$('#desktop-save').onclick;
+ $('#desktop-open').onclick=()=>run(async()=>{if(!confirm('Открыть другой проект? Сохраните текущий в файл перед заменой.'))return;const data=await api.open();if(!data)return;for(const i of data.items){if(!i.config||!i.id)throw Error('Повреждённый проект');}localStorage.removeItem('agm-facade-editor-v1');for(const key of Object.keys(localStorage))if(key.startsWith('agm-quote-v1:'))localStorage.removeItem(key);localStorage.setItem('agm-facade-editor-v1',JSON.stringify({...data,signature:null}));localStorage.setItem('alfa-desktop-meta',JSON.stringify(data.meta||{}));location.reload();});
+ $('#desktop-new').onclick=()=>{if(confirm('Создать новый проект? Несохранённый проект будет заменён.')){for(const key of Object.keys(localStorage))if(key.startsWith('agm-quote-v1:')||key==='agm-facade-editor-v1'||key==='alfa-desktop-meta')localStorage.removeItem(key);location.reload();}};
+ async function report(kind){project.update(state);const errors=project.items.flatMap(i=>validate(i.config).errors.map(e=>i.name+': '+e));if(errors.length)throw Error(errors.join('\n'));await api.report(payload(),kind);status('Документ открыт. Доступны печать и сохранение PDF.');}
+ $('#desktop-client').onclick=()=>run(()=>report('client'));$('#desktop-production').onclick=()=>run(()=>report('production'));$('#send-project').onclick=$('#desktop-client').onclick;
+ $('#desktop-update').onclick=()=>api.updates();$('#desktop-catalog').onclick=()=>api.catalog();
+ status('Офлайн-версия 0.1.0 · проекты сохраняются на вашем компьютере · цены не подключены');
+}
