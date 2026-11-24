@@ -55,3 +55,41 @@
 @media(max-width:760px){.led-brief{grid-template-columns:1fr}.led-selected-image{max-height:240px}.led-form{padding:18px}.designers-page .ds-hero{padding-top:0;gap:24px}.led-filters{gap:6px}.led-filters button{padding:8px 12px;font-size:13px}}
 @media(max-width:520px){#variants .ds-solution-grid{grid-template-columns:1fr}.led-card h3{min-height:0}.led-form{grid-template-columns:1fr}.led-full{grid-column:auto}.led-brief h2{font-size:30px}.designers-page .ds-section{padding-top:40px;padding-bottom:40px}}
 @media(prefers-reduced-motion:reduce){.led-card{transition:none}.led-card:hover{transform:none}}
+/* Editorial LED collection: scoped to this page, shared header untouched. */
+.led-editorial-hero{grid-template-columns:minmax(0,.8fr) minmax(0,1.3fr)!important;align-items:center!important}
+.led-editorial-hero h1{font-size:clamp(40px,4.6vw,70px)!important;line-height:1.05;letter-spacing:-.04em}
+.led-hero-sub{font-size:22px!important;color:var(--ink)!important;line-height:1.4}
+.led-editorial-hero .ds-lead{font-size:16px;max-width:440px}
+.led-editorial-photo{position:relative;margin:0;overflow:hidden;border-radius:5px}
+.led-editorial-photo img{display:block;width:100%;height:540px;object-fit:cover}
+.led-editorial-photo figcaption{position:absolute;bottom:0;left:0;right:0;padding:40px 24px 20px;background:linear-gradient(transparent,#0008);color:white;font-size:18px}
+.led-silhouettes{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:8px;margin:32px 0 20px}
+.led-silhouettes button{display:flex;flex-direction:column;align-items:center;gap:10px;border-radius:10px;padding:14px 6px;font-size:12px}
+.led-silhouettes svg{width:62px;height:62px;fill:none;stroke:currentColor;stroke-width:1.6}
+#variants .ds-solution-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:36px}
+.led-card{border-radius:5px;box-shadow:none}
+.led-card img{aspect-ratio:3/2;object-fit:cover}
+.led-card h3{min-height:0;font-size:25px;margin-bottom:12px}
+.led-card>div{padding:24px 28px}
+.led-card .ds-eyebrow{display:none}
+.led-details{background:var(--surface)}
+.led-feature-stage{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:56px;align-items:center}
+.led-feature-visual{position:relative;overflow:hidden;border-radius:5px;background:#aaa}
+.led-feature-visual img{width:100%;display:block;aspect-ratio:1.15;object-fit:cover;transition:transform .4s}
+.led-feature-visual img[data-focus=sensor]{transform:scale(1.4);transform-origin:65% 55%}
+.led-feature-visual img[data-focus=clock]{transform:scale(1.5);transform-origin:52% 55%}
+#led-power{position:absolute;bottom:20px;left:20px;background:#14232ce6;color:white;border:1px solid #ffffff70;border-radius:30px;padding:12px 20px;font:inherit;cursor:pointer}
+#led-power[hidden]{display:none}
+.led-feature-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:36px}
+.led-feature-tabs button{font:inherit;font-size:14px;padding:10px 16px;border:1px solid var(--line);border-radius:30px;color:var(--ink);background:var(--surface);cursor:pointer}
+.led-feature-tabs button[aria-pressed=true]{background:var(--ink);color:var(--surface)}
+.led-feature-copy h3{font-size:36px;line-height:1.15;letter-spacing:-.025em;margin:12px 0 20px}
+.led-feature-copy .ds-caption{margin-top:32px;font-size:12px}
+.led-temperature{display:flex;gap:30px;justify-content:center;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:32px;margin-top:32px}
+.led-temperature span{display:flex;align-items:center;gap:10px;font-size:14px}
+.led-temperature i{width:22px;height:22px;display:block;border-radius:50%;border:1px solid #aaa}
+@media(max-width:1000px){.led-silhouettes{grid-template-columns:repeat(4,minmax(0,1fr))}.led-feature-stage{gap:28px}.led-editorial-photo img{height:450px}}
+@media(max-width:760px){.led-editorial-hero,.led-feature-stage{grid-template-columns:1fr!important}.led-editorial-photo img{height:auto;aspect-ratio:3/2}.led-feature-copy h3{font-size:30px}.led-feature-tabs{margin-bottom:24px}#variants .ds-solution-grid{gap:20px}.led-card>div{padding:20px}.led-card h3{font-size:22px}}
+@media(max-width:520px){#variants .ds-solution-grid{grid-template-columns:1fr}.led-silhouettes svg{width:44px;height:44px}.led-silhouettes button{font-size:11px}.led-feature-visual img{aspect-ratio:3/2}}
+@media(prefers-reduced-motion:reduce){.led-feature-visual img{transition:none}}
+.led-feature-visual img{height:auto}
