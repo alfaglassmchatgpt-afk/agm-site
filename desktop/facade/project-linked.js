@@ -9,7 +9,6 @@ export function renameLinked(project,item,name){const base=name.trim().replace(/
 export class FacadeProject extends Base {
  add(kind){
   const source=this.current(),partner=this.partner();
-  if(kind==='copy'&&source?.linkId&&!partner)throw Error('В связанной паре отсутствует вторая створка. Восстановите её перед копированием.');
   if(kind==='copy'&&partner){
    const group=source.linkId||source.pairId,base=stem(source),original=[source,partner];
    for(const i of original){i.linkId=group;i.baseName=base;}
@@ -18,7 +17,7 @@ export class FacadeProject extends Base {
   }
   const base=source?stem(source):'',item=super.add(kind);
   if(kind==='mirror'){source.baseName=item.baseName=base;source.linkId=item.linkId=source.linkId||source.id;numberFacades(this.items);}
-  else if(kind==='copy'){item.name=source.name;}
+  else if(kind==='copy'){item.name=source.linkId?stem(source):source.name;}
   return item;
  }
  update(config){
