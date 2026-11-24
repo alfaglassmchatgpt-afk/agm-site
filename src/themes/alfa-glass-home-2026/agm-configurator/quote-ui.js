@@ -166,7 +166,7 @@
    const {id,time,token}=credentials;
    const r=await fetch(endpoint,{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({...data,id,time,token}),signal:controller.signal}),result=await r.json();
    if(!r.ok||!result.ok){if(r.status===403)credentials=null;throw Error(result.message||'Не удалось передать заявку.');}
-   sentFingerprint=current;feedback.textContent=result.message+' Состав заказа сохранён в браузере.';
+   sentFingerprint=current;feedback.textContent='Ваша заявка отправлена. Наш менеджер свяжется с Вами. Спасибо.';
   }catch(error){feedback.textContent=(error.name==='AbortError'?'Ответ задерживается. При повторе неизменённой заявки используется тот же номер.':error.message)+' Данные не удалены.';}
   finally{clearTimeout(timer);busy=false;send.disabled=false;}
  });
