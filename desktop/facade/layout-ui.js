@@ -1,4 +1,4 @@
-import {renameLinked} from './project.js';
+import {renameLinked} from './project.js?v=layout-20261124';
 import {placements,bounds,bake,attach,overlaps,layoutLimit,addChecked,facadeNumber,setFacadeNumber} from './layout.mjs';
 export {placements,bounds,facadeNumber};
 export function badge(T,number,active){const canvas=document.createElement('canvas');canvas.width=128;canvas.height=128;const c=canvas.getContext('2d');c.fillStyle=active?'#007eaf':'#183746';c.beginPath();c.arc(64,64,56,0,Math.PI*2);c.fill();c.strokeStyle='white';c.lineWidth=5;c.stroke();c.fillStyle='white';c.font='bold '+Math.min(65,140/String(number).length)+'px Arial';c.textAlign='center';c.textBaseline='middle';c.fillText(String(number),64,67);const sprite=new T.Sprite(new T.SpriteMaterial({map:new T.CanvasTexture(canvas),depthTest:false,depthWrite:false}));sprite.scale.set(95,95,1);sprite.renderOrder=1000;return sprite;}
@@ -9,7 +9,7 @@ export function installLayout({project,state,activate,update,fit,saveProject,T,c
  numberInput.onchange=()=>{try{setFacadeNumber(project,project.current(),Number(numberInput.value));numberInput.setCustomValidity('');numberError.textContent='';update();saveProject();}catch(error){numberInput.setCustomValidity(error.message);numberError.textContent=error.message;numberInput.reportValidity();}};
  numberInput.oninput=()=>numberInput.setCustomValidity('');
  $('#facade-name').oninput=event=>{renameLinked(project,project.current(),event.target.value);update();saveProject();};
- const toolbar=$('.desktop-tools');new ResizeObserver(()=>document.documentElement.style.setProperty('--desktop-toolbar-height',toolbar.getBoundingClientRect().height+'px')).observe(toolbar);
+ const toolbar=$('.desktop-tools');if(toolbar)new ResizeObserver(()=>document.documentElement.style.setProperty('--desktop-toolbar-height',toolbar.getBoundingClientRect().height+'px')).observe(toolbar);
  const panel=document.createElement('div');panel.className='layout-controls compact';panel.innerHTML='<label><input id="layout-numbers" type="checkbox" checked> Номера фасадов</label><label><input id="layout-show-links" type="checkbox" checked> Отображение связей</label><span>Нажмите на фасад или номер, чтобы выбрать его.</span><p id="layout-warning" role="status"></p><p id="layout-links"></p>';bar.append(panel);
  const toggle=$('#layout-numbers');toggle.checked=localStorage.getItem('rf-layout-numbers')!=='false';toggle.onchange=()=>{localStorage.setItem('rf-layout-numbers',String(toggle.checked));update();};
  const linksToggle=$('#layout-show-links');linksToggle.checked=localStorage.getItem('rf-layout-links')!=='false';linksToggle.onchange=()=>{localStorage.setItem('rf-layout-links',String(linksToggle.checked));update();};

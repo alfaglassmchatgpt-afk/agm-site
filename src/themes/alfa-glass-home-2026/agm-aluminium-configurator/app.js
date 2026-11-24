@@ -1,4 +1,5 @@
-import {connectFacadeQuote,facadeEntry} from './quote.js?v=20261029';
+import {placements,bounds,badge,installLayout,facadeNumber,drawLinks} from './layout-ui.js?v=layout-20261124-2';
+import {connectFacadeQuote,facadeEntry} from './quote.js?v=layout-20261124';
 import * as T from 'three';
 import {OrbitControls} from './vendor/OrbitControls.js';
 import {Reflector} from './vendor/Reflector.js';
@@ -6,7 +7,7 @@ import {profiles,colors,glasses,validate,source,profileSeries,profileLabel,assem
 import {sections,svgSection,sectionNotes} from './sections.js?v=mf-frame45-20261021';
 import {railGeometry,sampleGeometry,handleRailGeometries} from './profile-mesh.js?v=mf-frame45-20261021';
 import {profileMetal} from './metal.js';
-import {FacadeProject} from './project.js?v=20261015-groups';
+import {FacadeProject} from './project.js?v=layout-20261124';
 import {transparentSlugs,transparentItems,matteSlugs,matteItems,stopsolSlugs,stopsolItems,reedSlugs,reedItems,patternedSlugs,patternedItems,lacobelSlugs,lacobelItems,matelacSlugs,matelacItems,mirrorSlugs,mirrorItems} from './glass-groups.js?v=photobox-camera-20261020';
 import {ProjectConfirmation} from './confirmation.js';
 import {studioEnvironment,studioBackdrop,refractionSurround,fitPhotoboxToCamera,moruOptics,estriadoOptics,glassMaterial,glassEdgeMaterial,stopsolGlassOptics,sampleCabinet,satinContactMap} from './glass-render.js?v=photobox-camera-20261020';
@@ -63,14 +64,14 @@ scene.add(coatingLights);
 let showSampleCabinet=false;
 let showPhotobox=false;
 let model=new T.Group();scene.add(model);
-function fit(){const inspect=s.view==='profile',distance=inspect?(profiles.find(p=>p.id===s.profile).series!=='MZ'?Math.max(450,150/camera.aspect)*1.45:Math.max(s.handle?155:125,150/camera.aspect)*1.1):Math.max(s.h,(pair()?s.w*2+40:s.w)/camera.aspect)*2;camera.position.set(inspect?(profiles.find(p=>p.id===s.profile).series!=='MZ'?-distance*.85:distance*.5):s.view==='3d'?distance*.4:0,inspect?distance*(profiles.find(p=>p.id===s.profile).series!=='MZ'?.55:.35):s.view==='3d'?distance*.15:0,s.view==='back'?-distance:distance);orbit.target.set(0,0,0);orbit.update();}
+function fit(){const assemblyBounds=bounds(project.items);const inspect=s.view==='profile',distance=inspect?(profiles.find(p=>p.id===s.profile).series!=='MZ'?Math.max(450,150/camera.aspect)*1.45:Math.max(s.handle?155:125,150/camera.aspect)*1.1):Math.max(assemblyBounds.h,assemblyBounds.w/camera.aspect)*2.2;camera.position.set(inspect?(profiles.find(p=>p.id===s.profile).series!=='MZ'?-distance*.85:distance*.5):s.view==='3d'?distance*.4:0,inspect?distance*(profiles.find(p=>p.id===s.profile).series!=='MZ'?.55:.35):s.view==='3d'?distance*.15:0,s.view==='back'?-distance:distance);orbit.target.set(0,0,0);orbit.update();}
 function disposeModel(root){const materials=new Set(),textures=new Set();root.traverse(o=>{o.getRenderTarget?.().dispose();o.geometry?.dispose();for(const m of (Array.isArray(o.material)?o.material:[o.material]))if(m)materials.add(m);});for(const m of materials){for(const key of ['map','normalMap','roughnessMap','bumpMap'])if(m[key])textures.add(m[key]);m.dispose();}for(const texture of textures)texture.dispose();}
 function build(){
  light.intensity=s.view==='profile'?1:3.4;scene.remove(model);disposeModel(model);model=new T.Group();scene.add(model);productGroup=new T.Group();productGroup.name="product-assembly";productGroup.quaternion.copy(productRotation);model.add(productGroup);
- const extent=Math.max(s.h,s.w*(pair()?2:1))*1.4;Object.assign(light.shadow.camera,{left:-extent,right:extent,top:extent,bottom:-extent});light.shadow.camera.updateProjectionMatrix();
- const other=pair(), states=other&&s.view!=='profile'?[project.current(),other].sort((a,b)=>a.config.side==='left'?-1:1):[project.current()];
- states.forEach((item,i)=>{const part=buildFacade({...item.config,view:s.view,backdrop:s.backdrop});part.traverse(o=>{if(o.isMesh&&!(Array.isArray(o.material)?o.material.some(m=>m.transmission):o.material?.transmission)){o.castShadow=true;o.receiveShadow=true;}});if(states.length===2)part.position.x=(i===0?-1:1)*(s.w+40)/2;productGroup.add(part);if(showSampleCabinet&&['3d','front'].includes(s.view)){const cabinet=sampleCabinet(item.config.w,item.config.h,showSampleCabinet);cabinet.position.x=part.position.x;productGroup.add(cabinet);}});
- if(showPhotobox&&['3d','front','back'].includes(s.view))model.add(refractionSurround(s.w*states.length,s.h,renderer));
+ const extent=Math.max(bounds(project.items).h,bounds(project.items).w)*1.4;Object.assign(light.shadow.camera,{left:-extent,right:extent,top:extent,bottom:-extent});light.shadow.camera.updateProjectionMatrix();
+ const states=s.view==='profile'?[project.current()]:project.items, positions=placements(states), area=bounds(states);
+ states.forEach((item,i)=>{const part=buildFacade({...item.config,view:s.view,backdrop:s.backdrop});part.traverse(o=>{if(o.isMesh&&!(Array.isArray(o.material)?o.material.some(m=>m.transmission):o.material?.transmission)){o.castShadow=true;o.receiveShadow=true;}});if(s.view!=='profile'){const p=positions.get(item.id);part.position.set(p.x+p.w/2-area.cx,p.y+p.h/2-area.cy,0);if(document.querySelector('#layout-numbers')?.checked){const label=badge(T,facadeNumber(item),item.id===project.activeId);label.position.set(0,0,80);part.add(label);}}part.userData.facadeId=item.id;if(s.view!=='profile'){const target=new T.Mesh(new T.PlaneGeometry(item.config.w,item.config.h),new T.MeshBasicMaterial({transparent:true,opacity:0,depthWrite:false,side:T.DoubleSide}));part.add(target);}productGroup.add(part);if(showSampleCabinet&&['3d','front'].includes(s.view)){const cabinet=sampleCabinet(item.config.w,item.config.h,showSampleCabinet);cabinet.position.copy(part.position);productGroup.add(cabinet);}});
+ if(s.view!=='profile'&&document.querySelector('#layout-show-links')?.checked)drawLinks(T,productGroup,states,positions,area);if(showPhotobox&&['3d','front','back'].includes(s.view))model.add(refractionSurround(area.w,area.h,renderer));
 }
 function buildFacade(s){
  const model=new T.Group();
@@ -230,9 +231,9 @@ function renderProject(){
  $('#facade-navigation').hidden=project.items.length<2;
  const select=$('#facade-select');select.replaceChildren();
  const groups=project.groups(),activeGroup=groups.find(group=>group.members.some(item=>item.id===project.activeId));
- for(const group of groups){const option=document.createElement('option');option.value=group.id;option.textContent=group.members[0].name+(group.members.length===2?' · пара (2 створки)':'');select.append(option);}select.value=activeGroup.id;
+ for(const group of groups){const option=document.createElement('option');option.value=group.id;option.textContent='№ '+facadeNumber(group.members[0])+' · '+group.members[0].name+(group.members.length===2?' · пара (2 створки)':'');select.append(option);}select.value=activeGroup.id;
  if(document.activeElement!==$('#facade-name'))$('#facade-name').value=project.current().name;
- $('#project-note').textContent=pair()?'Связанная пара: размеры, материалы и петли меняются у обоих. Имена индивидуальные. В 3D показаны оба фасада; зазор 40 мм только для просмотра. Схема — выбранный фасад.':'Самостоятельный фасад: изменения не затрагивают остальные позиции.';
+ $('#project-note').textContent=pair()?'Связанные фасады: размеры, материалы и петли меняются вместе. В 3D показан весь проект. Схема — выбранный фасад.':'Самостоятельный фасад: изменения не затрагивают остальные позиции.';
  $('#kit-summary').textContent=`Фасадов в проекте: ${project.items.length}. Выбран: ${project.current().name}.`;
  $('#add-mirror').disabled=!!pair();$('#mirror-note').hidden=!pair();
 }
@@ -314,3 +315,5 @@ if(new URLSearchParams(location.search).get("preview")==="mf-series"){selectProf
 if(new URLSearchParams(location.search).get("preview")==="mf-handles"){selectProfile("MF31");document.querySelector('[data-view="profile"]').click();}
 
 if(new URLSearchParams(location.search).get("preview")==="mf20-handles"){selectProfile("MF21");document.querySelector('[data-view="profile"]').click();}
+
+installLayout({project,state:s,activate,update,fit,saveProject,T,camera,surface,getProduct:()=>productGroup,selectInScene:id=>{const position=camera.position.clone(),target=orbit.target.clone();activate(id);camera.position.copy(position);orbit.target.copy(target);orbit.update();}});

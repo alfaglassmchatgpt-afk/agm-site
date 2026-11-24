@@ -1,5 +1,5 @@
 import {reedSlugs} from './glass-groups.js';
-import {numberFacades} from './project.js';
+import {numberFacades} from './project.js?v=layout-20261124';
 import {profiles,colors,glasses,validate,orderProfileLabel,glassCut} from './data.js?v=mf-series-20261021';
 
 // Product-specific serialization; storage and checkout live in the shared configurator.

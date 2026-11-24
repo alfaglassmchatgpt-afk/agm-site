@@ -4,8 +4,6 @@ fs.mkdirSync(out,{recursive:true});
 const source=path.join(root,'src/themes/alfa-glass-home-2026');
 const dest=path.join(out,'agm-aluminium-configurator');
 fs.cpSync(path.join(source,'agm-aluminium-configurator'),dest,{recursive:true});
-const projectFile=path.join(dest,'project.js');fs.writeFileSync(projectFile,fs.readFileSync(projectFile,'utf8').replace('const number=/^facade-', 'const number=item.number??/^facade-'));
-fs.renameSync(projectFile,path.join(dest,'project-base.js'));fs.copyFileSync(path.join(__dirname,'project-linked.js'),projectFile);
 fs.mkdirSync(path.join(out,'agm-configurator'),{recursive:true});
 fs.copyFileSync(path.join(source,'agm-configurator/quote-store.js'),path.join(out,'agm-configurator/quote-store.js'));
 fs.cpSync(path.join(root,'.local/facade-desktop-assets'),out,{recursive:true});
@@ -23,7 +21,7 @@ html=html.replace('Добавить в мой расчёт','Документ д
 html=html.replace(/<dialog id="al-request"[\s\S]*?<\/dialog>/,'');
 fs.writeFileSync(path.join(dest,'index.html'),html);
 const app=path.join(dest,'app.js');fs.appendFileSync(app,"\nconst {installDesktop}=await import('./desktop-adapter.js');installDesktop({project,state:s,activate,update,validate,facadeEntry});\n");
-require('./prepare-layout.cjs')(app);
+// Shared source already includes the layout integration.
 for(const f of ['desktop-boot.js','desktop-adapter.js','desktop.css','layout.mjs','layout-ui.js'])fs.copyFileSync(path.join(__dirname,f),path.join(dest,f));
 fs.copyFileSync(path.join(root,'.local/modus-mz/fasadnye-profili.pdf'),path.join(out,'modus.pdf'));
 fs.copyFileSync(path.join(__dirname,'reports.mjs'),path.join(dest,'desktop-reports.mjs'));
