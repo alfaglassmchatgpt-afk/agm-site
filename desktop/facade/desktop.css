@@ -1,1 +1,7 @@
 .desktop-tools{position:sticky;top:0;z-index:1000;display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:12px 20px;background:#102c3b;color:white;box-shadow:0 2px 8px #0004}.desktop-tools button{padding:8px 12px;background:#e6f3f8;color:#153a4a;border:0;border-radius:6px;font:inherit;cursor:pointer}.desktop-tools strong{margin-right:auto}#desktop-status{width:100%;font-size:13px}.desktop-components{padding:16px;border:1px solid #82b1c3;border-radius:12px;margin:16px 0}.desktop-components input,.desktop-components select{width:100%}.desktop-components label{display:block;margin:8px 0}.desktop-components small{display:block;line-height:1.4}.desktop-client-meta{display:flex;gap:12px;padding:12px 20px;flex-wrap:wrap}.desktop-client-meta label{min-width:200px;flex:1}.desktop-client-meta input{width:100%}a[href^="https:"]{cursor:pointer}.summary .text-button{white-space:normal}
+/* Desktop-only controls follow the same palette as the configurator. */
+.desktop-client-meta{background:var(--card);color:var(--ink);border-bottom:1px solid var(--line)}
+.desktop-client-meta input,.desktop-components textarea{font:inherit;line-height:1.5;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:10px 12px;min-height:43px;width:100%}
+.desktop-components{background:var(--card);color:var(--ink)}
+.desktop-components small{color:var(--muted)}
+.desktop-client-meta input:focus-visible,.desktop-components textarea:focus-visible{outline:3px solid var(--blue);outline-offset:2px}

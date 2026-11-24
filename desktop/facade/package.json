@@ -1,5 +1,5 @@
 {
- "name":"alfaglass-facades","productName":"ALFAGLASS Facades","version":"0.1.0","private":true,"description":"Offline facade configurator for ALFAGLASS managers","author":"ALFAGLASS","main":"main.cjs",
+ "name":"alfaglass-facades","productName":"ALFAGLASS Facades","version":"0.1.1","private":true,"description":"Offline facade configurator for ALFAGLASS managers","author":"ALFAGLASS","main":"main.cjs",
  "scripts":{"prepare:app":"node prepare.cjs","start":"electron .","dist":"electron-builder --win nsis --x64","test":"node test.cjs"},
  "devDependencies":{"electron":"45.4.1","electron-builder":"26.18.0"},
  "build":{"appId":"ru.alfaglass.facades","productName":"ALFAGLASS Facades","directories":{"output":"../../.local/facade-desktop-dist"},"files":["main.cjs","preload.cjs","domain.cjs","bundle/**/*","package.json"],"win":{"target":"nsis","signAndEditExecutable":false,"artifactName":"ALFAGLASS-Facades-Setup-${version}.${ext}"},"nsis":{"oneClick":false,"perMachine":false,"allowToChangeInstallationDirectory":true,"createDesktopShortcut":true,"deleteAppDataOnUninstall":false}}
