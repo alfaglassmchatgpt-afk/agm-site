@@ -2,7 +2,8 @@ const {app,BrowserWindow,Menu,dialog,ipcMain,protocol,net,shell,session}=require
 const fs=require('node:fs/promises'),path=require('node:path'),{pathToFileURL}=require('node:url'),{validateProject,MAX}=require('./domain.cjs');
 const bundle=path.join(__dirname,'bundle');let main,reportModule;const reports=new Map();
 protocol.registerSchemesAsPrivileged([{scheme:'alfa',privileges:{standard:true,secure:true,supportFetchAPI:true,corsEnabled:true}}]);
-app.setName('ALFAGLASS Facades');
+app.setPath('userData',path.join(app.getPath('appData'),'ALFAGLASS Facades'));
+app.setName('РФ АГМ');
 const entry='alfa://app/agm-aluminium-configurator/index.html';
 function options(){return {width:1450,height:950,backgroundColor:'#102c3b',webPreferences:{preload:path.join(__dirname,'preload.cjs'),contextIsolation:true,nodeIntegration:false,sandbox:true}};}
 function protect(w){w.webContents.setWindowOpenHandler(()=>({action:'deny'}));w.webContents.on('will-navigate',(e,url)=>{if(!url.startsWith('alfa://app/'))e.preventDefault();});}
@@ -19,7 +20,7 @@ app.whenReady().then(async()=>{
  ipcMain.handle('project:open',async e=>{trusted(e);const r=await dialog.showOpenDialog(main,{properties:['openFile'],filters:[{name:'Проект ALFAGLASS',extensions:['alfa-facades']}]});if(r.canceled)return null;const p=r.filePaths[0];if((await fs.stat(p)).size>MAX)throw Error('Слишком большой файл');const d=validateProject(JSON.parse(await fs.readFile(p,'utf8')));return d;});
  ipcMain.handle('project:report',async(e,data,kind)=>{trusted(e);if(!['client','production'].includes(kind))throw Error('Неизвестный документ');await checked(data);await documentWindow(reportModule.render(data,kind),kind==='client'?'Для клиента':'Для производства');return true;});
  ipcMain.handle('catalog:open',async e=>{trusted(e);const target=path.join(app.getPath('userData'),'MODUS-facades.pdf');await fs.copyFile(path.join(bundle,'modus.pdf'),target);return shell.openPath(target);});
- ipcMain.handle('updates:info',async e=>{trusted(e);return dialog.showMessageBox(main,{type:'info',title:'Обновления',message:'ALFAGLASS Facades '+app.getVersion(),detail:'Новая версия устанавливается поверх текущей тем же установщиком. Проекты в файлах и локальный черновик сохраняются. Автоматический канал обновлений ещё не подключён. Прайс и нормы каталога имеют отдельные версии; цены в этой сборке отключены.'});});
+ ipcMain.handle('updates:info',async e=>{trusted(e);return dialog.showMessageBox(main,{type:'info',title:'Обновления',message:'РФ АГМ '+app.getVersion(),detail:'Новая версия устанавливается поверх текущей тем же установщиком. Проекты в файлах и локальный черновик сохраняются. Автоматический канал обновлений ещё не подключён. Прайс и нормы каталога имеют отдельные версии; цены в этой сборке отключены.'});});
  await main.loadURL(entry);
 });
 app.on('window-all-closed',()=>app.quit());

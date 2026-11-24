@@ -158,3 +158,5 @@ SHA-1: `6B9A87D9A603A89708B4F5B55D55610B5DA5D561`.
 Локальный проект desktop/facade: Electron 45.4.1 / electron-builder 26.18.0, NSIS x64. Работает без сайта через изолированный alfa://app. Ресурсы/каталог и сборки только в игнорируемых локальных папках. Данные проектов — в файлах пользователя, черновик — в Electron userData. Никакого автодеплоя.
 
 2026-11-24 — desktop/prices: отдельное локальное окно Electron на существующем runtime фасадов. Хранение userData/price-revisions; никакой сетевой публикации. Запуск desktop/prices/start.ps1.
+
+2026-11-24 — Отображаемое имя программы «РФ АГМ», версия 0.1.2. Стабильный appId ru.alfaglass.facades, EXE ALFAGLASS Facades.exe, данные в прежних ALFAGLASS Facades / ALFAGLASS Prices. Установщик RF-AGM-Setup-0.1.2.exe.
