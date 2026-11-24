@@ -5,6 +5,7 @@ const source=path.join(root,'src/themes/alfa-glass-home-2026');
 const dest=path.join(out,'agm-aluminium-configurator');
 fs.cpSync(path.join(source,'agm-aluminium-configurator'),dest,{recursive:true});
 const projectFile=path.join(dest,'project.js');fs.writeFileSync(projectFile,fs.readFileSync(projectFile,'utf8').replace('const number=/^facade-', 'const number=item.number??/^facade-'));
+fs.renameSync(projectFile,path.join(dest,'project-base.js'));fs.copyFileSync(path.join(__dirname,'project-linked.js'),projectFile);
 fs.mkdirSync(path.join(out,'agm-configurator'),{recursive:true});
 fs.copyFileSync(path.join(source,'agm-configurator/quote-store.js'),path.join(out,'agm-configurator/quote-store.js'));
 fs.cpSync(path.join(root,'.local/facade-desktop-assets'),out,{recursive:true});
