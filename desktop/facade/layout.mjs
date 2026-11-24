@@ -1,3 +1,4 @@
+export function facadeNumber(item){return /^facade-(\d+)$/.exec(item.id)?.[1]||item.id;}
 // Positions are in millimetres, independent of manufacturing parameters.
 export function placements(items){
  const found=new Map(),visiting=new Set();
@@ -28,7 +29,7 @@ export function attach(items,item,anchor,direction,gap=3){
  }
 
 }
-export function overlaps(items){const p=placements(items),out=[];for(let i=0;i<items.length;i++)for(let j=i+1;j<items.length;j++){const a=p.get(items[i].id),b=p.get(items[j].id);if(a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y)out.push([i+1,j+1]);}return out;}
+export function overlaps(items){const p=placements(items),out=[];for(let i=0;i<items.length;i++)for(let j=i+1;j<items.length;j++){const a=p.get(items[i].id),b=p.get(items[j].id);if(a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y)out.push([facadeNumber(items[i]),facadeNumber(items[j])]);}return out;}
 
 // Count non-overlapping panels along each axis; differing widths/heights do not create extra rows.
 export function layoutLimit(items){

@@ -1,5 +1,5 @@
-import {placements,bounds,bake,attach,overlaps,layoutLimit,addChecked} from './layout.mjs';
-export {placements,bounds};
+import {placements,bounds,bake,attach,overlaps,layoutLimit,addChecked,facadeNumber} from './layout.mjs';
+export {placements,bounds,facadeNumber};
 export function badge(T,number,active){const canvas=document.createElement('canvas');canvas.width=128;canvas.height=128;const c=canvas.getContext('2d');c.fillStyle=active?'#007eaf':'#183746';c.beginPath();c.arc(64,64,56,0,Math.PI*2);c.fill();c.strokeStyle='white';c.lineWidth=5;c.stroke();c.fillStyle='white';c.font='bold 65px Arial';c.textAlign='center';c.textBaseline='middle';c.fillText(String(number),64,67);const sprite=new T.Sprite(new T.SpriteMaterial({map:new T.CanvasTexture(canvas),depthTest:false,depthWrite:false}));sprite.scale.set(95,95,1);sprite.renderOrder=1000;return sprite;}
 export function installLayout({project,state,activate,update,fit,saveProject,T,camera,surface,getProduct,selectInScene}){
  const $=s=>document.querySelector(s),bar=$('.project-bar'),preview=$('.preview-card');preview.prepend(bar);
@@ -11,7 +11,7 @@ export function installLayout({project,state,activate,update,fit,saveProject,T,c
  const kind=$('#layout-kind'),anchor=$('#layout-anchor');
  function hint(){const item=project.items.find(i=>i.id===anchor.value);const paired=!!item?.pairId;kind.querySelector('[value="mirror"]').disabled=paired;if(paired&&kind.value==='mirror')kind.value='copy';$('#layout-add-hint').textContent=kind.value==='mirror'?'Связанная пара: противоположное открывание. Размеры и комплектация меняются у обоих фасадов.':kind.value==='copy'?'Параметры выбранного фасада будут скопированы. Новый фасад редактируется независимо.':'Новый фасад с базовыми параметрами. Затем задайте его размеры и комплектацию.';}
  anchor.onchange=kind.onchange=hint;
- $('#add-facade').onclick=()=>{anchor.replaceChildren(...project.items.map((item,i)=>new Option('№ '+(i+1)+' · '+item.name,item.id)));anchor.value=project.activeId;$('#layout-add-error').textContent='';hint();dialog.showModal();};
+ $('#add-facade').onclick=()=>{anchor.replaceChildren(...project.items.map((item,i)=>new Option('№ '+facadeNumber(item)+' · '+item.name,item.id)));anchor.value=project.activeId;$('#layout-add-error').textContent='';hint();dialog.showModal();};
  if(project.items.some(i=>!i.layout))bake(project.items);
  const originalAdd=project.add.bind(project),originalRemove=project.remove.bind(project);
  project.add=type=>addChecked(project,originalAdd,type);
