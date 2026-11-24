@@ -93,3 +93,19 @@
 @media(max-width:520px){#variants .ds-solution-grid{grid-template-columns:1fr}.led-silhouettes svg{width:44px;height:44px}.led-silhouettes button{font-size:11px}.led-feature-visual img{aspect-ratio:3/2}}
 @media(prefers-reduced-motion:reduce){.led-feature-visual img{transition:none}}
 .led-feature-visual img{height:auto}
+/* Compact marketplace layout: compare several models without scrolling. */
+#variants .ds-section-heading{margin-bottom:20px}
+#variants .led-silhouettes{margin:16px 0 12px}
+#variants .led-silhouettes button{padding:8px 6px;gap:5px}
+#variants .led-silhouettes svg{width:40px;height:40px}
+#variants .ds-solution-grid{grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
+#variants .led-card img{aspect-ratio:4/3;object-fit:contain}
+#variants .led-card>div{padding:12px;gap:8px}
+#variants .led-card h3{font-size:16px;line-height:1.35;min-height:2.7em;margin:0}
+#variants .led-card p{display:none}
+#variants .led-card .led-tag{font-size:11px;padding:3px 7px}
+#variants .led-card .led-pick{font-size:13px;padding-top:5px;min-height:36px}
+#variants .led-results{margin-bottom:16px}
+@media(max-width:1200px){#variants .ds-solution-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:900px){#variants .ds-solution-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:600px){#variants .ds-solution-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}#variants .led-card h3{font-size:14px}#variants .led-card>div{padding:10px}#variants .led-card .led-pick{font-size:12px}}
