@@ -1,0 +1,1 @@
+const {contextBridge,ipcRenderer}=require('electron');contextBridge.exposeInMainWorld('prices',{read:()=>ipcRenderer.invoke('read'),save:d=>ipcRenderer.invoke('save',d),history:()=>ipcRenderer.invoke('history'),restore:n=>ipcRenderer.invoke('restore',n),import:()=>ipcRenderer.invoke('import'),export:d=>ipcRenderer.invoke('export',d)});
