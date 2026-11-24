@@ -1,4 +1,4 @@
-/* Designer prototype: local brief export only, no network submissions. */
+/* Legacy header fallback. The product editor lives in catalog.js. */
 (() => {
   'use strict';
   if (document.querySelector('.agm-standard-header')) return;
@@ -44,16 +44,5 @@
   window.addEventListener('resize',()=>{if(innerWidth>1000)closeMenu();},{passive:true});
   if('ResizeObserver' in window) new ResizeObserver(()=>root.style.setProperty('--header-height',$('.site-header').getBoundingClientRect().height+'px')).observe($('.site-header'));
 
- const form=$('#led-brief');
- document.querySelectorAll('.led-pick').forEach(button=>button.addEventListener('click',()=>{
-   ['variant','kind','light','shape'].forEach(key=>form.elements[key].value=button.dataset[key]);
-   $('#brief-status').textContent='Выбрано: '+button.dataset.variant+'. Параметры можно изменить.';
-   $('#project-brief').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
-   form.elements.variant.focus({preventScroll:true});
- }));
- form.addEventListener('submit',e=>{e.preventDefault();const d=new FormData(form);
- const labels={variant:'За основу',shape:'Форма',kind:'Подсветка',light:'Цвет света',quantity:'Количество',width:'Ширина / диаметр, мм',height:'Высота, мм',control:'Управление',comment:'Комментарий'};
- const text=['ALFAGLASS — зеркало с подсветкой',...Object.entries(labels).map(([k,v])=>v+': '+(d.get(k)||'не указано')),'Дополнительно: '+(d.getAll('extras').join(', ')||'не указано'),'Эскиз приложите отдельно. Данные не отправлены.'].join('\n\n');
- const url=URL.createObjectURL(new Blob(['\uFEFF'+text],{type:'text/plain;charset=utf-8'})); const a=document.createElement('a');a.href=url;a.download='alfaglass-led-mirror.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);$('#brief-status').textContent='Задание подготовлено. Файл сохранён локально; данные не отправлены.';
- });
+
 })();

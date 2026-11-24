@@ -11,10 +11,10 @@ $html = file_get_contents(get_template_directory() . '/agm-led/index.html');
 ob_start(); wp_head(); $head = ob_get_clean();
 ob_start(); wp_body_open(); $body = ob_get_clean();
 ob_start(); wp_footer(); $footer = ob_get_clean();
-echo strtr(strtr($html, ['__AGM_HEADER__'=>$header,'__AGM_SPRITE__'=>$sprite[0]]), [
+echo agm_quote_assets(strtr(strtr($html, ['__AGM_HEADER__'=>$header,'__AGM_SPRITE__'=>$sprite[0]]), [
     '__AGM_ASSETS__'=>esc_url(get_template_directory_uri() . '/agm-homepage'),
     '__AGM_LED__'=>esc_url(get_template_directory_uri() . '/agm-led'),
     '__AGM_DESIGNERS__'=>esc_url(get_template_directory_uri() . '/agm-designers'),
     '__AGM_HOME__'=>esc_url(home_url('/')),
     '__AGM_WP_HEAD__'=>$head,'__AGM_WP_BODY__'=>$body,'__AGM_WP_FOOTER__'=>$footer,
-]);
+]));
