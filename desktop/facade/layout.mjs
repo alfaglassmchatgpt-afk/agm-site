@@ -43,10 +43,13 @@ export function addChecked(project,add,kind,direction='right',gap=3){
  try{while(project.items.some(i=>facadeNumber(i)===String(project.nextId)))project.nextId++;if(project.nextId>999999)throw Error('Достигнут максимальный номер фасада.');const anchor=project.current(),sourcePair=project.partner?.(),sourcePositions=placements(project.items),item=add(kind);
  const added=project.items.filter(i=>!snapshot.items.some(old=>old.id===i.id));
  if(added.length===2&&sourcePair){
+  // Unplaced copies must not act as obstacles through legacy fallback positions.
+  const pending=new Set(added.map(i=>i.id));
+  const place=(item,anchor,direction,gap)=>{pending.delete(item.id);attach(project.items.filter(i=>!pending.has(i.id)),item,anchor,direction,gap);};
   const sources=[anchor,sourcePair].sort((a,b)=>sourcePositions.get(a.id).x-sourcePositions.get(b.id).x),left=added.find(i=>i.copiedFrom===sources[0].id),right=added.find(i=>i.copiedFrom===sources[1].id),lp=sourcePositions.get(sources[0].id),rp=sourcePositions.get(sources[1].id);
-  if(Math.abs(lp.x-rp.x)<1){const sorted=[...sources].sort((a,b)=>sourcePositions.get(b.id).y-sourcePositions.get(a.id).y),top=added.find(i=>i.copiedFrom===sorted[0].id),bottom=added.find(i=>i.copiedFrom===sorted[1].id);if(direction==='below'){attach(project.items,top,sorted[1],direction,gap);attach(project.items,bottom,top,'below',gap);}else if(direction==='above'){attach(project.items,bottom,sorted[0],direction,gap);attach(project.items,top,bottom,'above',gap);}else{attach(project.items,top,sorted[0],direction,gap);attach(project.items,bottom,top,'below',gap);}}
-  else if(direction==='left'){attach(project.items,right,sources[0],'left',gap);attach(project.items,left,right,'left',gap);}
-  else{attach(project.items,left,direction==='right'?sources[1]:sources[0],direction,gap);attach(project.items,right,left,'right',Math.max(0,rp.x-lp.x-lp.w));}
+  if(Math.abs(lp.x-rp.x)<1){const sorted=[...sources].sort((a,b)=>sourcePositions.get(b.id).y-sourcePositions.get(a.id).y),top=added.find(i=>i.copiedFrom===sorted[0].id),bottom=added.find(i=>i.copiedFrom===sorted[1].id);if(direction==='below'){place(top,sorted[1],direction,gap);place(bottom,top,'below',gap);}else if(direction==='above'){place(bottom,sorted[0],direction,gap);place(top,bottom,'above',gap);}else{place(top,sorted[0],direction,gap);place(bottom,top,'below',gap);}}
+  else if(direction==='left'){place(right,sources[0],'left',gap);place(left,right,'left',gap);}
+  else{place(left,direction==='right'?sources[1]:sources[0],direction,gap);place(right,left,'right',Math.max(0,rp.x-lp.x-lp.w));}
   for(const i of added)delete i.copiedFrom;
  }else attach(project.items,item,anchor,direction,gap);const error=layoutLimit(project.items);if(error)throw Error(error);return item;}
  catch(error){Object.assign(project,snapshot);throw error;}
