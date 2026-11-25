@@ -67,6 +67,7 @@
    const invalid=items.find(i=>i.errors.length);if(invalid)throw Error(invalid.title+': '+invalid.errors[0]);
    return groupFacades(items).map(({type,title,summary,data})=>{
     const item={type,title,summary};
+    if(type==='mirror' && data?.led && data.sketch)item.sketch=clone(data.sketch);
     if(type==='material' && data?.shelf){
      if(data.shelf.productKind==='mirror' && data.sketch)item.sketch=clone(data.sketch);
      item.shelf={productKind:data.shelf.productKind==='mirror'?'mirror':'shelf'};
