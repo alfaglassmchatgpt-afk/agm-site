@@ -37,3 +37,16 @@ document.querySelectorAll('[data-model-light]').forEach(button => button.addEven
  card.querySelectorAll('[data-model-light]').forEach(b => b.setAttribute('aria-pressed', String(b === button)));
  if (state !== 'off') card.querySelector('.led-pick').dataset.light = { '3000k':'Тёплый', '4500k':'Нейтральный', '6000k':'Холодный', red:'RGB — красный', orange:'RGB — оранжевый', green:'RGB — зелёный', cyan:'RGB — голубой', blue:'RGB — синий', purple:'RGB — фиолетовый' }[state];
 }));
+
+(() => {
+ const root=document.querySelector('.led-hero-slider'); if(!root)return;
+ const slides=Array.from(root.querySelectorAll('.led-hero-slide'));
+ const pause=root.querySelector('[data-hero-pause]');
+ let index=0, paused=matchMedia('(prefers-reduced-motion: reduce)').matches, timer;
+ function show(n){index=(n+slides.length)%slides.length;slides.forEach((s,i)=>{s.classList.toggle('is-active',i===index);s.setAttribute('aria-hidden',String(i!==index));});root.querySelector('figcaption').textContent=slides[index].dataset.caption;}
+ function schedule(){clearInterval(timer);if(!paused&&!document.hidden)timer=setInterval(()=>show(index+1),5000);pause.textContent=paused?'Воспроизвести':'Пауза';pause.setAttribute('aria-label',paused?'Воспроизвести слайды':'Приостановить слайды');}
+ root.querySelector('[data-hero-prev]').addEventListener('click',()=>{show(index-1);schedule();});
+ root.querySelector('[data-hero-next]').addEventListener('click',()=>{show(index+1);schedule();});
+ pause.addEventListener('click',()=>{paused=!paused;schedule();});
+ document.addEventListener('visibilitychange',schedule);schedule();
+})();
