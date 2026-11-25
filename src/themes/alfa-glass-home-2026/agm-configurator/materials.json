@@ -524,7 +524,7 @@
     "preserveUnknownThickness": true
   },
   "moru-dark-grey-mat": {
-    "title": "Стекло Dark Grey Mat",
+    "title": "Матовое стекло Дарк грей",
     "variants": {
       "standard": "Тонированное в массе тёмно-серое сатинированное"
     },
@@ -608,7 +608,7 @@
     }
   },
   "moru-dark-grey": {
-    "title": "Тонированное стекло Dark Grey",
+    "title": "Тонированное стекло Дарк грей",
     "variants": {
       "standard": "Дарк грей"
     },
@@ -625,10 +625,13 @@
       "polish",
       "grind",
       "drill",
-      "facade"
+      "facade",
+      "temper",
+      "laminate",
+      "paint"
     ],
     "policy": "basic",
-    "note": "Специальные обработки включаются после подтверждения для этого материала."
+    "note": "Прозрачное тонированное в массе стекло. Формат листа 3210 × 2250 мм."
   },
   "moru-bronze": {
     "title": "Тонированное стекло Бронза",
@@ -939,10 +942,16 @@
       "polish",
       "grind",
       "drill",
-      "facade"
+      "facade",
+      "temper",
+      "paint",
+      "film",
+      "laminate",
+      "bevel"
     ],
     "policy": "basic",
-    "note": "Специальные обработки включаются после подтверждения для этого материала."
+    "note": "Лист 3210 × 2250 мм. Параметры и сочетания согласуем по толщине, размерам, стороне покрытия и чертежу.",
+    "preserveUnknownThickness": false
   },
   "steklo-lacobel": {
     "title": "Стекло Lacobel",
@@ -961,7 +970,8 @@
       "facade"
     ],
     "policy": "painted",
-    "note": "Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы."
+    "note": "Толщина 4 мм. Формат листа 3210 × 2250 мм. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+    "preserveUnknownThickness": true
   },
   "steklo-matelak": {
     "title": "Стекло Matelac",
@@ -980,7 +990,8 @@
       "facade"
     ],
     "policy": "painted",
-    "note": "Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы."
+    "note": "Толщина 4 мм. Формат листа 3210 × 2250 мм. Обычные Lacobel/Matelac не предназначены для закалки и триплексования. Версии T — отдельные материалы.",
+    "preserveUnknownThickness": true
   },
   "dihroichnoe-steklo": {
     "title": "Дихроичное стекло, купить в Москве",
@@ -997,11 +1008,18 @@
       "shape",
       "polish",
       "grind",
+      "bevel",
       "drill",
+      "film",
+      "sandblast",
+      "laminate",
+      "temper",
+      "paint",
+      "frame",
       "facade"
     ],
     "policy": "basic",
-    "note": "Специальные обработки включаются после подтверждения для этого материала."
+    "note": "Лист 3210 × 2250 мм. Параметры и сочетания обработок согласуем по толщине стекла, размерам изделия и чертежу."
   },
   "steklo-osvetlyonnoe-clearvision": {
     "title": "Стекло осветлённое Extra Clear, Optiwhite",
@@ -1105,7 +1123,7 @@
     "note": "Закалка готового зеркала недоступна."
   },
   "zerkalo-gezella": {
-    "title": "Двухстороннее зеркало",
+    "title": "Зеркало двухстороннее",
     "variants": {
       "chrome_plus": "Mirropane Chrome Plus · 0,1%",
       "chrome": "Mirropane Chrome · 2%",
@@ -1129,7 +1147,7 @@
       "frame"
     ],
     "policy": "mirror",
-    "note": "Закалка готового зеркала недоступна."
+    "note": "Стекло с зеркальным покрытием на одной стороне. Формат листа 3210 × 2250 мм. Наличие исполнения, монтаж и специальные обработки согласуем по проекту."
   },
   "moru-crystal": {
     "title": "Рифлёное стекло MORU CRYSTAL",
@@ -2246,6 +2264,63 @@
     "policy": "basic",
     "note": "Лист 3210 × 2250 мм. Параметры и сочетания согласуем по толщине, размерам, стороне покрытия и чертежу.",
     "preserveUnknownThickness": false
+  },
+  "craft-moru-bronze-mat": {
+    "title": "Мору бронзовое матовое · Крафтовый триплекс",
+    "variants": {
+      "standard": "MORU Ultra 4 мм + плоское матовое бронзовое стекло 4 мм"
+    },
+    "thicknesses": [
+      "8"
+    ],
+    "operations": [
+      "drill"
+    ],
+    "policy": "craft",
+    "fixedComposition": true,
+    "maxSize": {
+      "width": 1400,
+      "height": 2900
+    },
+    "note": "Готовая комбинация 4 + 4 мм. Формат 2900 × 1400 мм; рифление вдоль высоты. Укажите размер изделия, наличие отверстий и технологических вырезов; расположение — по эскизу."
+  },
+  "craft-moru-grey-mat": {
+    "title": "Мору серое матовое · Крафтовый триплекс",
+    "variants": {
+      "standard": "MORU Ultra 4 мм + плоское матовое серое стекло 4 мм"
+    },
+    "thicknesses": [
+      "8"
+    ],
+    "operations": [
+      "drill"
+    ],
+    "policy": "craft",
+    "fixedComposition": true,
+    "maxSize": {
+      "width": 1400,
+      "height": 2900
+    },
+    "note": "Готовая комбинация 4 + 4 мм. Формат 2900 × 1400 мм; рифление вдоль высоты. Укажите размер изделия, наличие отверстий и технологических вырезов; расположение — по эскизу."
+  },
+  "craft-moru-dark-grey-mat": {
+    "title": "Мору Dark Gray матовое · Крафтовый триплекс",
+    "variants": {
+      "standard": "MORU Ultra 4 мм + плоское матовое тёмно-серое стекло 4 мм"
+    },
+    "thicknesses": [
+      "8"
+    ],
+    "operations": [
+      "drill"
+    ],
+    "policy": "craft",
+    "fixedComposition": true,
+    "maxSize": {
+      "width": 1400,
+      "height": 2900
+    },
+    "note": "Готовая комбинация 4 + 4 мм. Формат 2900 × 1400 мм; рифление вдоль высоты. Укажите размер изделия, наличие отверстий и технологических вырезов; расположение — по эскизу."
   },
   "matovoe-zerkalo-clear": {
     "title": "Матовое зеркало серебро — Matelac Silver Clear",
