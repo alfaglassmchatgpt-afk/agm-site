@@ -1,4 +1,4 @@
-import {placements,bounds,badge,installLayout,facadeNumber,drawLinks} from './layout-ui.js?v=layout-20261124-2';
+import {placements,bounds,badge,installLayout,facadeNumber,drawLinks} from './layout-ui.js?v=20261125-controls';
 import {connectFacadeQuote,facadeEntry} from './quote.js?v=layout-20261124';
 import * as T from 'three';
 import {OrbitControls} from './vendor/OrbitControls.js';
@@ -216,8 +216,12 @@ $('#custom-hinge').oninput=e=>{s.customHinge=e.target.value;update();};
 $('#count').onchange=e=>{s.hinges=Array(+e.target.value).fill(0);if(!s.hinges.length)s.hinge='none';else if(s.hinge==='none')s.hinge=hingeOptions(s)[0];even();controls();};function even(){const n=s.hinges.length;s.hinges=s.hinges.map((_,i)=>Math.round(100+i*(s.h-200)/Math.max(1,n-1)));hingeFields();update();}$('#even').onclick=even;
 $('#handle').onchange=e=>{s.handle=e.target.checked;if(s.handle&&!['00','21','25'].includes(s.color))s.color='00';controls();update();if(s.view==='profile')fit();};$('#mask').onchange=e=>{s.mask=e.target.checked;update();};
 document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>{s.view=b.dataset.view;productRotation.identity();document.querySelectorAll('[data-view]').forEach(t=>t.classList.toggle('active',t===b));$('#drawing').toggleAttribute('hidden',s.view!=='drawing');$('#scene').style.visibility=s.view==='drawing'?'hidden':'visible';$('#gesture').textContent=s.view==='drawing'?'Перемещайте синие точки · координаты в миллиметрах':s.view==='profile'?'Вращайте образец · Shift/Ctrl + мышь — поворот изделия':'Shift/Ctrl + мышь — вращать изделие · мышь — камера · ПКМ — сдвиг · колесо — масштаб';update();fit();});$('#reset').onclick=()=>{productRotation.identity();productGroup?.quaternion.identity();fit();};
-$('#photobox-toggle').onclick=()=>{showPhotobox=!showPhotobox;$('#photobox-toggle').setAttribute('aria-pressed',String(showPhotobox));build();};
-for(const [id,kind] of [['sample-cabinet','books'],['kitchen-cabinet','kitchen']])$('#'+id).onclick=()=>{showSampleCabinet=showSampleCabinet===kind?false:kind;$('#sample-cabinet').setAttribute('aria-pressed',String(showSampleCabinet==='books'));$('#kitchen-cabinet').setAttribute('aria-pressed',String(showSampleCabinet==='kitchen'));build();};
+function selectScene(kind){
+ showPhotobox=kind==='photobox';showSampleCabinet=['books','kitchen'].includes(kind)?kind:false;
+ for(const [id,value] of [['projection-scene','projection'],['sample-cabinet','books'],['kitchen-cabinet','kitchen'],['photobox-toggle','photobox']]){const button=$('#'+id);button.setAttribute('aria-pressed',String(kind===value));button.classList.toggle('active',kind===value);}
+ build();
+}
+for(const [id,kind] of [['projection-scene','projection'],['sample-cabinet','books'],['kitchen-cabinet','kitchen'],['photobox-toggle','photobox']])$('#'+id).onclick=()=>selectScene(kind);
 function confirmationControls(){
  const valid=!project.items.some(item=>validate(item.config).errors.length),confirmed=confirmation.check(project.items,valid);
  $('#confirm-project').disabled=!valid||confirmed;$('#send-project').disabled=!confirmed;

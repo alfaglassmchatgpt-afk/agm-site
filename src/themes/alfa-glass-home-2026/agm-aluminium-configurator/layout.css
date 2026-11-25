@@ -5,3 +5,16 @@
 @media(min-width:901px){.preview-col{top:12px}.preview-card .view{height:clamp(300px,calc(100dvh - 310px),560px)}}
 
 .preview-card .project-fields .facade-number-field{flex:0 0 90px;min-width:90px}#facade-number-error{color:#d06d26;font-size:13px;margin:6px 0}#facade-number-error:empty{display:none}
+
+/* Compact facade identity and centered display controls. */
+.preview-card .project-fields .facade-number-field{flex:0 0 72px;min-width:72px}
+#facade-number{padding-inline:8px;appearance:textfield}#facade-number::-webkit-inner-spin-button{appearance:none}
+.preview-card .project-fields .facade-name-field{flex:0 1 35%;min-width:160px;margin-right:auto}
+.preview-card .toolbar{justify-content:center;flex-wrap:wrap;position:relative;padding-inline:48px;gap:10px}
+.model-display-label{font-size:13px;color:var(--muted)}.preview-card .toolbar #reset{position:absolute;right:12px}
+.preview-card .tabs{justify-content:center;flex-wrap:wrap}
+.environment-panel{text-align:center}.environment-buttons{justify-content:center}
+#environment-label{font-size:13px}
+.view-display-options{position:absolute;top:12px;left:50%;transform:translateX(-50%);z-index:5;display:flex;align-items:center;justify-content:center;gap:14px;padding:8px 12px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);max-width:calc(100% - 24px);font-size:12px;box-shadow:0 2px 10px #0001}
+.view-display-options label{display:flex;align-items:center;gap:6px;white-space:nowrap;cursor:pointer}.view-display-options input{margin:0;accent-color:var(--blue)}
+@media(max-width:650px){.preview-card .project-fields{flex-direction:row}.preview-card .project-fields .facade-name-field{flex:1;min-width:140px}.preview-card .toolbar{padding:12px 42px 12px 12px}.model-display-label{width:100%;text-align:center}.view-display-options{gap:8px;flex-wrap:wrap;font-size:11px}.view-tag{top:70px}}

@@ -11,6 +11,7 @@ export function installLayout({project,state,activate,update,fit,saveProject,T,c
  $('#facade-name').oninput=event=>{renameLinked(project,project.current(),event.target.value);update();saveProject();};
  const toolbar=$('.desktop-tools');if(toolbar)new ResizeObserver(()=>document.documentElement.style.setProperty('--desktop-toolbar-height',toolbar.getBoundingClientRect().height+'px')).observe(toolbar);
  const panel=document.createElement('div');panel.className='layout-controls compact';panel.innerHTML='<label><input id="layout-numbers" type="checkbox" checked> Номера фасадов</label><label><input id="layout-show-links" type="checkbox" checked> Отображение связей</label><span>Нажмите на фасад или номер, чтобы выбрать его.</span><p id="layout-warning" role="status"></p><p id="layout-links"></p>';bar.append(panel);
+ const overlay=document.createElement('div');overlay.className='view-display-options';$('#view').append(overlay);panel.querySelectorAll('label').forEach(label=>overlay.append(label));
  const toggle=$('#layout-numbers');toggle.checked=localStorage.getItem('rf-layout-numbers')!=='false';toggle.onchange=()=>{localStorage.setItem('rf-layout-numbers',String(toggle.checked));update();};
  const linksToggle=$('#layout-show-links');linksToggle.checked=localStorage.getItem('rf-layout-links')!=='false';linksToggle.onchange=()=>{localStorage.setItem('rf-layout-links',String(linksToggle.checked));update();};
  const dialog=$('#add-dialog');dialog.querySelector('.add-options').hidden=true;
