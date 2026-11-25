@@ -15,6 +15,6 @@
 .preview-card .tabs{justify-content:center;flex-wrap:wrap}
 .environment-panel{text-align:center}.environment-buttons{justify-content:center}
 #environment-label{font-size:13px}
-.view-display-options{position:absolute;top:12px;left:50%;transform:translateX(-50%);z-index:5;display:flex;align-items:center;justify-content:center;gap:14px;padding:8px 12px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);max-width:calc(100% - 24px);font-size:12px;box-shadow:0 2px 10px #0001}
+.view-display-options{position:absolute;top:12px;left:50%;transform:translateX(-50%);z-index:5;display:flex;align-items:center;justify-content:center;gap:14px;padding:8px 12px;border:0;background:transparent;color:#34474e;max-width:calc(100% - 24px);font-size:12px;box-shadow:none}
 .view-display-options label{display:flex;align-items:center;gap:6px;white-space:nowrap;cursor:pointer}.view-display-options input{margin:0;accent-color:var(--blue)}
 @media(max-width:650px){.preview-card .project-fields{flex-direction:row}.preview-card .project-fields .facade-name-field{flex:1;min-width:140px}.preview-card .toolbar{padding:12px 42px 12px 12px}.model-display-label{width:100%;text-align:center}.view-display-options{gap:8px;flex-wrap:wrap;font-size:11px}.view-tag{top:70px}}
