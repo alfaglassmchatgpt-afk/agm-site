@@ -28,3 +28,12 @@
   }));
   power.addEventListener('click', () => { on = !on; render(); });
 })();
+// Authored render variants: changing light updates both image and quote preference.
+document.querySelectorAll('[data-model-light]').forEach(button => button.addEventListener('click', () => {
+ const card = button.closest('.led-card'), state = button.dataset.modelLight;
+ const img = card.querySelector('img');
+ img.src = img.src.replace(/-(3000k|4500k|6000k|off)\.jpg$/, '-' + state + '.jpg');
+ card.querySelector('a').href = img.src;
+ card.querySelectorAll('[data-model-light]').forEach(b => b.setAttribute('aria-pressed', String(b === button)));
+ if (state !== 'off') card.querySelector('.led-pick').dataset.light = { '3000k':'Тёплый', '4500k':'Нейтральный', '6000k':'Холодный' }[state];
+}));
