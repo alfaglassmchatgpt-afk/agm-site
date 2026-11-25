@@ -32,8 +32,8 @@
 document.querySelectorAll('[data-model-light]').forEach(button => button.addEventListener('click', () => {
  const card = button.closest('.led-card'), state = button.dataset.modelLight;
  const img = card.querySelector('img');
- img.src = img.src.replace(/-(3000k|4500k|6000k|off)\.jpg$/, '-' + state + '.jpg');
+ img.src = img.src.replace(/-(3000k|4500k|6000k|off|red|orange|green|cyan|blue|purple)\.(jpg|png)$/, '-' + state + '.$2');
  card.querySelector('a').href = img.src;
  card.querySelectorAll('[data-model-light]').forEach(b => b.setAttribute('aria-pressed', String(b === button)));
- if (state !== 'off') card.querySelector('.led-pick').dataset.light = { '3000k':'Тёплый', '4500k':'Нейтральный', '6000k':'Холодный' }[state];
+ if (state !== 'off') card.querySelector('.led-pick').dataset.light = { '3000k':'Тёплый', '4500k':'Нейтральный', '6000k':'Холодный', red:'RGB — красный', orange:'RGB — оранжевый', green:'RGB — зелёный', cyan:'RGB — голубой', blue:'RGB — синий', purple:'RGB — фиолетовый' }[state];
 }));
