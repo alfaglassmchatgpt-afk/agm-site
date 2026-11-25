@@ -4,7 +4,7 @@ defined('ABSPATH') || exit;
 
 function agm_material_groups() {
     return [
-        'zerkala' => ['title' => 'Зеркала', 'slugs' => ['zerkalo-serebro', 'zerkalo-osvetlyonnoe', 'tonirovannye-zerkala', 'zerkalo-gezella']],
+        'zerkala' => ['title' => 'Зеркала', 'slugs' => ['zerkalo-serebro', 'zerkalo-osvetlyonnoe', 'tonirovannye-zerkala', 'zerkalo-gezella', 'matovoe-zerkalo-clear', 'matovoe-zerkalo-crystalvision', 'matovoe-zerkalo-bronze', 'matovoe-zerkalo-grey']],
         'riflenoe-steklo' => ['title' => 'Рифлёное стекло', 'slugs' => ['moru-magnetron-bronze', 'moru-magnetron-grey', 'flutelite-s', 'estriado', 'estriado-crystal', 'estriado-ultra', 'riflenoe-steklo-flutes', 'moru-crystal', 'moru-ultra', 'moru-bronze-toned', 'moru-grey', 'raywall90', 'raywall', 'vison-sun', 'flutes-moru-bronze', 'flutes-moru-ultra', 'flutes-moru-grey', 'flutes-moru-grey-mat', 'flutes-moru-bronze-mat', 'flutes-moru-ultra-mat', 'tonirovannoe-v-masse-steklo-moru']],
         'sostarennye-zerkala' => ['title' => 'Состаренные зеркала', 'slugs' => ['sostarennye-zerkala', 'sostarennye-zerkala-k1']],
         'tonirovannoe-steklo' => ['title' => 'Тонированное стекло', 'slugs' => ['moru-dark-grey', 'moru-bronze', 'moru-bronze-mat', 'moru-grey-mat', 'moru-dark-grey-mat']],
@@ -75,6 +75,7 @@ function agm_material_catalog_render($html) {
     foreach ($groups as $key => $group) {
         $out .= '<section class="gc-material-group" data-group="' . esc_attr($key) . '"' . ($selected === $key ? '' : ' hidden') . '>' . ($selected === $key ? '' : '<h2>' . esc_html($group['title']) . '</h2>') . '<div class="gc-grid">';
         foreach ($group['pages'] as $page) {
+            if ($page->post_name === 'matovoe-zerkalo-clear') { $out .= '</div><h2>Матовые зеркала Matelac Silver</h2><div class="gc-grid">'; }
             $card = $cards[$page->post_name] ?? '<a class="gc-card" data-material-card href="' . esc_url(get_permalink($page)) . '"><div><h3>' . esc_html($page->post_title) . '</h3><strong>Выбрать материал →</strong></div></a>';
             if ($page->post_name === 'tonirovannye-zerkala') { $card = agm_tinted_cascade_card(get_permalink($page)); }
             $card = preg_replace('/ data-groups="[^"]*"/', '', $card);

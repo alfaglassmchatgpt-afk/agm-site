@@ -117,7 +117,7 @@
     const i=active(), selection=onThisPage(i)?i:nextDraft;
     const profile=materials[i?.material||current];
     $('#unknown').closest('label').hidden=!i?.unknown||profile.policy==='craft';
-    $('#width').max=profile.maxSize?.width||10000;$('#height').max=profile.maxSize?.height||10000;
+    $('#width').max=profile.sheetSize?Math.max(profile.sheetSize.width,profile.sheetSize.height):(profile.maxSize?.width||10000);$('#height').max=profile.sheetSize?Math.max(profile.sheetSize.width,profile.sheetSize.height):(profile.maxSize?.height||10000);
     if(i){$('#width').value=i.width;$('#height').value=i.height;$('#quantity').value=i.quantity;$('#unknown').checked=i.unknown;$('#width').disabled=i.unknown;$('#height').disabled=i.unknown;$('#item-note').value=i.note;$('#active-item-label').textContent=draft?'Новое изделие':'Параметры изделия '+(state.items.indexOf(i)+1);}
     if(mirrorPage){$$('input[name=base]').forEach(r=>r.checked=r.value===selection.base);$$('input[name=thickness]').forEach(r=>{r.checked=r.value===selection.thickness;r.disabled=!AGMOrderModel.thicknesses(materials[current],selection.base).includes(r.value);});$('#variant-note').textContent=materialName(selection)+': '+baseName(selection)+', '+thicknessName(selection)+'.'+(i&&!onThisPage(i)?' В расчёте выбрано изделие другого материала. Нажмите «Добавить ещё изделие», чтобы добавить этот вариант.':'');$('#add-material').textContent=i?'Добавить ещё изделие →':'Добавить к расчёту →';}
     document.dispatchEvent(new CustomEvent('agm:selectionchange',{detail:{material:current,base:selection.base}}));

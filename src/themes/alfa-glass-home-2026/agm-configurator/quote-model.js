@@ -22,6 +22,7 @@ function mirrorError(i){if(i.shape==='Прямоугольник'&&!['3','8','15
   if(!Number.isInteger(Number(i.quantity))||Number(i.quantity)<1||Number(i.quantity)>9999)errors.push('Укажите количество от 1 до 9999.');
   if(i.unknown||!AGMOrderModel.wholeMillimetres(i.width)||!AGMOrderModel.wholeMillimetres(i.height)||Number(i.width)>10000||Number(i.height)>10000)errors.push('Укажите ширину и высоту целыми числами от 1 до 10000 мм.');
   if(m.maxSize&&(i.unknown||!AGMOrderModel.wholeMillimetres(i.width)||!AGMOrderModel.wholeMillimetres(i.height)||Number(i.width)>m.maxSize.width||Number(i.height)>m.maxSize.height))errors.push('Допустимый формат: до '+m.maxSize.width+' × '+m.maxSize.height+' мм; направление рисунка сохраняется.');
+  if(m.sheetSize&&(Math.max(+i.width,+i.height)>Math.max(m.sheetSize.width,m.sheetSize.height)||Math.min(+i.width,+i.height)>Math.min(m.sheetSize.width,m.sheetSize.height)))errors.push('Размер превышает формат листа '+m.sheetSize.width+' × '+m.sheetSize.height+' мм (с поворотом).');
   const extra=[];
   if(i.delivery){
    const address=(i.deliveryAddress||'').trim();

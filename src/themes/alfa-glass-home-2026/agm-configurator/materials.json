@@ -2246,5 +2246,97 @@
     "policy": "basic",
     "note": "Лист 3210 × 2250 мм. Параметры и сочетания согласуем по толщине, размерам, стороне покрытия и чертежу.",
     "preserveUnknownThickness": false
+  },
+  "matovoe-zerkalo-clear": {
+    "title": "Матовое зеркало серебро — Matelac Silver Clear",
+    "variants": {
+      "clear": "Silver Clear"
+    },
+    "thicknesses": [
+      "4"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "frame"
+    ],
+    "policy": "mirror",
+    "sheetSize": {
+      "width": 3210,
+      "height": 2250
+    },
+    "note": "Матовое зеркало, 4 мм. Лист 3210 × 2250 мм. Закалка недоступна. Размер готового изделия и обработку согласуем при расчёте."
+  },
+  "matovoe-zerkalo-crystalvision": {
+    "title": "Матовое зеркало осветлённое — Matelac Silver Crystalvision",
+    "variants": {
+      "crystalvision": "Silver Crystalvision"
+    },
+    "thicknesses": [
+      "4"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "frame"
+    ],
+    "policy": "mirror",
+    "sheetSize": {
+      "width": 3210,
+      "height": 2250
+    },
+    "note": "Матовое зеркало, 4 мм. Лист 3210 × 2250 мм. Закалка недоступна. Размер готового изделия и обработку согласуем при расчёте."
+  },
+  "matovoe-zerkalo-bronze": {
+    "title": "Матовое зеркало бронза — Matelac Silver Bronze",
+    "variants": {
+      "bronze": "Silver Bronze"
+    },
+    "thicknesses": [
+      "4"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "frame"
+    ],
+    "policy": "mirror",
+    "sheetSize": {
+      "width": 3210,
+      "height": 2250
+    },
+    "note": "Матовое зеркало, 4 мм. Лист 3210 × 2250 мм. Закалка недоступна. Размер готового изделия и обработку согласуем при расчёте."
+  },
+  "matovoe-zerkalo-grey": {
+    "title": "Матовое зеркало графит — Matelac Silver Grey",
+    "variants": {
+      "grey": "Silver Grey"
+    },
+    "thicknesses": [
+      "4"
+    ],
+    "operations": [
+      "cut",
+      "shape",
+      "polish",
+      "grind",
+      "drill",
+      "frame"
+    ],
+    "policy": "mirror",
+    "sheetSize": {
+      "width": 3210,
+      "height": 2250
+    },
+    "note": "Матовое зеркало, 4 мм. Лист 3210 × 2250 мм. Закалка недоступна. Размер готового изделия и обработку согласуем при расчёте."
   }
 }
