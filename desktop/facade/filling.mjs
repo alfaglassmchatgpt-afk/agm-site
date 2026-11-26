@@ -26,3 +26,11 @@ export function syncLinkedFillings(items,choices,overrides={},change=null){
  if(change){delete overrides[change.id+':'+change.key];if(change.key==='glass')delete overrides[change.id+':film'];}
  return choices;
 }
+
+export function removableFilm(material,glass){
+ const required=!!material&&(/stopsol|стопсол|напылени/i.test(material.name)||material.removableFilm===true);
+ if(!required)return {required:false,price:0,note:''};
+ const row=glass.items.find(x=>x.kind==='service'&&x.enabled&&/быстрос[ъь]?ем|быстросъём/i.test(x.name));
+ const price=row&&Number.isSafeInteger(row.priceKopecks)&&row.priceKopecks>=0?row.priceKopecks/100:null;
+ return {required:true,price,note:price===null?'Б/с плёнка: ставка не найдена в прайсе':'б/с плёнка учтена'};
+}

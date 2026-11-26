@@ -9,14 +9,14 @@ export async function installDesktop({project,state,activate,update,validate,fac
  $('.desktop-tools').after(metadata);
  let meta=JSON.parse(localStorage.getItem('alfa-desktop-meta')||'{}');$('#desktop-customer').value=meta.customer||'';$('#desktop-comment').value=meta.comment||'';
  metadata.oninput=()=>{meta={customer:$('#desktop-customer').value,comment:$('#desktop-comment').value};localStorage.setItem('alfa-desktop-meta',JSON.stringify(meta));};
- const components=document.createElement('section');components.className='desktop-components';components.innerHTML='<h2>Комплектующие и обработка</h2><label>Цвет уплотнителя<select id="seal-color"><option>Уточнить</option><option>Чёрный</option><option>Серый</option><option>Прозрачный</option></select></label><label>Запас уплотнителя, мм на фасад<input id="seal-extra" type="number" min="0" max="10000" step="1" value="0"></label><label>Дополнительные работы / присадки<textarea id="extra-work" maxlength="1000" rows="3"></textarea></label><small>Типы уголков, уплотнителя и крепежа определяются по серии MODUS. Расход уплотнителя — по периметру стекла плюс указанный запас. Артикулы винтов и расход клея требуют проверки по комплектации поставщика. Стоимость и ручные цены — в разделе расчёта ниже.</small>';
+ const components=document.createElement('section');components.className='desktop-components';components.innerHTML='<h2>Уплотнитель</h2><label>Цвет уплотнителя<select id="seal-color"><option>Уточнить</option><option>Чёрный</option><option>Серый</option><option>Прозрачный</option></select></label>';
  $('aside').append(components);
  document.addEventListener('rf-facade-activated',()=>sync());
- function sync(){const c=project.current().config;$('#seal-color').value=c.sealColor||'Уточнить';$('#seal-extra').value=c.sealExtra||0;$('#extra-work').value=c.extraWork||'';}
- components.oninput=()=>{const extra=Number($('#seal-extra').value);if(!Number.isInteger(extra)||extra<0||extra>10000){status('Запас: целое число от 0 до 10000 мм');return;}Object.assign(state,{sealColor:$('#seal-color').value,sealExtra:extra,extraWork:$('#extra-work').value});update();};
+ function sync(){const c=project.current().config;$('#seal-color').value=c.sealColor||'Уточнить';}
+ components.oninput=()=>{Object.assign(state,{sealColor:$('#seal-color').value});update();};
  $('#facade-select').addEventListener('change',sync);for(const id of ['add-new','add-copy','add-mirror','remove-facade','undo-remove'])$('#'+id).addEventListener('click',sync);sync();
  const pricing=await installPricing(project,type=>{if(type==='auto')return;if(type==='none'){state.hinge='none';state.hinges=[];}else{if(!state.hinges.length)state.hinges=[100,state.h-100];const desired=type==='mf20'?'mf20':type==='cup35'?'cup':type==='blum'?'blum':'custom';state.hinge=hingeOptions(state).includes(desired)?desired:'custom';state.customHinge=drillingTypes.find(x=>x.id===type)?.name||'';}controls();update();});$('#desktop-pricing').onclick=()=>document.querySelector('.rf-pricing').scrollIntoView({behavior:'smooth'});
- const payload=()=>({format:'alfaglass-facade-project',schemaVersion:1,appVersion:'0.1.17',catalogRevision:'MODUS-63-72',pricing:pricing.snapshot(),meta,items:structuredClone(project.items),activeId:project.activeId,nextId:project.nextId});
+ const payload=()=>({format:'alfaglass-facade-project',schemaVersion:1,appVersion:'0.1.18',catalogRevision:'MODUS-63-72',pricing:pricing.snapshot(),meta,items:structuredClone(project.items),activeId:project.activeId,nextId:project.nextId});
  async function run(fn){try{status('');await fn();}catch(e){status(e.message);}}
  $('#desktop-save').onclick=()=>run(async()=>{project.update(state);const r=await api.save(payload());status(r?'Проект сохранён: '+r:'Сохранение отменено.');});
  $('#export').onclick=$('#desktop-save').onclick;
@@ -25,5 +25,5 @@ export async function installDesktop({project,state,activate,update,validate,fac
  async function report(kind){project.update(state);const errors=project.items.flatMap(i=>validate(i.config).errors.map(e=>i.name+': '+e));if(errors.length)throw Error(errors.join('\n'));await api.report(payload(),kind);status('Документ открыт. Доступны печать и сохранение PDF.');}
  $('#desktop-client').onclick=()=>run(()=>report('client'));$('#desktop-production').onclick=()=>run(()=>report('production'));$('#send-project').onclick=$('#desktop-client').onclick;
  $('#desktop-update').onclick=()=>api.updates();$('#desktop-catalog').onclick=()=>api.catalog();
- status('Офлайн-версия 0.1.17 · проекты сохраняются на вашем компьютере · расчёт по локальным прайсам');
+ status('Офлайн-версия 0.1.18 · проекты сохраняются на вашем компьютере · расчёт по локальным прайсам');
 }

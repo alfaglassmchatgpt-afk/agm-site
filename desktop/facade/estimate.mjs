@@ -1,3 +1,4 @@
+import {removableFilm} from './filling.mjs';
 import {edgeService,syncLinkedFillings} from './filling.mjs';
 import {drillingService} from './drilling.mjs';
 import {profiles,glassCut} from './data.js';
@@ -31,7 +32,8 @@ export function estimate(items,catalog,settings,overrides={},choices={}){
   add(prefix+':packing',item.name+' · картон',c.w*c.h/1e6,'м²',rate(rules.packagingCode));
   if(c.glass!=='none'){
    const code=choice.glass||catalog.materialMap?.[c.glass],material=catalog.glass.items.find(x=>x.code===code&&x.enabled&&x.kind==='material');
-   add(prefix+':glass',item.name+' · '+(material?.name||'Наполнение — выберите строку прайса'),area,'м²',material?.priceKopecks==null?null:material.priceKopecks/100);
+   const protection=removableFilm(material,catalog.glass);
+   add(prefix+':glass',item.name+' · '+(material?.name||'Наполнение — выберите строку прайса'),area,'м²',material?.priceKopecks==null||protection.price===null?null:material.priceKopecks/100+protection.price,protection.note);
    add(prefix+':cutting',item.name+' · резка наполнения',perimeter,'м',rate(choice.cutting||rules.cuttingCode));
    if(/зеркало|мателак.*сильвер/i.test(material?.name||''))add(prefix+':film',item.name+' · защитная плёнка 80 мкм',area,'м²',rate(rules.filmCode));
    const edging=edgeService(choice.edge,catalog.glass);if(edging.type!=='none')add(prefix+':edge',item.name+' · '+edging.name,perimeter,'м',edging.price,edging.price==null?'Ставка не найдена в прайсе; укажите конечную цену вручную':'По периметру наполнения');
