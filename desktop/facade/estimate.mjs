@@ -20,8 +20,10 @@ export function estimate(items,catalog,settings,overrides={},choices={}){
   add(prefix+':corner',item.name+' · '+(corner?.name||'Уголки'),p.series==='MF-20'?1:4,p.series==='MF-20'?'компл.':'шт.',corner?stockCost(corner)*rules.materialFactor:null,'Винты входят в комплект уголков; отдельно не начисляются');
   if(c.glass!=='none'&&!['10','12'].includes(p.id)){const sealId=['07','17'].includes(p.id)?'facade-261':c.sealColor==='Чёрный'?'facade-260':c.sealColor==='Серый'?'facade-259':c.sealColor==='Прозрачный'?'facade-258':null,seal=find(sealId);
    add(prefix+':seal',item.name+' · уплотнитель',perimeter+(c.sealExtra||0)/1000,'м',seal?stockCost(seal)*rules.materialFactor:null,seal?.name||'Выберите цвет уплотнителя');}
-  if(c.hinges.length){const auto=c.hinge==='mf20'?'hinge-7':c.hinge==='mzf'?'hinge-23':null,h=find(choice.hinge||auto);
-   add(prefix+':hinges',item.name+' · '+(h?.name||'Петли — выберите модель'),c.hinges.length,'шт.',h?stockCost(h)/h.pack*rules.hingeFactor:null,'Цена комплекта поделена на '+(h?.pack||1));
+  const hingeQuantity=choice.hinge==='none'?0:choice.hingeQuantity??c.hinges.length;
+  if(!Number.isInteger(hingeQuantity)||hingeQuantity<0||hingeQuantity>100)throw Error('Количество петель: целое число от 0 до 100');
+  if(hingeQuantity){const auto=c.hinge==='mf20'?'hinge-7':c.hinge==='mzf'?'hinge-23':null,h=find(choice.hinge||auto);
+   add(prefix+':hinges',item.name+' · '+(h?.name||'Петли — выберите модель'),hingeQuantity,'шт.',h?stockCost(h)/h.pack*rules.hingeFactor:null,'Цена комплекта поделена на '+(h?.pack||1));
 
   }
   const drill=drillingService(choice,c,rules);if(drill.quantity)add(prefix+':drilling',item.name+' · '+drill.name,drill.quantity,'шт.',drill.price);

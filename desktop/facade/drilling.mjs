@@ -16,6 +16,7 @@ export const drillingTypes=[
  ['sensys8661','Присадка под петлю Sensys 8661']
 ].map(([id,name,special=false])=>({id,name,special}));
 export function drillingService(choice,config,rules){
+ if(choice.drillingType==='none')return {name:'Без присадок',quantity:0,price:0};
  const type=drillingTypes.find(t=>t.id===choice.drillingType);
  const quantity=choice.drillingQuantity??config.hinges.length;
  if(!Number.isInteger(quantity)||quantity<0||quantity>100)throw Error('Количество присадок: целое число от 0 до 100');

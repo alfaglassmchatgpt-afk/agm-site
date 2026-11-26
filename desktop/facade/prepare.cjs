@@ -20,7 +20,7 @@ html=html.replace('</head>','<link rel="stylesheet" href="desktop.css"><link rel
 html=html.replace('Добавить в мой расчёт','Документ для клиента').replace('Скачать проект ↓','Сохранить проект').replace(/<strong>Дальше — в «Мой расчёт»<\/strong>/,'<strong>Проект сохраняется на этом компьютере</strong>');
 html=html.replace(/<dialog id="al-request"[\s\S]*?<\/dialog>/,'');
 fs.writeFileSync(path.join(dest,'index.html'),html);
-const app=path.join(dest,'app.js');fs.appendFileSync(app,"\nconst {installDesktop}=await import('./desktop-adapter.js');installDesktop({project,state:s,activate,update,validate,facadeEntry});\n");
+const app=path.join(dest,'app.js');fs.appendFileSync(app,"\nconst {installDesktop}=await import('./desktop-adapter.js');installDesktop({project,state:s,activate,update,validate,facadeEntry,controls});\n");
 // Shared source already includes the layout integration.
 for(const f of ['desktop-boot.js','desktop-adapter.js','desktop.css','layout.mjs','pricing.mjs','estimate.mjs','pricing-ui.js','glass-prices.mjs','drilling.mjs','pricing-view.mjs','filling.mjs'])fs.copyFileSync(path.join(__dirname,f),path.join(dest,f));
 fs.copyFileSync(path.join(root,'.local/modus-mz/fasadnye-profili.pdf'),path.join(out,'modus.pdf'));

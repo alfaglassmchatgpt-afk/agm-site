@@ -1,5 +1,7 @@
+import {drillingTypes} from './drilling.mjs';
+import {hingeOptions} from './data.js';
 import {installPricing} from './pricing-ui.js';
-export async function installDesktop({project,state,activate,update,validate,facadeEntry}){
+export async function installDesktop({project,state,activate,update,validate,facadeEntry,controls}){
  const extras={sealColor:'Уточнить',sealExtra:0,extraWork:''};Object.assign(project.defaults,extras);for(const item of project.items)item.config={...extras,...item.config};Object.assign(state,project.current().config);
  document.addEventListener('click',e=>{const a=e.target.closest('a');if(a){e.preventDefault();if(/modus|pdf/i.test(a.href))window.alfaDesktop.catalog();}});
  const api=window.alfaDesktop,$=s=>document.querySelector(s),status=t=>$('#desktop-status').textContent=t;
@@ -13,8 +15,8 @@ export async function installDesktop({project,state,activate,update,validate,fac
  function sync(){const c=project.current().config;$('#seal-color').value=c.sealColor||'Уточнить';$('#seal-extra').value=c.sealExtra||0;$('#extra-work').value=c.extraWork||'';}
  components.oninput=()=>{const extra=Number($('#seal-extra').value);if(!Number.isInteger(extra)||extra<0||extra>10000){status('Запас: целое число от 0 до 10000 мм');return;}Object.assign(state,{sealColor:$('#seal-color').value,sealExtra:extra,extraWork:$('#extra-work').value});update();};
  $('#facade-select').addEventListener('change',sync);for(const id of ['add-new','add-copy','add-mirror','remove-facade','undo-remove'])$('#'+id).addEventListener('click',sync);sync();
- const pricing=await installPricing(project);$('#desktop-pricing').onclick=()=>document.querySelector('.rf-pricing').scrollIntoView({behavior:'smooth'});
- const payload=()=>({format:'alfaglass-facade-project',schemaVersion:1,appVersion:'0.1.16',catalogRevision:'MODUS-63-72',pricing:pricing.snapshot(),meta,items:structuredClone(project.items),activeId:project.activeId,nextId:project.nextId});
+ const pricing=await installPricing(project,type=>{if(type==='auto')return;if(type==='none'){state.hinge='none';state.hinges=[];}else{if(!state.hinges.length)state.hinges=[100,state.h-100];const desired=type==='mf20'?'mf20':type==='cup35'?'cup':type==='blum'?'blum':'custom';state.hinge=hingeOptions(state).includes(desired)?desired:'custom';state.customHinge=drillingTypes.find(x=>x.id===type)?.name||'';}controls();update();});$('#desktop-pricing').onclick=()=>document.querySelector('.rf-pricing').scrollIntoView({behavior:'smooth'});
+ const payload=()=>({format:'alfaglass-facade-project',schemaVersion:1,appVersion:'0.1.17',catalogRevision:'MODUS-63-72',pricing:pricing.snapshot(),meta,items:structuredClone(project.items),activeId:project.activeId,nextId:project.nextId});
  async function run(fn){try{status('');await fn();}catch(e){status(e.message);}}
  $('#desktop-save').onclick=()=>run(async()=>{project.update(state);const r=await api.save(payload());status(r?'Проект сохранён: '+r:'Сохранение отменено.');});
  $('#export').onclick=$('#desktop-save').onclick;
@@ -23,5 +25,5 @@ export async function installDesktop({project,state,activate,update,validate,fac
  async function report(kind){project.update(state);const errors=project.items.flatMap(i=>validate(i.config).errors.map(e=>i.name+': '+e));if(errors.length)throw Error(errors.join('\n'));await api.report(payload(),kind);status('Документ открыт. Доступны печать и сохранение PDF.');}
  $('#desktop-client').onclick=()=>run(()=>report('client'));$('#desktop-production').onclick=()=>run(()=>report('production'));$('#send-project').onclick=$('#desktop-client').onclick;
  $('#desktop-update').onclick=()=>api.updates();$('#desktop-catalog').onclick=()=>api.catalog();
- status('Офлайн-версия 0.1.16 · проекты сохраняются на вашем компьютере · расчёт по локальным прайсам');
+ status('Офлайн-версия 0.1.17 · проекты сохраняются на вашем компьютере · расчёт по локальным прайсам');
 }

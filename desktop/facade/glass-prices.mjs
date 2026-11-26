@@ -6,6 +6,8 @@ export function refreshGlassPrices(current,latest){
  return {...current,glass:structuredClone(glass),materialMap,materialMapRevision:latest.materialMapRevision};
 }
 export function fillMissingGlassMappings(saved,latest){
+ const additions=latest.glass.items.filter(x=>(latest.ownerConfirmedServices||[]).includes(x.code)&&!saved.glass.items.some(r=>r.code===x.code));
+ if(additions.length)saved={...saved,glass:{...saved.glass,items:[...saved.glass.items,...structuredClone(additions)]}};
  // Attach new identities to unchanged historical rates; never silently reprice an order.
  if(saved.glass?.revision!==latest.glass?.revision||saved.glass?.sourceSha256!==latest.glass?.sourceSha256)return saved;
  const refreshed=refreshGlassPrices(saved,latest);
