@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import {edgeTypes,edgeType,edgeService,syncLinkedFillings} from './filling.mjs';
+assert.deepEqual(edgeTypes.map(x=>x.id),['none','polished','ground','blunted']);
+const glass={items:[{code:'1067',kind:'service',enabled:true,priceKopecks:1000},{code:'1062',kind:'service',enabled:true,priceKopecks:800}]};
+assert.equal(edgeType('1067'),'polished');assert.equal(edgeType('1062'),'ground');assert.equal(edgeType('other-service'),null);
+assert.equal(edgeService(undefined,glass).price,0);assert.equal(edgeService('polished',glass).price,10);assert.equal(edgeService('ground',glass).price,8);assert.equal(edgeService('blunted',glass).price,null);
+const items=[{id:'a',linkId:'pair'},{id:'b',linkId:'pair'},{id:'c',linkId:'pair'},{id:'d'}];
+const choices={a:{glass:'first',edge:'polished'},d:{glass:'independent',edge:'ground'}};const overrides={'a:edge':{price:7},'b:edge':{price:8},'d:edge':{price:9}};
+syncLinkedFillings(items,choices,overrides);assert.equal(choices.c.glass,'first');assert.equal(choices.b.edge,'polished');
+syncLinkedFillings(items,choices,overrides,{id:'b',key:'edge',value:'ground'});for(const id of ['a','b','c'])assert.equal(choices[id].edge,'ground');assert.equal(overrides['a:edge'],undefined);assert.equal(overrides['b:edge'],undefined);assert.equal(overrides['d:edge'].price,9);
+syncLinkedFillings(items,choices,overrides,{id:'c',key:'glass',value:'second'});for(const id of ['a','b','c'])assert.equal(choices[id].glass,'second');assert.equal(choices.d.glass,'independent');
+const restored=JSON.parse(JSON.stringify(choices));syncLinkedFillings([...items,{id:'new',linkId:'pair'}],restored);assert.equal(restored.new.glass,'second');assert.equal(restored.new.edge,'ground');
+syncLinkedFillings(items,restored,{}, {id:'a',key:'edge',value:'none'});assert.equal(restored.c.edge,'none');
+console.log('PASS four edge options, rate lookup, legacy mapping, missing blunting rate, linked edits/copies, independence, clearing stale overrides and serialization');

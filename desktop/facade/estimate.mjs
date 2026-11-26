@@ -1,7 +1,9 @@
+import {edgeService,syncLinkedFillings} from './filling.mjs';
 import {drillingService} from './drilling.mjs';
 import {profiles,glassCut} from './data.js';
 import {purchase,planCuts,priceRows,totalRows,money} from './pricing.mjs';
 export function estimate(items,catalog,settings,overrides={},choices={}){
+ choices=syncLinkedFillings(items,structuredClone(choices));
  const rows=[],plans=[],warnings=[],groups=new Map(),rules=catalog.rules;
  const add=(id,name,quantity,unit,price,note='')=>rows.push({id,name,quantity,unit,price,note});
  const find=id=>catalog.items.find(x=>x.id===id);
@@ -30,7 +32,7 @@ export function estimate(items,catalog,settings,overrides={},choices={}){
    add(prefix+':glass',item.name+' · '+(material?.name||'Наполнение — выберите строку прайса'),area,'м²',material?.priceKopecks==null?null:material.priceKopecks/100);
    add(prefix+':cutting',item.name+' · резка наполнения',perimeter,'м',rate(choice.cutting||rules.cuttingCode));
    if(/зеркало|мателак.*сильвер/i.test(material?.name||''))add(prefix+':film',item.name+' · защитная плёнка 80 мкм',area,'м²',rate(rules.filmCode));
-   if(p.edge)add(prefix+':edge',item.name+' · обработка кромки наполнения',perimeter,'м',rate(choice.edge),'Выберите обработку по прайсу');
+   const edging=edgeService(choice.edge,catalog.glass);if(edging.type!=='none')add(prefix+':edge',item.name+' · '+edging.name,perimeter,'м',edging.price,edging.price==null?'Ставка не найдена в прайсе; укажите конечную цену вручную':'По периметру наполнения');
    if(p.bond)add(prefix+':bond',item.name+' · вклейка',perimeter,'м',rules.bond);
    if(Math.max(cut.width,cut.height)>2500||Math.min(cut.width,cut.height)>1000){add(prefix+':size-review',item.name+' · наценка за размер: согласовать',1,'шт.',null,'Правило наценки за размер в прайсе требует уточнения');}
   }
