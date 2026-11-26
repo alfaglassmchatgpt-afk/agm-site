@@ -1,3 +1,4 @@
+import {drillingService} from './drilling.mjs';
 import {profiles,glassCut} from './data.js';
 import {purchase,planCuts,priceRows,totalRows,money} from './pricing.mjs';
 export function estimate(items,catalog,settings,overrides={},choices={}){
@@ -19,8 +20,9 @@ export function estimate(items,catalog,settings,overrides={},choices={}){
    add(prefix+':seal',item.name+' · уплотнитель',perimeter+(c.sealExtra||0)/1000,'м',seal?stockCost(seal)*rules.materialFactor:null,seal?.name||'Выберите цвет уплотнителя');}
   if(c.hinges.length){const auto=c.hinge==='mf20'?'hinge-7':c.hinge==='mzf'?'hinge-23':null,h=find(choice.hinge||auto);
    add(prefix+':hinges',item.name+' · '+(h?.name||'Петли — выберите модель'),c.hinges.length,'шт.',h?stockCost(h)/h.pack*rules.hingeFactor:null,'Цена комплекта поделена на '+(h?.pack||1));
-   add(prefix+':drilling',item.name+' · присадка под петли',c.hinges.length,'шт.',choice.specialDrilling||c.hinge==='mf20'?rules.specialDrilling:rules.drilling);
+
   }
+  const drill=drillingService(choice,c,rules);if(drill.quantity)add(prefix+':drilling',item.name+' · '+drill.name,drill.quantity,'шт.',drill.price);
   add(prefix+':assembly',item.name+' · сборка',1,'шт.',rules.assembly);
   add(prefix+':packing',item.name+' · картон',c.w*c.h/1e6,'м²',rate(rules.packagingCode));
   if(c.glass!=='none'){
