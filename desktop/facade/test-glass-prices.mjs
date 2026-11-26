@@ -6,7 +6,7 @@ const old={glass:structuredClone(glass),materialMap:{},items:[{usd:10}],rules:{e
 const latest={glass,materialMap:{clear:'test',bad:'disabled',thick:'six',absent:'missing'}};
 const merged=fillMissingGlassMappings(old,latest);assert.deepEqual(merged.materialMap,{clear:'test'});assert.equal(merged.glass,old.glass);
 const changed={...latest,glass:{...glass,revision:'two',items:[{...item,priceKopecks:45600}]}};
-assert.equal(fillMissingGlassMappings(old,changed),old);
+const enriched=fillMissingGlassMappings(old,changed);assert.deepEqual(enriched.materialMap,{clear:'test'});assert.equal(enriched.glass,old.glass);assert.equal(enriched.glass.items[0].priceKopecks,12300);
 const refreshed=refreshGlassPrices(old,changed);assert.equal(refreshed.glass.items[0].priceKopecks,45600);assert.equal(old.glass.items[0].priceKopecks,12300);assert.deepEqual(refreshed.rules,old.rules);assert.deepEqual(refreshed.items,old.items);
 assert.throws(()=>refreshGlassPrices(old,{glass:{currency:'USD'}}));
 console.log('PASS glass mappings: 4 mm, active rows, unchanged historical rates, explicit refresh, supplier rules retained');

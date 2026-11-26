@@ -31,7 +31,7 @@ export function estimate(items,catalog,settings,overrides={},choices={}){
   add(prefix+':assembly',item.name+' · сборка',1,'шт.',rules.assembly);
   add(prefix+':packing',item.name+' · картон',c.w*c.h/1e6,'м²',rate(rules.packagingCode));
   if(c.glass!=='none'){
-   const code=choice.glass||catalog.materialMap?.[c.glass],material=catalog.glass.items.find(x=>x.code===code&&x.enabled&&x.kind==='material');
+   const code=catalog.materialMap?.[c.glass],material=catalog.glass.items.find(x=>x.code===code&&x.enabled&&x.kind==='material');
    const protection=removableFilm(material,catalog.glass);
    add(prefix+':glass',item.name+' · '+(material?.name||'Наполнение — выберите строку прайса'),area,'м²',material?.priceKopecks==null||protection.price===null?null:material.priceKopecks/100+protection.price,protection.note);
    add(prefix+':cutting',item.name+' · резка наполнения',perimeter,'м',rate(choice.cutting||rules.cuttingCode));

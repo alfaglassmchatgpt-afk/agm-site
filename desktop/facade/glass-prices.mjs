@@ -8,6 +8,8 @@ export function refreshGlassPrices(current,latest){
 export function fillMissingGlassMappings(saved,latest){
  const additions=latest.glass.items.filter(x=>(latest.ownerConfirmedServices||[]).includes(x.code)&&!saved.glass.items.some(r=>r.code===x.code));
  if(additions.length)saved={...saved,glass:{...saved.glass,items:[...saved.glass.items,...structuredClone(additions)]}};
+ const missing=Object.fromEntries(Object.entries(latest.materialMap||{}).filter(([key,code])=>!saved.materialMap?.[key]&&saved.glass.items.some(x=>x.code===code&&x.kind==='material'&&x.enabled&&x.thicknessMm===4)));
+ saved={...saved,materialMap:{...missing,...saved.materialMap}};
  // Attach new identities to unchanged historical rates; never silently reprice an order.
  if(saved.glass?.revision!==latest.glass?.revision||saved.glass?.sourceSha256!==latest.glass?.sourceSha256)return saved;
  const refreshed=refreshGlassPrices(saved,latest);
