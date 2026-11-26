@@ -1,6 +1,6 @@
 {
   "localPrices": {"path":"desktop/prices","status":"local-draft","schemaVersion":1,"productionConnected":false},
-  "facadeDesktop": {"displayName":"РФ АГМ","version":"0.1.18","status":"local-test-build","path":"desktop/facade","prices":"local-private","automaticUpdates":false,"productionChanged":false},
+  "facadeDesktop": {"displayName":"РФ АГМ","version":"0.1.19","status":"local-test-build","path":"desktop/facade","prices":"local-private","automaticUpdates":false,"productionChanged":false},
   "pageConsistency": {"status":"deployed","deployedOn":"2026-11-20","plugin":"agm-page-consistency.php","assets":["agm-page-consistency.css"],"routes":["kompleksnye-postavki","dveri-iz-stekla","contacts","materialy/tonirovannye-zerkala","aluminium/peregorodki"]},
   "panelsStandardLayout": {"status":"deployed","deployedOn":"2026-11-20","plugin":"agm-panels-layout.php","assets":["agm-panels-layout.css","agm-railing-layout.css","agm-railing-layout.js"],"requestMode":"existing-specification-mail-client"},
   "railingStandardLayout": {"status":"deployed","deployedOn":"2026-11-20","plugin":"agm-railing-layout.php","assets":["agm-railing-layout.css","agm-railing-layout.js"],"requestMode":"existing-specification-mail-client"},
