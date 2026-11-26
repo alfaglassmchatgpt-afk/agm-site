@@ -20,7 +20,7 @@ export function estimate(items,catalog,settings,overrides={},choices={}){
   const cornerId=p.series==='MF-20'?'facade-44':p.series==='MF-30'?'facade-89':p.b<20?'facade-257':'facade-256',corner=find(cornerId);
   add(prefix+':corner',item.name+' · '+(corner?.name||'Уголки'),p.series==='MF-20'?1:4,p.series==='MF-20'?'компл.':'шт.',corner?stockCost(corner)*rules.materialFactor:null,'Винты входят в комплект уголков; отдельно не начисляются');
   if(c.glass!=='none'&&!['10','12'].includes(p.id)){const sealId=['07','17'].includes(p.id)?'facade-261':c.sealColor==='Чёрный'?'facade-260':c.sealColor==='Серый'?'facade-259':c.sealColor==='Прозрачный'?'facade-258':null,seal=find(sealId);
-   add(prefix+':seal',item.name+' · уплотнитель',perimeter+(c.sealExtra||0)/1000,'м',seal?stockCost(seal)*rules.materialFactor:null,seal?.name||'Выберите цвет уплотнителя');}
+   add(prefix+':seal',item.name+' · Уплотнитель',perimeter+(c.sealExtra||0)/1000,'м',seal?stockCost(seal)*rules.materialFactor:null,seal?.name||'Выберите цвет уплотнителя');}
   const hingeQuantity=choice.hinge==='none'?0:choice.hingeQuantity??c.hinges.length;
   if(!Number.isInteger(hingeQuantity)||hingeQuantity<0||hingeQuantity>100)throw Error('Количество петель: целое число от 0 до 100');
   if(hingeQuantity){const auto=c.hinge==='mf20'?'hinge-7':c.hinge==='mzf'?'hinge-23':null,h=find(choice.hinge||auto);
@@ -28,17 +28,17 @@ export function estimate(items,catalog,settings,overrides={},choices={}){
 
   }
   const drill=drillingService(choice,c,rules);if(drill.quantity)add(prefix+':drilling',item.name+' · '+drill.name,drill.quantity,'шт.',drill.price);
-  add(prefix+':assembly',item.name+' · сборка',1,'шт.',rules.assembly);
-  add(prefix+':packing',item.name+' · картон',c.w*c.h/1e6,'м²',rate(rules.packagingCode));
+  add(prefix+':assembly',item.name+' · Сборка',1,'шт.',rules.assembly);
+  add(prefix+':packing',item.name+' · Упаковка в картон',c.w*c.h/1e6,'м²',rate(rules.packagingCode));
   if(c.glass!=='none'){
    const code=catalog.materialMap?.[c.glass],material=catalog.glass.items.find(x=>x.code===code&&x.enabled&&x.kind==='material');
    const protection=removableFilm(material,catalog.glass);
-   add(prefix+':glass',item.name+' · '+(material?.name||'Наполнение — выберите строку прайса'),area,'м²',material?.priceKopecks==null||protection.price===null?null:material.priceKopecks/100+protection.price,protection.note);
-   add(prefix+':cutting',item.name+' · резка наполнения',perimeter,'м',rate(choice.cutting||rules.cuttingCode));
-   if(/зеркало|мателак.*сильвер/i.test(material?.name||''))add(prefix+':film',item.name+' · защитная плёнка 80 мкм',area,'м²',rate(rules.filmCode));
+   add(prefix+':glass',item.name+' · '+(material?.name||'Наполнение — требуется сопоставление с прайсом'),area,'м²',material?.priceKopecks==null||protection.price===null?null:material.priceKopecks/100*(area<0.3&&choice.smallAreaFactor!==false?2:1)+protection.price,[protection.note,area<0.3?(choice.smallAreaFactor!==false?'Материал ×2: площадь менее 0,3 м²':'Коэффициент малой площади отключён'):''].filter(Boolean).join(' · '));
+   add(prefix+':cutting',item.name+' · Резка наполнения',perimeter,'м',rate(rules.cuttingCode));
+   if(/зеркало|мателак.*сильвер/i.test(material?.name||''))add(prefix+':film',item.name+' · Защитная плёнка 80 мкм',area,'м²',rate(rules.filmCode));
    const edging=edgeService(choice.edge,catalog.glass);if(edging.type!=='none')add(prefix+':edge',item.name+' · '+edging.name,perimeter,'м',edging.price,edging.price==null?'Ставка не найдена в прайсе; укажите конечную цену вручную':'По периметру наполнения');
-   if(p.bond)add(prefix+':bond',item.name+' · вклейка',perimeter,'м',rules.bond);
-   if(Math.max(cut.width,cut.height)>2500||Math.min(cut.width,cut.height)>1000){add(prefix+':size-review',item.name+' · наценка за размер: согласовать',1,'шт.',null,'Правило наценки за размер в прайсе требует уточнения');}
+   if(p.bond)add(prefix+':bond',item.name+' · Вклейка',perimeter,'м',rules.bond);
+   if(Math.max(cut.width,cut.height)>2500||Math.min(cut.width,cut.height)>1000){add(prefix+':size-review',item.name+' · Наценка за размер: согласовать',1,'шт.',null,'Правило наценки за размер в прайсе требует уточнения');}
   }
  }
  for(const [key,g] of groups){const variants=catalog.items.filter(x=>x.article===g.article&&x.color===g.color&&x.length&&x.enabled!==false);
