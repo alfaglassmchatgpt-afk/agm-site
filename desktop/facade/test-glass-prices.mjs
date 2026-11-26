@@ -1,0 +1,12 @@
+import assert from 'node:assert/strict';
+import {refreshGlassPrices,fillMissingGlassMappings} from './glass-prices.mjs';
+const item={code:'test',kind:'material',enabled:true,thicknessMm:4,unit:'м2',priceKopecks:12300};
+const glass={schemaVersion:1,currency:'RUB',revision:'one',sourceSha256:'source',items:[item,{...item,code:'disabled',enabled:false},{...item,code:'six',thicknessMm:6}]};
+const old={glass:structuredClone(glass),materialMap:{},items:[{usd:10}],rules:{example:1}};
+const latest={glass,materialMap:{clear:'test',bad:'disabled',thick:'six',absent:'missing'}};
+const merged=fillMissingGlassMappings(old,latest);assert.deepEqual(merged.materialMap,{clear:'test'});assert.equal(merged.glass,old.glass);
+const changed={...latest,glass:{...glass,revision:'two',items:[{...item,priceKopecks:45600}]}};
+assert.equal(fillMissingGlassMappings(old,changed),old);
+const refreshed=refreshGlassPrices(old,changed);assert.equal(refreshed.glass.items[0].priceKopecks,45600);assert.equal(old.glass.items[0].priceKopecks,12300);assert.deepEqual(refreshed.rules,old.rules);assert.deepEqual(refreshed.items,old.items);
+assert.throws(()=>refreshGlassPrices(old,{glass:{currency:'USD'}}));
+console.log('PASS glass mappings: 4 mm, active rows, unchanged historical rates, explicit refresh, supplier rules retained');
