@@ -23,3 +23,5 @@
 .rf-rate-field{max-width:320px;scroll-margin:120px}.rf-rate-field a{display:inline-block;margin-left:10px;color:#075a86;text-decoration:underline}.rf-rate-field small{margin-top:6px}.rf-pricing input[aria-invalid="true"]{border:2px solid #be2735;background:#fff1f2;outline-color:#be2735;box-shadow:0 0 0 3px #be273526}
 
 #rf-edge-control[hidden]{display:none!important}#rf-edge-control small:empty{display:none}#rf-edge-warning{color:#be2735}
+
+main>.desktop-client-meta{margin:0 0 18px;padding:16px 20px;border:1px solid var(--line);border-radius:14px}main>.desktop-client-meta label{min-width:0;flex:1 1 240px}main>.intro>.desktop-intro-header{width:100%;max-width:none;margin:0;padding:0 0 18px;text-align:left;gap:16px;flex-wrap:wrap}main>.intro>.desktop-intro-header .head-actions{margin-left:auto}main>.intro>.desktop-intro-header .brand-logo{max-width:100%;height:auto}@media(max-width:760px){main>.desktop-client-meta{padding:14px}main>.intro>.desktop-intro-header{flex-wrap:nowrap}main>.intro>.desktop-intro-header .brand{min-width:0}main>.intro>.desktop-intro-header .brand-logo{max-width:190px}main>.intro>.desktop-intro-header .head-actions{flex-shrink:0}}
