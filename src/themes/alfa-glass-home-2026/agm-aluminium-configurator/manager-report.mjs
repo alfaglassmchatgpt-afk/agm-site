@@ -1,3 +1,4 @@
+import {gripPosition} from './grip-position.js';
 import quoteStore from '../agm-configurator/quote-store.js';
 import {reedSlugs} from './glass-groups.js';
 import {readFileSync} from 'node:fs';
@@ -13,8 +14,9 @@ function sketch(c,p,g){
  const ribs=reedSlugs.includes(g?.slug)?'<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" fill="url(#reed-'+c.reed+')"/>':'';
  const pattern='<defs><pattern id="reed-'+c.reed+'" width="6" height="6" patternUnits="userSpaceOnUse"><path d="'+(c.reed==='horizontal'?'M0 1H6':'M1 0V6')+'" stroke="#586970" opacity=".45"/></pattern></defs>';
  const handleHeight=(c.handle?Math.min(250,c.h-80):p.gripLength||c.h)*scale;
+ const handleY=p.gripLength?y+(c.h-gripPosition(p,c))*scale:139;
  const handleX=c.side==='left'?x+w:x;
- const handle=(c.handle||p.baseId)?'<line x1="'+handleX+'" x2="'+handleX+'" y1="'+(139-handleHeight/2)+'" y2="'+(139+handleHeight/2)+'" stroke="#5c5147" stroke-width="5"/>':'';
+ const handle=(c.handle||p.baseId)?'<line x1="'+handleX+'" x2="'+handleX+'" y1="'+(handleY-handleHeight/2)+'" y2="'+(handleY+handleHeight/2)+'" stroke="#5c5147" stroke-width="5"/>':'';
  return '<svg role="img" aria-label="Эскиз фасада '+c.w+' на '+c.h+' мм" viewBox="0 0 320 278">'+pattern+'<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" fill="'+(g?.color||'white')+'" stroke="'+colors[c.color][1]+'" stroke-width="5"/>'+ribs+pins+handle+'<path fill="none" stroke="#57727e" d="M'+x+' '+(y-7)+'v-5h'+w+'v5 M'+(x-7)+' '+y+'h-5v'+h+'h5"/><text x="160" y="'+(y-17)+'">'+c.w+' мм</text><text transform="translate('+(x-18)+' 139) rotate(-90)">'+c.h+' мм</text></svg>';
 }
 function planCuts(group){
@@ -97,7 +99,7 @@ export function render(order){
      add(rail,baseStock,[horizontal,horizontal,c.h]);
      add(handleProfileLabel(profileLabel(p)),p.gripLength?2850:5500,[c.h],true,Boolean(p.gripLength));
    }else add(rail,baseStock,[c.w,c.w,c.h,c.h]);
-   cards.push('<article>'+sketch(c,p,g)+'<div><h3>'+esc(item.title)+'</h3><p>'+esc(orderProfileLabel(p,c.handle))+' · '+esc(color)+'</p><p>Петли: '+esc(c.hinge==='custom'?c.customHinge+' — совместимость и присадку согласовать':hinges[c.hinge])+' · '+c.hinges.length+' шт.'+(c.hinges.length?' · '+(c.side==='left'?'слева':'справа'):'')+'</p><p>Стекло: '+esc(name)+'</p><p>Количество: '+quantity+' шт.</p></div></article>');
+   cards.push('<article>'+sketch(c,p,g)+'<div><h3>'+esc(item.title)+'</h3><p>'+esc(orderProfileLabel(p,c.handle))+' · '+esc(color)+'</p><p>Петли: '+esc(c.hinge==='custom'?c.customHinge+' — совместимость и присадку согласовать':hinges[c.hinge])+' · '+c.hinges.length+' шт.'+(c.hinges.length?' · '+(c.side==='left'?'слева':'справа'):'')+'</p><p>Стекло: '+esc(name)+'</p>'+(p.gripLength?'<p>Центр ручки: '+gripPosition(p,c)+' мм от низа фасада · хват '+p.gripLength+' мм</p>':'')+'<p>Количество: '+quantity+' шт.</p></div></article>');
  }
  const groups=[...rails.values()].sort((a,b)=>Number(a.handle)-Number(b.handle)).map(group=>({group,bars:planCuts(group)}));
  const profileRows=groups.map(({group:g,bars})=>[g.label,g.color,g.stock+' мм',bars?bars.length+' шт.':'Уточнить раскрой']);

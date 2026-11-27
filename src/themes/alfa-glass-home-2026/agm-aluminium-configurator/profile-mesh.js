@@ -1,3 +1,4 @@
+import {gripPosition} from './grip-position.js';
 import * as T from './vendor/three.module.js';
 import {sections} from './sections.js?v=mf-frame45-20261021';
 
@@ -53,7 +54,7 @@ function clipSection(q,x,keepLeft){
  const clip=poly=>{const out=[];for(let i=0;i<poly.length;i++){const a=poly[i],b=poly[(i+1)%poly.length],inside=v=>keepLeft?v[0]<=x:v[0]>=x,ia=inside(a),ib=inside(b);if(ia)out.push(a);if(ia!==ib){const t=(x-a[0])/(b[0]-a[0]);out.push([x,a[1]+t*(b[1]-a[1])]);}}return out;};
  return {...q,outline:clip(q.outline),holes:q.holes.map(clip).filter(h=>h.length>=3)};
 }
-export function handleRailGeometries(p,w,h,side,{miter=true}={}){
+export function handleRailGeometries(p,w,h,side,{miter=true,gripAt}={}){
  const parts=[];
  const add=(id,height,options)=>{
   const q=sections[id];
@@ -63,10 +64,10 @@ export function handleRailGeometries(p,w,h,side,{miter=true}={}){
   }else parts.push(railGeometry(id,w,height,side,{...options,miter:options.miter??miter}));
  };
  if(!p.gripLength){add(p.id,h,{});return parts;}
- const span=Math.min(p.gripLength,Math.max(1,h-2*p.baseWidth)),a=(h-span)/2;
+ const span=Math.min(p.gripLength,Math.max(1,h-2*p.baseWidth)),center=gripPosition(p,{h,gripAt}),a=(side==='right'?h-center:center)-span/2;
  const plain=sections[p.id+'-cut']?p.id+'-cut':p.baseId;
  add(plain,h,{start:0,end:a/h});
- add(p.id,span,{miter:false});
+ const before=parts.length;add(p.id,span,{miter:false});for(const part of parts.slice(before))part.translate(0,center-h/2,0);
  add(plain,h,{start:(a+span)/h,end:1});
  return parts;
 }

@@ -1,3 +1,4 @@
+import {gripPosition} from './grip-position.js';
 import {hardwareSummary} from './public-options.js?v=20261126-public';
 import {reedSlugs} from './glass-groups.js';
 import {numberFacades} from './project.js?v=layout-20261124';
@@ -12,6 +13,7 @@ export function facadeEntry(item,confirmed){
   summary:[c.w+' × '+c.h+' мм; количество: 1','Профиль: MODUS '+orderProfileLabel(p,c.handle),'Цвет: '+colors[c.color][0],'Заполнение: '+glasses[c.glass][0],
    cut?'Стекло: '+cut.width+' × '+cut.height+' × 4 мм':'Без наполнения',
    'Присадки под петли: '+(c.hinge==='custom'?'Другая петля: '+c.customHinge+' — согласовать совместимость и присадку':({none:'Без петель',mf20:'Скрытые MF 20',narrow:'Для узкого профиля',mzf:'MZF 63',blum:'BLUM 71B950A',cup:'Чашка 35 мм — модель уточнить'}[c.hinge]||c.hinge))+'; сторона: '+(c.side==='left'?'слева':'справа')+'; координаты от верха, мм: '+c.hinges.join(', '),
+   ...(p.gripLength?['Центр ручки: '+gripPosition(p,c)+' мм от низа фасада; хват '+p.gripLength+' мм']:[]),
    ...hardwareSummary(c),
    ...(reedSlugs.includes(c.glass.split('__')[0])?['Направление рифления: '+(c.reed==='vertical'?'вертикальное':'горизонтальное')]:[]),
    'Маскировка зоны вклейки: '+(c.mask?'да':'нет'),...validate(c).warnings,'Параметры предварительные; производственный чертёж согласовать.'].join('\n')};

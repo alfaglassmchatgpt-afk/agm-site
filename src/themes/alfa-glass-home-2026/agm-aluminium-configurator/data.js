@@ -1,3 +1,4 @@
+import {gripBounds} from './grip-position.js';
 export const source='https://modusline.ru/site/files/1/fasadnye-profili-1.pdf';
 // Dimensions in millimetres. Source: MODUS facade technical catalog, pp.63–66.
 // Section outlines and hinge meshes are schematic, not machining geometry.
@@ -57,6 +58,7 @@ export function validate(s){const p=profiles.find(p=>p.id===s.profile), errors=[
  if(p.series==='MF-20'&&s.hinges.length&&(s.hinge!=='mf20'||s.hinges.length!==2))errors.push('MF-20: используются только две скрытые петли серии MF 20.');
  if((s.hinge!=='none'||s.hinges.length)&&(![2,3,4,5,6].includes(s.hinges.length)||!hingeOptions(s).includes(s.hinge)))errors.push('Выбранные петли не подходят для этих параметров. Измените выбор или укажите «Без петель и присадок».');
  if(p.gripLength&&s.h<p.gripLength+2*p.baseWidth)errors.push('В модели не хватает места для хвата 250 мм и угловых соединений. Увеличьте высоту фасада; нестандартный вариант требует согласования.');
+ if(p.gripLength&&s.gripAt!=null){const b=gripBounds(p,s.h);if(!Number.isInteger(s.gripAt)||s.gripAt<b.min||s.gripAt>b.max)errors.push('Центр ручки должен быть целым числом от '+b.min+' до '+b.max+' мм от низа фасада.');}
  if(p.maxWeight)warnings.push('Максимальный вес двери — 20 кг. Полная масса с профилем и фурнитурой проверяется при согласовании.');
  if(p.series==='MF-20'&&s.hinges.length)warnings.push('Петли показаны условно сверху и снизу; производственную присадку определяют чертежи MF 20.');
  if(s.hinges.some(v=>!Number.isInteger(v)||v<=0||v>=s.h))errors.push('Центры петель задаются целыми миллиметрами внутри высоты фасада.');

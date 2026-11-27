@@ -14,7 +14,7 @@ export function estimate(items,catalog,settings,overrides={},choices={}){
  const converted=(x,factor=1)=>x&&hasRate?stockCost(x)*factor:null;
  const service=code=>catalog.glass.items.find(x=>x.code===code&&x.enabled)?.priceKopecks/100;
  const rate=code=>Number.isFinite(service(code))?service(code):null;
- function rail(article,color,parts,owner,whole=false,single=false){const key=article+'|'+color;const g=groups.get(key)||{article,color,parts:[],whole,single};g.parts.push(...parts.map(length=>({length,owner,gripAt:choices[owner]?.gripAt??length/2})));groups.set(key,g);}
+ function rail(article,color,parts,owner,whole=false,single=false){const key=article+'|'+color;const g=groups.get(key)||{article,color,parts:[],whole,single};g.parts.push(...parts.map(length=>({length,owner,gripAt:items.find(i=>i.id===owner)?.config.gripAt??length/2})));groups.set(key,g);}
  for(const item of items){const c=item.config,p=profiles.find(p=>p.id===c.profile),prefix=item.id,choice=choices[prefix]||{},base=p.baseId||p.id,article=p.series==='MZ'?'MZ'+base:base;
   if(p.baseId){rail(article,c.color,[c.w-(p.b-p.baseWidth),c.w-(p.b-p.baseWidth),c.h],prefix);rail(p.id,c.color,[c.h],prefix,true,!!p.gripLength);}
   else if(p.id==='13'&&c.handle){const span=Math.min(250,c.h-80),end=(c.h-span)/2;rail(article,c.color,[c.w,c.w,c.h,end,end],prefix);rail('MZ13-01',c.color,[span],prefix,true);}
