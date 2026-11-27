@@ -23,7 +23,7 @@ html=html.replace(/<dialog id="al-request"[\s\S]*?<\/dialog>/,'');
 fs.writeFileSync(path.join(dest,'index.html'),html);
 const app=path.join(dest,'app.js');fs.appendFileSync(app,"\nconst {installDesktop}=await import('./desktop-adapter.js');installDesktop({project,state:s,activate,update,validate,facadeEntry,controls});\n");
 // Shared source already includes the layout integration.
-for(const f of ['reset-facade.mjs','desktop-boot.js','desktop-adapter.js','desktop.css','layout.mjs','pricing.mjs','estimate.mjs','pricing-ui.js','glass-prices.mjs','drilling.mjs','pricing-view.mjs','filling.mjs'])fs.copyFileSync(path.join(__dirname,f),path.join(dest,f));
+for(const f of ['session-rate.mjs','reset-facade.mjs','desktop-boot.js','desktop-adapter.js','desktop.css','layout.mjs','pricing.mjs','estimate.mjs','pricing-ui.js','glass-prices.mjs','drilling.mjs','pricing-view.mjs','filling.mjs'])fs.copyFileSync(path.join(__dirname,f),path.join(dest,f));
 fs.copyFileSync(path.join(root,'.local/modus-mz/fasadnye-profili.pdf'),path.join(out,'modus.pdf'));
 fs.copyFileSync(path.join(__dirname,'reports.mjs'),path.join(dest,'desktop-reports.mjs'));
 console.log('Prepared offline bundle from shared source');

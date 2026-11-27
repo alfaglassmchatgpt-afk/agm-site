@@ -1,3 +1,4 @@
+import {restoreSessionRate,saveSessionRate} from './session-rate.mjs';
 import {facadeNumber} from './layout.mjs';
 import {edgeTypes,edgeType,syncLinkedFillings} from './filling.mjs';
 import {profiles} from './data.js';
@@ -20,6 +21,7 @@ export async function installPricing(project,onMachining){
  let saved=JSON.parse(localStorage.getItem('rf-pricing')||'null');
  if(saved?.catalog)catalog=fillMissingGlassMappings(saved.catalog,catalog);
  let settings=saved?.settings||{date:new Date().toLocaleDateString('en-CA'),rate:null,fxExtra:catalog.rules.fxExtra,kerf:4,trim:50,grips:{},stocks:{},extraRows:[]},overrides=saved?.overrides||{},choices=saved?.choices||{};
+ const today=()=>new Date().toLocaleDateString('en-CA');let rateDay=today();restoreSessionRate(sessionStorage,rateDay,settings,!!saved?.settings);
  let selected=project.activeId||project.items[0].id;const openBlocks={frame:true,filling:true,settings:false};
  let result=null;const persist=()=>localStorage.setItem('rf-pricing',JSON.stringify({settings,overrides,choices,catalog}));
  const options=(list,value)=>'<option value="">Выберите позицию</option>'+list.map(x=>'<option value="'+esc(x.id||x.code)+'" '+((x.id||x.code)===value?'selected':'')+'>'+esc(x.name)+'</option>').join('');
@@ -54,6 +56,7 @@ document.querySelector('#rf-drilling-type').innerHTML='<option value="auto">По
  const missingRate=()=>!Number.isFinite(settings.rate)||settings.rate<=0;
  function focusRate(){const input=document.querySelector('#rf-usd-rate');if(!input)return;input.scrollIntoView({behavior:'smooth',block:'center'});input.focus({preventScroll:true});input.select();}
  function render(){
+  if(rateDay!==today()){rateDay=today();settings.rate=null;saveSessionRate(sessionStorage,rateDay,settings.date,null);}
   if(!project.items.some(i=>i.id===selected))selected=project.activeId||project.items[0].id;
   for(const i of project.items){const c=choices[i.id]||={};delete c.glass;
    if(c.glassFor!==undefined&&c.glassFor!==i.config.glass){delete c.glass;for(const name of ['glass','film','cutting','edge','bond'])delete overrides[i.id+':'+name];}
@@ -69,13 +72,13 @@ document.querySelector('#rf-drilling-type').innerHTML='<option value="auto">По
   const rateField=section.querySelector('.rf-rate-field');
   document.querySelector('.desktop-client-meta .rf-rate-field')?.remove();
   document.querySelector('.desktop-client-meta').append(rateField);
-  rateField.onchange=e=>{settings.rate=Number(e.target.value);persist();render();};
+  rateField.onchange=e=>{settings.rate=Number(e.target.value);rateDay=today();saveSessionRate(sessionStorage,rateDay,settings.date,settings.rate);persist();render();};
   rateField.onclick=async e=>{if(!e.target.closest('[data-cbr]'))return;e.preventDefault();try{await window.alfaDesktop.cbr();}catch(err){alert('Не удалось открыть сайт ЦБ РФ: '+err.message);}};
   const settingsControls=section.querySelector('.rf-price-settings'),settingsNote=settingsControls.nextElementSibling;
   const settingsPanel=document.createElement('details');settingsPanel.className='rf-settings-panel';settingsPanel.dataset.priceBlock='settings';settingsPanel.open=!!openBlocks.settings;settingsPanel.innerHTML='<summary>Настройки расчёта и прайсы</summary>';settingsPanel.append(settingsControls,settingsNote);section.append(settingsPanel);
  }
  section.addEventListener('toggle',e=>{if(e.target.dataset.priceBlock)openBlocks[e.target.dataset.priceBlock]=e.target.open;},true);
- section.onchange=e=>{const t=e.target;if(t.hasAttribute('data-facade-select')){selected=t.value;render();return;}if(t.dataset.setting){settings[t.dataset.setting]=t.type==='number'?Number(t.value):t.value;}
+ section.onchange=e=>{const t=e.target;if(t.hasAttribute('data-facade-select')){selected=t.value;render();return;}if(t.dataset.setting){if(t.dataset.setting==='date'&&t.value!==settings.date){settings.rate=null;saveSessionRate(sessionStorage,today(),t.value,null);}settings[t.dataset.setting]=t.type==='number'?Number(t.value):t.value;}
   if(t.dataset.choice){const id=t.closest('[data-facade]').dataset.facade;choices[id]||={};if(t.dataset.choice==='smallAreaFactor')delete overrides[id+':glass'];if(t.dataset.choice==='drillingType')delete overrides[id+':drilling'];choices[id][t.dataset.choice]=t.type==='checkbox'?t.checked:t.type==='number'?(t.value===''?undefined:Number(t.value)):t.value;if(['glass','edge'].includes(t.dataset.choice))syncLinkedFillings(project.items,choices,overrides,{id,key:t.dataset.choice,value:t.value});}
   if(t.hasAttribute('data-price')){const id=t.closest('[data-row]').dataset.row;overrides[id]={...overrides[id],price:t.value===''?null:Number(t.value)};}
   if(t.hasAttribute('data-exclude')){const id=t.closest('[data-row]').dataset.row;overrides[id]={...overrides[id],excluded:t.checked};}
@@ -90,6 +93,6 @@ document.querySelector('#rf-drilling-type').innerHTML='<option value="auto">По
   if(t.hasAttribute('data-stock')){const key=t.closest('[data-group]').dataset.group,[article,color]=key.split('|'),single=result.plans.find(x=>x.key===key)?.single;
    const v=await askFields('Закупочная длина '+article,[{key:'length',label:'Длина доступного хлыста, мм',type:'number'},{key:'usd',label:'Цена хлыста USD до скидки',type:'number'},...(single?[{key:'gripCenter',label:'Центр заводского хвата от начала хлыста, мм',type:'number'}]:[])]);if(!v)return;const length=Number(v.length),usd=Number(v.usd);if(!Number.isFinite(length)||length<=0||!Number.isFinite(usd)||usd<=0)return;settings.stocks[key]||=catalog.items.filter(x=>x.article===article&&x.color===color&&x.length);settings.stocks[key].push({id:crypto.randomUUID(),article,color,length,usd,gripCenter:single?Number(v.gripCenter):undefined});}
   persist();render();};
- let signature='';setInterval(()=>{const next=JSON.stringify([project.activeId,project.items]);if(next!==signature&&!section.contains(document.activeElement)&&document.activeElement?.id!=='rf-usd-rate'){signature=next;render();}},1200);render();if(missingRate())requestAnimationFrame(focusRate);
+ let signature='';setInterval(()=>{const next=JSON.stringify([project.activeId,project.items]);if((next!==signature||rateDay!==today())&&!section.contains(document.activeElement)&&document.activeElement?.id!=='rf-usd-rate'){signature=next;render();}},1200);render();if(missingRate())requestAnimationFrame(focusRate);
  return {show(){if(missingRate())focusRate();else section.scrollIntoView({behavior:'smooth'});},resetFacade(id){delete choices[id];for(const key of Object.keys(overrides))if(key.startsWith(id+':'))delete overrides[key];persist();render();},snapshot(){render();return {enabled:true,settings:structuredClone(settings),overrides:structuredClone(overrides),choices:structuredClone(choices),catalog:structuredClone(catalog),result};}};
 }

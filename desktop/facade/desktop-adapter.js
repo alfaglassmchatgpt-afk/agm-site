@@ -26,10 +26,10 @@ export async function installDesktop({project,state,activate,update,validate,fac
  const oldPricing=JSON.parse(localStorage.getItem('rf-pricing')||'null'),oldChoices=oldPricing?.choices||{};for(const item of project.items){if(item.config.gripAt==null&&Number.isInteger(oldChoices[item.id]?.gripAt))item.config.gripAt=oldChoices[item.id].gripAt;if(oldChoices[item.id])delete oldChoices[item.id].gripAt;}if(oldPricing)localStorage.setItem('rf-pricing',JSON.stringify(oldPricing));Object.assign(state,project.current().config);controls();update();
  const pricing=await installPricing(project,type=>{if(type==='auto')return;if(type==='none'){state.hinge='none';state.hinges=[];}else{if(!state.hinges.length)state.hinges=[100,state.h-100];const desired=type==='mf20'?'mf20':type==='cup35'?'cup':type==='blum'?'blum':'custom';state.hinge=hingeOptions(state).includes(desired)?desired:'custom';state.customHinge=drillingTypes.find(x=>x.id===type)?.name||'';}controls();update();});$('#desktop-pricing').onclick=()=>pricing.show?.();
  const reset=document.createElement('button');reset.id='desktop-reset-facade';reset.type='button';reset.textContent='Начать сначала';reset.title='Сбросить настройки и имя выбранного фасада';$('#add-facade').before(reset);
- const startOver=()=>{if(!confirm('Начать сначала? Все фасады, имена, связи и настройки текущего расчёта будут сброшены. Сохранённые файлы проектов и прайсы останутся.'))return;for(const key of Object.keys(localStorage))if(key.startsWith('agm-quote-v1:')||['agm-facade-editor-v1','alfa-desktop-meta','rf-pricing','rf-layout-numbers','rf-layout-links'].includes(key))localStorage.removeItem(key);location.reload();};
+ const startOver=()=>{if(!confirm('Начать сначала? Все фасады, имена, связи и настройки текущего расчёта будут сброшены. Курс и дата покупки в текущей сессии сохранятся. Сохранённые файлы проектов и прайсы останутся.'))return;for(const key of Object.keys(localStorage))if(key.startsWith('agm-quote-v1:')||['agm-facade-editor-v1','alfa-desktop-meta','rf-pricing','rf-layout-numbers','rf-layout-links'].includes(key))localStorage.removeItem(key);location.reload();};
  reset.title='Вернуть весь конфигуратор в стартовое состояние';reset.onclick=startOver;
 
- const payload=()=>({format:'alfaglass-facade-project',schemaVersion:1,appVersion:'0.1.35',catalogRevision:'MODUS-63-72',pricing:pricing.snapshot(),meta,items:structuredClone(project.items),activeId:project.activeId,nextId:project.nextId});
+ const payload=()=>({format:'alfaglass-facade-project',schemaVersion:1,appVersion:'0.1.36',catalogRevision:'MODUS-63-72',pricing:pricing.snapshot(),meta,items:structuredClone(project.items),activeId:project.activeId,nextId:project.nextId});
  async function run(fn){try{status('');await fn();}catch(e){status(e.message);}}
  $('#desktop-save').onclick=()=>run(async()=>{project.update(state);const r=await api.save(payload());status(r?'Проект сохранён: '+r:'Сохранение отменено.');});
  $('#export').onclick=$('#desktop-save').onclick;
@@ -38,5 +38,5 @@ export async function installDesktop({project,state,activate,update,validate,fac
  async function report(kind){project.update(state);const errors=project.items.flatMap(i=>validate(i.config).errors.map(e=>i.name+': '+e));if(errors.length)throw Error(errors.join('\n'));await api.report(payload(),kind);status('Документ открыт. Доступны печать и сохранение PDF.');}
  $('#desktop-client').onclick=()=>run(()=>report('client'));$('#desktop-production').onclick=()=>run(()=>report('production'));$('#send-project').onclick=$('#desktop-client').onclick;
  $('#desktop-update').onclick=()=>api.updates();
- status('Офлайн-версия 0.1.35 · проекты сохраняются на вашем компьютере · расчёт по локальным прайсам');
+ status('Офлайн-версия 0.1.36 · проекты сохраняются на вашем компьютере · расчёт по локальным прайсам');
 }
