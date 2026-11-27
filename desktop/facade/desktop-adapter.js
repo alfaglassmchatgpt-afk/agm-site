@@ -8,7 +8,7 @@ export async function installDesktop({project,state,activate,update,validate,fac
  document.addEventListener('click',e=>{const a=e.target.closest('a');if(a){e.preventDefault();if(/modus|pdf/i.test(a.href))window.alfaDesktop.catalog();}});
  const api=window.alfaDesktop,$=s=>document.querySelector(s),status=t=>$('#desktop-status').textContent=t;
  const metadata=document.createElement('div');metadata.className='desktop-client-meta';metadata.innerHTML='<label>Заказ / клиент<input id="desktop-customer" maxlength="180"></label><label>Комментарий к проекту<input id="desktop-comment" maxlength="1000"></label>';
- const intro=$('main>.intro');intro.before(metadata);
+ const intro=$('main>.intro');intro.after(metadata);
  const header=$('body>header');header.classList.add('desktop-intro-header');
  const title=intro.querySelector('h1');title.textContent='Конфигуратор фасадов';
  const brand=header.querySelector('.brand'),pill=header.querySelector('.pill'),theme=$('#theme');
@@ -28,7 +28,7 @@ export async function installDesktop({project,state,activate,update,validate,fac
  const startOver=()=>{if(!confirm('Начать сначала? Все фасады, имена, связи и настройки текущего расчёта будут сброшены. Сохранённые файлы проектов и прайсы останутся.'))return;for(const key of Object.keys(localStorage))if(key.startsWith('agm-quote-v1:')||['agm-facade-editor-v1','alfa-desktop-meta','rf-pricing','rf-layout-numbers','rf-layout-links'].includes(key))localStorage.removeItem(key);location.reload();};
  reset.title='Вернуть весь конфигуратор в стартовое состояние';reset.onclick=startOver;
 
- const payload=()=>({format:'alfaglass-facade-project',schemaVersion:1,appVersion:'0.1.31',catalogRevision:'MODUS-63-72',pricing:pricing.snapshot(),meta,items:structuredClone(project.items),activeId:project.activeId,nextId:project.nextId});
+ const payload=()=>({format:'alfaglass-facade-project',schemaVersion:1,appVersion:'0.1.32',catalogRevision:'MODUS-63-72',pricing:pricing.snapshot(),meta,items:structuredClone(project.items),activeId:project.activeId,nextId:project.nextId});
  async function run(fn){try{status('');await fn();}catch(e){status(e.message);}}
  $('#desktop-save').onclick=()=>run(async()=>{project.update(state);const r=await api.save(payload());status(r?'Проект сохранён: '+r:'Сохранение отменено.');});
  $('#export').onclick=$('#desktop-save').onclick;
@@ -37,5 +37,5 @@ export async function installDesktop({project,state,activate,update,validate,fac
  async function report(kind){project.update(state);const errors=project.items.flatMap(i=>validate(i.config).errors.map(e=>i.name+': '+e));if(errors.length)throw Error(errors.join('\n'));await api.report(payload(),kind);status('Документ открыт. Доступны печать и сохранение PDF.');}
  $('#desktop-client').onclick=()=>run(()=>report('client'));$('#desktop-production').onclick=()=>run(()=>report('production'));$('#send-project').onclick=$('#desktop-client').onclick;
  $('#desktop-update').onclick=()=>api.updates();
- status('Офлайн-версия 0.1.31 · проекты сохраняются на вашем компьютере · расчёт по локальным прайсам');
+ status('Офлайн-версия 0.1.32 · проекты сохраняются на вашем компьютере · расчёт по локальным прайсам');
 }
